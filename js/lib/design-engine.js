@@ -192,9 +192,9 @@ function isCommand(command) {
 
 function getCommandFromShortcut(shortcut) {
 
-	var commandFromShortcut = shortcut
+	var commandFromShortcut = shortcut.toUpperCase()
 	for (var i = 0; i < commands.length; i++) {
-		if (commands[i].shortcut === shortcut) {
+		if (commands[i].shortcut === shortcut.toUpperCase()) {
 			commandFromShortcut = commands[i].command;
 		}
 	}
