@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/wood/dan/design">
+    <file>window.cmb.ui</file>
+    <file>gtk/help-overlay.ui</file>
+  </gresource>
+</gresources>
