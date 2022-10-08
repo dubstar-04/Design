@@ -20,7 +20,7 @@ import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 import Gio from 'gi://Gio';
 import Gdk from 'gi://Gdk';
-import Adw from 'gi://Adw';
+import Adw from 'gi://Adw?version=1';
 import Cairo from 'cairo';
 
 import { Core } from '../Design-Core/core.js';
@@ -32,6 +32,20 @@ export const DesignWindow = GObject.registerClass({
 }, class DesignWindow extends Adw.ApplicationWindow{
     _init(application) {
         super._init({ application });
+
+      const open = new Gio.SimpleAction({
+        name: "open",
+        parameter_type: null,
+      });
+      open.connect("activate", this.openDialog.bind(this));
+      this.add_action(open);
+
+      const save = new Gio.SimpleAction({
+        name: "save",
+        parameter_type: null,
+      });
+      save.connect("activate", this.saveDialog.bind(this));
+      this.add_action(save);
 
       this._openButton.connect('clicked', this.openDialog.bind(this));
       this._saveButton.connect('clicked', this.saveDialog.bind(this));

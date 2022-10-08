@@ -1,0 +1,97 @@
+using Gtk 4.0;
+using Adw 1;
+
+menu app-menu {
+
+section{
+id: "file-management";
+
+  item{
+  label:_("Open");
+  action:"win.open";
+  }
+
+  item{
+  label:_("Save");
+  action:"win.save";
+  }
+
+
+}
+
+  section {
+    id: "help-section";
+
+    item {
+      label: _("Preferences");
+      action: "app.preferences";
+    }
+
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "win.show-help-overlay";
+    }
+
+    item {
+      label: _("About Design");
+      action: "app.about";
+    }
+  }
+}
+
+template DesignWindow : Adw.ApplicationWindow {
+  default-height: 600;
+  default-width: 800;
+  title: 'Design';
+  content:
+Box{
+  orientation: vertical;
+  vexpand: true;
+
+  Adw.HeaderBar{
+    Button openButton{
+    focus-on-click: false;
+      Image{
+        icon-name: 'folder-open-symbolic';
+      }
+    }
+    Button saveButton{
+    focus-on-click: false;
+      Image{
+        icon-name: 'document-save-symbolic';}
+      }
+    [end]
+    MenuButton{
+      icon-name: 'open-menu-symbolic';
+      menu-model: app-menu;
+
+    }
+  }
+Box{
+orientation: vertical;
+
+DrawingArea drawingArea{
+hexpand: true;
+vexpand: true;
+focusable: true;
+}
+
+InfoBar{
+  Box{
+    Entry commandLineEntry{
+    hexpand: true;
+    focus-on-click: false;
+    }
+    Label mousePosLabel{
+    halign: end;
+    width-request: 150;
+    }
+
+    }
+
+}
+
+}
+
+};
+  }

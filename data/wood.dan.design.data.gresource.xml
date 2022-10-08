@@ -2,6 +2,5 @@
 <gresources>
   <gresource prefix="/wood/dan/design">
     <file>ui/window.ui</file>
-    <file>ui/help-overlay.ui</file>
   </gresource>
 </gresources>

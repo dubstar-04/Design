@@ -44,8 +44,8 @@ export const DesignApplication = GObject.registerClass(
                     authors: [
                         'Daniel Wood'
                     ],
-                    version: '0.1.0',
-                    program_name: 'design',
+                    version: 'POC',
+                    program_name: 'Design',
                     transient_for: this.active_window,
                     modal: true,
                 };

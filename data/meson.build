@@ -16,9 +16,18 @@ endif
 
 pkgdatadir = join_paths(get_option('datadir'), meson.project_name())
 
+blueprints = custom_target('blueprints',
+    input: files(
+        'ui/window.blp'
+    ),
+    output: '.',
+    command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@']
+)
+
 data_res = gnome.compile_resources('wood.dan.design.data',
   'wood.dan.design.data.gresource.xml',
   gresource_bundle: true,
+  dependencies: blueprints,
   install: true,
   install_dir: pkgdatadir,
 )
