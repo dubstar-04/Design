@@ -1,0 +1,33 @@
+using Gtk 4.0;
+
+ShortcutsWindow shortcuts {
+    modal: true;
+    section-name: 'shortcuts';
+    ShortcutsSection {
+        visible: true;
+        ShortcutsGroup {
+            title: _("Entities");
+            ShortcutsShortcut {
+                accelerator: 'L';
+                title: _("Draw Line");
+            }
+            ShortcutsShortcut {
+                accelerator: 'C';
+                title: _("Draw Circle");
+            }
+            ShortcutsShortcut {
+                accelerator: 'R E C';
+                title: _("Draw Rectangle");
+            }
+        }
+
+        ShortcutsGroup {
+            title: _("General");
+            ShortcutsShortcut {
+                accelerator: 'not implimented';
+                title: _("not implimented");
+            }
+        }
+    }
+}
+

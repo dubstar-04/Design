@@ -2,5 +2,6 @@
 <gresources>
   <gresource prefix="/wood/dan/design">
     <file>ui/window.ui</file>
+    <file>ui/shortcuts.ui</file>
   </gresource>
 </gresources>

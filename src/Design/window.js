@@ -47,6 +47,13 @@ export const DesignWindow = GObject.registerClass({
       save.connect("activate", this.saveDialog.bind(this));
       this.add_action(save);
 
+      const shortcuts = new Gio.SimpleAction({
+        name: "shortcuts",
+        parameter_type: null,
+      });
+      shortcuts.connect("activate", this.show_shortcuts_window.bind(this));
+      this.add_action(shortcuts);
+
       this._openButton.connect('clicked', this.openDialog.bind(this));
       this._saveButton.connect('clicked', this.saveDialog.bind(this));
 
@@ -110,6 +117,13 @@ export const DesignWindow = GObject.registerClass({
 
         this.core.canvas.setCanvasWidget(this._drawingArea, this.ctx);
         this._drawingArea.set_draw_func(this.on_draw.bind(this));
+    }
+
+
+    show_shortcuts_window(){
+      var shortcuts_win = Gtk.Builder.new_from_resource('/wood/dan/design/ui/shortcuts.ui').get_object('shortcuts')
+      shortcuts_win.set_transient_for(this)
+      shortcuts_win.present()
     }
 
         painting_callback(){
