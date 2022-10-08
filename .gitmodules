@@ -1,0 +1,3 @@
+[submodule "src/Design-Core"]
+	path = src/Design-Core
+	url = https://github.com/dubstar-04/Design-Core.git

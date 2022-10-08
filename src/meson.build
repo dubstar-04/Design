@@ -8,13 +8,6 @@ src_res = gnome.compile_resources('wood.dan.design.src',
   install_dir: pkgdatadir,
 )
 
-data_res = gnome.compile_resources('wood.dan.design.data',
-  'wood.dan.design.data.gresource.xml',
-  gresource_bundle: true,
-  install: true,
-  install_dir: pkgdatadir,
-)
-
 bin_conf = configuration_data()
 bin_conf.set('GJS', find_program('gjs').full_path())
 bin_conf.set('PACKAGE_VERSION', meson.project_version())

@@ -14,6 +14,15 @@ if desktop_utils.found()
   )
 endif
 
+pkgdatadir = join_paths(get_option('datadir'), meson.project_name())
+
+data_res = gnome.compile_resources('wood.dan.design.data',
+  'wood.dan.design.data.gresource.xml',
+  gresource_bundle: true,
+  install: true,
+  install_dir: pkgdatadir,
+)
+
 appstream_file = i18n.merge_file(
   input: 'wood.dan.design.appdata.xml.in',
   output: 'wood.dan.design.appdata.xml',

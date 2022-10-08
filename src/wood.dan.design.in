@@ -6,6 +6,6 @@ imports.package.init({
   libdir: "@libdir@",
   datadir: "@datadir@",
 });
-import("resource://@resource_path@/js/main.js")
+import("resource://@resource_path@/js/Design/main.js")
   .then((main) => imports.package.run(main))
   .catch(logError);
