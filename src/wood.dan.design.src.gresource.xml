@@ -3,6 +3,7 @@
   <gresource prefix="/wood/dan/design/js">
     <file>Design/main.js</file>
     <file>Design/window.js</file>
+    <file>Design/canvas.js</file>
 
 
     <!-- Design Core -->
