@@ -15,8 +15,6 @@ id: "file-management";
   label:_("Save");
   action:"win.save";
   }
-
-
 }
 
   section {
@@ -49,19 +47,18 @@ Box{
   vexpand: true;
 
   Adw.HeaderBar{
-    Button openButton{
+    Button newButton{
     focus-on-click: false;
+    focusable: false;
       Image{
-        icon-name: 'folder-open-symbolic';
+        icon-name: 'document-new-symbolic';
       }
     }
-    Button saveButton{
-    focus-on-click: false;
-      Image{
-        icon-name: 'document-save-symbolic';}
-      }
     [end]
     MenuButton{
+      focus-on-click: false;
+      focusable: false;
+      can-focus: false;
       icon-name: 'open-menu-symbolic';
       menu-model: app-menu;
 
@@ -70,10 +67,18 @@ Box{
 Box{
 orientation: vertical;
 
-DrawingArea drawingArea{
-hexpand: true;
+Box{
+orientation: vertical;
+
+Adw.TabBar tabBar{
+view: tabView;
+//expand-tabs: false;
+}
+
+Adw.TabView tabView{
 vexpand: true;
-focusable: true;
+hexpand: true;
+}
 }
 
 InfoBar{
@@ -81,17 +86,14 @@ InfoBar{
     Entry commandLineEntry{
     hexpand: true;
     focus-on-click: false;
+    can-focus: false;
     }
     Label mousePosLabel{
     halign: end;
     width-request: 150;
     }
-
-    }
-
-}
-
-}
-
-};
   }
+}
+}
+};
+}

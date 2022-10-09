@@ -23,15 +23,18 @@ import Gdk from 'gi://Gdk';
 import Adw from 'gi://Adw?version=1';
 import Cairo from 'cairo';
 
-import { Core } from '../Design-Core/core.js';
+import { Canvas } from './canvas.js'
 
 export const DesignWindow = GObject.registerClass({
     GTypeName: 'DesignWindow',
     Template: 'resource:///wood/dan/design/ui/window.ui',
-    InternalChildren: ['drawingArea', 'mousePosLabel', 'commandLineEntry', 'openButton', 'saveButton'],
+    InternalChildren: ['tabView', 'mousePosLabel', 'commandLineEntry', 'newButton'],
 }, class DesignWindow extends Adw.ApplicationWindow{
     _init(application) {
         super._init({ application });
+
+
+
 
       const open = new Gio.SimpleAction({
         name: "open",
@@ -54,71 +57,31 @@ export const DesignWindow = GObject.registerClass({
       shortcuts.connect("activate", this.show_shortcuts_window.bind(this));
       this.add_action(shortcuts);
 
-      this._openButton.connect('clicked', this.openDialog.bind(this));
-      this._saveButton.connect('clicked', this.saveDialog.bind(this));
+      this._newButton.connect('clicked', this.new_document.bind(this));
 
-        var motion_event = Gtk.EventControllerMotion.new()
-        motion_event.connect("motion", this.mouseMove.bind(this))
-        this._drawingArea.add_controller(motion_event)
+      var keyController = Gtk.EventControllerKey.new()
+      keyController.connect('key-pressed', this.on_key_press.bind(this));
+      this._commandLineEntry.add_controller(keyController)
 
-    	var click_gesture = Gtk.GestureClick.new()
-        click_gesture.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
-        click_gesture.set_button(0);
-        click_gesture.connect("pressed", this.mouseDown.bind(this))
-        click_gesture.connect("released", this.mouseUp.bind(this))
-        this._drawingArea.add_controller(click_gesture)
+      this.add_canvas()
 
-        var scroll_event = Gtk.EventControllerScroll.new(Gtk.EventControllerScrollFlags.VERTICAL)
-        scroll_event.connect("scroll", this.wheel.bind(this))
-        this._drawingArea.add_controller(scroll_event)
-
-        //var drag_gesture = Gtk.GestureDrag.new()
-        //drag_gesture.set_propagation_phase(Gtk.PropagationPhase.BUBBLE)
-        // set button: 1 = left, 2 = wheel, 3 = right;
-        //drag_gesture.set_button(2);
-        //drag_gesture.connect("drag-begin", this.dragBegin.bind(this))
-        //drag_gesture.connect("drag-update", this.dragUpdate.bind(this))
-        //drag_gesture.connect("drag-end", this.dragEnd.bind(this))
-        //this._drawingArea.add_controller(drag_gesture)
-
-    	var zoom_gesture = Gtk.GestureZoom.new()
-        zoom_gesture.set_propagation_phase(Gtk.PropagationPhase.BUBBLE)
-        zoom_gesture.connect("begin", this.zoomBegin.bind(this))
-        zoom_gesture.connect("scale-changed", this.zoomEnd.bind(this))
-        this._drawingArea.add_controller(zoom_gesture)
-
-        var keyController = Gtk.EventControllerKey.new()
-        keyController.connect('key-pressed', this.on_key_press.bind(this));
-        //this.add_controller(keyController);
-        this._drawingArea.add_controller(keyController)
-        this._drawingArea.grab_focus();
-
-
-        var keyController2 = Gtk.EventControllerKey.new()
-        keyController2.connect('key-pressed', this.on_key_press.bind(this));
-        //this.add_controller(keyController);
-        this._commandLineEntry.add_controller(keyController2)
-
-
-        this.core = new Core();
-
-        this.core.commandLine.setUpdateFunction(this.commandLineUpdateCallback.bind(this));
-        this.core.canvas.setExternalPaintCallbackFunction(this.painting_callback.bind(this));
-
-        //this.core.canvas.setCanvasWidget(this._drawingArea);
-        //var context = this._drawingArea.get_style_context()
-        //log(context);
-        //this.core.canvas.setCanvasWidget(this._drawingArea, context);
-
-        //this.offscreen_surface = new Cairo.ImageSurface(Cairo.Format.RGB24, this._drawingArea.get_width(), this._drawingArea.get_height());
-
-        //this.offscreen_surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, 100, 100);
-        //this.ctx = new Cairo.Context(this.offscreen_surface);
-
-        this.core.canvas.setCanvasWidget(this._drawingArea, this.ctx);
-        this._drawingArea.set_draw_func(this.on_draw.bind(this));
     }
 
+    new_document(){
+        this.add_canvas()
+    }
+
+    add_canvas(name){
+      // setup empty new canvas
+      var canvas = new Canvas()
+      var page = this._tabView.add_page(canvas, null);
+      var tabname = name || 'new'
+      page.set_title(tabname);
+      canvas.connect('commandline-updated', this.update_commandline.bind(this))
+      canvas.connect('mouseposition-updated', this.update_mouse_position.bind(this))
+      canvas.grab_focus()
+      canvas.init()
+    }
 
     show_shortcuts_window(){
       var shortcuts_win = Gtk.Builder.new_from_resource('/wood/dan/design/ui/shortcuts.ui').get_object('shortcuts')
@@ -126,161 +89,24 @@ export const DesignWindow = GObject.registerClass({
       shortcuts_win.present()
     }
 
-        painting_callback(){
-          this._drawingArea.queue_draw();
-        }
+    update_commandline(canvas, commandLineValue){
+      log("window - update commandline")
+      log(commandLineValue)
+      this._commandLineEntry.text  = commandLineValue;
+    }
 
-        on_draw(area, cr, width, height) {
-            this.core.canvas.paint(cr, width, height);
-            // draw the offscreen context in the drawing area
-            //cr.setSourceSurface(this.offscreen_surface, 0, 0);
-            //cr.paint();
-            cr.$dispose();
-        }
+    update_mouse_position(canvas, position){
+    this._mousePosLabel.label = position
+    }
 
-    commandLineUpdateCallback(commandLineValue) {
-        this._commandLineEntry.text  = commandLineValue;
-
+    get_active_canvas(){
+      var activePage = this._tabView.get_selected_page()
+      var activeCanvas =  activePage.get_child()
+      return activeCanvas
     }
 
     on_key_press(controller, keyval, keycode, state){
-		  //console.log("keypressed", controller, keyval, keycode, state);
-		  console.log("Keycode:", keycode)
-		  //keyboard events
-		  //var event = controller.get_current_event();
-		  //log(controller);
-
-		  //return Gdk.EVENT_STOP;
-		  //return Gdk.EVENT_PROPAGATE;
-                var key;
-
-                switch (keycode) {
-                    case 22: //Backspace
-                        key = "Backspace";
-                        break;
-                    case 23: //Tab
-                        break;
-                    case 36: //Enter
-                        key = "Enter";
-                        break;
-                    case 50: // Shift
-                        break;
-                    case 37: // Ctrl
-                        break;
-                    case 9: // Escape
-                        key = "Escape";
-                        break;
-                    case 65: // space
-                        key = "Space";
-                        break;
-                    case 113: // Left-Arrow
-                        break;
-                    case 111: // Up-Arrow
-                        key = "Up-Arrow";
-                        break;
-                    case 114: // Right-Arrow
-                        break;
-                    case 116: // Down-Arrow
-                        key = "Down-Arrow";
-                        break;
-                    case 119: // Delete
-                        key = "Delete";
-                        break;
-                    case 112: // F1
-                        showSettings()
-                        changeTab(event, 'Help')
-                        break;
-                    case 113: // F2
-                        break;
-                    case 114: // F3
-                        //this.disableSnaps(e);
-                        break;
-                    case 115: // F4
-                        break;
-                    case 116: // F5
-                        break;
-                    case 117: // F6
-                        break;
-                    case 118: // F7
-                        //toggleSnap('drawGrid')
-                        break;
-                    case 119: // F8
-                        //toggleSnap('ortho')
-                        break;
-                    case 120: // F9
-                        break;
-                    case 121: // F10
-                        //toggleSnap('polar');
-                        break;
-                    case 122: // F11
-                        break;
-                    case 123: // F12
-                        break;
-                    case 59: //comma
-                        key = ",";
-                    break;
-
-                    default:
-                        key = Gdk.keyval_name(keyval)
-                        //controller.forward(this._commandLineEntry);
-                }
-
-                console.log("key:", key);
-
-                this.core.commandLine.handleKeys(key);
-            }
-
-    mouseMove(controller, x, y){
-		this.core.mouse.mouseMoved(x, y);
-		this._mousePosLabel.label = this.core.mouse.positionString()
-    }
-
-    mouseDown(gesture, num, x, y, z){
-    	console.log("mouseDown", gesture, num, x, y);
-    	let event = gesture.get_current_event();
-    	let btn = gesture.get_current_button() - 1
-    	console.log("event", event, btn);
-    	this.core.mouse.mouseDown(btn);
-    }
-
-    mouseUp(gesture, num, x, y, z){
-    	console.log("mouseUp", gesture, num, x, y);
-    	let event = gesture.get_current_event();
-    	let btn = gesture.get_current_button() - 1
-    	console.log("event", event, btn);
-    	this.core.mouse.mouseUp(btn);
-    }
-
-    wheel(controller, x, y){
-    	console.log("wheel", controller, x, y);
-    	this.core.mouse.wheel(y);
-    	this._drawingArea.queue_draw();
-    }
-
-        dragBegin(controller, x, y){
-    	//console.log("dragBegin", controller, x, y);
-    	//this.core.mouse.wheel();
-    }
-
-        dragUpdate(controller, x, y){
-    	//console.log("dragUpdate", controller, x, y);
-    	//this.core.mouse.wheel();
-    }
-
-        dragEnd(controller, x, y){
-    	console.log("dragEnd", controller, x, y);
-    	//this.core.mouse.wheel();
-    }
-
-    zoomBegin(controller, x, y){
-    	console.log("zoomBegin", controller, x, y);
-    	//this.core.mouse.wheel();
-
-    }
-
-    zoomEnd(controller, x, y){
-    	console.log("zoomEnd", controller, x, y);
-    	//this.core.mouse.wheel();
+      console.log("Commandline Key Press - Keycode:", keycode)
     }
 
   openDialog(){
@@ -289,11 +115,11 @@ export const DesignWindow = GObject.registerClass({
     var action = Gtk.FileChooserAction.OPEN
 
     var filter = new Gtk.FileFilter();
-    //filter.add_mime_type('text/plain');
+    filter.add_pattern('*.dxf')
 
     var dialog = new Gtk.FileChooserDialog({
         action: Gtk.FileChooserAction.OPEN,
-        //filter: filter,
+        filter: filter,
         select_multiple: false,
         transient_for: this,
         title: 'Open'
@@ -309,21 +135,21 @@ export const DesignWindow = GObject.registerClass({
   openFile(dialog, response){
 
     log("openFile")
-    log(dialog)
-    log(response)
 
       if (response == Gtk.ResponseType.OK)
       {
-        log(" ok clicked")
         var file = dialog.get_file();
         dialog.destroy()
-        //log(file)
         const [, contents, etag] = file.load_contents(null);
-        //log(contents)
-        //log(etag)
         const decoder = new TextDecoder('utf-8');
+        // decode the file contents from a bitearray
         const contentsString = decoder.decode(contents);
-        this.core.openFile(contentsString)
+        // get filename
+        const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
+        // create a new canvas with the filename in the tab
+        this.add_canvas(info.get_name())
+        // load the file contents into the canvas
+        this.get_active_canvas().core.openFile(contentsString)
       }
 
       dialog.destroy()
@@ -336,11 +162,11 @@ export const DesignWindow = GObject.registerClass({
     var action = Gtk.FileChooserAction.SAVE
 
     var filter = new Gtk.FileFilter();
-    //filter.add_mime_type('text/plain');
+    filter.add_pattern('*.dxf')
 
     var dialog = new Gtk.FileChooserDialog({
         action: Gtk.FileChooserAction.SAVE,
-        //filter: filter,
+        filter: filter,
         select_multiple: false,
         transient_for: this,
         title: 'Save As'
@@ -367,7 +193,7 @@ export const DesignWindow = GObject.registerClass({
         // Synchronous, blocking method
         const outputStream = file.create(Gio.FileCreateFlags.NONE, null);
 
-        const dxfContents = this.core.saveFile();
+        const dxfContents = this.get_active_canvas().core.saveFile();
 
         const [, etag] = file.replace_contents(dxfContents, null, false,
             Gio.FileCreateFlags.REPLACE_DESTINATION, null);
@@ -375,7 +201,6 @@ export const DesignWindow = GObject.registerClass({
 
       dialog.destroy()
   }
-
 }
 
 );
