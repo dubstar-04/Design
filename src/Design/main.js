@@ -48,6 +48,9 @@ export const DesignApplication = GObject.registerClass(
                     program_name: 'Design',
                     transient_for: this.active_window,
                     modal: true,
+                    logo_icon_name: "wood.dan.design",
+                    copyright: "Copyright 2022 Daniel Wood",
+                    license_type: Gtk.License.GPL_3_0,
                 };
                 const aboutDialog = new Gtk.AboutDialog(aboutParams);
                 aboutDialog.present();
