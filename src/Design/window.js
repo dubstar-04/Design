@@ -24,6 +24,7 @@ import Adw from 'gi://Adw?version=1';
 import Cairo from 'cairo';
 
 import { Canvas } from './canvas.js'
+import { PreferencesWindow } from './preferencesWindow.js'
 
 export const DesignWindow = GObject.registerClass({
   GTypeName: 'DesignWindow',
@@ -46,6 +47,13 @@ export const DesignWindow = GObject.registerClass({
     });
     save.connect("activate", this.saveDialog.bind(this));
     this.add_action(save);
+
+    const preferences = new Gio.SimpleAction({
+      name: "preferences",
+      parameter_type: null,
+    });
+    preferences.connect("activate", this.show_preferences_window.bind(this));
+    application.add_action(preferences);
 
     const shortcuts = new Gio.SimpleAction({
       name: "shortcuts",
@@ -84,6 +92,13 @@ export const DesignWindow = GObject.registerClass({
     var shortcuts_win = Gtk.Builder.new_from_resource('/wood/dan/design/ui/shortcuts.ui').get_object('shortcuts')
     shortcuts_win.set_transient_for(this)
     shortcuts_win.present()
+  }
+
+  show_preferences_window() {
+    var preferences_win = new PreferencesWindow();
+    //Gtk.Builder.new_from_resource('/wood/dan/design/ui/preferences.ui').get_object('preferences')
+    preferences_win.set_transient_for(this)
+    preferences_win.present()
   }
 
   update_commandline(canvas, commandLineValue) {

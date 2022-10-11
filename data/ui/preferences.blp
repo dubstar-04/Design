@@ -1,0 +1,220 @@
+using Gtk 4.0;
+using Adw 1;
+
+template PreferencesWindow : Adw.PreferencesWindow {
+  hide-on-close: true;
+  modal: true;
+  title: "Preferences";
+  default-height: 700;
+  default-width: 700;
+
+  Adw.PreferencesPage {
+    icon-name: "emblem-system-symbolic";
+    title: _("Snaps");
+
+    Adw.PreferencesGroup {
+      title: _("User");
+
+      Adw.ActionRow endSnap{
+        title: _("End Snap");
+
+          [suffix]
+          Switch{
+            margin-top: 15;
+            margin-bottom: 15;
+            margin-end: 10;
+          }
+        }
+
+      Adw.ActionRow midSnap{
+        title: _("Mid Snap");
+
+          [suffix]
+          Switch{
+            margin-top: 15;
+            margin-bottom: 15;
+            margin-end: 10;
+          }
+        }
+
+      Adw.ActionRow centreSnap{
+        title: _("Centre Snap");
+
+          [suffix]
+          Switch{
+            margin-top: 15;
+            margin-bottom: 15;
+            margin-end: 10;
+          }
+        }
+
+      Adw.ActionRow nearestSnap{
+        title: _("Nearest Snap");
+
+          [suffix]
+          Switch{
+            margin-top: 15;
+            margin-bottom: 15;
+            margin-end: 10;
+          }
+        }
+
+      Adw.ComboRow polarAngle {
+            title: "Polar Angle";
+            subtitle: "Snap Angle For Polar";
+
+            model: Gtk.StringList {
+                strings [
+                    "22.5",
+                    "45",
+                    "90",
+                    "135"
+                ]
+            };
+        }
+
+      Adw.ActionRow polar{
+        title: _("Polar");
+
+          [suffix]
+          Switch{
+            margin-top: 15;
+            margin-bottom: 15;
+            margin-end: 10;
+          }
+        }
+
+      Adw.ActionRow ortho{
+        title: _("Ortho");
+
+          [suffix]
+          Switch{
+            margin-top: 15;
+            margin-bottom: 15;
+            margin-end: 10;
+          }
+        }
+
+      Adw.ActionRow drawGrid{
+        title: _("Draw Grid");
+
+          [suffix]
+          Switch{
+            margin-top: 15;
+            margin-bottom: 15;
+            margin-end: 10;
+          }
+        }
+      }
+    }
+
+  Adw.PreferencesPage {
+    icon-name: "preferences-color-symbolic";
+    title: _("Colours");
+
+        Adw.PreferencesGroup {
+          title: _("User");
+
+
+      Adw.ActionRow canvasBackgroundColour{
+        title: _("Background Colour");
+
+        [suffix]
+        ColorButton  {
+          valign: center;
+          use-alpha: true;
+          }
+        }
+
+      Adw.ActionRow selectedItemsColour{
+        title: _("Selected Items Colour");
+
+        [suffix]
+        ColorButton  {
+          valign: center;
+          use-alpha: true;
+          }
+        }
+
+      Adw.ActionRow snapColour{
+        title: _("Snap Colour");
+
+        [suffix]
+        ColorButton  {
+          valign: center;
+          use-alpha: true;
+          }
+        }
+
+      Adw.ActionRow gridColour{
+        title: _("Grid Colour");
+
+        [suffix]
+        ColorButton  {
+          valign: center;
+          use-alpha: true;
+          }
+        }
+
+      Adw.ActionRow helperGeometryColour{
+        title: _("Helper Geometry Colour");
+
+        [suffix]
+        ColorButton  {
+          valign: center;
+          use-alpha: true;
+          }
+        }
+
+      Adw.ActionRow polarSnapColour{
+        title: _("Polar Snap Colour");
+
+        [suffix]
+        ColorButton  {
+          valign: center;
+          use-alpha: true;
+          }
+        }
+      }
+    }
+
+    Adw.PreferencesPage {
+    icon-name: "preferences-desktop-font-symbolic";
+    title: _("Font");
+
+      Adw.PreferencesGroup {
+        title: _("User");
+
+        Adw.ActionRow font{
+          title: _("Font");
+
+          [suffix]
+          FontButton font_button {
+          valign: center;
+          }
+        }
+
+        Adw.ActionRow fontupsidedown{
+          title: _("Font Upsidedown");
+
+            [suffix]
+            Switch{
+              margin-top: 15;
+              margin-bottom: 15;
+              margin-end: 10;
+            }
+          }
+
+        Adw.ActionRow fontbackwards{
+          title: _("Font Backwards");
+
+            [suffix]
+            Switch{
+              margin-top: 15;
+              margin-bottom: 15;
+              margin-end: 10;
+            }
+          }
+        }
+      }
+}

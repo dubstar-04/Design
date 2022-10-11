@@ -4,54 +4,54 @@
     <file>Design/main.js</file>
     <file>Design/window.js</file>
     <file>Design/canvas.js</file>
-
+    <file>Design/preferencesWindow.js</file>
 
     <!-- Design Core -->
     <file>Design-Core/core.js</file>
     <file>Design-Core/lib/canvas.js</file>
-	<file>Design-Core/lib/colours.js</file>
-	<file>Design-Core/lib/commandLine.js</file>
-	<file>Design-Core/lib/commandManager.js</file>
-	<file>Design-Core/lib/designEngine.js</file>
-	<file>Design-Core/lib/dxf.js</file>
-	<file>Design-Core/lib/fileio.js</file>
-	<file>Design-Core/lib/intersect.js</file>
-  <file>Design-Core/lib/matrix.js</file>
-	<file>Design-Core/lib/mouse.js</file>
-	<file>Design-Core/lib/scene.js</file>
-	<file>Design-Core/lib/settings.js</file>
-	<file>Design-Core/lib/snapping.js</file>
-	<file>Design-Core/lib/utils.js</file>
+    <file>Design-Core/lib/colours.js</file>
+    <file>Design-Core/lib/commandLine.js</file>
+    <file>Design-Core/lib/commandManager.js</file>
+    <file>Design-Core/lib/designEngine.js</file>
+    <file>Design-Core/lib/dxf.js</file>
+    <file>Design-Core/lib/fileio.js</file>
+    <file>Design-Core/lib/intersect.js</file>
+    <file>Design-Core/lib/matrix.js</file>
+    <file>Design-Core/lib/mouse.js</file>
+    <file>Design-Core/lib/scene.js</file>
+    <file>Design-Core/lib/settings.js</file>
+    <file>Design-Core/lib/snapping.js</file>
+    <file>Design-Core/lib/utils.js</file>
 
-	<file>Design-Core/entities/arc.js</file>
-	  <file>Design-Core/entities/block.js</file>
-	  <file>Design-Core/entities/circle.js</file>
-	  <file>Design-Core/entities/dimension.js</file>
-	  <file>Design-Core/entities/ellipse.js</file>
-	  <file>Design-Core/entities/filledRectangle.js</file>
-	  <file>Design-Core/entities/insert.js</file>
-	  <file>Design-Core/entities/line.js</file>
-	  <file>Design-Core/entities/point.js</file>
-	  <file>Design-Core/entities/polyline.js</file>
-	  <file>Design-Core/entities/rectangle.js</file>
-	  <file>Design-Core/entities/spline.js</file>
-	  <file>Design-Core/entities/text.js</file>
+    <file>Design-Core/entities/arc.js</file>
+    <file>Design-Core/entities/block.js</file>
+    <file>Design-Core/entities/circle.js</file>
+    <file>Design-Core/entities/dimension.js</file>
+    <file>Design-Core/entities/ellipse.js</file>
+    <file>Design-Core/entities/filledRectangle.js</file>
+    <file>Design-Core/entities/insert.js</file>
+    <file>Design-Core/entities/line.js</file>
+    <file>Design-Core/entities/point.js</file>
+    <file>Design-Core/entities/polyline.js</file>
+    <file>Design-Core/entities/rectangle.js</file>
+    <file>Design-Core/entities/spline.js</file>
+    <file>Design-Core/entities/text.js</file>
 
-	  <file>Design-Core/tools/copy.js</file>
-	  <file>Design-Core/tools/distance.js</file>
-	  <file>Design-Core/tools/erase.js</file>
-	  <file>Design-Core/tools/extend.js</file>
-	  <file>Design-Core/tools/identify.js</file>
-	  <file>Design-Core/tools/move.js</file>
-	  <file>Design-Core/tools/rotate.js</file>
-	  <file>Design-Core/tools/trim.js</file>
+    <file>Design-Core/tools/copy.js</file>
+    <file>Design-Core/tools/distance.js</file>
+    <file>Design-Core/tools/erase.js</file>
+    <file>Design-Core/tools/extend.js</file>
+    <file>Design-Core/tools/identify.js</file>
+    <file>Design-Core/tools/move.js</file>
+    <file>Design-Core/tools/rotate.js</file>
+    <file>Design-Core/tools/trim.js</file>
 
-	  <file>Design-Core/layers/layer.js</file>
-	  <file>Design-Core/layers/layerManager.js</file>
+    <file>Design-Core/layers/layer.js</file>
+    <file>Design-Core/layers/layerManager.js</file>
 
-	  <file>Design-Core/styles/dimStyle.js</file>
-	  <file>Design-Core/styles/dimStyleManager.js</file>
-	  <file>Design-Core/styles/style.js</file>
-	  <file>Design-Core/styles/styleManager.js</file>
+    <file>Design-Core/styles/dimStyle.js</file>
+    <file>Design-Core/styles/dimStyleManager.js</file>
+    <file>Design-Core/styles/style.js</file>
+    <file>Design-Core/styles/styleManager.js</file>
   </gresource>
 </gresources>
