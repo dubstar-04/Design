@@ -5,6 +5,7 @@
     <file>Design/window.js</file>
     <file>Design/canvas.js</file>
     <file>Design/preferencesWindow.js</file>
+    <file>Design/layersWindow.js</file>
 
     <!-- Design Core -->
     <file>Design-Core/core.js</file>

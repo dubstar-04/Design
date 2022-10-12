@@ -54,6 +54,7 @@ Box{
         icon-name: 'document-new-symbolic';
       }
     }
+
     [end]
     MenuButton{
       focus-on-click: false;
@@ -61,9 +62,19 @@ Box{
       can-focus: false;
       icon-name: 'open-menu-symbolic';
       menu-model: app-menu;
-
     }
+
+    [end]
+    Button layersButton{
+      focus-on-click: false;
+      focusable: false;
+      clicked => show_layers_window();
+        Image{
+          icon-name: 'focus-legacy-systray-symbolic';
+        }
+      }
   }
+
 Box{
 orientation: vertical;
 

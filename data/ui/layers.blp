@@ -1,0 +1,75 @@
+using Gtk 4.0;
+using Adw 1;
+
+template LayersWindow : Adw.Window {
+  modal: false;
+  default-width: "400";
+  default-height: "400";
+  destroy-with-parent: true;
+
+
+    Box {
+    orientation: vertical;
+
+    .AdwHeaderBar {
+      show-end-title-buttons: false;
+      title-widget:
+      .AdwWindowTitle {
+        title: _("Layers");
+      };
+
+      Button newButton{
+        focus-on-click: false;
+        focusable: false;
+          Image{
+            icon-name: 'document-new-symbolic';
+          }
+        }
+
+      [end]
+      Button btn_cancel {
+        label: _("_Cancel");
+        use-underline: true;
+        action-name: "window.close";
+      }
+
+      ShortcutController {
+        scope: managed;
+
+        Shortcut {
+          trigger: "Escape";
+          action: "action(window.close)";
+        }
+      }
+    } //headerbar
+
+
+  Adw.Clamp {
+    vexpand: true;
+    child:
+    Box {
+      vexpand: true;
+      orientation: vertical;
+      margin-top: 24;
+      margin-bottom: 24;
+      margin-start: 12;
+      margin-end: 12;
+      spacing: 24;
+
+    ListBox layerList{
+        selection-mode: none;
+        //vexpand: true;
+
+        styles ["boxed-list"]
+        } //List
+      }; //Box
+    } //Clamp
+  } //Adw.Window
+
+
+
+
+
+
+
+}

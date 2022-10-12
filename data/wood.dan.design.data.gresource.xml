@@ -4,5 +4,6 @@
     <file>ui/window.ui</file>
     <file>ui/shortcuts.ui</file>
     <file>ui/preferences.ui</file>
+    <file>ui/layers.ui</file>
   </gresource>
 </gresources>

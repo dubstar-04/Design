@@ -25,6 +25,7 @@ import Cairo from 'cairo';
 
 import { Canvas } from './canvas.js'
 import { PreferencesWindow } from './preferencesWindow.js'
+import { LayersWindow } from './layersWindow.js'
 
 export const DesignWindow = GObject.registerClass({
   GTypeName: 'DesignWindow',
@@ -96,9 +97,15 @@ export const DesignWindow = GObject.registerClass({
 
   show_preferences_window() {
     var preferences_win = new PreferencesWindow();
-    //Gtk.Builder.new_from_resource('/wood/dan/design/ui/preferences.ui').get_object('preferences')
     preferences_win.set_transient_for(this)
     preferences_win.present()
+  }
+
+  show_layers_window(){
+    console.log("Show Layers Window")
+    var layers_win = new LayersWindow(this);
+    layers_win.set_transient_for(this)
+    layers_win.present()
   }
 
   update_commandline(canvas, commandLineValue) {
