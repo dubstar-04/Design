@@ -1,7 +1,7 @@
 {
     "app-id" : "wood.dan.design",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "42",
+    "runtime-version" : "43",
     "sdk" : "org.gnome.Sdk",
     "command" : "wood.dan.design",
     "finish-args" : [
