@@ -1,10 +1,10 @@
 using Gtk 4.0;
 using Adw 1;
 
-template LayersWindow : Adw.Window {
+template LayersWindow : Adw.ApplicationWindow {
   modal: false;
-  default-width: "400";
-  default-height: "400";
+  default-width: "500";
+  default-height: "600";
   destroy-with-parent: true;
 
 
@@ -21,16 +21,34 @@ template LayersWindow : Adw.Window {
       Button newButton{
         focus-on-click: false;
         focusable: false;
-          Image{
-            icon-name: 'document-new-symbolic';
-          }
+        visible: bind backButton.visible inverted bidirectional;
+        clicked => on_new_clicked();
+        icon-name: 'list-add-symbolic';
+        }
+
+      Button backButton{
+        focus-on-click: false;
+        focusable: false;
+        visible: false;
+        clicked => on_back_clicked();
+        icon-name: 'go-previous-symbolic';
         }
 
       [end]
       Button btn_cancel {
         label: _("_Cancel");
+        visible: bind backButton.visible inverted bidirectional;
         use-underline: true;
         action-name: "window.close";
+      }
+
+      [end]
+      Button btn_delete{
+        label: _("_Delete");
+        visible: bind backButton.visible bidirectional;
+        use-underline: true;
+        clicked => on_layer_delete();
+        styles ['destructive-action']
       }
 
       ShortcutController {
@@ -44,26 +62,117 @@ template LayersWindow : Adw.Window {
     } //headerbar
 
 
-  Adw.Clamp {
-    vexpand: true;
-    child:
-    Box {
-      vexpand: true;
-      orientation: vertical;
-      margin-top: 24;
-      margin-bottom: 24;
-      margin-start: 12;
-      margin-end: 12;
-      spacing: 24;
+  Adw.ViewStack stack {
+       vexpand : true;
 
-    ListBox layerList{
-        selection-mode: none;
-        //vexpand: true;
+	Adw.ViewStackPage {
+          title: "LayerList";
+          name: "layerListPage";
+	        child:
 
-        styles ["boxed-list"]
-        } //List
-      }; //Box
-    } //Clamp
+	        Gtk.ScrolledWindow {
+            Adw.Clamp{
+              child:
+              Box layerBox{
+                orientation: vertical;
+                margin-top: 24;
+                margin-bottom: 24;
+                margin-start: 12;
+                margin-end: 12;
+                spacing: 24;
+
+              ListBox layerList{
+                  selection-mode: single;
+                  //row-selected => on_layer_selected();
+
+                  styles ["boxed-list"]
+
+                  } //List
+                }; //Box
+              } //Clamp
+            }; //ScrolledWindow
+          } //Page
+
+
+        Adw.ViewStackPage {
+          title: "LayerDetails";
+          name: "LayerDetailsPage";
+	        child:
+
+            Adw.Clamp{
+              child:
+              Box {
+                orientation: vertical;
+                margin-top: 24;
+                margin-bottom: 24;
+                margin-start: 12;
+                margin-end: 12;
+                spacing: 24;
+
+
+        Adw.PreferencesGroup {
+
+            Adw.EntryRow nameEntry{
+              title: _("Name");
+              show-apply-button: true;
+              apply => on_layer_update();
+            }
+
+            Adw.ActionRow {
+              title: _("Frozen");
+              subtitle: _("Frozen layers are not shown or available for any actions");
+
+                [suffix]
+                Switch frozenSwitch{
+                  valign: center;
+                  //state-set => on_update_layer();
+                }
+              }
+
+            Adw.ActionRow {
+              title: _("Locked");
+              subtitle: _("Locked layers are visible but not able to be selected");
+
+                [suffix]
+                Switch lockedSwitch{
+                  valign: center;
+                }
+              }
+
+            Adw.ActionRow {
+              title: _("Line Type");
+              subtitle: _("Line type for the selected layer. Not implimented");
+
+                [suffix]
+                Label lineTypeLabel{
+                  valign: center;
+                }
+              }
+
+            Adw.ActionRow {
+              title: _("Line Weight");
+              subtitle: _("Line weight for the selected layer. Not implimented");
+
+                [suffix]
+                Label lineWeightLabel{
+                  valign: center;
+                }
+              }
+
+            Adw.ActionRow {
+              title: _("Plotting");
+              subtitle: _("Layers with plotting true will appear on prints");
+
+                [suffix]
+                Switch plottingSwitch{
+                  valign: center;
+                }
+              }
+            }// group
+          }; //Box
+        }; //Clamp
+      } //Page
+    } //stack
   } //Adw.Window
 
 
