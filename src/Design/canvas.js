@@ -10,6 +10,7 @@ export var Canvas = GObject.registerClass({
     Signals: {
         'commandline-updated': { param_types: [GObject.TYPE_STRING] },
         'mouseposition-updated': { param_types: [GObject.TYPE_STRING] },
+        'selection-updated': {},
     },
 }, class Canvas extends Gtk.DrawingArea {
     constructor() {
@@ -59,16 +60,22 @@ export var Canvas = GObject.registerClass({
 
         this.core.commandLine.setUpdateFunction(this.commandLineUpdateCallback.bind(this));
         this.core.canvas.setExternalPaintCallbackFunction(this.painting_callback.bind(this));
+        this.core.propertyManager.setPropertyCallbackFunction(this.propertyCallback.bind(this))
     }
 
     init() {
         // hacky function to load the commandline value after the object has been created
-        // this is needed because the emit function won't work until after the canva is initialised
+        // this is needed because the emit function won't work until after the canvas is initialised
         this.core.commandLine.handleKeys('Escape');
     }
 
     painting_callback() {
         this.queue_draw();
+    }
+
+    propertyCallback() {
+        console.log("Canvas - Property Callback")
+        this.emit('selection-updated')
     }
 
     on_draw(area, cr, width, height) {

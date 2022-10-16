@@ -28,6 +28,9 @@ import { PropertiesWindow } from './propertiesWindow.js'
 
 export const DesignWindow = GObject.registerClass({
   GTypeName: 'DesignWindow',
+  Signals: {
+    'canvas-selection-updated': {},
+  },
   Template: 'resource:///wood/dan/design/ui/window.ui',
   InternalChildren: ['tabView', 'mousePosLabel', 'commandLineEntry', 'newButton'],
 }, class DesignWindow extends Adw.ApplicationWindow {
@@ -84,6 +87,7 @@ export const DesignWindow = GObject.registerClass({
     page.set_title(tabname);
     canvas.connect('commandline-updated', this.update_commandline.bind(this))
     canvas.connect('mouseposition-updated', this.update_mouse_position.bind(this))
+    canvas.connect('selection-updated', this.canvas_selection_updated.bind(this))
     canvas.grab_focus()
     canvas.init()
   }
@@ -122,6 +126,11 @@ export const DesignWindow = GObject.registerClass({
 
   update_mouse_position(canvas, position) {
     this._mousePosLabel.label = position
+  }
+
+  canvas_selection_updated(){
+    console.log("main window - canvas selection updated")
+    this.emit('canvas-selection-updated')
   }
 
   get_active_canvas() {

@@ -31,7 +31,15 @@ export const PropertiesWindow = GObject.registerClass({
     super._init({});
 
     this.mainWindow = parent;
+    this.mainWindow.connect('canvas-selection-updated', this.on_selection_updated.bind(this))
   } //init
+
+
+  on_selection_updated(){
+
+    console.log("Properties Window: Selection Updated")
+
+  }
 
 
 } //window

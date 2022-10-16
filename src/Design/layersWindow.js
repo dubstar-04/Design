@@ -87,7 +87,7 @@ export const LayersWindow = GObject.registerClass({
   }
 
   getLayerManager() {
-    this.layerManager = this.mainWindow.get_active_canvas().core.LM
+    this.layerManager = this.mainWindow.get_active_canvas().core.layerManager
   }
 
   toRgba(layerColour) {
