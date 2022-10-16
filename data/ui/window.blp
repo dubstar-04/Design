@@ -57,7 +57,6 @@ Box{
     [end]
     MenuButton{
       focus-on-click: false;
-      //focusable: false;
       can-focus: false;
       icon-name: 'open-menu-symbolic';
       menu-model: app-menu;
@@ -66,9 +65,15 @@ Box{
     [end]
     Button layersButton{
       focus-on-click: false;
-      //focusable: false;
       clicked => show_layers_window();
       icon-name: 'focus-legacy-systray-symbolic';
+      }
+
+    [end]
+    Button propertiesButton{
+      focus-on-click: false;
+      clicked => show_properties_window();
+      icon-name: 'dialog-question-symbolic';
       }
   }
 

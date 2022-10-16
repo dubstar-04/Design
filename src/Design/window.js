@@ -26,6 +26,7 @@ import Cairo from 'cairo';
 import { Canvas } from './canvas.js'
 import { PreferencesWindow } from './preferencesWindow.js'
 import { LayersWindow } from './layersWindow.js'
+import { PropertiesWindow } from './propertiesWindow.js'
 
 export const DesignWindow = GObject.registerClass({
   GTypeName: 'DesignWindow',
@@ -106,6 +107,13 @@ export const DesignWindow = GObject.registerClass({
     var layers_win = new LayersWindow(this);
     layers_win.set_transient_for(this)
     layers_win.present()
+  }
+
+    show_properties_window(){
+    console.log("Show Properties Window")
+    var properties_win = new PropertiesWindow(this);
+    properties_win.set_transient_for(this)
+    properties_win.present()
   }
 
   update_commandline(canvas, commandLineValue) {
