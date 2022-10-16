@@ -25,6 +25,8 @@
     <file>Design-Core/lib/snapping.js</file>
     <file>Design-Core/lib/utils.js</file>
 
+    <file>Design-Core/properties/propertyManager.js</file>
+
     <file>Design-Core/entities/arc.js</file>
     <file>Design-Core/entities/block.js</file>
     <file>Design-Core/entities/circle.js</file>
