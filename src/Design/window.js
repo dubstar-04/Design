@@ -19,9 +19,7 @@
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 import Gio from 'gi://Gio';
-import Gdk from 'gi://Gdk';
 import Adw from 'gi://Adw?version=1';
-import Cairo from 'cairo';
 
 import { Canvas } from './canvas.js'
 import { PreferencesWindow } from './preferencesWindow.js'
@@ -102,14 +100,14 @@ export const DesignWindow = GObject.registerClass({
     preferences_win.present()
   }
 
-  show_layers_window(){
+  show_layers_window() {
     console.log("Show Layers Window")
     var layers_win = new LayersWindow(this);
     layers_win.set_transient_for(this)
     layers_win.present()
   }
 
-    show_properties_window(){
+  show_properties_window() {
     console.log("Show Properties Window")
     var properties_win = new PropertiesWindow(this);
     properties_win.set_transient_for(this)

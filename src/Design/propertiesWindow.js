@@ -18,10 +18,6 @@
 
 import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
-import Gtk from 'gi://Gtk';
-import Gdk from 'gi://Gdk';
-import Gio from 'gi://Gio';
-import GLib from "gi://GLib";
 
 import { Colours } from '../Design-Core/lib/colours.js'
 //import resource from "../../ui/layers.ui";
@@ -32,13 +28,13 @@ export const PropertiesWindow = GObject.registerClass({
   InternalChildren: [],
 }, class PropertiesWindow extends Adw.ApplicationWindow {
   _init(parent) {
-    super._init({ });
+    super._init({});
 
     this.mainWindow = parent;
-    } //init
+  } //init
 
 
-  } //window
+} //window
 );
 
 

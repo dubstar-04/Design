@@ -25,10 +25,10 @@ export const PreferencesWindow = GObject.registerClass({
   InternalChildren: [],
 }, class PreferencesWindow extends Adw.PreferencesWindow {
   _init() {
-    super._init({  });
+    super._init({});
 
   }
-  }
+}
 );
 
 
