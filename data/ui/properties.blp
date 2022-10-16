@@ -16,6 +16,15 @@ destroy-with-parent: true;
   .AdwWindowTitle {
   title: _("Properties");
   };
+
+        Button backButton{
+        focus-on-click: false;
+        //focusable: false;
+        //visible: false;
+        clicked => on_back_clicked();
+        icon-name: 'go-previous-symbolic';
+        }
+
   } // HeaderBar
 
   Adw.ViewStack stack {
@@ -57,6 +66,39 @@ destroy-with-parent: true;
         } //Clamp
       }; //ScrolledWindow
     } //Page
+
+
+        Adw.ViewStackPage {
+    title: "PropertiesPage";
+    name: "propertiesPage";
+    child:
+
+    Gtk.ScrolledWindow {
+      Adw.Clamp{
+        child:
+        Box {
+          orientation: vertical;
+          margin-top: 24;
+          margin-bottom: 24;
+          margin-start: 12;
+          margin-end: 12;
+          spacing: 24;
+
+            ListBox propertyList{
+            selection-mode: none;
+            styles ["boxed-list"]
+            } //List
+          }; //Box
+        } //Clamp
+      }; //ScrolledWindow
+    } //Page
+
+
+
+
+
+
+
   } //Stack
   } //Box
 }
