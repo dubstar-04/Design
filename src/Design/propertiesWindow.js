@@ -27,7 +27,7 @@ import { Colours } from '../Design-Core/lib/colours.js'
 export const PropertiesWindow = GObject.registerClass({
   GTypeName: 'PropertiesWindow',
   Template: 'resource:///wood/dan/design/ui/properties.ui',
-  InternalChildren: ['stack','elementList', 'propertyList'],
+  InternalChildren: ['stack','elementSelector', 'elementList'],
 }, class PropertiesWindow extends Adw.ApplicationWindow {
   _init(parent) {
     super._init({});
@@ -37,6 +37,7 @@ export const PropertiesWindow = GObject.registerClass({
     this.propertyManager;
     this.getPropertyManager();
 
+
   } //init
 
   on_selection_updated(){
@@ -44,17 +45,11 @@ export const PropertiesWindow = GObject.registerClass({
     this.loadSelectedItems();
   }
 
-  on_back_clicked() {
-    this._stack.set_visible_child_name("elementsPage")
-    //this._backButton.visible = false
-    //this.reloadLayers();
-  }
-
   getPropertyManager() {
     this.propertyManager = this.mainWindow.get_active_canvas().core.propertyManager
   }
 
-    clearList() {
+  clear_list() {
     // delete all current children
     let child = this._elementList.get_first_child();
 
@@ -65,44 +60,38 @@ export const PropertiesWindow = GObject.registerClass({
     }
   }
 
-    loadSelectedItems() {
-      const types = this.propertyManager.getItemTypes();
-      if(types.length){
-        this.clearList();
-        this._stack.set_visible_child_name("elementsPage")
-      }else{
-        this._stack.set_visible_child_name("propertiesStatusPage")
-      }
+  loadSelectedItems() {
+    const types = this.propertyManager.getItemTypes();
+    if(types.length){
+      this._stack.set_visible_child_name("elementsPage")
+    }else{
+      this._stack.set_visible_child_name("propertiesStatusPage")
+    }
 
-      for (let i = 0; i < types.length; i++) {
+    const model = new Gtk.StringList()
 
-        var row = new Adw.ActionRow({ title: types[i], activatable: true });
-        row.connect('activated', this.on_item_selected.bind(this));
-        this._elementList.append(row);
-      }
+    for (let i = 0; i < types.length; i++) {
+    model.append(types[i]);
+    }
+
+    this._elementSelector.set_model(model);
   }
 
-  //TODO: this is duplicated on the layers window
-  toRgba(layerColour) {
-    const rgba = new Gdk.RGBA();
-    var colour = Colours.hexToScaledRGB(layerColour)
-    rgba.red = colour.r;
-    rgba.green = colour.g;
-    rgba.blue = colour.b;
-    rgba.alpha = 1.0;
-    return rgba;
-  }
+  on_type_changed(){
 
-  on_item_selected(row, two){
-    if (row) {
-      this._elementList.unselect_row(row)
-      const properties = this.propertyManager.getItemProperties(row.title);
+      const selectedIndex = this._elementSelector.get_selected();
+      const typeStringList = this._elementSelector.get_model();
+      const selectedType = typeStringList.get_string(selectedIndex)
+
+      const properties = this.propertyManager.getItemProperties(selectedType);
+
+      this.clear_list();
+
       if(properties.length){
-        this._stack.set_visible_child_name("propertiesPage");
 
         for (let i = 0; i < properties.length; i++) {
 
-                let value = this.propertyManager.getItemPropertyValue(row.title, properties[i])
+                let value = this.propertyManager.getItemPropertyValue(selectedType, properties[i])
 
                 console.log("property value:", value)
 
@@ -134,11 +123,20 @@ export const PropertiesWindow = GObject.registerClass({
 
         var prop_row = new Adw.ActionRow({ title: properties[i]});
         prop_row.add_suffix(suffixWidget)
-        this._propertyList.append(prop_row);
+        this._elementList.append(prop_row);
       }
-      }
-      log(properties)
-    }
+  }
+  }
+
+  //TODO: this is duplicated on the layers window
+  toRgba(layerColour) {
+    const rgba = new Gdk.RGBA();
+    var colour = Colours.hexToScaledRGB(layerColour)
+    rgba.red = colour.r;
+    rgba.green = colour.g;
+    rgba.blue = colour.b;
+    rgba.alpha = 1.0;
+    return rgba;
   }
 
 } //window
