@@ -1,0 +1,7 @@
+data/wood.dan.design.desktop.in
+data/wood.dan.design.appdata.xml.in
+data/wood.dan.design.gschema.xml
+src/window.ui
+src/main.js
+src/window.js
+

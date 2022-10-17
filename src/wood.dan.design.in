@@ -1,0 +1,11 @@
+#!@GJS@
+imports.package.init({
+  name: "@PACKAGE_NAME@",
+  version: "@PACKAGE_VERSION@",
+  prefix: "@prefix@",
+  libdir: "@libdir@",
+  datadir: "@datadir@",
+});
+import("resource://@resource_path@/js/Design/main.js")
+  .then((main) => imports.package.run(main))
+  .catch(logError);

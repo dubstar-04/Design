@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=design
+Exec=wood.dan.design
+Icon=wood.dan.design
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true
