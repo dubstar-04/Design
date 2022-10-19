@@ -130,6 +130,8 @@ export var Canvas = GObject.registerClass({
         let btn = gesture.get_current_button() - 1
         //console.log("event", event, btn);
         this.core.mouse.mouseDown(btn);
+        // ensure the canvas has focus to receive events
+        this.grab_focus()
     }
 
     mouseUp(gesture, num, x, y, z) {
