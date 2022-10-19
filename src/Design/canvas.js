@@ -90,84 +90,12 @@ export var Canvas = GObject.registerClass({
     }
 
     on_key_press(controller, keyval, keycode, state) {
-        //console.log("Keycode:", keycode)
+        // forward key press info to the commandline object
+        // unless control is pressed
 
-        //return Gdk.EVENT_STOP;
-        //return Gdk.EVENT_PROPAGATE;
-        var key;
-
-        switch (keycode) {
-            case 22: //Backspace
-                key = "Backspace";
-                break;
-            case 23: //Tab
-                break;
-            case 36: //Enter
-                key = "Enter";
-                break;
-            case 50: // Shift
-                break;
-            case 37: // Ctrl
-                break;
-            case 9: // Escape
-                key = "Escape";
-                break;
-            case 65: // space
-                key = "Space";
-                break;
-            case 113: // Left-Arrow
-                break;
-            case 111: // Up-Arrow
-                key = "Up-Arrow";
-                break;
-            case 114: // Right-Arrow
-                break;
-            case 116: // Down-Arrow
-                key = "Down-Arrow";
-                break;
-            case 119: // Delete
-                key = "Delete";
-                break;
-            case 112: // F1
-                showSettings()
-                changeTab(event, 'Help')
-                break;
-            case 113: // F2
-                break;
-            case 114: // F3
-                //this.disableSnaps(e);
-                break;
-            case 115: // F4
-                break;
-            case 116: // F5
-                break;
-            case 117: // F6
-                break;
-            case 118: // F7
-                //toggleSnap('drawGrid')
-                break;
-            case 119: // F8
-                //toggleSnap('ortho')
-                break;
-            case 120: // F9
-                break;
-            case 121: // F10
-                //toggleSnap('polar');
-                break;
-            case 122: // F11
-                break;
-            case 123: // F12
-                break;
-            case 59: //comma
-                key = ",";
-                break;
-
-            default:
-                key = Gdk.keyval_name(keyval)
+        if (state !== Gdk.ModifierType.CONTROL_MASK){
+            this.commandline_widget.key_pressed(keyval, keycode)
         }
-
-        console.log("key:", key);
-        this.core.commandLine.handleKeys(key);
     }
 
     mouseMove(controller, x, y) {
