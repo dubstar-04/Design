@@ -53,6 +53,19 @@ export var Canvas = GObject.registerClass({
         keyController.connect('key-pressed', this.on_key_press.bind(this));
         this.add_controller(keyController)
 
+        const shortcutController = new Gtk.ShortcutController();
+
+        const copy_shortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.CallbackAction.new(this.on_copy.bind(this))});
+        shortcutController.add_shortcut(copy_shortcut)
+
+        const paste_shortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>V'), action: Gtk.CallbackAction.new(this.on_paste.bind(this))});
+        shortcutController.add_shortcut(paste_shortcut)
+
+        const undo_shortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Z'), action: Gtk.CallbackAction.new(this.on_undo.bind(this))});
+        shortcutController.add_shortcut(undo_shortcut)
+
+        this.add_controller(shortcutController);
+
         this.core = new Core();
 
         this.core.canvas.setCanvasWidget(this._drawingArea, this.ctx);
@@ -61,6 +74,21 @@ export var Canvas = GObject.registerClass({
         this.core.commandLine.setUpdateFunction(this.commandLineUpdateCallback.bind(this));
         this.core.canvas.setExternalPaintCallbackFunction(this.painting_callback.bind(this));
         this.core.propertyManager.setPropertyCallbackFunction(this.propertyCallback.bind(this))
+
+        this.commandline_widget;
+
+    }
+
+    on_copy(){
+        console.log("-------- Copy --------")
+    }
+
+    on_paste(){
+        console.log("-------- Paste --------")
+    }
+
+    on_undo(){
+        console.log("-------- Undo --------")
     }
 
     init() {
