@@ -34,15 +34,6 @@ export var Canvas = GObject.registerClass({
         scroll_event.connect("scroll", this.wheel.bind(this))
         this.add_controller(scroll_event)
 
-        //var drag_gesture = Gtk.GestureDrag.new()
-        //drag_gesture.set_propagation_phase(Gtk.PropagationPhase.BUBBLE)
-        // set button: 1 = left, 2 = wheel, 3 = right;
-        //drag_gesture.set_button(2);
-        //drag_gesture.connect("drag-begin", this.dragBegin.bind(this))
-        //drag_gesture.connect("drag-update", this.dragUpdate.bind(this))
-        //drag_gesture.connect("drag-end", this.dragEnd.bind(this))
-        //this._drawingArea.add_controller(drag_gesture)
-
         var zoom_gesture = Gtk.GestureZoom.new()
         zoom_gesture.set_propagation_phase(Gtk.PropagationPhase.BUBBLE)
         zoom_gesture.connect("begin", this.zoomBegin.bind(this))
@@ -53,6 +44,19 @@ export var Canvas = GObject.registerClass({
         keyController.connect('key-pressed', this.on_key_press.bind(this));
         this.add_controller(keyController)
 
+        const shortcutController = new Gtk.ShortcutController();
+
+        const copy_shortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.CallbackAction.new(this.on_copy.bind(this))});
+        shortcutController.add_shortcut(copy_shortcut)
+
+        const paste_shortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>V'), action: Gtk.CallbackAction.new(this.on_paste.bind(this))});
+        shortcutController.add_shortcut(paste_shortcut)
+
+        const undo_shortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Z'), action: Gtk.CallbackAction.new(this.on_undo.bind(this))});
+        shortcutController.add_shortcut(undo_shortcut)
+
+        this.add_controller(shortcutController);
+
         this.core = new Core();
 
         this.core.canvas.setCanvasWidget(this._drawingArea, this.ctx);
@@ -61,12 +65,29 @@ export var Canvas = GObject.registerClass({
         this.core.commandLine.setUpdateFunction(this.commandLineUpdateCallback.bind(this));
         this.core.canvas.setExternalPaintCallbackFunction(this.painting_callback.bind(this));
         this.core.propertyManager.setPropertyCallbackFunction(this.propertyCallback.bind(this))
+
+        this.commandline_widget;
+
     }
 
-    init() {
+    on_copy(){
+        console.log("-------- Copy --------")
+    }
+
+    on_paste(){
+        console.log("-------- Paste --------")
+    }
+
+    on_undo(){
+        console.log("-------- Undo --------")
+    }
+
+    init(commandline_widget) {
         // hacky function to load the commandline value after the object has been created
         // this is needed because the emit function won't work until after the canvas is initialised
         this.core.commandLine.handleKeys('Escape');
+        this.commandline_widget = commandline_widget;
+        this.grab_focus()
     }
 
     painting_callback() {
@@ -90,84 +111,12 @@ export var Canvas = GObject.registerClass({
     }
 
     on_key_press(controller, keyval, keycode, state) {
-        //console.log("Keycode:", keycode)
+        // forward key press info to the commandline object
+        // unless control is pressed
 
-        //return Gdk.EVENT_STOP;
-        //return Gdk.EVENT_PROPAGATE;
-        var key;
-
-        switch (keycode) {
-            case 22: //Backspace
-                key = "Backspace";
-                break;
-            case 23: //Tab
-                break;
-            case 36: //Enter
-                key = "Enter";
-                break;
-            case 50: // Shift
-                break;
-            case 37: // Ctrl
-                break;
-            case 9: // Escape
-                key = "Escape";
-                break;
-            case 65: // space
-                key = "Space";
-                break;
-            case 113: // Left-Arrow
-                break;
-            case 111: // Up-Arrow
-                key = "Up-Arrow";
-                break;
-            case 114: // Right-Arrow
-                break;
-            case 116: // Down-Arrow
-                key = "Down-Arrow";
-                break;
-            case 119: // Delete
-                key = "Delete";
-                break;
-            case 112: // F1
-                showSettings()
-                changeTab(event, 'Help')
-                break;
-            case 113: // F2
-                break;
-            case 114: // F3
-                //this.disableSnaps(e);
-                break;
-            case 115: // F4
-                break;
-            case 116: // F5
-                break;
-            case 117: // F6
-                break;
-            case 118: // F7
-                //toggleSnap('drawGrid')
-                break;
-            case 119: // F8
-                //toggleSnap('ortho')
-                break;
-            case 120: // F9
-                break;
-            case 121: // F10
-                //toggleSnap('polar');
-                break;
-            case 122: // F11
-                break;
-            case 123: // F12
-                break;
-            case 59: //comma
-                key = ",";
-                break;
-
-            default:
-                key = Gdk.keyval_name(keyval)
+        if (state !== Gdk.ModifierType.CONTROL_MASK){
+            this.commandline_widget.key_pressed(keyval, keycode)
         }
-
-        console.log("key:", key);
-        this.core.commandLine.handleKeys(key);
     }
 
     mouseMove(controller, x, y) {
@@ -181,6 +130,8 @@ export var Canvas = GObject.registerClass({
         let btn = gesture.get_current_button() - 1
         //console.log("event", event, btn);
         this.core.mouse.mouseDown(btn);
+        // ensure the canvas has focus to receive events
+        this.grab_focus()
     }
 
     mouseUp(gesture, num, x, y, z) {

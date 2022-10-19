@@ -22,6 +22,7 @@ import Gio from 'gi://Gio';
 import Adw from 'gi://Adw?version=1';
 
 import { Canvas } from './canvas.js'
+import { CommandLine } from './commandLine.js'
 import { PreferencesWindow } from './preferencesWindow.js'
 import { LayersWindow } from './layersWindow.js'
 import { PropertiesWindow } from './propertiesWindow.js'
@@ -66,14 +67,9 @@ export const DesignWindow = GObject.registerClass({
     this.add_action(shortcuts);
 
     this._newButton.connect('clicked', this.new_document.bind(this));
-
-    var keyController = Gtk.EventControllerKey.new()
-    keyController.connect('key-pressed', this.on_key_press.bind(this));
-    this._commandLineEntry.add_controller(keyController)
-
-    this.add_canvas()
-
-  }
+    this.add_canvas();
+    this._commandLineEntry.set_parent(this)
+  } //init
 
   new_document() {
     this.add_canvas()
@@ -88,8 +84,7 @@ export const DesignWindow = GObject.registerClass({
     canvas.connect('commandline-updated', this.update_commandline.bind(this))
     canvas.connect('mouseposition-updated', this.update_mouse_position.bind(this))
     canvas.connect('selection-updated', this.canvas_selection_updated.bind(this))
-    canvas.grab_focus()
-    canvas.init()
+    canvas.init(this._commandLineEntry)
   }
 
   show_shortcuts_window() {
@@ -119,8 +114,6 @@ export const DesignWindow = GObject.registerClass({
   }
 
   update_commandline(canvas, commandLineValue) {
-    log("window - update commandline")
-    log(commandLineValue)
     this._commandLineEntry.text = commandLineValue;
   }
 
@@ -129,7 +122,6 @@ export const DesignWindow = GObject.registerClass({
   }
 
   canvas_selection_updated(){
-    console.log("main window - canvas selection updated")
     this.emit('canvas-selection-updated')
   }
 
@@ -137,10 +129,6 @@ export const DesignWindow = GObject.registerClass({
     var activePage = this._tabView.get_selected_page()
     var activeCanvas = activePage.get_child()
     return activeCanvas
-  }
-
-  on_key_press(controller, keyval, keycode, state) {
-    console.log("Commandline Key Press - Keycode:", keycode)
   }
 
   openDialog() {
