@@ -22,6 +22,7 @@ import Gio from 'gi://Gio';
 import Adw from 'gi://Adw?version=1';
 
 import { Canvas } from './canvas.js'
+import { CommandLine } from './commandLine.js'
 import { PreferencesWindow } from './preferencesWindow.js'
 import { LayersWindow } from './layersWindow.js'
 import { PropertiesWindow } from './propertiesWindow.js'
