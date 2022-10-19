@@ -91,10 +91,12 @@ export var Canvas = GObject.registerClass({
         console.log("-------- Undo --------")
     }
 
-    init() {
+    init(commandline_widget) {
         // hacky function to load the commandline value after the object has been created
         // this is needed because the emit function won't work until after the canvas is initialised
         this.core.commandLine.handleKeys('Escape');
+        this.commandline_widget = commandline_widget;
+        this.grab_focus()
     }
 
     painting_callback() {
