@@ -34,15 +34,6 @@ export var Canvas = GObject.registerClass({
         scroll_event.connect("scroll", this.wheel.bind(this))
         this.add_controller(scroll_event)
 
-        //var drag_gesture = Gtk.GestureDrag.new()
-        //drag_gesture.set_propagation_phase(Gtk.PropagationPhase.BUBBLE)
-        // set button: 1 = left, 2 = wheel, 3 = right;
-        //drag_gesture.set_button(2);
-        //drag_gesture.connect("drag-begin", this.dragBegin.bind(this))
-        //drag_gesture.connect("drag-update", this.dragUpdate.bind(this))
-        //drag_gesture.connect("drag-end", this.dragEnd.bind(this))
-        //this._drawingArea.add_controller(drag_gesture)
-
         var zoom_gesture = Gtk.GestureZoom.new()
         zoom_gesture.set_propagation_phase(Gtk.PropagationPhase.BUBBLE)
         zoom_gesture.connect("begin", this.zoomBegin.bind(this))
