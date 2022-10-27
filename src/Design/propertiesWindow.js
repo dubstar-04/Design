@@ -21,7 +21,7 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
 
-import { Colours } from '../Design-Core/lib/colours.js'
+import { Colours } from '../Design-Core/core/lib/colours.js'
 //import resource from "../../ui/layers.ui";
 
 export const PropertiesWindow = GObject.registerClass({

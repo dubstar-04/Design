@@ -2,7 +2,7 @@ import Gtk from 'gi://Gtk?version=4.0';
 import GObject from 'gi://GObject';
 import Gdk from 'gi://Gdk';
 
-import { Core } from '../Design-Core/core.js';
+import { Core } from '../Design-Core/core/core.js';
 
 export var Canvas = GObject.registerClass({
     GTypeName: 'Canvas',

@@ -23,7 +23,7 @@ import Gdk from 'gi://Gdk';
 import Gio from 'gi://Gio';
 import GLib from "gi://GLib";
 
-import { Colours } from '../Design-Core/lib/colours.js'
+import { Colours } from '../Design-Core/core/lib/colours.js'
 
 export const LayersWindow = GObject.registerClass({
   GTypeName: 'LayersWindow',
