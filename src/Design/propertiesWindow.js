@@ -33,12 +33,18 @@ export const PropertiesWindow = GObject.registerClass({
     super._init({});
 
     this.mainWindow = parent;
-    this.mainWindow.connect('canvas-selection-updated', this.on_selection_updated.bind(this))
+    this.connection = this.mainWindow.connect('canvas-selection-updated', this.on_selection_updated.bind(this))
+    this.connect("close-request", this.on_close.bind(this));
     this.propertyManager;
     this.getPropertyManager();
 
 
   } //init
+
+  on_close(){
+    console.log("properties closing")
+    this.mainWindow.disconnect(this.connection)
+  }
 
   on_selection_updated(){
     console.log("Properties Window: Selection Updated")
