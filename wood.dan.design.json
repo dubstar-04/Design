@@ -41,8 +41,8 @@
             "buildsystem" : "meson",
             "sources" : [
                 {
-                    "type" : "git",
-                    "url" : "file:///media/media/Documents/Projects/Design"
+                    "type" : "dir",
+                    "path" : "."
                 }
             ]
         }
