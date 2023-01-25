@@ -33,7 +33,7 @@ export const DesignWindow = GObject.registerClass({
     'canvas-selection-updated': {},
   },
   Template: 'resource:///wood/dan/design/ui/window.ui',
-  InternalChildren: ['tabView', 'mousePosLabel', 'commandLineEntry', 'newButton'],
+  InternalChildren: ['tabView', 'mousePosLabel', 'commandLineEntry', 'newButton', 'entitiesToolbar', 'toolsToolbar'],
 }, class DesignWindow extends Adw.ApplicationWindow {
   _init(application) {
     super._init({ application });
@@ -69,6 +69,7 @@ export const DesignWindow = GObject.registerClass({
     this._newButton.connect('clicked', this.new_document.bind(this));
     this.add_canvas();
     this._commandLineEntry.set_parent(this)
+    this.load_toolbars();
   } //init
 
   new_document() {
@@ -85,6 +86,47 @@ export const DesignWindow = GObject.registerClass({
     canvas.connect('mouseposition-updated', this.update_mouse_position.bind(this))
     canvas.connect('selection-updated', this.canvas_selection_updated.bind(this))
     canvas.init(this._commandLineEntry)
+  }
+
+  load_toolbars(){
+    const commands = this.get_active_canvas().core.commandManager.getCommands();
+
+    for (const command in commands) {
+
+      const design_command = commands[command]
+      
+      if (Object.hasOwn(design_command, 'type') && Object.hasOwn(design_command, 'shortcut')){
+
+        const command_name = design_command.command.toLowerCase()
+
+        let button = new Gtk.Button({
+          icon_name: `${command_name}-symbolic`,
+          valign: Gtk.Align.CENTER,
+          halign: Gtk.Align.CENTER,
+          width_request: 32,
+          height_request: 32,
+          margin_top: 5,
+          margin_bottom: 5,
+          //TODO: Make first letter of command_name uppercase
+          tooltip_text: `${command_name} (${design_command.shortcut})`
+        });
+
+        button.connect('clicked', this.toolbar_button_press.bind(this, design_command.shortcut));
+
+        if (design_command.type === 'Entity'){
+          this._entitiesToolbar.append(button);
+        }
+
+        if (design_command.type === 'Tool'){
+          this._toolsToolbar.append(button);
+        }
+    }
+    }
+
+  }
+
+  toolbar_button_press(command){
+    this.get_active_canvas().core.designEngine.sceneControl('Enter', [`${command}`])
   }
 
   show_shortcuts_window() {
