@@ -92,7 +92,6 @@ export const DesignWindow = GObject.registerClass({
     const commands = this.get_active_canvas().core.commandManager.getCommands();
 
     for (const command in commands) {
-      console.log(commands[command].command);
 
       const design_command = commands[command]
       
