@@ -43,6 +43,7 @@ template DesignWindow : Adw.ApplicationWindow {
   title: 'Design';
   styles ['devel']
   content:
+
 Box{
   orientation: vertical;
   vexpand: true;
@@ -83,9 +84,50 @@ view: tabView;
 //expand-tabs: false;
 }
 
+Gtk.Overlay overlay {
+vexpand: true;
+hexpand: true;
+
+
 Adw.TabView tabView{
 vexpand: true;
 hexpand: true;
+}
+
+  [overlay]
+  Gtk.Revealer{
+    reveal-child: true;
+    transition-type: slide_left;
+    hexpand: true;
+    halign: start;
+
+    Box entitiesToolbar{
+      styles ["card"]
+      width-request: 42;
+      height-request: 200;
+      orientation: vertical;
+      margin-start: 10;
+      valign: center;
+    }
+  }
+
+  [overlay]
+  Gtk.Revealer{
+    reveal-child: true;
+    transition-type: slide_right;
+    hexpand: true;
+    halign: end;
+
+    Box toolsToolbar{
+      width-request: 42;
+      height-request: 200;
+      orientation: vertical;
+      margin-end: 10;
+      valign: center;
+      styles ["card"]
+      spacing: 0;
+    }
+  }
 }
 }
 
