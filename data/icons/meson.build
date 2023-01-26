@@ -1,19 +1,19 @@
 application_id = 'wood.dan.design'
 
 icons = [
-  'entities/arc.svg',
-  'entities/line.svg',
-  'entities/circle.svg',
-  'entities/polyline.svg',
-  'entities/rectangle.svg',
-  'entities/text.svg',
+  'entities/arc-symbolic.svg',
+  'entities/line-symbolic.svg',
+  'entities/circle-symbolic.svg',
+  'entities/polyline-symbolic.svg',
+  'entities/rectangle-symbolic.svg',
+  'entities/text-symbolic.svg',
 
-  'tools/copy.svg',
-  'tools/erase.svg',
-  'tools/extend.svg',
-  'tools/move.svg',
-  'tools/rotate.svg',
-  'tools/trim.svg',
+  'tools/copy-symbolic.svg',
+  'tools/erase-symbolic.svg',
+  'tools/extend-symbolic.svg',
+  'tools/move-symbolic.svg',
+  'tools/rotate-symbolic.svg',
+  'tools/trim-symbolic.svg',
   ]
 
 scalable_dir = join_paths('hicolor', 'scalable', 'apps')
