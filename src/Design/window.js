@@ -107,7 +107,8 @@ export const DesignWindow = GObject.registerClass({
           height_request: 32,
           margin_top: 5,
           margin_bottom: 5,
-          //TODO: Make first letter of command_name uppercase
+          css_classes:  ['flat'],
+          //TODO: Make first letter of command_name uppercase - possible to add more info?
           tooltip_text: `${command_name} (${design_command.shortcut})`
         });
 
