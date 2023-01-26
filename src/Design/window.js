@@ -105,9 +105,10 @@ export const DesignWindow = GObject.registerClass({
           halign: Gtk.Align.CENTER,
           width_request: 32,
           height_request: 32,
-          margin_top: 5,
-          margin_bottom: 5,
-          //TODO: Make first letter of command_name uppercase
+          margin_top: 2,
+          margin_bottom: 2,
+          css_classes:  ['flat'],
+          //TODO: Make first letter of command_name uppercase - possible to add more info?
           tooltip_text: `${command_name} (${design_command.shortcut})`
         });
 
