@@ -41,18 +41,19 @@ export const DesignApplication = GObject.registerClass(
             const show_about_action = new Gio.SimpleAction({ name: 'about' });
             show_about_action.connect('activate', action => {
                 let aboutParams = {
-                    authors: [
+                    developers: [
                         'Daniel Wood'
                     ],
-                    version: 'POC',
-                    program_name: 'Design',
                     transient_for: this.active_window,
                     modal: true,
-                    logo_icon_name: "wood.dan.design",
-                    copyright: "Copyright 2022 Daniel Wood",
+                    version: 'POC',
+                    application_name: 'Design',
+                    application_icon: "wood.dan.design",
+                    copyright: "Copyright 2023 Daniel Wood",
+                    issue_url: 'https://github.com/dubstar-04/Design/issues/new',
                     license_type: Gtk.License.GPL_3_0,
                 };
-                const aboutDialog = new Gtk.AboutDialog(aboutParams);
+                const aboutDialog = new Adw.AboutWindow(aboutParams);
                 aboutDialog.present();
             });
             this.add_action(show_about_action);
