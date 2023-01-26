@@ -42,11 +42,12 @@ export const DesignApplication = GObject.registerClass(
             show_about_action.connect('activate', action => {
                 let aboutParams = {
                     developers: [
-                        'Daniel Wood'
+                        'Daniel Wood', 
+                        'Sonny Piers'
                     ],
                     transient_for: this.active_window,
                     modal: true,
-                    version: 'POC',
+                    version: pkg.version,
                     application_name: 'Design',
                     application_icon: "wood.dan.design",
                     copyright: "Copyright 2023 Daniel Wood",
