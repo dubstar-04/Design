@@ -46,7 +46,7 @@ export const DesignApplication = GObject.registerClass(
                     ],
                     transient_for: this.active_window,
                     modal: true,
-                    version: 'POC',
+                    version: pkg.version,
                     application_name: 'Design',
                     application_icon: "wood.dan.design",
                     copyright: "Copyright 2023 Daniel Wood",
