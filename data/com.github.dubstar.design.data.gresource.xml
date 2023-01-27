@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/wood/dan/design">
+  <gresource prefix="/com/github/dubstar/design">
     <file>ui/window.ui</file>
     <file>ui/shortcuts.ui</file>
     <file>ui/preferences.ui</file>

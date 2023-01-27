@@ -26,7 +26,7 @@ import { Colours } from '../Design-Core/core/lib/colours.js'
 
 export const PropertiesWindow = GObject.registerClass({
   GTypeName: 'PropertiesWindow',
-  Template: 'resource:///wood/dan/design/ui/properties.ui',
+  Template: 'resource:///com/github/dubstar/design/ui/properties.ui',
   InternalChildren: ['stack','elementSelector', 'elementList'],
 }, class PropertiesWindow extends Adw.ApplicationWindow {
   _init(parent) {

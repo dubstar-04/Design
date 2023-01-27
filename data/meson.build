@@ -1,6 +1,6 @@
 desktop_file = i18n.merge_file(
-  input: 'wood.dan.design.desktop.in',
-  output: 'wood.dan.design.desktop',
+  input: 'com.github.dubstar.design.desktop.in',
+  output: 'com.github.dubstar.design.desktop',
   type: 'desktop',
   po_dir: '../po',
   install: true,
@@ -28,8 +28,8 @@ blueprints = custom_target('blueprints',
     command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@']
 )
 
-data_res = gnome.compile_resources('wood.dan.design.data',
-  'wood.dan.design.data.gresource.xml',
+data_res = gnome.compile_resources('com.github.dubstar.design.data',
+  'com.github.dubstar.design.data.gresource.xml',
   gresource_bundle: true,
   dependencies: blueprints,
   install: true,
@@ -37,8 +37,8 @@ data_res = gnome.compile_resources('wood.dan.design.data',
 )
 
 appstream_file = i18n.merge_file(
-  input: 'wood.dan.design.metainfo.xml',
-  output: 'wood.dan.design.metainfo.xml',
+  input: 'com.github.dubstar.design.metainfo.xml',
+  output: 'com.github.dubstar.design.metainfo.xml',
   po_dir: '../po',
   install: true,
   install_dir: join_paths(get_option('datadir'), 'appdata')
@@ -51,7 +51,7 @@ if appstream_util.found()
   )
 endif
 
-install_data('wood.dan.design.gschema.xml',
+install_data('com.github.dubstar.design.gschema.xml',
   install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas')
 )
 

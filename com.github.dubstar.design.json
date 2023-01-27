@@ -1,9 +1,9 @@
 {
-    "app-id" : "wood.dan.design",
+    "app-id" : "com.github.dubstar.design",
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "43",
     "sdk" : "org.gnome.Sdk",
-    "command" : "wood.dan.design",
+    "command" : "com.github.dubstar.design",
     "finish-args" : [
         "--filesystem=home",
         "--share=ipc",

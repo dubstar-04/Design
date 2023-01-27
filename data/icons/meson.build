@@ -1,4 +1,4 @@
-application_id = 'wood.dan.design'
+application_id = 'com.github.dubstar.design'
 
 icons = [
   'entities/arc-symbolic.svg',
