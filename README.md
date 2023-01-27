@@ -1,4 +1,4 @@
-![alt text](data/icons/hicolor/scalable/apps/wood.dan.design.png?raw=true)
+<img src="https://github.com/dubstar-04/Design/blob/92ae601cff4c4b6eb6cfe837d4dbbe7c6915a556/data/icons/hicolor/scalable/apps/wood.dan.design.svg" width=50% height=50%>
 
 # Design
 Design is a 2D computer aided design application (CAD), 
@@ -20,3 +20,9 @@ Using [GNOME Builder](https://wiki.gnome.org/Apps/Builder) with [flatpak](https:
 ___
 
 ### Screenshots:
+
+![Screenshot 1](data/screenshots/screenshot1.png "Design Main Window")
+
+![Screenshot 2](data/screenshots/screenshot2.png "Layer manager")
+
+![Screenshot 3](data/screenshots/screenshot3.png "Properties")
