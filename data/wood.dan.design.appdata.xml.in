@@ -3,7 +3,62 @@
 	<id>wood.dan.design.desktop</id>
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
+	<name>Design</name>
+	<summary>2D CAD for GNOME</summary>
 	<description>
-	  <p>No description</p>
+		<p>Design is a 2D computer aided design application (CAD), 
+		created to meet the needs of makers and designers, 
+		hobbyists and professionals that require a first class CAD application.</p>
+		<p>Features:</p>
+		<ul>
+		<li>Supports the industry standard DXF format</li>
+		<li>Uses common CAD workflows, commands and canvas management</li>
+		<li>Drawing creation and manipulation using commandline or toolbar input</li>
+		<li>Layer management and manipulation</li>
+		<li>Entity interogation and modification </li>
+	  </ul>
 	</description>
+  	<screenshots>
+		<screenshot type="default">
+		<image>https://github.com/dubstar-04/Design/tree/main/data/screenshots/screenshot1.png</image>
+		<caption>Main Window</caption>
+		</screenshot>
+		<screenshot>
+		<image>https://github.com/dubstar-04/Design/tree/main/data/screenshots/screenshot2.png</image>
+		<caption>Layer Manager</caption>
+		</screenshot>
+		<screenshot>
+		<image>https://github.com/dubstar-04/Design/tree/main/data/screenshots/screenshot3.png</image>
+		<caption>Properties</caption>
+		</screenshot>
+  	</screenshots>
+	<content_rating type="oars-1.1" />
+  	<releases>
+		<release version="43.alpha1" date="2023-01-27">
+			<ul>
+				<li>Preview release</li>
+			</ul>
+		</release>
+	</releases>
+	<url type="homepage">https://github.com/dubstar-04/Design</url>
+  	<url type="bugtracker">https://github.com/dubstar-04/Design/issues</url>
+	<recommends>
+    	<control>keyboard</control>
+    	<control>pointing</control>
+    	<control>touch</control>
+  	</recommends>
+	<provides>
+		<id>wood.dan.design</id>
+	</provides>
+	<developer_name>Daniel Wood</developer_name>
+	<launchable type="desktop-id">@app-id@.desktop</launchable>
+	<custom>
+		<value key="Purism::form_factor">workstation</value>
+	</custom>
+
+
+
+
+
+
 </component>
