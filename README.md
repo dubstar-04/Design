@@ -6,7 +6,7 @@ hobbyists and professionals that require a first class CAD application.
 ___
 
 ### History
-Design was originally conceived as an Ubuntu / Ubuntu Phone application, written in C++, QML and JS [Design for Ubuntu](https://launchpad.net/design-app). 
+Design was originally conceived as an [Ubuntu / Ubuntu Phone application](https://launchpad.net/design-app), written in C++, QML and JS. 
 When the Ubuntu Phone project was cancelled in 2017 it seemed that would be the end of the road for Design, however the creator 
 wondered if Design could possibly live on as a web app [Design Web](https://www.design-app.co.uk/)
 
