@@ -8,7 +8,7 @@ ___
 ### History
 Design was originally conceived as an [Ubuntu / Ubuntu Phone application](https://launchpad.net/design-app), written in C++, QML and JS. 
 When the Ubuntu Phone project was cancelled in 2017 it seemed that would be the end of the road for Design, however the creator 
-wondered if Design could possibly live on as a web app [Design Web](https://www.design-app.co.uk/)
+wondered if Design could possibly live on as a [web app](https://www.design-app.co.uk/).
 
 Now in the early 2020s Linux phones are gaining popularity and momentum, the team have revived Design as a GNOME application
 along with the original aim to provide a native CAD experience whether on the move with a mobile device, pocket PC or at a traditional work station.
