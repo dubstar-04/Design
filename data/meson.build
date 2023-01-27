@@ -37,8 +37,8 @@ data_res = gnome.compile_resources('wood.dan.design.data',
 )
 
 appstream_file = i18n.merge_file(
-  input: 'wood.dan.design.appdata.xml.in',
-  output: 'wood.dan.design.appdata.xml',
+  input: 'wood.dan.design.metainfo.xml',
+  output: 'wood.dan.design.metainfo.xml',
   po_dir: '../po',
   install: true,
   install_dir: join_paths(get_option('datadir'), 'appdata')
