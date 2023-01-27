@@ -145,14 +145,14 @@ export const DesignWindow = GObject.registerClass({
   }
 
   show_layers_window() {
-    console.log("Show Layers Window")
+    // console.log("Show Layers Window")
     var layers_win = new LayersWindow(this);
     layers_win.set_transient_for(this)
     layers_win.present()
   }
 
   show_properties_window() {
-    console.log("Show Properties Window")
+    // console.log("Show Properties Window")
     var properties_win = new PropertiesWindow(this);
     properties_win.set_transient_for(this)
     properties_win.present()
@@ -177,7 +177,7 @@ export const DesignWindow = GObject.registerClass({
   }
 
   openDialog() {
-    log("Open File")
+   // log("Open File")
 
     var action = Gtk.FileChooserAction.OPEN
 
@@ -201,7 +201,7 @@ export const DesignWindow = GObject.registerClass({
 
   openFile(dialog, response) {
 
-    log("openFile")
+   // log("openFile")
 
     if (response == Gtk.ResponseType.OK) {
       var file = dialog.get_file();
@@ -223,7 +223,7 @@ export const DesignWindow = GObject.registerClass({
 
 
   saveDialog() {
-    log("save File dialog")
+   // log("save File dialog")
 
     var action = Gtk.FileChooserAction.SAVE
 
@@ -247,12 +247,12 @@ export const DesignWindow = GObject.registerClass({
 
   saveFile(dialog, response) {
 
-    log("save File")
-    log(dialog)
-    log(response)
+   // log("save File")
+   // log(dialog)
+   // log(response)
 
     if (response == Gtk.ResponseType.ACCEPT) {
-      log("Save clicked:")
+     // log("Save clicked:")
       var file = dialog.get_file();
 
       // Synchronous, blocking method

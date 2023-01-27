@@ -27,7 +27,7 @@ export var CommandLine = GObject.registerClass({
 
     key_pressed(keyval, keycode){
 
-        console.log("Commandline - keycode:", keycode)
+        // console.log("Commandline - keycode:", keycode)
 
         var key;
 

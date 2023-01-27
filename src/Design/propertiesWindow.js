@@ -42,12 +42,12 @@ export const PropertiesWindow = GObject.registerClass({
   } //init
 
   on_close(){
-    console.log("properties closing")
+    // console.log("properties closing")
     this.mainWindow.disconnect(this.connection)
   }
 
   on_selection_updated(){
-    console.log("Properties Window: Selection Updated")
+    // console.log("Properties Window: Selection Updated")
     this.loadSelectedItems();
   }
 
@@ -99,7 +99,7 @@ export const PropertiesWindow = GObject.registerClass({
 
                 let value = this.propertyManager.getItemPropertyValue(selectedType, properties[i])
 
-                console.log("property value:", value)
+                // console.log("property value:", value)
 
                 let suffixWidget;
 
