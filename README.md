@@ -1,10 +1,17 @@
 <img src="https://github.com/dubstar-04/Design/blob/92ae601cff4c4b6eb6cfe837d4dbbe7c6915a556/data/icons/hicolor/scalable/apps/wood.dan.design.svg" width=10%>
 
 # Design
-Design is a 2D computer aided design application (CAD), 
-created to meet the needs of makers and designers, 
-hobbyists and professionals that require a first class 
-CAD application. 
+Design is a 2D computer aided design application (CAD),created to meet the needs of makers and designers, 
+hobbyists and professionals that require a first class CAD application.
+___
+
+### History
+Design was originally conceived as an Ubuntu / Ubuntu Phone application, written in C++, QML and JS [Design for Ubuntu](https://launchpad.net/design-app). 
+When the Ubuntu Phone project was cancelled in 2017 it seemed that would be the end of the road for Design, however the creator 
+wondered if Design could possibly live on as a web app [Design Web](https://www.design-app.co.uk/)
+
+Now in the early 2020s Linux phones are gaining popularity and momentum, the team have revived Design as a GNOME application
+along with the original aim to provide a native CAD experience whether on the move with a mobile device, pocket PC or at a traditional work station.
 ___
 
 ### Documention is available at:
