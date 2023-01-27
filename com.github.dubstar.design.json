@@ -27,6 +27,7 @@
       "name": "blueprint",
       "buildsystem": "meson",
       "builddir": true,
+      "cleanup": ["*"],
       "sources": [
         {
           "type": "git",
