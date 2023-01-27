@@ -5,7 +5,7 @@
     "sdk" : "org.gnome.Sdk",
     "command" : "wood.dan.design",
     "finish-args" : [
-        "--share=network",
+        "--filesystem=home",
         "--share=ipc",
         "--socket=fallback-x11",
         "--device=dri",
