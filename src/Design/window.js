@@ -270,6 +270,16 @@ export const DesignWindow = GObject.registerClass({
 
       const [, etag] = file.replace_contents(dxfContents, null, false,
         Gio.FileCreateFlags.REPLACE_DESTINATION, null);
+
+        //update page name
+        const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
+        const file_name = info.get_name();
+        const tab_title = this._tabView.get_selected_page().get_title()
+
+        if (file_name !== tab_title){
+          const page = this._tabView.get_selected_page()
+          page.set_title(file_name);
+        }
     }
 
     dialog.destroy()
