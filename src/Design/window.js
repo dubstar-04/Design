@@ -177,9 +177,6 @@ export const DesignWindow = GObject.registerClass({
   }
 
   openDialog() {
-   // log("Open File")
-
-    var action = Gtk.FileChooserAction.OPEN
 
     var filter = new Gtk.FileFilter();
     filter.add_pattern('*.dxf')
@@ -200,9 +197,6 @@ export const DesignWindow = GObject.registerClass({
   };
 
   openFile(dialog, response) {
-
-   // log("openFile")
-
     if (response == Gtk.ResponseType.OK) {
       var file = dialog.get_file();
       dialog.destroy()
@@ -213,7 +207,6 @@ export const DesignWindow = GObject.registerClass({
       // get filename
       const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
       // create a new canvas with the filename in the tab
-      this.add_canvas(info.get_name())
       const file_name = this.format_filename(info.get_name())
       this.add_canvas(file_name)
       // load the file contents into the canvas
@@ -225,10 +218,6 @@ export const DesignWindow = GObject.registerClass({
 
 
   saveDialog() {
-   // log("save File dialog")
-
-    var action = Gtk.FileChooserAction.SAVE
-
     var filter = new Gtk.FileFilter();
     filter.add_pattern('*.dxf')
 
