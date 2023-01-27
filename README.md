@@ -1,4 +1,4 @@
-![alt text](data/icons/hicolor/scalable/apps/wood.dan.design.png?raw=true)
+![Icon](data/icons/hicolor/scalable/apps/wood.dan.design.png?raw=true)
 
 # Design
 Design is a 2D computer aided design application (CAD), 
@@ -20,3 +20,9 @@ Using [GNOME Builder](https://wiki.gnome.org/Apps/Builder) with [flatpak](https:
 ___
 
 ### Screenshots:
+
+![Screenshot 1](data/screenshots/screenshot1.png "Design Main Window")
+
+![Screenshot 2](data/screenshots/screenshot2.png "Layer manager")
+
+![Screenshot 3](data/screenshots/screenshot3.png "Properties")
