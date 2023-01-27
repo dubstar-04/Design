@@ -1,4 +1,4 @@
-![Icon](data/icons/hicolor/scalable/apps/wood.dan.design.png?raw=true)
+![Icon](data/icons/hicolor/scalable/apps/wood.dan.design.svg)
 
 # Design
 Design is a 2D computer aided design application (CAD), 
