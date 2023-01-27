@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/com/github/dubstar/design/js">
+  <gresource prefix="/io/github/dubstar_04/design/js">
     <file>Design/main.js</file>
     <file>Design/window.js</file>
     <file>Design/canvas.js</file>

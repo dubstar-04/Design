@@ -29,7 +29,7 @@ pkg.initFormat();
 export const DesignApplication = GObject.registerClass(
     class DesignApplication extends Adw.Application {
         constructor() {
-            super({ application_id: 'com.github.dubstar.design', flags: Gio.ApplicationFlags.FLAGS_NONE });
+            super({ application_id: 'io.github.dubstar_04.design', flags: Gio.ApplicationFlags.FLAGS_NONE });
 
             const quit_action = new Gio.SimpleAction({ name: 'quit' });
             quit_action.connect('activate', action => {
@@ -49,7 +49,7 @@ export const DesignApplication = GObject.registerClass(
                     modal: true,
                     version: pkg.version,
                     application_name: 'Design',
-                    application_icon: "com.github.dubstar.design",
+                    application_icon: "io.github.dubstar_04.design",
                     copyright: "Copyright 2023 Daniel Wood",
                     issue_url: 'https://github.com/dubstar-04/Design/issues/new',
                     license_type: Gtk.License.GPL_3_0,
