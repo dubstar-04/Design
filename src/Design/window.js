@@ -214,6 +214,8 @@ export const DesignWindow = GObject.registerClass({
       const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
       // create a new canvas with the filename in the tab
       this.add_canvas(info.get_name())
+      const file_name = this.format_filename(info.get_name())
+      this.add_canvas(file_name)
       // load the file contents into the canvas
       this.get_active_canvas().core.openFile(contentsString)
     }
