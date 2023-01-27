@@ -1,4 +1,4 @@
-![Icon](data/icons/hicolor/scalable/apps/wood.dan.design.svg)
+<img src="https://github.com/dubstar-04/Design/blob/92ae601cff4c4b6eb6cfe837d4dbbe7c6915a556/data/icons/hicolor/scalable/apps/wood.dan.design.svg" width=50% height=50%>
 
 # Design
 Design is a 2D computer aided design application (CAD), 
