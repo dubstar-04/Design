@@ -245,6 +245,11 @@ export const DesignWindow = GObject.registerClass({
     dialog.connect("response", this.saveFile.bind(this))
   };
 
+  format_filename(file_name){
+    const formatted_name = file_name.replace(/\.[^/.]+$/, "")
+    return formatted_name
+  }
+
   saveFile(dialog, response) {
 
    // log("save File")
