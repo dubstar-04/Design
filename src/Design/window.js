@@ -241,6 +241,9 @@ export const DesignWindow = GObject.registerClass({
     dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
     dialog.add_button('Save', Gtk.ResponseType.ACCEPT);
 
+    const name = this.format_filename(this._tabView.get_selected_page().get_title());
+    dialog.set_current_name(`${name}.dxf`);
+
     dialog.show()
     dialog.connect("response", this.saveFile.bind(this))
   };
