@@ -71,15 +71,15 @@ export var Canvas = GObject.registerClass({
     }
 
     on_copy(){
-        console.log("-------- Copy --------")
+        // console.log("-------- Copy --------")
     }
 
     on_paste(){
-        console.log("-------- Paste --------")
+        // console.log("-------- Paste --------")
     }
 
     on_undo(){
-        console.log("-------- Undo --------")
+        // console.log("-------- Undo --------")
     }
 
     init(commandline_widget) {
@@ -95,7 +95,7 @@ export var Canvas = GObject.registerClass({
     }
 
     propertyCallback() {
-        console.log("Canvas - Property Callback")
+        // console.log("Canvas - Property Callback")
         this.emit('selection-updated')
     }
 
@@ -125,52 +125,52 @@ export var Canvas = GObject.registerClass({
     }
 
     mouseDown(gesture, num, x, y, z) {
-        //console.log("mouseDown", gesture, num, x, y);
+        //// console.log("mouseDown", gesture, num, x, y);
         let event = gesture.get_current_event();
         let btn = gesture.get_current_button() - 1
-        //console.log("event", event, btn);
+        //// console.log("event", event, btn);
         this.core.mouse.mouseDown(btn);
         // ensure the canvas has focus to receive events
         this.grab_focus()
     }
 
     mouseUp(gesture, num, x, y, z) {
-        //console.log("mouseUp", gesture, num, x, y);
+        //// console.log("mouseUp", gesture, num, x, y);
         let event = gesture.get_current_event();
         let btn = gesture.get_current_button() - 1
-        //console.log("event", event, btn);
+        //// console.log("event", event, btn);
         this.core.mouse.mouseUp(btn);
     }
 
     wheel(controller, x, y) {
-        //console.log("wheel", controller, x, y);
+        //// console.log("wheel", controller, x, y);
         this.core.mouse.wheel(y);
         this.queue_draw();
     }
 
     dragBegin(controller, x, y) {
-        //console.log("dragBegin", controller, x, y);
+        //// console.log("dragBegin", controller, x, y);
         //this.core.mouse.wheel();
     }
 
     dragUpdate(controller, x, y) {
-        //console.log("dragUpdate", controller, x, y);
+        //// console.log("dragUpdate", controller, x, y);
         //this.core.mouse.wheel();
     }
 
     dragEnd(controller, x, y) {
-        //console.log("dragEnd", controller, x, y);
+        //// console.log("dragEnd", controller, x, y);
         //this.core.mouse.wheel();
     }
 
     zoomBegin(controller, x, y) {
-        //console.log("zoomBegin", controller, x, y);
+        //// console.log("zoomBegin", controller, x, y);
         //this.core.mouse.wheel();
 
     }
 
     zoomEnd(controller, x, y) {
-        //console.log("zoomEnd", controller, x, y);
+        //// console.log("zoomEnd", controller, x, y);
         //this.core.mouse.wheel();
     }
 
