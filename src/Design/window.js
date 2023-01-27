@@ -86,6 +86,8 @@ export const DesignWindow = GObject.registerClass({
     canvas.connect('mouseposition-updated', this.update_mouse_position.bind(this))
     canvas.connect('selection-updated', this.canvas_selection_updated.bind(this))
     canvas.init(this._commandLineEntry)
+    //make the new page current
+    this._tabView.set_selected_page(page);
   }
 
   load_toolbars(){
