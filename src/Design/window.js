@@ -177,9 +177,6 @@ export const DesignWindow = GObject.registerClass({
   }
 
   openDialog() {
-   // log("Open File")
-
-    var action = Gtk.FileChooserAction.OPEN
 
     var filter = new Gtk.FileFilter();
     filter.add_pattern('*.dxf')
@@ -200,9 +197,6 @@ export const DesignWindow = GObject.registerClass({
   };
 
   openFile(dialog, response) {
-
-   // log("openFile")
-
     if (response == Gtk.ResponseType.OK) {
       var file = dialog.get_file();
       dialog.destroy()
@@ -213,7 +207,8 @@ export const DesignWindow = GObject.registerClass({
       // get filename
       const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
       // create a new canvas with the filename in the tab
-      this.add_canvas(info.get_name())
+      const file_name = this.format_filename(info.get_name())
+      this.add_canvas(file_name)
       // load the file contents into the canvas
       this.get_active_canvas().core.openFile(contentsString)
     }
@@ -223,10 +218,6 @@ export const DesignWindow = GObject.registerClass({
 
 
   saveDialog() {
-   // log("save File dialog")
-
-    var action = Gtk.FileChooserAction.SAVE
-
     var filter = new Gtk.FileFilter();
     filter.add_pattern('*.dxf')
 
@@ -241,9 +232,17 @@ export const DesignWindow = GObject.registerClass({
     dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
     dialog.add_button('Save', Gtk.ResponseType.ACCEPT);
 
+    const name = this.format_filename(this._tabView.get_selected_page().get_title());
+    dialog.set_current_name(`${name}.dxf`);
+
     dialog.show()
     dialog.connect("response", this.saveFile.bind(this))
   };
+
+  format_filename(file_name){
+    const formatted_name = file_name.replace(/\.[^/.]+$/, "")
+    return formatted_name
+  }
 
   saveFile(dialog, response) {
 
@@ -262,6 +261,16 @@ export const DesignWindow = GObject.registerClass({
 
       const [, etag] = file.replace_contents(dxfContents, null, false,
         Gio.FileCreateFlags.REPLACE_DESTINATION, null);
+
+        //update page name
+        const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
+        const file_name = info.get_name();
+        const tab_title = this._tabView.get_selected_page().get_title()
+
+        if (file_name !== tab_title){
+          const page = this._tabView.get_selected_page()
+          page.set_title(file_name);
+        }
     }
 
     dialog.destroy()
