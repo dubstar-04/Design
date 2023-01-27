@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=design
-Exec=wood.dan.design
-Icon=wood.dan.design
+Exec=com.github.dubstar.design
+Icon=com.github.dubstar.design
 Terminal=false
 Type=Application
 Categories=GTK;

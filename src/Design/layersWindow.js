@@ -27,7 +27,7 @@ import { Colours } from '../Design-Core/core/lib/colours.js'
 
 export const LayersWindow = GObject.registerClass({
   GTypeName: 'LayersWindow',
-  Template: 'resource:///wood/dan/design/ui/layers.ui',
+  Template: 'resource:///com/github/dubstar/design/ui/layers.ui',
   InternalChildren: ['layerList', 'stack', 'backButton', 'nameEntry', 'frozenSwitch', 'lockedSwitch', 'lineTypeLabel', 'lineWeightLabel', 'plottingSwitch'],
 }, class LayersWindow extends Adw.ApplicationWindow {
   _init(parent) {

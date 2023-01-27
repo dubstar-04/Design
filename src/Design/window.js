@@ -32,7 +32,7 @@ export const DesignWindow = GObject.registerClass({
   Signals: {
     'canvas-selection-updated': {},
   },
-  Template: 'resource:///wood/dan/design/ui/window.ui',
+  Template: 'resource:///com/github/dubstar/design/ui/window.ui',
   InternalChildren: ['tabView', 'mousePosLabel', 'commandLineEntry', 'newButton', 'entitiesToolbar', 'toolsToolbar'],
 }, class DesignWindow extends Adw.ApplicationWindow {
   _init(application) {
@@ -133,7 +133,7 @@ export const DesignWindow = GObject.registerClass({
   }
 
   show_shortcuts_window() {
-    var shortcuts_win = Gtk.Builder.new_from_resource('/wood/dan/design/ui/shortcuts.ui').get_object('shortcuts')
+    var shortcuts_win = Gtk.Builder.new_from_resource('/com/github/dubstar/design/ui/shortcuts.ui').get_object('shortcuts')
     shortcuts_win.set_transient_for(this)
     shortcuts_win.present()
   }
