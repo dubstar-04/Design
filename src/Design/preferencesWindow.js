@@ -21,7 +21,7 @@ import Adw from 'gi://Adw?version=1';
 
 export const PreferencesWindow = GObject.registerClass({
   GTypeName: 'PreferencesWindow',
-  Template: 'resource:///com/github/dubstar/design/ui/preferences.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/preferences.ui',
   InternalChildren: [],
 }, class PreferencesWindow extends Adw.PreferencesWindow {
   _init() {

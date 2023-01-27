@@ -1,9 +1,9 @@
 {
-    "app-id" : "com.github.dubstar.design",
+    "app-id" : "io.github.dubstar_04.design",
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "43",
     "sdk" : "org.gnome.Sdk",
-    "command" : "com.github.dubstar.design",
+    "command" : "io.github.dubstar_04.design",
     "finish-args" : [
         "--filesystem=home",
         "--share=ipc",

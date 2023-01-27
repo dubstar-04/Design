@@ -1,8 +1,8 @@
 pkgdatadir = join_paths(get_option('datadir'), meson.project_name())
 gnome = import('gnome')
 
-src_res = gnome.compile_resources('com.github.dubstar.design.src',
-  'com.github.dubstar.design.src.gresource.xml',
+src_res = gnome.compile_resources('io.github.dubstar_04.design.src',
+  'io.github.dubstar_04.design.src.gresource.xml',
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,
@@ -15,12 +15,12 @@ bin_conf.set('PACKAGE_NAME', meson.project_name())
 bin_conf.set('prefix', get_option('prefix'))
 bin_conf.set('libdir', join_paths(get_option('prefix'), get_option('libdir')))
 bin_conf.set('datadir', join_paths(get_option('prefix'), get_option('datadir')))
-bin_conf.set('resource_path', '/com/github/dubstar/design')
+bin_conf.set('resource_path', '/io/github/dubstar_04/design')
 
 configure_file(
-  input: 'com.github.dubstar.design.in',
-  output: 'com.github.dubstar.design',
+  input: 'io.github.dubstar_04.design.in',
+  output: 'io.github.dubstar_04.design',
   configuration: bin_conf,
   install: true,
-  install_dir: get_option('bindir')
+  install_dir: get_option('bindir'),
 )

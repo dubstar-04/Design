@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="design">
-	<schema id="com.github.dubstar.design" path="/com/github/dubstar/design/">
+	<schema id="io.github.dubstar_04.design" path="/io/github/dubstar_04/design/">
 	</schema>
 </schemalist>
