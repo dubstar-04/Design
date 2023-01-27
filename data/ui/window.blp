@@ -52,6 +52,7 @@ Box{
     Button newButton{
     can-focus: false;
     icon-name: 'document-new-symbolic';
+    tooltip-text: _("Create a new design");
     }
 
     [end]
@@ -59,6 +60,7 @@ Box{
       can-focus: false;
       icon-name: 'open-menu-symbolic';
       menu-model: app-menu;
+      tooltip-text: _("Open application menu");
     }
 
     [end]
@@ -66,6 +68,7 @@ Box{
       can-focus: false;
       clicked => show_layers_window();
       icon-name: 'focus-legacy-systray-symbolic';
+      tooltip-text: _("Show layer manager");
       }
 
     [end]
@@ -73,6 +76,7 @@ Box{
       can-focus: false;
       clicked => show_properties_window();
       icon-name: 'dialog-question-symbolic';
+      tooltip-text: _("Show properties window");
       }
   }
 
