@@ -29,7 +29,7 @@ pkg.initFormat();
 export const DesignApplication = GObject.registerClass(
     class DesignApplication extends Adw.Application {
         constructor() {
-            super({ application_id: 'io.github.dubstar_04.design', flags: Gio.ApplicationFlags.FLAGS_NONE });
+            super({ application_id: 'io.github.dubstar_04.design', flags: Gio.ApplicationFlags.HANDLES_OPEN});
 
             const quit_action = new Gio.SimpleAction({ name: 'quit' });
             quit_action.connect('activate', action => {
@@ -57,16 +57,23 @@ export const DesignApplication = GObject.registerClass(
                 const aboutDialog = new Adw.AboutWindow(aboutParams);
                 aboutDialog.present();
             });
+
             this.add_action(show_about_action);
-        }
 
-        vfunc_activate() {
-            let { active_window } = this;
+            //open signal only emitted if files are passed as argv. See activate signal.
+            this.connect("open", (self, files) => {
+                const active_window = new DesignWindow(this);
+                files.forEach((file) => {
+                    active_window.load_file(file);
+                });
+                active_window.present();
+            });
 
-            if (!active_window)
-                active_window = new DesignWindow(this);
-
-            active_window.present();
+            // activate signal only emitted if no files are passed as argv
+            this.connect("activate", () => {
+                const active_window = new DesignWindow(this);
+                active_window.present();
+            });
         }
     }
 );

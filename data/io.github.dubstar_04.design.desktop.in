@@ -1,8 +1,11 @@
 [Desktop Entry]
 Name=design
-Exec=io.github.dubstar_04.design
+Exec=io.github.dubstar_04.design %F
 Icon=io.github.dubstar_04.design
 Terminal=false
 Type=Application
 Categories=GTK;
+MimeType=image/x-dxf
+Keywords=CAD;DXF;drawing;design;vector;
 StartupNotify=true
+
