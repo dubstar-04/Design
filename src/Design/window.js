@@ -193,29 +193,44 @@ export const DesignWindow = GObject.registerClass({
     dialog.add_button('OK', Gtk.ResponseType.OK);
 
     dialog.show()
-    dialog.connect("response", this.openFile.bind(this))
+    dialog.connect("response", this.open_dialog_response.bind(this))
   };
 
-  openFile(dialog, response) {
+  open_dialog_response(dialog, response) {
     if (response == Gtk.ResponseType.OK) {
       var file = dialog.get_file();
       dialog.destroy()
-      const [, contents, etag] = file.load_contents(null);
-      const decoder = new TextDecoder('utf-8');
-      // decode the file contents from a bitearray
-      const contentsString = decoder.decode(contents);
-      // get filename
-      const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
-      // create a new canvas with the filename in the tab
-      const file_name = this.format_filename(info.get_name())
-      this.add_canvas(file_name)
-      // load the file contents into the canvas
-      this.get_active_canvas().core.openFile(contentsString)
+      this.load_file(file);
     }
-
     dialog.destroy()
   }
 
+  load_file(file){
+
+    if (!file.query_exists(null)){
+      //TODO: inform user that the selected file is invalid.
+      return
+    }
+
+    // get filename
+    const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
+    const file_name = this.format_filename(info.get_name());
+    const ext = this.get_file_extension(info.get_name());
+
+    if(ext.toLowerCase() !== 'dxf'){
+      //TODO: inform user that the file type is not supported.
+      return
+    }
+
+    const [, contents, etag] = file.load_contents(null);
+    const decoder = new TextDecoder('utf-8');
+    // decode the file contents from a bitearray
+    const contentsString = decoder.decode(contents);
+    // create a new canvas with the filename in the tab
+    this.add_canvas(file_name)
+    // load the file contents into the active canvas
+    this.get_active_canvas().core.openFile(contentsString)
+  } 
 
   saveDialog() {
     var filter = new Gtk.FileFilter();
@@ -244,12 +259,12 @@ export const DesignWindow = GObject.registerClass({
     return formatted_name
   }
 
+  get_file_extension(file_name){
+    const extension = file_name.split('.').pop();
+    return extension;
+  }
+  
   saveFile(dialog, response) {
-
-   // log("save File")
-   // log(dialog)
-   // log(response)
-
     if (response == Gtk.ResponseType.ACCEPT) {
      // log("Save clicked:")
       var file = dialog.get_file();
