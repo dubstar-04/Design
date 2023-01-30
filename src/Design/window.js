@@ -36,8 +36,8 @@ export const DesignWindow = GObject.registerClass({
   Template: 'resource:///io/github/dubstar_04/design/ui/window.ui',
   InternalChildren: ['tabView', 'mousePosLabel', 'commandLineEntry', 'newButton', 'entitiesToolbar', 'toolsToolbar'],
 }, class DesignWindow extends Adw.ApplicationWindow {
-  _init(application) {
-    super._init({ application });
+  constructor(application) {
+    super({ application });
 
     // initialise the application settings
     this.settings = new Settings(this);

@@ -25,8 +25,6 @@ export const PreferencesWindow = GObject.registerClass({
   Template: 'resource:///io/github/dubstar_04/design/ui/preferences.ui',
   InternalChildren: [],
 }, class PreferencesWindow extends Adw.PreferencesWindow {
-  _init() {
-    super._init({});
   constructor(settings) {
     super({});
     this.settings = settings
