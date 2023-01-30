@@ -26,6 +26,7 @@ import { CommandLine } from './commandLine.js'
 import { PreferencesWindow } from './preferencesWindow.js'
 import { LayersWindow } from './layersWindow.js'
 import { PropertiesWindow } from './propertiesWindow.js'
+import { Settings } from './settings.js';
 
 export const DesignWindow = GObject.registerClass({
   GTypeName: 'DesignWindow',
@@ -37,6 +38,9 @@ export const DesignWindow = GObject.registerClass({
 }, class DesignWindow extends Adw.ApplicationWindow {
   _init(application) {
     super._init({ application });
+
+    // initialise the application settings
+    this.settings = new Settings(this);
 
     const open = new Gio.SimpleAction({
       name: "open",
@@ -70,7 +74,15 @@ export const DesignWindow = GObject.registerClass({
     this.add_canvas();
     this._commandLineEntry.set_parent(this)
     this.load_toolbars();
+
+    this._tabView.connect("notify::selected-page", this.on_tab_change.bind(this));
+
   } //init
+
+  on_tab_change(){
+    // Ensure the settings are synced to the selected tab
+    this.settings.sync_settings();
+  }
 
   new_document() {
     this.add_canvas()
@@ -88,6 +100,7 @@ export const DesignWindow = GObject.registerClass({
     canvas.init(this._commandLineEntry)
     //make the new page current
     this._tabView.set_selected_page(page);
+    this.settings.sync_settings();
   }
 
   load_toolbars(){
@@ -139,7 +152,7 @@ export const DesignWindow = GObject.registerClass({
   }
 
   show_preferences_window() {
-    var preferences_win = new PreferencesWindow();
+    var preferences_win = new PreferencesWindow(this.settings);
     preferences_win.set_transient_for(this)
     preferences_win.present()
   }
