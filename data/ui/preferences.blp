@@ -13,14 +13,17 @@ template PreferencesWindow : Adw.PreferencesWindow {
     title: _("Snaps");
 
     Adw.PreferencesGroup {
-      title: _("User");
+      title: _("Snaps");
 
       Adw.ActionRow endSnap{
         title: _("End Snap");
 
           [suffix]
           Switch{
+            name: "endsnap";
             valign: center;
+            notify::active => on_toggled();
+            action-name: "settings.endsnap";
           }
         }
 
@@ -29,7 +32,10 @@ template PreferencesWindow : Adw.PreferencesWindow {
 
           [suffix]
           Switch{
+            name: "midsnap";
             valign: center;
+            notify::active => on_toggled();
+            action-name: "settings.midsnap";
           }
         }
 
@@ -38,7 +44,10 @@ template PreferencesWindow : Adw.PreferencesWindow {
 
           [suffix]
           Switch{
+            name: "centresnap";
             valign: center;
+            notify::active => on_toggled();
+            action-name: "settings.centresnap";
           }
         }
 
@@ -47,13 +56,34 @@ template PreferencesWindow : Adw.PreferencesWindow {
 
           [suffix]
           Switch{
+            name: "nearestsnap";
             valign: center;
+            notify::active => on_toggled();
+            action-name: "settings.nearestsnap";
           }
         }
 
-      Adw.ComboRow polarAngle {
+      Adw.ActionRow polar{
+        title: _("Polar");
+
+          [suffix]
+          Switch polar_switch{
+            name: "polar";
+            valign: center;
+            notify::active => on_toggled();
+            action-name: "settings.polar";
+          }
+        }
+
+        /*
+        //TODO: Fix loading of the polar angle
+        Adw.ComboRow polarAngle {
             title: "Polar Angle";
+            name: "polarangle";
             subtitle: "Snap Angle For Polar";
+            notify::selected => on_selected();
+            //action-name: "settings.polarangle";
+            sensitive: bind polar_switch.active;
 
             model: Gtk.StringList {
                 strings [
@@ -64,36 +94,39 @@ template PreferencesWindow : Adw.PreferencesWindow {
                 ]
             };
         }
-
-      Adw.ActionRow polar{
-        title: _("Polar");
-
-          [suffix]
-          Switch{
-            valign: center;
-          }
-        }
+        */
 
       Adw.ActionRow ortho{
         title: _("Ortho");
 
           [suffix]
           Switch{
+            name: "ortho";
             valign: center;
+            notify::active => on_toggled();
+            action-name: "settings.ortho";
           }
         }
+    }
+
+  Adw.PreferencesGroup {
+      title: _("Canvas");
 
       Adw.ActionRow drawGrid{
         title: _("Draw Grid");
 
           [suffix]
           Switch{
+            name: "drawgrid";
             valign: center;
+            notify::active => on_toggled();
+            action-name: "settings.drawgrid";
           }
         }
       }
     }
 
+  /*
   Adw.PreferencesPage {
     icon-name: "preferences-color-symbolic";
     title: _("Colours");
@@ -199,4 +232,5 @@ template PreferencesWindow : Adw.PreferencesWindow {
           }
         }
       }
+      */
 }
