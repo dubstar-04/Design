@@ -30,8 +30,8 @@ export const LayersWindow = GObject.registerClass({
   Template: 'resource:///io/github/dubstar_04/design/ui/layers.ui',
   InternalChildren: ['layerList', 'stack', 'backButton', 'nameEntry', 'frozenSwitch', 'lockedSwitch', 'lineTypeLabel', 'lineWeightLabel', 'plottingSwitch'],
 }, class LayersWindow extends Adw.ApplicationWindow {
-  _init(parent) {
-    super._init({});
+  constructor(parent) {
+    super({});
 
     this.mainWindow = parent;
     this.layerManager;

@@ -8,6 +8,7 @@
     <file>Design/layersWindow.js</file>
     <file>Design/propertiesWindow.js</file>
     <file>Design/commandLine.js</file>
+    <file>Design/settings.js</file>
 
     <!-- Design Core -->
     <file>Design-Core/core/core.js</file>

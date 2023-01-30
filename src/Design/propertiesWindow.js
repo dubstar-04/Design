@@ -29,8 +29,8 @@ export const PropertiesWindow = GObject.registerClass({
   Template: 'resource:///io/github/dubstar_04/design/ui/properties.ui',
   InternalChildren: ['stack','elementSelector', 'elementList'],
 }, class PropertiesWindow extends Adw.ApplicationWindow {
-  _init(parent) {
-    super._init({});
+  constructor(parent) {
+    super({});
 
     this.mainWindow = parent;
     this.connection = this.mainWindow.connect('canvas-selection-updated', this.on_selection_updated.bind(this))
