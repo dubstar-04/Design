@@ -18,6 +18,7 @@
 
 import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
+import Gio from 'gi://Gio';
 
 export const PreferencesWindow = GObject.registerClass({
   GTypeName: 'PreferencesWindow',
@@ -26,7 +27,28 @@ export const PreferencesWindow = GObject.registerClass({
 }, class PreferencesWindow extends Adw.PreferencesWindow {
   _init() {
     super._init({});
+  constructor(settings) {
+    super({});
+    this.settings = settings
 
+    // create a new action group for the preference window
+    this.settings_group = new Gio.SimpleActionGroup();
+    this.insert_action_group("settings", this.settings_group);
+
+    // get a list of settings keys
+    const settings_keys = this.settings.list_keys();
+    settings_keys.forEach(key => {
+        // Create an action for each key
+        // These actions are assigned to the preference widgets in the .blp
+        // These actions sync the widget state to the settings
+        const action = this.settings.create_action(key);
+        this.settings_group.add_action(action);
+        });
+  }
+
+  on_toggled(widget){
+    // update core with the changed setting
+    this.settings.set_core_setting(widget.name, widget.state);
   }
 }
 );
