@@ -1,0 +1,6 @@
+
+.flatpak*
+.vscode*
+*.cmb
+*.flatpak
+/node_modules
