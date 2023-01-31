@@ -13,11 +13,13 @@ export const Canvas = GObject.registerClass({
     'selection-updated': {},
   },
 }, class Canvas extends Gtk.DrawingArea {
-  constructor() {
+  constructor(commandLine) {
     super();
 
     // set the drawing area as focusable or we don't get events
     this.focusable = true;
+
+    this.commandLine = commandLine;
 
     const motionEvent = Gtk.EventControllerMotion.new();
     motionEvent.connect('motion', this.mouseMove.bind(this));
@@ -66,7 +68,7 @@ export const Canvas = GObject.registerClass({
     this.core.canvas.setExternalPaintCallbackFunction(this.painting_callback.bind(this));
     this.core.propertyManager.setPropertyCallbackFunction(this.propertyCallback.bind(this));
 
-    this.commandlineWidget;
+    this.grab_focus();
   }
 
   on_copy() {
@@ -79,14 +81,6 @@ export const Canvas = GObject.registerClass({
 
   on_undo() {
     // console.log("-------- Undo --------")
-  }
-
-  init(commandlineWidget) {
-    // hacky function to load the commandline value after the object has been created
-    // this is needed because the emit function won't work until after the canvas is initialised
-    this.core.commandLine.handleKeys('Escape');
-    this.commandlineWidget = commandlineWidget;
-    this.grab_focus();
   }
 
   painting_callback() {
@@ -114,7 +108,7 @@ export const Canvas = GObject.registerClass({
     // unless control is pressed
 
     if (state !== Gdk.ModifierType.CONTROL_MASK) {
-      this.commandlineWidget.key_pressed(keyval, keycode);
+      this.commandLine.key_pressed(keyval, keycode);
     }
   }
 

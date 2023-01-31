@@ -41,6 +41,7 @@ export const DesignWindow = GObject.registerClass({
 
     // initialise the application settings
     this.settings = new Settings(this);
+    this.commandLine = new CommandLine(this);
 
     const open = new Gio.SimpleAction({
       name: 'open',
@@ -71,13 +72,11 @@ export const DesignWindow = GObject.registerClass({
     this.add_action(shortcuts);
 
     this._newButton.connect('clicked', this.new_document.bind(this));
-    this.add_canvas();
-
-    this._commandLineEntry.set_parent(this);
-    this.load_toolbars();
-
     this._tabView.connect('notify::selected-page', this.on_tab_change.bind(this));
-  } // init
+
+    this.add_canvas();
+    this.load_toolbars();
+  }
 
   on_tab_change() {
     // Ensure the settings are synced to the selected tab
@@ -90,14 +89,14 @@ export const DesignWindow = GObject.registerClass({
 
   add_canvas(name) {
     // setup empty new canvas
-    const canvas = new Canvas();
+    const canvas = new Canvas(this.commandLine);
     const page = this._tabView.add_page(canvas, null);
     const tabname = name || 'new';
     page.set_title(tabname);
     canvas.connect('commandline-updated', this.update_commandline.bind(this));
     canvas.connect('mouseposition-updated', this.update_mouse_position.bind(this));
     canvas.connect('selection-updated', this.canvas_selection_updated.bind(this));
-    canvas.init(this._commandLineEntry);
+    this.commandLine.reset();
     // make the new page current
     this._tabView.set_selected_page(page);
     this.settings.sync_settings();

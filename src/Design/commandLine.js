@@ -25,18 +25,19 @@ export const CommandLine = GObject.registerClass({
   Properties: {},
   Signals: {},
 }, class CommandLine extends Gtk.Entry {
-  constructor() {
+  constructor(window) {
     super();
 
-    this.mainWindow;
+    this.mainWindow = window;
 
     const keyController = Gtk.EventControllerKey.new();
     keyController.connect('key-pressed', this.on_key_press.bind(this));
     this.add_controller(keyController);
   }
 
-  set_parent(parent) {
-    this.mainWindow = parent;
+  reset() {
+    // reset the commandline
+    this.mainWindow.get_active_canvas().core.commandLine.resetPrompt();
   }
 
   on_key_press(controller, keyVal, keyCode, state) {
@@ -44,7 +45,7 @@ export const CommandLine = GObject.registerClass({
   }
 
   key_pressed(keyVal, keyCode) {
-    // console.log("Commandline - keycode:", keycode)
+    console.log('Commandline - keycode:', keyCode, 'keyval:', keyVal);
 
     let key;
 
