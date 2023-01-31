@@ -88,6 +88,10 @@ export const PropertiesWindow = GObject.registerClass({
 
     const properties = this.propertyManager.getItemProperties(selectedType);
 
+    if (!properties) {
+      return;
+    }
+
     this.clear_list();
 
     if (properties.length) {
