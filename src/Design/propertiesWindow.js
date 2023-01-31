@@ -1,4 +1,4 @@
-/* window.js
+/* propertiesWindow.js
  *
  * Copyright 2022 Daniel Wood
  *
@@ -21,38 +21,36 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
 
-import { Colours } from '../Design-Core/core/lib/colours.js'
-//import resource from "../../ui/layers.ui";
+import {Colours} from '../Design-Core/core/lib/colours.js';
+// import resource from "../../ui/layers.ui";
 
 export const PropertiesWindow = GObject.registerClass({
   GTypeName: 'PropertiesWindow',
   Template: 'resource:///io/github/dubstar_04/design/ui/properties.ui',
-  InternalChildren: ['stack','elementSelector', 'elementList'],
+  InternalChildren: ['stack', 'elementSelector', 'elementList'],
 }, class PropertiesWindow extends Adw.ApplicationWindow {
   constructor(parent) {
     super({});
 
     this.mainWindow = parent;
-    this.connection = this.mainWindow.connect('canvas-selection-updated', this.on_selection_updated.bind(this))
-    this.connect("close-request", this.on_close.bind(this));
+    this.connection = this.mainWindow.connect('canvas-selection-updated', this.on_selection_updated.bind(this));
+    this.connect('close-request', this.on_close.bind(this));
     this.propertyManager;
     this.getPropertyManager();
+  } // init
 
-
-  } //init
-
-  on_close(){
+  on_close() {
     // console.log("properties closing")
-    this.mainWindow.disconnect(this.connection)
+    this.mainWindow.disconnect(this.connection);
   }
 
-  on_selection_updated(){
+  on_selection_updated() {
     // console.log("Properties Window: Selection Updated")
     this.loadSelectedItems();
   }
 
   getPropertyManager() {
-    this.propertyManager = this.mainWindow.get_active_canvas().core.propertyManager
+    this.propertyManager = this.mainWindow.get_active_canvas().core.propertyManager;
   }
 
   clear_list() {
@@ -60,7 +58,7 @@ export const PropertiesWindow = GObject.registerClass({
     let child = this._elementList.get_first_child();
 
     while (child) {
-      let next = child.get_next_sibling();
+      const next = child.get_next_sibling();
       this._elementList.remove(child);
       child = next;
     }
@@ -68,87 +66,78 @@ export const PropertiesWindow = GObject.registerClass({
 
   loadSelectedItems() {
     const types = this.propertyManager.getItemTypes();
-    if(types.length){
-      this._stack.set_visible_child_name("elementsPage")
-    }else{
-      this._stack.set_visible_child_name("propertiesStatusPage")
+    if (types.length) {
+      this._stack.set_visible_child_name('elementsPage');
+    } else {
+      this._stack.set_visible_child_name('propertiesStatusPage');
     }
 
-    const model = new Gtk.StringList()
+    const model = new Gtk.StringList();
 
     for (let i = 0; i < types.length; i++) {
-    model.append(types[i]);
+      model.append(types[i]);
     }
 
     this._elementSelector.set_model(model);
   }
 
-  on_type_changed(){
+  on_type_changed() {
+    const selectedIndex = this._elementSelector.get_selected();
+    const typeStringList = this._elementSelector.get_model();
+    const selectedType = typeStringList.get_string(selectedIndex);
 
-      const selectedIndex = this._elementSelector.get_selected();
-      const typeStringList = this._elementSelector.get_model();
-      const selectedType = typeStringList.get_string(selectedIndex)
+    const properties = this.propertyManager.getItemProperties(selectedType);
 
-      const properties = this.propertyManager.getItemProperties(selectedType);
+    this.clear_list();
 
-      this.clear_list();
+    if (properties.length) {
+      for (let i = 0; i < properties.length; i++) {
+        const value = this.propertyManager.getItemPropertyValue(selectedType, properties[i]);
 
-      if(properties.length){
+        let suffixWidget;
 
-        for (let i = 0; i < properties.length; i++) {
+        switch (properties[i]) {
+          /*
+            case "width":
+                break;
+            case "height":
+                break;
+            case "rotation":
+                break;
+            */
+          case 'radius':
+            suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
+            break;
+            // case "lineWidth":
+            //     break;
+            // case "colour":
+            //     suffixWidget = new Gtk.ColorButton({ valign: Gtk.Align.CENTER, 'rgba': this.toRgba(value) });
+            //     break;
+            // case "layer":
+            //    break;
+          default:
+            suffixWidget = new Gtk.Label({valign: Gtk.Align.CENTER, label: `${value}`});
+            break;
+        }
 
-                let value = this.propertyManager.getItemPropertyValue(selectedType, properties[i])
-
-                // console.log("property value:", value)
-
-                let suffixWidget;
-
-                switch (properties[i]) {
-                /*
-                case "width":
-                    break;
-                case "height":
-                    break;
-                case "rotation":
-                    break;
-                */
-                case "radius":
-                    suffixWidget = new Gtk.Entry({ valign: Gtk.Align.CENTER, text: `${value}` });
-                    break;
-               // case "lineWidth":
-               //     break;
-               // case "colour":
-               //     suffixWidget = new Gtk.ColorButton({ valign: Gtk.Align.CENTER, 'rgba': this.toRgba(value) });
-               //     break;
-                //case "layer":
-                //    break;
-                default:
-                    suffixWidget = new Gtk.Label({ valign: Gtk.Align.CENTER, label: `${value}`});
-                    break;
-            }
-
-        var prop_row = new Adw.ActionRow({ title: properties[i]});
-        prop_row.add_suffix(suffixWidget)
-        this._elementList.append(prop_row);
+        const propRow = new Adw.ActionRow({title: properties[i]});
+        propRow.add_suffix(suffixWidget);
+        this._elementList.append(propRow);
       }
-  }
+    }
   }
 
-  //TODO: this is duplicated on the layers window
+  // TODO: this is duplicated on the layers window
   toRgba(layerColour) {
     const rgba = new Gdk.RGBA();
-    var colour = Colours.hexToScaledRGB(layerColour)
+    const colour = Colours.hexToScaledRGB(layerColour);
     rgba.red = colour.r;
     rgba.green = colour.g;
     rgba.blue = colour.b;
     rgba.alpha = 1.0;
     return rgba;
   }
-
-} //window
+}, // window
 );
-
-
-
 
 
