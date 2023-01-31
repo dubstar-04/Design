@@ -1,4 +1,4 @@
-/* window.js
+/* preferencesWindow.js
  *
  * Copyright 2022 Daniel Wood
  *
@@ -27,30 +27,28 @@ export const PreferencesWindow = GObject.registerClass({
 }, class PreferencesWindow extends Adw.PreferencesWindow {
   constructor(settings) {
     super({});
-    this.settings = settings
+    this.settings = settings;
 
     // create a new action group for the preference window
     this.settings_group = new Gio.SimpleActionGroup();
-    this.insert_action_group("settings", this.settings_group);
+    this.insert_action_group('settings', this.settings_group);
 
     // get a list of settings keys
-    const settings_keys = this.settings.list_keys();
-    settings_keys.forEach(key => {
-        // Create an action for each key
-        // These actions are assigned to the preference widgets in the .blp
-        // These actions sync the widget state to the settings
-        const action = this.settings.create_action(key);
-        this.settings_group.add_action(action);
-        });
+    const settingsKeys = this.settings.list_keys();
+    settingsKeys.forEach((key) => {
+      // Create an action for each key
+      // These actions are assigned to the preference widgets in the .blp
+      // These actions sync the widget state to the settings
+      const action = this.settings.create_action(key);
+      this.settings_group.add_action(action);
+    });
   }
 
-  on_toggled(widget){
+  on_toggled(widget) {
     // update core with the changed setting
     this.settings.set_core_setting(widget.name, widget.state);
   }
-}
+},
 );
-
-
 
 
