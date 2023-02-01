@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
 	<id>io.github.dubstar_04.design</id>
+	<launchable type="desktop-id">io.github.dubstar_04.design.desktop</launchable>
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>GPL-3.0-or-later</project_license>
 	<name>Design</name>
@@ -51,7 +52,6 @@
 		<id>io.github.dubstar_04.design</id>
 	</provides>
 	<developer_name>Daniel Wood</developer_name>
-	<launchable type="desktop-id">@app-id@.desktop</launchable>
 	<custom>
 		<value key="Purism::form_factor">workstation</value>
 	</custom>
