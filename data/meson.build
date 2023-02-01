@@ -1,5 +1,5 @@
 desktop_file = i18n.merge_file(
-  input: 'io.github.dubstar_04.design.desktop.in',
+  input: 'io.github.dubstar_04.design.desktop',
   output: 'io.github.dubstar_04.design.desktop',
   type: 'desktop',
   po_dir: '../po',
