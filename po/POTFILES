@@ -1,4 +1,4 @@
-data/io.github.dubstar_04.design.desktop.in
+data/io.github.dubstar_04.design.desktop
 data/io.github.dubstar_04.design.metainfo.xml
 data/io.github.dubstar_04.design.gschema.xml
 src/window.ui
