@@ -1,6 +1,5 @@
-<img src="https://github.com/dubstar-04/Design/blob/92ae601cff4c4b6eb6cfe837d4dbbe7c6915a556/data/icons/hicolor/scalable/apps/io.github.dubstar_04.design.svg" width=10%>
+# Design &emsp;[![Design QA](https://github.com/dubstar-04/Design/actions/workflows/DesignQA.yml/badge.svg?branch=main)](https://github.com/dubstar-04/Design/actions/workflows/DesignQA.yml)
 
-# Design
 Design is a 2D computer aided design application (CAD),created to meet the needs of makers and designers, 
 hobbyists and professionals that require a first class CAD application.
 ___
