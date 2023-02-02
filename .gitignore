@@ -4,3 +4,4 @@
 *.cmb
 *.flatpak
 /node_modules
+/subprojects
