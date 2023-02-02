@@ -45,6 +45,9 @@ export const DesignApplication = GObject.registerClass(
               'Daniel Wood',
               'Sonny Piers',
             ],
+            artists: [
+              'Brage Fuglseth',
+            ],
             transient_for: this.activeWindow,
             modal: true,
             version: pkg.version,

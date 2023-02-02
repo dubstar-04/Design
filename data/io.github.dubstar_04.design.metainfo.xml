@@ -35,10 +35,25 @@
   	</screenshots>
 	<content_rating type="oars-1.1" />
   	<releases>
+		<release version="43.alpha2" date="2023-03-02">
+			<description>
+				<ul>
+					<li>FOSDEM release!</li>
+					<li>Enable 'open with' from the file browser</li>
+					<li>Show notifications for DI and ID commands</li>
+					<li>Recolor the canvas for dark/lights</li>
+					<li>End current command with a right click</li>
+					<li>Enable changing preferences</li>
+					<li>New icon!</li>
+				</ul>
+			</description>
+		</release>
 		<release version="43.alpha1" date="2023-01-27">
-			<ul>
-				<li>Preview release</li>
-			</ul>
+			<description>
+				<ul>
+					<li>Preview release</li>
+				</ul>
+			</description>
 		</release>
 	</releases>
 	<url type="homepage">https://github.com/dubstar-04/Design</url>
