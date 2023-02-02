@@ -81,7 +81,7 @@ export const DesignWindow = GObject.registerClass({
   on_show_toast(message) {
     const toast = new Adw.Toast({
       title: message,
-      //timeout: 3,
+      // timeout: 3,
     });
 
     this._toastoverlay.add_toast(toast);
