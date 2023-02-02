@@ -1,6 +1,7 @@
 import Gtk from 'gi://Gtk?version=4.0';
 import GObject from 'gi://GObject';
 import Gdk from 'gi://Gdk';
+import Adw from 'gi://Adw?version=1';
 
 import {Core} from '../Design-Core/core/core.js';
 
@@ -61,6 +62,9 @@ export const Canvas = GObject.registerClass({
 
     this.core = new Core();
 
+    this.styleManager = Adw.StyleManager.get_default();
+    this.styleManager.connect('notify::dark', this.on_style_change.bind(this));
+
     this.core.canvas.setCanvasWidget(this._drawingArea, this.ctx);
     this.set_draw_func(this.on_draw.bind(this));
 
@@ -69,6 +73,7 @@ export const Canvas = GObject.registerClass({
     this.core.propertyManager.setPropertyCallbackFunction(this.propertyCallback.bind(this));
 
     this.grab_focus();
+    this.on_style_change();
   }
 
   on_copy() {
@@ -81,6 +86,15 @@ export const Canvas = GObject.registerClass({
 
   on_undo() {
     // console.log("-------- Undo --------")
+  }
+
+  on_style_change() {
+    if (this.styleManager.get_dark()) {
+      this.core.settings.canvasbackgroundcolour = '#1e1e1e';
+    } else {
+      this.core.settings.canvasbackgroundcolour = '#f6f5f4';
+    }
+    this.queue_draw();
   }
 
   painting_callback() {
