@@ -34,7 +34,7 @@ export const DesignWindow = GObject.registerClass({
     'canvas-selection-updated': {},
   },
   Template: 'resource:///io/github/dubstar_04/design/ui/window.ui',
-  InternalChildren: ['tabView', 'mousePosLabel', 'commandLineEntry', 'newButton', 'entitiesToolbar', 'toolsToolbar'],
+  InternalChildren: ['tabView', 'mousePosLabel', 'commandLineEntry', 'newButton', 'entitiesToolbar', 'toolsToolbar', 'toastoverlay'],
 }, class DesignWindow extends Adw.ApplicationWindow {
   constructor(application) {
     super({application});
@@ -78,6 +78,15 @@ export const DesignWindow = GObject.registerClass({
     this.load_toolbars();
   }
 
+  on_show_toast(message) {
+    const toast = new Adw.Toast({
+      title: message,
+      // timeout: 3,
+    });
+
+    this._toastoverlay.add_toast(toast);
+  }
+
   on_tab_change() {
     // Ensure the settings are synced to the selected tab
     this.settings.sync_settings();
@@ -100,6 +109,10 @@ export const DesignWindow = GObject.registerClass({
     // make the new page current
     this._tabView.set_selected_page(page);
     this.settings.sync_settings();
+
+    // set the callback function to trigger toasts
+    // TODO: would this be better handles in canvas and use a signal?
+    canvas.core.setExternalNotifyCallbackFunction(this.on_show_toast.bind(this));
   }
 
   load_toolbars() {
