@@ -74,6 +74,9 @@ export const Canvas = GObject.registerClass({
 
     this.grab_focus();
     this.on_style_change();
+
+    // set the cursor style
+    this.set_cursor(Gdk.Cursor.new_from_name('crosshair', null));
   }
 
   on_copy() {
