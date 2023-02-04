@@ -40,6 +40,7 @@
 				<ul>
 					<li>Fix tabs not being shown</li>
 					<li>Show crosshair cursor on the canvas</li>
+					<li>Add touch controls, pan, pinch to zoom and double tap to zoom all</li>
 				</ul>
 			</description>
 		</release>
