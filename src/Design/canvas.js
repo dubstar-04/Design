@@ -137,11 +137,15 @@ export const Canvas = GObject.registerClass({
 
   on_key_press(controller, keyval, keycode, state) {
     // forward key press info to the commandline object
-    // unless control is pressed
+    // unless a modifier key is pressed CTRL, TAB, CAPSLOCK
 
-    if (state !== Gdk.ModifierType.CONTROL_MASK) {
-      this.commandLine.key_pressed(keyval, keycode);
+    const event = controller.get_current_event();
+
+    if (event.is_modifier()) {
+      return;
     }
+
+    this.commandLine.key_pressed(keyval, keycode);
   }
 
   mouseMove(controller, x, y) {
