@@ -12,6 +12,7 @@ export const Canvas = GObject.registerClass({
     'commandline-updated': {param_types: [GObject.TYPE_STRING]},
     'mouseposition-updated': {param_types: [GObject.TYPE_STRING]},
     'selection-updated': {},
+    'input-changed': {param_types: [GObject.TYPE_BOOLEAN]},
   },
 }, class Canvas extends Gtk.DrawingArea {
   constructor(commandLine) {
@@ -29,6 +30,7 @@ export const Canvas = GObject.registerClass({
     const clickGesture = Gtk.GestureClick.new();
     clickGesture.set_propagation_phase(Gtk.PropagationPhase.CAPTURE);
     clickGesture.set_button(0);
+    // clickGesture.set_exclusive(true); <-- doesn't appear to work
     clickGesture.connect('pressed', this.mouseDown.bind(this));
     clickGesture.connect('released', this.mouseUp.bind(this));
     this.add_controller(clickGesture);
@@ -40,8 +42,18 @@ export const Canvas = GObject.registerClass({
     const zoomGesture = Gtk.GestureZoom.new();
     zoomGesture.set_propagation_phase(Gtk.PropagationPhase.BUBBLE);
     zoomGesture.connect('begin', this.zoomBegin.bind(this));
-    zoomGesture.connect('scale-changed', this.zoomEnd.bind(this));
+    zoomGesture.connect('scale-changed', this.zoomChanged.bind(this));
     this.add_controller(zoomGesture);
+
+    const dragGesture = Gtk.GestureDrag.new();
+    dragGesture.set_propagation_phase(Gtk.PropagationPhase.BUBBLE);
+    // set button: 1 = left, 2 = wheel, 3 = right;
+    // dragGesture.set_button(0);
+    dragGesture.set_touch_only(true);
+    dragGesture.connect('drag-begin', this.dragBegin.bind(this));
+    dragGesture.connect('drag-update', this.dragUpdate.bind(this));
+    dragGesture.connect('drag-end', this.dragEnd.bind(this));
+    this.add_controller(dragGesture);
 
     const keyController = Gtk.EventControllerKey.new();
     keyController.connect('key-pressed', this.on_key_press.bind(this));
@@ -77,6 +89,9 @@ export const Canvas = GObject.registerClass({
 
     // set the cursor style
     this.set_cursor(Gdk.Cursor.new_from_name('crosshair', null));
+
+    // pinch to zoom delta
+    this.pinchDelta = 0;
   }
 
   on_copy() {
@@ -135,52 +150,76 @@ export const Canvas = GObject.registerClass({
   }
 
   mouseDown(gesture, num, x, y, z) {
-    // // console.log("mouseDown", gesture, num, x, y);
-    // const event = gesture.get_current_event();
+    const event = gesture.get_current_event();
+    if (event.get_device().get_source() === Gdk.InputSource.TOUCHSCREEN) {
+      // emit input changed so the window can hide / show widgets
+      this.emit('input-changed', false);
+      return;
+    }
+
     const btn = gesture.get_current_button() - 1;
-    // // console.log("event", event, btn);
     this.core.mouse.mouseDown(btn);
+
+    // emit input changed so the window can hide / show widgets
+    this.emit('input-changed', true);
+
     // ensure the canvas has focus to receive events
     this.grab_focus();
   }
 
   mouseUp(gesture, num, x, y, z) {
-    // // console.log("mouseUp", gesture, num, x, y);
-    // const event = gesture.get_current_event();
+    const event = gesture.get_current_event();
+    // ignore touch events
+    if (event.get_device().get_source() === Gdk.InputSource.TOUCHSCREEN) {
+      return;
+    }
+
     const btn = gesture.get_current_button() - 1;
-    // // console.log("event", event, btn);
     this.core.mouse.mouseUp(btn);
   }
 
   wheel(controller, x, y) {
-    // // console.log("wheel", controller, x, y);
+    // console.log("wheel", controller, x, y);
     this.core.mouse.wheel(y);
     this.queue_draw();
   }
 
-  dragBegin(controller, x, y) {
-    // // console.log("dragBegin", controller, x, y);
-    // this.core.mouse.wheel();
+  dragBegin(gesture, x, y) {
+    // log("dragBegin", gesture, x, y);
+    // button - 0 = left, 1 = wheel, 2 = right;
+    this.core.mouse.mouseMoved(x, y);
+    this.core.mouse.mouseDown(1);
   }
 
-  dragUpdate(controller, x, y) {
-    // // console.log("dragUpdate", controller, x, y);
-    // this.core.mouse.wheel();
+  dragUpdate(gesture, x, y) {
+    const startPoint = gesture.get_start_point();
+    this.core.mouse.mouseMoved(startPoint[1] + x, startPoint[2] + y);
   }
 
-  dragEnd(controller, x, y) {
-    // // console.log("dragEnd", controller, x, y);
-    // this.core.mouse.wheel();
+  dragEnd(gesture, x, y) {
+    // log("dragEnd", gesture, x, y);
+    // button - 0 = left, 1 = wheel, 2 = right;
+    this.core.mouse.mouseUp(1);
   }
 
-  zoomBegin(controller, x, y) {
-    // // console.log("zoomBegin", controller, x, y);
-    // this.core.mouse.wheel();
-
+  zoomBegin(gesture, data) {
+    // console.log("zoomBegin", gesture, data);
+    // get the pinch center from the bound box
+    const boundBox = gesture.get_bounding_box_center();
+    this.core.mouse.mouseMoved(boundBox[1], boundBox[2]);
+    // pinch to zoom delta
+    this.pinchDelta = 0;
   }
 
-  zoomEnd(controller, x, y) {
-    // // console.log("zoomEnd", controller, x, y);
-    // this.core.mouse.wheel();
+  zoomChanged(gesture, scale) {
+    // console.log("zoomChanged", gesture, scale);
+    const scaleDelta = scale - this.pinchDelta;
+
+    // ignore the first zoom change because we need
+    // the delta between the current and previous
+    if (this.pinchDelta !== 0) {
+      this.core.mouse.wheel(scaleDelta);
+    }
+    this.pinchDelta = scale;
   }
 });

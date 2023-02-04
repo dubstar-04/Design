@@ -30,6 +30,15 @@ import {Settings} from './settings.js';
 
 export const DesignWindow = GObject.registerClass({
   GTypeName: 'DesignWindow',
+  Properties: {
+    'toolbars-visible': GObject.ParamSpec.boolean(
+        'toolbars-visible',
+        'Toolbars Visible',
+        'Show the input toolbars',
+        GObject.ParamFlags.READWRITE,
+        true,
+    ),
+  },
   Signals: {
     'canvas-selection-updated': {},
   },
@@ -87,6 +96,13 @@ export const DesignWindow = GObject.registerClass({
     this._toastoverlay.add_toast(toast);
   }
 
+  on_show_toolbars(canvas, show) {
+    // show or hide the toolbars and commandline
+    // these are only suitable for mouse and keyboard
+    // hide on touch
+    this.toolbars_visible = show;
+  }
+
   on_tab_change() {
     // Ensure the settings are synced to the selected tab
     this.settings.sync_settings();
@@ -105,6 +121,7 @@ export const DesignWindow = GObject.registerClass({
     canvas.connect('commandline-updated', this.update_commandline.bind(this));
     canvas.connect('mouseposition-updated', this.update_mouse_position.bind(this));
     canvas.connect('selection-updated', this.canvas_selection_updated.bind(this));
+    canvas.connect('input-changed', this.on_show_toolbars.bind(this));
     this.commandLine.reset();
     // make the new page current
     this._tabView.set_selected_page(page);
