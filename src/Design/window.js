@@ -36,7 +36,7 @@ export const DesignWindow = GObject.registerClass({
         'Toolbars Visible',
         'Show the input toolbars',
         GObject.ParamFlags.READWRITE,
-        false
+        true,
     ),
   },
   Signals: {
@@ -96,8 +96,10 @@ export const DesignWindow = GObject.registerClass({
     this._toastoverlay.add_toast(toast);
   }
 
-  on_show_toolbars(canvas, show){
-    log("show toolbars:", show, this.toolbars_visible)
+  on_show_toolbars(canvas, show) {
+    // show or hide the toolbars and commandline
+    // these are only suitable for mouse and keyboard
+    // hide on touch
     this.toolbars_visible = show;
   }
 

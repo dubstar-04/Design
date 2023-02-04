@@ -12,7 +12,7 @@ export const Canvas = GObject.registerClass({
     'commandline-updated': {param_types: [GObject.TYPE_STRING]},
     'mouseposition-updated': {param_types: [GObject.TYPE_STRING]},
     'selection-updated': {},
-    'input-changed':{param_types: [GObject.TYPE_BOOLEAN]},
+    'input-changed': {param_types: [GObject.TYPE_BOOLEAN]},
   },
 }, class Canvas extends Gtk.DrawingArea {
   constructor(commandLine) {
@@ -45,15 +45,15 @@ export const Canvas = GObject.registerClass({
     zoomGesture.connect('scale-changed', this.zoomChanged.bind(this));
     this.add_controller(zoomGesture);
 
-    var dragGesture = Gtk.GestureDrag.new()
-    dragGesture.set_propagation_phase(Gtk.PropagationPhase.BUBBLE)
+    const dragGesture = Gtk.GestureDrag.new();
+    dragGesture.set_propagation_phase(Gtk.PropagationPhase.BUBBLE);
     // set button: 1 = left, 2 = wheel, 3 = right;
     // dragGesture.set_button(0);
     dragGesture.set_touch_only(true);
-    dragGesture.connect("drag-begin", this.dragBegin.bind(this))
-    dragGesture.connect("drag-update", this.dragUpdate.bind(this))
-    dragGesture.connect("drag-end", this.dragEnd.bind(this))
-    this.add_controller(dragGesture)
+    dragGesture.connect('drag-begin', this.dragBegin.bind(this));
+    dragGesture.connect('drag-update', this.dragUpdate.bind(this));
+    dragGesture.connect('drag-end', this.dragEnd.bind(this));
+    this.add_controller(dragGesture);
 
     const keyController = Gtk.EventControllerKey.new();
     keyController.connect('key-pressed', this.on_key_press.bind(this));
@@ -151,16 +151,17 @@ export const Canvas = GObject.registerClass({
 
   mouseDown(gesture, num, x, y, z) {
     const event = gesture.get_current_event();
-    if (event.get_device().get_source() === Gdk.InputSource.TOUCHSCREEN){
+    if (event.get_device().get_source() === Gdk.InputSource.TOUCHSCREEN) {
+      // emit input changed so the window can hide / show widgets
       this.emit('input-changed', false);
-      return
+      return;
     }
 
     const btn = gesture.get_current_button() - 1;
     this.core.mouse.mouseDown(btn);
 
+    // emit input changed so the window can hide / show widgets
     this.emit('input-changed', true);
-
 
     // ensure the canvas has focus to receive events
     this.grab_focus();
@@ -169,8 +170,8 @@ export const Canvas = GObject.registerClass({
   mouseUp(gesture, num, x, y, z) {
     const event = gesture.get_current_event();
     // ignore touch events
-    if (event.get_device().get_source() === Gdk.InputSource.TOUCHSCREEN){
-      return
+    if (event.get_device().get_source() === Gdk.InputSource.TOUCHSCREEN) {
+      return;
     }
 
     const btn = gesture.get_current_button() - 1;
@@ -178,13 +179,13 @@ export const Canvas = GObject.registerClass({
   }
 
   wheel(controller, x, y) {
-    //console.log("wheel", controller, x, y);
+    // console.log("wheel", controller, x, y);
     this.core.mouse.wheel(y);
     this.queue_draw();
   }
 
   dragBegin(gesture, x, y) {
-    //log("dragBegin", gesture, x, y);
+    // log("dragBegin", gesture, x, y);
     // button - 0 = left, 1 = wheel, 2 = right;
     this.core.mouse.mouseMoved(x, y);
     this.core.mouse.mouseDown(1);
@@ -211,12 +212,12 @@ export const Canvas = GObject.registerClass({
   }
 
   zoomChanged(gesture, scale) {
-    //console.log("zoomChanged", gesture, scale);
+    // console.log("zoomChanged", gesture, scale);
     const scaleDelta = scale - this.pinchDelta;
 
     // ignore the first zoom change because we need
     // the delta between the current and previous
-    if(this.pinchDelta !== 0){
+    if (this.pinchDelta !== 0) {
       this.core.mouse.wheel(scaleDelta);
     }
     this.pinchDelta = scale;
