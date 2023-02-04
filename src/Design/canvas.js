@@ -12,6 +12,7 @@ export const Canvas = GObject.registerClass({
     'commandline-updated': {param_types: [GObject.TYPE_STRING]},
     'mouseposition-updated': {param_types: [GObject.TYPE_STRING]},
     'selection-updated': {},
+    'input-changed':{param_types: [GObject.TYPE_BOOLEAN]},
   },
 }, class Canvas extends Gtk.DrawingArea {
   constructor(commandLine) {
@@ -151,11 +152,15 @@ export const Canvas = GObject.registerClass({
   mouseDown(gesture, num, x, y, z) {
     const event = gesture.get_current_event();
     if (event.get_device().get_source() === Gdk.InputSource.TOUCHSCREEN){
+      this.emit('input-changed', false);
       return
     }
 
     const btn = gesture.get_current_button() - 1;
     this.core.mouse.mouseDown(btn);
+
+    this.emit('input-changed', true);
+
 
     // ensure the canvas has focus to receive events
     this.grab_focus();

@@ -101,7 +101,7 @@ hexpand: true;
 
   [overlay]
   Gtk.Revealer{
-    reveal-child: true;
+    reveal-child: bind DesignWindow.toolbars-visible;
     transition-type: slide_left;
     hexpand: true;
     halign: start;
@@ -118,7 +118,7 @@ hexpand: true;
 
   [overlay]
   Gtk.Revealer{
-    reveal-child: true;
+    reveal-child: bind DesignWindow.toolbars-visible;
     transition-type: slide_right;
     hexpand: true;
     halign: end;
@@ -137,15 +137,23 @@ hexpand: true;
 }
 }
 
-InfoBar{
-  Box{
-    Entry commandLineEntry{
-    hexpand: true;
-    can-focus: false;
-    }
-    Label mousePosLabel{
-    halign: end;
-    width-request: 150;
+[overlay]
+Gtk.Revealer{
+  reveal-child: bind DesignWindow.toolbars-visible;
+  transition-type: slide_up;
+  hexpand: true;
+
+  InfoBar{
+    Box{
+      Entry commandLineEntry{
+        hexpand: true;
+        can-focus: false;
+      }
+
+      Label mousePosLabel{
+        halign: end;
+        width-request: 150;
+      }
     }
   }
 }
