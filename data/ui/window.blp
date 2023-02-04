@@ -26,6 +26,16 @@ id: "file-management";
     }
 
     item {
+      label: _("Layers");
+      action: "app.showlayers";
+    }
+
+    item {
+      label: _("Properties");
+      action: "app.showproperties";
+    }
+
+    item {
       label: _("Keyboard Shortcuts");
       action: "win.shortcuts";
     }
@@ -63,6 +73,7 @@ Box{
       tooltip-text: _("Open application menu");
     }
 
+    /*
     [end]
     Button layersButton{
       can-focus: false;
@@ -78,6 +89,7 @@ Box{
       icon-name: 'dialog-question-symbolic';
       tooltip-text: _("Show properties window");
       }
+      */
   }
 
 Adw.ToastOverlay toastoverlay {

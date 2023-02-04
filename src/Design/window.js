@@ -72,6 +72,22 @@ export const DesignWindow = GObject.registerClass({
     });
     preferences.connect('activate', this.show_preferences_window.bind(this));
     application.add_action(preferences);
+    application.set_accels_for_action('app.preferences', ['<primary>comma']);
+
+    const showLayers = new Gio.SimpleAction({
+      name: 'showlayers',
+      parameter_type: null,
+    });
+    showLayers.connect('activate', this.show_layers_window.bind(this));
+    application.add_action(showLayers);
+    application.set_accels_for_action('app.showlayers', ['<primary>L']);
+
+    const showProperties = new Gio.SimpleAction({
+      name: 'showproperties',
+      parameter_type: null,
+    });
+    showProperties.connect('activate', this.show_properties_window.bind(this));
+    application.add_action(showProperties);
 
     const shortcuts = new Gio.SimpleAction({
       name: 'shortcuts',
@@ -79,6 +95,7 @@ export const DesignWindow = GObject.registerClass({
     });
     shortcuts.connect('activate', this.show_shortcuts_window.bind(this));
     this.add_action(shortcuts);
+    application.set_accels_for_action('win.shortcuts', ['<primary>question']);
 
     this._newButton.connect('clicked', this.new_document.bind(this));
     this._tabView.connect('notify::selected-page', this.on_tab_change.bind(this));
@@ -184,7 +201,7 @@ export const DesignWindow = GObject.registerClass({
   }
 
   show_layers_window() {
-    // console.log("Show Layers Window")
+    console.log('Show Layers Window');
     const layersWin = new LayersWindow(this);
     layersWin.set_transient_for(this);
     layersWin.present();
