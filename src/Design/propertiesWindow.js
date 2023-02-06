@@ -37,7 +37,10 @@ export const PropertiesWindow = GObject.registerClass({
     this.connect('close-request', this.on_close.bind(this));
     this.propertyManager;
     this.getPropertyManager();
-  } // init
+
+    // attempt to load any currently selected entities
+    this.on_selection_updated();
+  }
 
   on_close() {
     // console.log("properties closing")
