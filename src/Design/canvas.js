@@ -184,7 +184,7 @@ export const Canvas = GObject.registerClass({
 
   wheel(controller, x, y) {
     // console.log("wheel", controller, x, y);
-    this.core.mouse.wheel(y);
+    this.core.mouse.wheel(y * -1);
     this.queue_draw();
   }
 
