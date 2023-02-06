@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=design
+Name=Design
 Exec=io.github.dubstar_04.design %F
 Icon=io.github.dubstar_04.design
 Terminal=false
