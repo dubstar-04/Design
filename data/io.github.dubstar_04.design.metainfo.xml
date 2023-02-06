@@ -45,6 +45,7 @@
 					<li>Add layer manager and properties to app menu. Remove header bar buttons</li>
 					<li>Fixes for text rotation</li>
 					<li>Show app name capitalised in overview</li>
+					<li>Invert zoom direction</li>
 				</ul>
 			</description>
 		</release>
