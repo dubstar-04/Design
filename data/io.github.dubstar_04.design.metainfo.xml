@@ -47,6 +47,8 @@
 					<li>Show app name capitalised in overview</li>
 					<li>Invert zoom direction</li>
 					<li>Load any preselected entities when opening the properties window</li>
+					<li>Fix right mouse button behaviour</li>
+					<li>Fix files being read incorrectly</li>
 				</ul>
 			</description>
 		</release>
