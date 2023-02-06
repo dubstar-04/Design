@@ -42,7 +42,9 @@
 					<li>Show crosshair cursor on the canvas</li>
 					<li>Add touch controls, pan, pinch to zoom and double tap to zoom all</li>
 					<li>Hide toolbars and commandline on touch input</li>
-					<li>Add layer manager and properties to app menu. Remove header bar buttons </li>
+					<li>Add layer manager and properties to app menu. Remove header bar buttons</li>
+					<li>Fixes for text rotation</li>
+					<li>Show app name capitalised in overview</li>
 				</ul>
 			</description>
 		</release>
@@ -52,7 +54,7 @@
 					<li>FOSDEM release!</li>
 					<li>Enable 'open with' from the file browser</li>
 					<li>Show notifications for DI and ID commands</li>
-					<li>Recolor the canvas for dark/lights</li>
+					<li>Recolor the canvas for dark/light styles</li>
 					<li>End current command with a right click</li>
 					<li>Enable changing preferences</li>
 					<li>New icon!</li>
