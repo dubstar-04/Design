@@ -46,6 +46,7 @@
 					<li>Fixes for text rotation</li>
 					<li>Show app name capitalised in overview</li>
 					<li>Invert zoom direction</li>
+					<li>Load any preselected entities when opening the properties window</li>
 				</ul>
 			</description>
 		</release>
