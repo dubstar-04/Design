@@ -23,6 +23,12 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
+**Design version**
+ - Version [e.g. v43-alpha2]
+
+**Flatpak version**
+- Version [e.g. 1.15.2]
+
 **Desktop (please complete the following information):**
  - OS: [e.g. Ubuntu]
  - Version [e.g. 22.04]
