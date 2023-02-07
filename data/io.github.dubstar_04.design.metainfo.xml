@@ -49,6 +49,8 @@
 					<li>Load any preselected entities when opening the properties window</li>
 					<li>Fix right mouse button behaviour</li>
 					<li>Fix files being read incorrectly</li>
+					<li>Fix ARC selection</li>
+					<li>Improve selection precision</li>
 				</ul>
 			</description>
 		</release>
