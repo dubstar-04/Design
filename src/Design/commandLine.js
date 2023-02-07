@@ -53,10 +53,6 @@ export const CommandLine = GObject.registerClass({
       case 9: // Escape
         key = 'Escape';
         break;
-      case 20: // Minus
-        break;
-      case 21: // Equals
-        break;
       case 22: // Backspace
         key = 'Backspace';
         break;
@@ -64,19 +60,6 @@ export const CommandLine = GObject.registerClass({
         break;
       case 36: // Enter
         key = 'Enter';
-        break;
-      case 37: // Ctrl
-        // key = "Ctrl";
-        break;
-      case 49: // acute
-        break;
-      case 50: // Shift
-        // key = "Shift";
-        break;
-      case 59: // comma
-        key = ',';
-        break;
-      case 64: // Alt_L
         break;
       case 65: // space
         key = 'Space';
@@ -94,39 +77,9 @@ export const CommandLine = GObject.registerClass({
       case 119: // Delete
         key = 'Delete';
         break;
-      case 112: // F1
-        // showSettings()
-        // changeTab(event, 'Help')
-        break;
-      case 113: // F2
-        break;
-      case 114: // F3
-        // this.disableSnaps(e);
-        break;
-      case 115: // F4
-        break;
-      case 116: // F5
-        break;
-      case 117: // F6
-        break;
-      case 118: // F7
-        // toggleSnap('drawGrid')
-        break;
-      case 119: // F8
-        // toggleSnap('ortho')
-        break;
-      case 120: // F9
-        break;
-      case 121: // F10
-        // toggleSnap('polar');
-        break;
-      case 122: // F11
-        break;
-      case 123: // F12
-        break;
 
       default:
-        key = Gdk.keyval_name(keyVal);
+        key = String.fromCodePoint(Gdk.keyval_to_unicode(keyVal));
     }
 
     if (key) {
