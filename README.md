@@ -1,7 +1,7 @@
 # Design &emsp;[![Design QA](https://github.com/dubstar-04/Design/actions/workflows/DesignQA.yml/badge.svg?branch=main)](https://github.com/dubstar-04/Design/actions/workflows/DesignQA.yml)
 
-Design is a 2D computer aided design application (CAD),created to meet the needs of makers and designers, 
-hobbyists and professionals that require a first class CAD application.
+Design is a 2D computer aided design application (CAD), created to meet the needs of makers and designers, 
+hobbyists and professionals that require a first-class CAD application.
 ___
 
 ### History
@@ -10,10 +10,10 @@ When the Ubuntu Phone project was cancelled in 2017 it seemed that would be the 
 wondered if Design could possibly live on as a [web app](https://www.design-app.co.uk/).
 
 Now in the early 2020s Linux phones are gaining popularity and momentum, the team have reinvented Design as a GNOME application
-along with the original aim to provide a native CAD experience whether on the move with a mobile device, pocket PC or at a traditional work station.
+along with the original aim to provide a native CAD experience whether on the move with a mobile device, pocket PC or at a traditional workstation.
 ___
 
-### Documention is available at:
+### Documentation is available at:
 https://design-app.readthedocs.io/en/latest/index.html
 ___
 
