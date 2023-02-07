@@ -32,3 +32,7 @@ ___
 ![Screenshot 2](data/screenshots/screenshot2.png "Layer manager")
 
 ![Screenshot 3](data/screenshots/screenshot3.png "Properties")
+
+## Contribute
+
+Congratulations! You’re up and running. Now you can begin coding in Design and contribute your fixes and new features to the project. For details on submitting your code to the project, read [Contributing Code](https://github.com/dubstar-04/Design/blob/main/Contributing.md).
