@@ -98,6 +98,7 @@ export const DesignWindow = GObject.registerClass({
     });
     showProperties.connect('activate', this.show_properties_window.bind(this));
     application.add_action(showProperties);
+    application.set_accels_for_action('app.showproperties', ['<primary>1']);
 
     const shortcuts = new Gio.SimpleAction({
       name: 'shortcuts',
@@ -115,6 +116,9 @@ export const DesignWindow = GObject.registerClass({
 
     const openDocShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>O'), action: Gtk.CallbackAction.new(this.openDialog.bind(this))});
     shortcutController.add_shortcut(openDocShortcut);
+
+    const showPropertiesShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>1'), action: Gtk.CallbackAction.new(this.show_properties_window.bind(this))});
+    shortcutController.add_shortcut(showPropertiesShortcut);
 
     this.add_controller(shortcutController);
     // #endregion
