@@ -103,6 +103,9 @@ export const DesignWindow = GObject.registerClass({
     const newDocShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>N'), action: Gtk.CallbackAction.new(this.new_document.bind(this))});
     shortcutController.add_shortcut(newDocShortcut);
 
+    const openDocShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>O'), action: Gtk.CallbackAction.new(this.openDialog.bind(this))});
+    shortcutController.add_shortcut(openDocShortcut);
+
     this.add_controller(shortcutController);
     // #endregion
 
