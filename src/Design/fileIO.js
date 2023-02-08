@@ -88,7 +88,7 @@ export class FileIO {
 
       const dxfContents = window.get_active_canvas().core.saveFile();
 
-      const [success, tag] = file.replace_contents(dxfContents, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
+      const [success] = file.replace_contents(dxfContents, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
 
       if (success) {
         /* it worked! */
