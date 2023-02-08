@@ -49,6 +49,7 @@ export const CommandLine = GObject.registerClass({
 
     let key;
 
+    // Keycode list: https://gist.github.com/rickyzhang82/8581a762c9f9fc6ddb8390872552c250
     switch (keyCode) {
       case 9: // Escape
         key = 'Escape';
@@ -61,7 +62,7 @@ export const CommandLine = GObject.registerClass({
       case 36: // Enter
         key = 'Enter';
         break;
-      case 104: // Numpad Enter
+      case 108: // Numpad Enter
         key = 'Enter';
         break;
       case 65: // space
