@@ -60,6 +60,7 @@ export const DesignWindow = GObject.registerClass({
     });
     open.connect('activate', () => FileIO.openDialog(this));
     this.add_action(open);
+    application.set_accels_for_action('win.open', ['<primary>O']);
 
     const save = new Gio.SimpleAction({
       name: 'save',
