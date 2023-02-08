@@ -111,6 +111,9 @@ export const DesignWindow = GObject.registerClass({
     const showPropertiesShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>1'), action: Gtk.CallbackAction.new(this.show_properties_window.bind(this))});
     shortcutController.add_shortcut(showPropertiesShortcut);
 
+    const toggleGridShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>G'), action: Gtk.CallbackAction.new(this.on_setting_toggled.bind(this, 'drawgrid'))});
+    shortcutController.add_shortcut(toggleGridShortcut);
+
     this.add_controller(shortcutController);
     // #endregion
 
@@ -361,8 +364,14 @@ export const DesignWindow = GObject.registerClass({
 
     dialog.destroy();
   }
-},
 
+  on_setting_toggled(setting) {
+    const state = this.settings.get_setting(setting);
+    this.settings.set_core_setting(setting, !state);
+    this.settings.set_setting(setting, !state);
+    this.commandLine.reset();
+  }
+},
 );
 
 
