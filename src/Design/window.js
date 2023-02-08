@@ -123,6 +123,9 @@ export const DesignWindow = GObject.registerClass({
     const toggleGridShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>G'), action: Gtk.CallbackAction.new(this.on_setting_toggled.bind(this, 'drawgrid'))});
     shortcutController.add_shortcut(toggleGridShortcut);
 
+    const toggleOrthoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F8'), action: Gtk.CallbackAction.new(this.on_setting_toggled.bind(this, 'ortho'))});
+    shortcutController.add_shortcut(toggleOrthoShortcut);
+
     this.add_controller(shortcutController);
     // #endregion
 
@@ -280,7 +283,10 @@ export const DesignWindow = GObject.registerClass({
     const state = this.settings.get_setting(setting);
     this.settings.set_core_setting(setting, !state);
     this.settings.set_setting(setting, !state);
-    this.commandLine.reset();
+
+    if (setting === 'drawgrid') {
+      this.commandLine.reset();
+    }
   }
 },
 );
