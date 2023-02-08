@@ -126,6 +126,9 @@ export const DesignWindow = GObject.registerClass({
     const toggleOrthoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F8'), action: Gtk.CallbackAction.new(this.on_setting_toggled.bind(this, 'ortho'))});
     shortcutController.add_shortcut(toggleOrthoShortcut);
 
+    const togglePolarShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F9'), action: Gtk.CallbackAction.new(this.on_setting_toggled.bind(this, 'polar'))});
+    shortcutController.add_shortcut(togglePolarShortcut);
+
     this.add_controller(shortcutController);
     // #endregion
 
