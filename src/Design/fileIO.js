@@ -2,6 +2,13 @@ import Gtk from 'gi://Gtk';
 import Gio from 'gi://Gio';
 
 export class FileIO {
+  // TODO: FileIO needs to be refactored considering the following:
+  // 1. File open dialogs should be transient to the application window
+  // 2. The application window will need to create a new TabPage and Canvas before files can be opened
+  // 3. File data needs to be loaded relevant to the canvas object
+  // 4. Autosave will need to be tracked on the canvas with a timer
+  // 5. Success notifications will need to be returned to the application window
+
   static format_filename(fileName) {
     const formattedName = fileName.replace(/\.[^/.]+$/, '');
     return formattedName;
