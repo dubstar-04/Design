@@ -59,6 +59,7 @@ export const Canvas = GObject.registerClass({
     keyController.connect('key-pressed', this.on_key_press.bind(this));
     this.add_controller(keyController);
 
+    // #region CTRL + '' shortcuts
     const shortcutController = new Gtk.ShortcutController();
 
     const copyShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.CallbackAction.new(this.on_copy.bind(this))});
@@ -71,6 +72,7 @@ export const Canvas = GObject.registerClass({
     shortcutController.add_shortcut(undoShortcut);
 
     this.add_controller(shortcutController);
+    // #endregion
 
     this.core = new Core();
 
