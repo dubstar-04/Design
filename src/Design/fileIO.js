@@ -123,6 +123,13 @@ export class FileIO {
     const name = this.format_filename(window._tabView.get_selected_page().get_title());
     dialog.set_current_name(`${name}.dxf`);
 
+    const filePath = window.get_active_canvas().getFilePath();
+    if (filePath) {
+      const file = Gio.File.new_for_path(filePath);
+      const path = file.get_parent();
+      dialog.set_current_folder(path);
+    }
+
     dialog.show();
     dialog.connect('response', (dialog, response) => {
       if (response == Gtk.ResponseType.ACCEPT) {
