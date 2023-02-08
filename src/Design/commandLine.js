@@ -61,6 +61,9 @@ export const CommandLine = GObject.registerClass({
       case 36: // Enter
         key = 'Enter';
         break;
+      case 104: // Numpad Enter
+        key = 'Enter';
+        break;
       case 65: // space
         key = 'Space';
         break;
