@@ -106,6 +106,15 @@ export const DesignWindow = GObject.registerClass({
     this.add_action(shortcuts);
     application.set_accels_for_action('win.shortcuts', ['<primary>question']);
 
+    // #region CTRL + '' shortcuts
+    const shortcutController = new Gtk.ShortcutController();
+
+    const newDocShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>N'), action: Gtk.CallbackAction.new(this.new_document.bind(this))});
+    shortcutController.add_shortcut(newDocShortcut);
+
+    this.add_controller(shortcutController);
+    // #endregion
+
     this._newButton.connect('clicked', this.new_document.bind(this));
     this._tabView.connect('notify::selected-page', this.on_tab_change.bind(this));
 
