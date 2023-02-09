@@ -9,7 +9,7 @@ assignees: ''
 
 **Describe the bug or feature**
 A clear and concise description.
- - Version [e.g. 43-aplha1] - Check the about window under the app menu
+ - Version [e.g. 43-alpha3] - Check the about window under the app menu
 
 **Step to reproduce an issue (omit for feature request)**
 Steps to reproduce the behaviour:
