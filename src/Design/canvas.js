@@ -7,7 +7,15 @@ import {Core} from '../Design-Core/core/core.js';
 
 export const Canvas = GObject.registerClass({
   GTypeName: 'Canvas',
-  Properties: {},
+  Properties: {
+    'file-path': GObject.ParamSpec.string(
+        'file-path',
+        'File Path',
+        'File path for current file',
+        GObject.ParamFlags.READWRITE,
+        null,
+    ),
+  },
   Signals: {
     'commandline-updated': {param_types: [GObject.TYPE_STRING]},
     'mouseposition-updated': {param_types: [GObject.TYPE_STRING]},
@@ -92,6 +100,15 @@ export const Canvas = GObject.registerClass({
 
     // pinch to zoom delta
     this.pinchDelta = 0;
+  }
+
+  setFilePath(filePath) {
+    // TODO: Check path is valid
+    this.file_path = filePath;
+  }
+
+  getFilePath() {
+    return this.file_path;
   }
 
   on_copy() {
