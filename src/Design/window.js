@@ -28,6 +28,8 @@ import {LayersWindow} from './layersWindow.js';
 import {PropertiesWindow} from './propertiesWindow.js';
 import {Settings} from './settings.js';
 
+import {FileIO} from './fileIO.js';
+
 export const DesignWindow = GObject.registerClass({
   GTypeName: 'DesignWindow',
   Properties: {
@@ -56,7 +58,7 @@ export const DesignWindow = GObject.registerClass({
       name: 'open',
       parameter_type: null,
     });
-    open.connect('activate', this.openDialog.bind(this));
+    open.connect('activate', () => FileIO.openDialog(this));
     this.add_action(open);
     application.set_accels_for_action('win.open', ['<primary>O']);
 
@@ -64,8 +66,15 @@ export const DesignWindow = GObject.registerClass({
       name: 'save',
       parameter_type: null,
     });
-    save.connect('activate', this.saveDialog.bind(this));
+    save.connect('activate', () => FileIO.save(this));
     this.add_action(save);
+
+    const saveAs = new Gio.SimpleAction({
+      name: 'save-as',
+      parameter_type: null,
+    });
+    saveAs.connect('activate', () => FileIO.saveDialog(this));
+    this.add_action(saveAs);
 
     const preferences = new Gio.SimpleAction({
       name: 'preferences',
@@ -156,9 +165,18 @@ export const DesignWindow = GObject.registerClass({
   }
 
   add_canvas(name) {
-    // setup empty new canvas
-    const canvas = new Canvas(this.commandLine);
-    const page = this._tabView.add_page(canvas, null);
+    // Check if the current canvas is empty
+    let canvas = this.get_active_canvas();
+    let page = this._tabView.get_selected_page();
+
+    if (!canvas || canvas.core.scene.items.length !== 0 || canvas.getFilePath()) {
+      // no active canvas
+      // canvas is not empty or has a filePath assigned
+      // setup empty new canvas
+      canvas = new Canvas(this.commandLine);
+      page = this._tabView.add_page(canvas, null);
+    }
+
     const tabname = name || 'new';
     page.set_title(tabname);
     canvas.connect('commandline-updated', this.update_commandline.bind(this));
@@ -255,120 +273,23 @@ export const DesignWindow = GObject.registerClass({
 
   get_active_canvas() {
     const activePage = this._tabView.get_selected_page();
-    const activeCanvas = activePage.get_child();
-    return activeCanvas;
-  }
-
-  openDialog() {
-    const filter = new Gtk.FileFilter();
-    filter.add_pattern('*.dxf');
-
-    const dialog = new Gtk.FileChooserDialog({
-      action: Gtk.FileChooserAction.OPEN,
-      filter: filter,
-      select_multiple: false,
-      transient_for: this,
-      title: 'Open',
-    });
-
-    dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
-    dialog.add_button('OK', Gtk.ResponseType.OK);
-
-    dialog.show();
-    dialog.connect('response', this.open_dialog_response.bind(this));
-  };
-
-  open_dialog_response(dialog, response) {
-    if (response == Gtk.ResponseType.OK) {
-      const file = dialog.get_file();
-      dialog.destroy();
-      this.load_file(file);
-    }
-    dialog.destroy();
-  }
-
-  load_file(file) {
-    if (!file.query_exists(null)) {
-      // TODO: inform user that the selected file is invalid.
-      return;
+    if (activePage) {
+      const activeCanvas = activePage.get_child();
+      return activeCanvas;
     }
 
-    // get filename
-    const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
-    const fileName = this.format_filename(info.get_name());
-    const ext = this.get_file_extension(info.get_name());
+    // no active canvas
+    return;
+  }
 
-    if (ext.toLowerCase() !== 'dxf') {
-      // TODO: inform user that the file type is not supported.
-      return;
+  on_setting_toggled(setting) {
+    const state = this.settings.get_setting(setting);
+    this.settings.set_core_setting(setting, !state);
+    this.settings.set_setting(setting, !state);
+
+    if (setting === 'drawgrid') {
+      this.commandLine.reset();
     }
-
-    const [, contents] = file.load_contents(null);
-    const decoder = new TextDecoder('utf-8');
-    // decode the file contents from a bitearray
-    const contentsString = decoder.decode(contents);
-    // create a new canvas with the filename in the tab
-    this.add_canvas(fileName);
-    // load the file contents into the active canvas
-    this.get_active_canvas().core.openFile(contentsString);
-  }
-
-  saveDialog() {
-    const filter = new Gtk.FileFilter();
-    filter.add_pattern('*.dxf');
-
-    const dialog = new Gtk.FileChooserDialog({
-      action: Gtk.FileChooserAction.SAVE,
-      filter: filter,
-      select_multiple: false,
-      transient_for: this,
-      title: 'Save As',
-    });
-
-    dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
-    dialog.add_button('Save', Gtk.ResponseType.ACCEPT);
-
-    const name = this.format_filename(this._tabView.get_selected_page().get_title());
-    dialog.set_current_name(`${name}.dxf`);
-
-    dialog.show();
-    dialog.connect('response', this.saveFile.bind(this));
-  };
-
-  format_filename(fileName) {
-    const formattedName = fileName.replace(/\.[^/.]+$/, '');
-    return formattedName;
-  }
-
-  get_file_extension(fileName) {
-    const extension = fileName.split('.').pop();
-    return extension;
-  }
-
-  saveFile(dialog, response) {
-    if (response == Gtk.ResponseType.ACCEPT) {
-      // log("Save clicked:")
-      const file = dialog.get_file();
-
-      // Synchronous, blocking method
-      file.create(Gio.FileCreateFlags.NONE, null);
-
-      const dxfContents = this.get_active_canvas().core.saveFile();
-
-      file.replace_contents(dxfContents, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
-
-      // update page name
-      const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
-      const fileName = info.get_name();
-      const tabTitle = this._tabView.get_selected_page().get_title();
-
-      if (fileName !== tabTitle) {
-        const page = this._tabView.get_selected_page();
-        page.set_title(fileName);
-      }
-    }
-
-    dialog.destroy();
   }
 
   on_setting_toggled(setting) {
