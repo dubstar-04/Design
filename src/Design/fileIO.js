@@ -98,9 +98,10 @@ export class FileIO {
       const [success] = file.replace_contents(dxfContents, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
 
       if (success) {
-        /* it worked! */
+        // TODO: Janky sending notifications through core
+        window.get_active_canvas().core.notify('File Saved');
       } else {
-        /* it failed */
+        window.get_active_canvas().core.notify('Error Saving File');
       }
     }
   }
