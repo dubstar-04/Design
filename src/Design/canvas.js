@@ -189,6 +189,7 @@ export const Canvas = GObject.registerClass({
     this.emit('mouseposition-updated', this.core.mouse.positionString());
 
     // emit input changed so the window can hide / show widgets
+    // TODO: investigate if this has any performance implications
     this.emit('input-changed', true);
   }
 
