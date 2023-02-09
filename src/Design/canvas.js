@@ -187,6 +187,10 @@ export const Canvas = GObject.registerClass({
   mouseMove(controller, x, y) {
     this.core.mouse.mouseMoved(x, y);
     this.emit('mouseposition-updated', this.core.mouse.positionString());
+
+    // emit input changed so the window can hide / show widgets
+    // TODO: investigate if this has any performance implications
+    this.emit('input-changed', true);
   }
 
   mouseDown(gesture, num, x, y, z) {
@@ -199,9 +203,6 @@ export const Canvas = GObject.registerClass({
 
     const btn = gesture.get_current_button() - 1;
     this.core.mouse.mouseDown(btn);
-
-    // emit input changed so the window can hide / show widgets
-    this.emit('input-changed', true);
 
     // ensure the canvas has focus to receive events
     this.grab_focus();
