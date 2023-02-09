@@ -60,6 +60,7 @@ export const DesignWindow = GObject.registerClass({
     });
     open.connect('activate', () => FileIO.openDialog(this));
     this.add_action(open);
+    application.set_accels_for_action('win.open', ['<primary>O']);
 
     const save = new Gio.SimpleAction({
       name: 'save',
@@ -67,6 +68,7 @@ export const DesignWindow = GObject.registerClass({
     });
     save.connect('activate', () => FileIO.save(this));
     this.add_action(save);
+    application.set_accels_for_action('win.save', ['<primary>S']);
 
     const saveAs = new Gio.SimpleAction({
       name: 'save-as',
@@ -74,6 +76,7 @@ export const DesignWindow = GObject.registerClass({
     });
     saveAs.connect('activate', () => FileIO.saveDialog(this));
     this.add_action(saveAs);
+    application.set_accels_for_action('win.save-as', ['<primary><SHIFT>S']);
 
     const preferences = new Gio.SimpleAction({
       name: 'preferences',
@@ -97,6 +100,7 @@ export const DesignWindow = GObject.registerClass({
     });
     showProperties.connect('activate', this.show_properties_window.bind(this));
     application.add_action(showProperties);
+    application.set_accels_for_action('app.showproperties', ['<primary>1']);
 
     const shortcuts = new Gio.SimpleAction({
       name: 'shortcuts',
@@ -106,7 +110,32 @@ export const DesignWindow = GObject.registerClass({
     this.add_action(shortcuts);
     application.set_accels_for_action('win.shortcuts', ['<primary>question']);
 
-    this._newButton.connect('clicked', this.new_document.bind(this));
+    const newDoc = new Gio.SimpleAction({
+      name: 'new',
+      parameter_type: null,
+    });
+    newDoc.connect('activate', this.new_document.bind(this));
+    this.add_action(newDoc);
+    application.set_accels_for_action('win.new', ['<primary>N']);
+
+    // #region CTRL + '' shortcuts
+    const shortcutController = new Gtk.ShortcutController();
+
+    const toggleGridShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>G'), action: Gtk.CallbackAction.new(this.settings.on_setting_toggled.bind(this.settings, 'drawgrid'))});
+    shortcutController.add_shortcut(toggleGridShortcut);
+
+    const helpShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F1'), action: Gtk.CallbackAction.new(this.open_help.bind(this))});
+    shortcutController.add_shortcut(helpShortcut);
+
+    const toggleOrthoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F8'), action: Gtk.CallbackAction.new(this.settings.on_setting_toggled.bind(this.settings, 'ortho'))});
+    shortcutController.add_shortcut(toggleOrthoShortcut);
+
+    const togglePolarShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F9'), action: Gtk.CallbackAction.new(this.settings.on_setting_toggled.bind(this.settings, 'polar'))});
+    shortcutController.add_shortcut(togglePolarShortcut);
+
+    this.add_controller(shortcutController);
+    // #endregion
+
     this._tabView.connect('notify::selected-page', this.on_tab_change.bind(this));
 
     this.add_canvas();
@@ -127,6 +156,11 @@ export const DesignWindow = GObject.registerClass({
     // these are only suitable for mouse and keyboard
     // hide on touch
     this.toolbars_visible = show;
+  }
+
+  open_help() {
+    const uri = 'https://design-app.readthedocs.io/en/latest/index.html';
+    Gio.AppInfo.launch_default_for_uri_async(uri, null, null, null);
   }
 
   on_tab_change() {
@@ -256,7 +290,6 @@ export const DesignWindow = GObject.registerClass({
     return;
   }
 },
-
 );
 
 

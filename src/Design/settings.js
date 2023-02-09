@@ -50,6 +50,12 @@ class Settings extends Gio.Settings {
     // TODO: add function to reset all settings to default
   }
 
+  on_setting_toggled(setting) {
+    const state = this.get_setting(setting);
+    this.set_core_setting(setting, !state);
+    this.set_setting(setting, !state);
+  }
+
   get_core_setting(name) {
     const value = this.window.get_active_canvas().core.settings.getSetting(name);
     return value;

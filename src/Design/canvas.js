@@ -67,6 +67,7 @@ export const Canvas = GObject.registerClass({
     keyController.connect('key-pressed', this.on_key_press.bind(this));
     this.add_controller(keyController);
 
+    // #region CTRL + '' shortcuts
     const shortcutController = new Gtk.ShortcutController();
 
     const copyShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.CallbackAction.new(this.on_copy.bind(this))});
@@ -78,7 +79,11 @@ export const Canvas = GObject.registerClass({
     const undoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Z'), action: Gtk.CallbackAction.new(this.on_undo.bind(this))});
     shortcutController.add_shortcut(undoShortcut);
 
+    const cutShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>X'), action: Gtk.CallbackAction.new(this.on_cut.bind(this))});
+    shortcutController.add_shortcut(cutShortcut);
+
     this.add_controller(shortcutController);
+    // #endregion
 
     this.core = new Core();
 
@@ -112,15 +117,23 @@ export const Canvas = GObject.registerClass({
   }
 
   on_copy() {
-    // console.log("-------- Copy --------")
+    // TODO: implement copy
+    this.core.notify('Copy not implemented');
   }
 
   on_paste() {
-    // console.log("-------- Paste --------")
+    // TODO: implement paste
+    this.core.notify('Paste not implemented');
   }
 
   on_undo() {
-    // console.log("-------- Undo --------")
+    // TODO: implement undo
+    this.core.notify('Undo not implemented');
+  }
+
+  on_cut() {
+    // TODO: implement cut
+    this.core.notify('Cut not implemented');
   }
 
   on_style_change() {
@@ -157,6 +170,12 @@ export const Canvas = GObject.registerClass({
     // unless a modifier key is pressed CTRL, TAB, CAPSLOCK
 
     const event = controller.get_current_event();
+
+    // Don't handle shortcuts and accelerators
+    if (state & Gdk.ModifierType.CONTROL_MASK) {
+      // https://docs.gtk.org/gdk4/flags.ModifierType.html
+      return;
+    }
 
     if (event.is_modifier()) {
       return;
