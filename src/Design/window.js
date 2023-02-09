@@ -289,16 +289,6 @@ export const DesignWindow = GObject.registerClass({
     const state = this.settings.get_setting(setting);
     this.settings.set_core_setting(setting, !state);
     this.settings.set_setting(setting, !state);
-
-    if (setting === 'drawgrid') {
-      this.commandLine.reset();
-    }
-  }
-
-  on_setting_toggled(setting) {
-    const state = this.settings.get_setting(setting);
-    this.settings.set_core_setting(setting, !state);
-    this.settings.set_setting(setting, !state);
   }
 },
 );
