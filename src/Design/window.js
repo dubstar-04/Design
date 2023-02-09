@@ -76,6 +76,7 @@ export const DesignWindow = GObject.registerClass({
     });
     saveAs.connect('activate', () => FileIO.saveDialog(this));
     this.add_action(saveAs);
+    application.set_accels_for_action('win.save-as', ['<primary><SHIFT>S']);
 
     const preferences = new Gio.SimpleAction({
       name: 'preferences',

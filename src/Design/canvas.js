@@ -79,6 +79,9 @@ export const Canvas = GObject.registerClass({
     const undoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Z'), action: Gtk.CallbackAction.new(this.on_undo.bind(this))});
     shortcutController.add_shortcut(undoShortcut);
 
+    const cutShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>X'), action: Gtk.CallbackAction.new(this.on_cut.bind(this))});
+    shortcutController.add_shortcut(cutShortcut);
+
     this.add_controller(shortcutController);
     // #endregion
 
@@ -114,15 +117,19 @@ export const Canvas = GObject.registerClass({
   }
 
   on_copy() {
-    // console.log("-------- Copy --------")
+    this.core.notify('Copy not implemented');
   }
 
   on_paste() {
-    // console.log("-------- Paste --------")
+    this.core.notify('Paste not implemented');
   }
 
   on_undo() {
-    // console.log("-------- Undo --------")
+    this.core.notify('Undo not implemented');
+  }
+
+  on_cut() {
+    this.core.notify('Cut not implemented');
   }
 
   on_style_change() {
