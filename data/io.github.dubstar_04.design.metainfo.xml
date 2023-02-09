@@ -35,7 +35,7 @@
   	</screenshots>
 	<content_rating type="oars-1.1" />
   	<releases>
-		<release version="43.alpha3" date="2023-02-xx">
+		<release version="43.alpha3" date="2023-02-09">
 			<description>
 				<ul>
 					<li>Fix tabs not being shown</li>
@@ -51,7 +51,10 @@
 					<li>Fix files being read incorrectly</li>
 					<li>Fix ARC selection</li>
 					<li>Improve selection precision</li>
-					<li>Added keyboard shortcut</li>
+					<li>Added ability to Save As</li>
+					<li>Added keyboard shortcuts: CTRL+N (New), CTRL+S (Save), CTRL+SHIFT+S (Save As) CTRL+O (Open)</li>
+					<li>	CTRL+1 (Properties),CTRL+G (Toggle Grid), F1 (Help)</li>
+					<li>	F8 (Toggle Ortho), F9 (Toggle Polar)</li>
 				</ul>
 			</description>
 		</release>
