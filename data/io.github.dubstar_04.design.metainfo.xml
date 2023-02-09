@@ -51,6 +51,7 @@
 					<li>Fix files being read incorrectly</li>
 					<li>Fix ARC selection</li>
 					<li>Improve selection precision</li>
+					<li>Added keyboard shortcut</li>
 				</ul>
 			</description>
 		</release>
