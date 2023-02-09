@@ -117,18 +117,22 @@ export const Canvas = GObject.registerClass({
   }
 
   on_copy() {
+    // TODO
     this.core.notify('Copy not implemented');
   }
 
   on_paste() {
+    // TODO
     this.core.notify('Paste not implemented');
   }
 
   on_undo() {
+    // TODO
     this.core.notify('Undo not implemented');
   }
 
   on_cut() {
+    // TODO
     this.core.notify('Cut not implemented');
   }
 
