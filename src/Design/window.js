@@ -154,7 +154,7 @@ export const DesignWindow = GObject.registerClass({
   }
 
   open_help() {
-    const uri = "https://design-app.readthedocs.io/en/latest/index.html";
+    const uri = 'https://design-app.readthedocs.io/en/latest/index.html';
     Gio.AppInfo.launch_default_for_uri_async(uri, null, null, null);
   }
 
@@ -299,10 +299,6 @@ export const DesignWindow = GObject.registerClass({
     const state = this.settings.get_setting(setting);
     this.settings.set_core_setting(setting, !state);
     this.settings.set_setting(setting, !state);
-
-    if (setting === 'drawgrid') {
-      this.commandLine.reset();
-    }
   }
 },
 );
