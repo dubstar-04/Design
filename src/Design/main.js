@@ -41,9 +41,10 @@ export const DesignApplication = GObject.registerClass(
         const showAboutAction = new Gio.SimpleAction({name: 'about'});
         showAboutAction.connect('activate', (action) => {
           const aboutParams = {
+            developer_name: 'Daniel Wood',
             developers: [
-              'Daniel Wood',
               'Sonny Piers',
+              'Brett Parker',
             ],
             artists: [
               'Brage Fuglseth',
