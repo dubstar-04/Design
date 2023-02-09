@@ -114,12 +114,6 @@ export const DesignWindow = GObject.registerClass({
     const newDocShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>N'), action: Gtk.CallbackAction.new(this.new_document.bind(this))});
     shortcutController.add_shortcut(newDocShortcut);
 
-    const openDocShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>O'), action: Gtk.CallbackAction.new(this.openDialog.bind(this))});
-    shortcutController.add_shortcut(openDocShortcut);
-
-    const showPropertiesShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>1'), action: Gtk.CallbackAction.new(this.show_properties_window.bind(this))});
-    shortcutController.add_shortcut(showPropertiesShortcut);
-
     const toggleGridShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>G'), action: Gtk.CallbackAction.new(this.on_setting_toggled.bind(this, 'drawgrid'))});
     shortcutController.add_shortcut(toggleGridShortcut);
 
