@@ -115,16 +115,16 @@ export const DesignWindow = GObject.registerClass({
     const newDocShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>N'), action: Gtk.CallbackAction.new(this.new_document.bind(this))});
     shortcutController.add_shortcut(newDocShortcut);
 
-    const toggleGridShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>G'), action: Gtk.CallbackAction.new(this.on_setting_toggled.bind(this, 'drawgrid'))});
+    const toggleGridShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>G'), action: Gtk.CallbackAction.new(this.settings.on_setting_toggled.bind(this.settings, 'drawgrid'))});
     shortcutController.add_shortcut(toggleGridShortcut);
 
     const helpShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F1'), action: Gtk.CallbackAction.new(this.open_help.bind(this))});
     shortcutController.add_shortcut(helpShortcut);
 
-    const toggleOrthoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F8'), action: Gtk.CallbackAction.new(this.on_setting_toggled.bind(this, 'ortho'))});
+    const toggleOrthoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F8'), action: Gtk.CallbackAction.new(this.settings.on_setting_toggled.bind(this.settings, 'ortho'))});
     shortcutController.add_shortcut(toggleOrthoShortcut);
 
-    const togglePolarShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F9'), action: Gtk.CallbackAction.new(this.on_setting_toggled.bind(this, 'polar'))});
+    const togglePolarShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F9'), action: Gtk.CallbackAction.new(this.settings.on_setting_toggled.bind(this.settings, 'polar'))});
     shortcutController.add_shortcut(togglePolarShortcut);
 
     this.add_controller(shortcutController);
@@ -283,12 +283,6 @@ export const DesignWindow = GObject.registerClass({
 
     // no active canvas
     return;
-  }
-
-  on_setting_toggled(setting) {
-    const state = this.settings.get_setting(setting);
-    this.settings.set_core_setting(setting, !state);
-    this.settings.set_setting(setting, !state);
   }
 },
 );
