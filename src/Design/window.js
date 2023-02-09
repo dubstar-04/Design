@@ -118,6 +118,9 @@ export const DesignWindow = GObject.registerClass({
     const toggleGridShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>G'), action: Gtk.CallbackAction.new(this.on_setting_toggled.bind(this, 'drawgrid'))});
     shortcutController.add_shortcut(toggleGridShortcut);
 
+    const helpShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F1'), action: Gtk.CallbackAction.new(this.open_help.bind(this))});
+    shortcutController.add_shortcut(helpShortcut);
+
     const toggleOrthoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F8'), action: Gtk.CallbackAction.new(this.on_setting_toggled.bind(this, 'ortho'))});
     shortcutController.add_shortcut(toggleOrthoShortcut);
 
@@ -148,6 +151,11 @@ export const DesignWindow = GObject.registerClass({
     // these are only suitable for mouse and keyboard
     // hide on touch
     this.toolbars_visible = show;
+  }
+
+  open_help() {
+    const uri = "https://design-app.readthedocs.io/en/latest/index.html";
+    Gio.AppInfo.launch_default_for_uri_async(uri, null, null, null);
   }
 
   on_tab_change() {
