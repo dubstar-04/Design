@@ -23,7 +23,7 @@ export class FileIO {
     const filter = new Gtk.FileFilter();
     filter.add_pattern('*.dxf');
 
-    const dialog = new Gtk.FileChooserDialog({
+    const dialog = new Gtk.FileChooserNative({
       action: Gtk.FileChooserAction.OPEN,
       filter: filter,
       select_multiple: false,
@@ -31,17 +31,12 @@ export class FileIO {
       title: 'Open',
     });
 
-    dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
-    dialog.add_button('OK', Gtk.ResponseType.OK);
-
     dialog.show();
     dialog.connect('response', (dialog, response) => {
-      if (response == Gtk.ResponseType.OK) {
+      if (response == Gtk.ResponseType.ACCEPT) {
         const file = dialog.get_file();
-        dialog.destroy();
         this.loadFile(file, window);
       }
-      dialog.destroy();
     });
   }
 
@@ -110,7 +105,7 @@ export class FileIO {
     const filter = new Gtk.FileFilter();
     filter.add_pattern('*.dxf');
 
-    const dialog = new Gtk.FileChooserDialog({
+    const dialog = new Gtk.FileChooserNative({
       action: Gtk.FileChooserAction.SAVE,
       filter: filter,
       select_multiple: false,
@@ -118,18 +113,8 @@ export class FileIO {
       title: 'Save As',
     });
 
-    dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
-    dialog.add_button('Save', Gtk.ResponseType.ACCEPT);
-
     const name = this.format_filename(window._tabView.get_selected_page().get_title());
     dialog.set_current_name(`${name}.dxf`);
-
-    const filePath = window.get_active_canvas().getFilePath();
-    if (filePath) {
-      const file = Gio.File.new_for_path(filePath);
-      const path = file.get_parent();
-      dialog.set_current_folder(path);
-    }
 
     dialog.show();
     dialog.connect('response', (dialog, response) => {
@@ -152,8 +137,6 @@ export class FileIO {
           page.set_title(fileName);
         }
       }
-
-      dialog.destroy();
     });
   }
 }
