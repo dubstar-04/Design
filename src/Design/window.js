@@ -181,7 +181,7 @@ export const DesignWindow = GObject.registerClass({
       // no active canvas
       // canvas is not empty or has a filePath assigned
       // setup empty new canvas
-      canvas = new Canvas(this.commandLine);
+      canvas = new Canvas(this, this.commandLine);
       page = this._tabView.add_page(canvas, null);
     }
 
@@ -273,6 +273,11 @@ export const DesignWindow = GObject.registerClass({
 
   update_mouse_position(canvas, position) {
     this._mousePosLabel.label = position;
+  }
+
+  file_saved() {
+    let canvas = this.get_active_canvas();
+    canvas.core.scene.saved = true;
   }
 
   canvas_selection_updated() {

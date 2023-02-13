@@ -23,13 +23,14 @@ export const Canvas = GObject.registerClass({
     'input-changed': {param_types: [GObject.TYPE_BOOLEAN]},
   },
 }, class Canvas extends Gtk.DrawingArea {
-  constructor(commandLine) {
+  constructor(designWindow, commandLine) {
     super();
 
     // set the drawing area as focusable or we don't get events
     this.focusable = true;
 
     this.commandLine = commandLine;
+    this.designWindow = designWindow;
 
     const motionEvent = Gtk.EventControllerMotion.new();
     motionEvent.connect('motion', this.mouseMove.bind(this));
@@ -158,6 +159,9 @@ export const Canvas = GObject.registerClass({
     // this is the main drawing function for the canvas
     // this is triggered by design core calling the painting_callback()
     this.core.canvas.paint(cr, width, height);
+    if(!this.core.scene.saved && !this.designWindow.title.includes('[Unsaved]')) {
+      this.designWindow.title = this.designWindow.title + ' [Unsaved]';
+    }
     cr.$dispose();
   }
 
