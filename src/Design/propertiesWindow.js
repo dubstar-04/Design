@@ -125,15 +125,15 @@ export const PropertiesWindow = GObject.registerClass({
           case 'height':
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
             suffixWidget.connect('activate', () => {
-              this.propertyManager.setItemProperties('height',suffixWidget.text);
-            });  
-            break;       
+              this.propertyManager.setItemProperties('height', suffixWidget.text);
+            });
+            break;
           case 'string':
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
             suffixWidget.connect('activate', () => {
-              this.propertyManager.setItemProperties('string',suffixWidget.text);
-            });   
-            break;              
+              this.propertyManager.setItemProperties('string', suffixWidget.text);
+            });
+            break;
           default:
             suffixWidget = new Gtk.Label({valign: Gtk.Align.CENTER, label: `${value}`});
             break;
