@@ -159,7 +159,7 @@ export const Canvas = GObject.registerClass({
     // this is the main drawing function for the canvas
     // this is triggered by design core calling the painting_callback()
     this.core.canvas.paint(cr, width, height);
-    if(!this.core.scene.saved && !this.designWindow.title.includes('[Unsaved]')) {
+    if (!this.core.scene.saved && !this.designWindow.title.includes('[Unsaved]')) {
       this.designWindow.title = this.designWindow.title + ' [Unsaved]';
     }
     cr.$dispose();

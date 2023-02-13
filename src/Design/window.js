@@ -276,7 +276,7 @@ export const DesignWindow = GObject.registerClass({
   }
 
   file_saved() {
-    let canvas = this.get_active_canvas();
+    const canvas = this.get_active_canvas();
     canvas.core.scene.saved = true;
   }
 
