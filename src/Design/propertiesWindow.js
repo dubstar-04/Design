@@ -107,10 +107,6 @@ export const PropertiesWindow = GObject.registerClass({
           /*
             case "width":
                 break;
-            case "height":
-                break;
-            case "rotation":
-                break;
             */
           case 'lineWidth':
             suffixWidget = new Gtk.Entry({input_purpose: Gtk.InputPurpose.NUMBER, valign: Gtk.Align.CENTER, text: `${value}`});
