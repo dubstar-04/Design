@@ -112,24 +112,31 @@ export const PropertiesWindow = GObject.registerClass({
             case "rotation":
                 break;
             */
-          case 'radius':
-            suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
+          case 'lineWidth':
+            suffixWidget = new Gtk.Entry({input_purpose: Gtk.InputPurpose.NUMBER, valign: Gtk.Align.CENTER, text: `${value}`});
+            suffixWidget.connect('activate', () => {
+              this.propertyManager.setItemProperties('lineWidth', suffixWidget.text);
+            });
             break;
-            // case "lineWidth":
-            //     break;
+          case 'radius':
+            suffixWidget = new Gtk.Entry({input_purpose: Gtk.InputPurpose.NUMBER, valign: Gtk.Align.CENTER, text: `${value}`});
+            suffixWidget.connect('activate', () => {
+              this.propertyManager.setItemProperties('radius', suffixWidget.text);
+            });
+            break;
             // case "colour":
             //     suffixWidget = new Gtk.ColorButton({ valign: Gtk.Align.CENTER, 'rgba': this.toRgba(value) });
             //     break;
             // case "layer":
             //    break;
           case 'height':
-            suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
+            suffixWidget = new Gtk.Entry({input_purpose: Gtk.InputPurpose.NUMBER, valign: Gtk.Align.CENTER, text: `${value}`});
             suffixWidget.connect('activate', () => {
               this.propertyManager.setItemProperties('height', suffixWidget.text);
             });
             break;
           case 'string':
-            suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
+            suffixWidget = new Gtk.Entry({input_purpose: Gtk.InputPurpose.ALPHA, valign: Gtk.Align.CENTER, text: `${value}`});
             suffixWidget.connect('activate', () => {
               this.propertyManager.setItemProperties('string', suffixWidget.text);
             });
