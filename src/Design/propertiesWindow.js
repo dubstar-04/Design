@@ -157,7 +157,6 @@ export const PropertiesWindow = GObject.registerClass({
           // String type properties
           case 'string':
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
-            suffixWidget.set_input_purpose(Gtk.INPUT_PURPOSE_FREEFORM);
             suffixWidget.connect('activate', () => {
               this.propertyManager.setItemProperties(`${property}`, suffixWidget.text);
             });
