@@ -106,6 +106,7 @@ export const PropertiesWindow = GObject.registerClass({
         const value = this.propertyManager.getItemPropertyValue(selectedType, properties[i]);
 
         let suffixWidget;
+        const property = properties[i];
 
         switch (properties[i]) {
           /*
@@ -129,13 +130,13 @@ export const PropertiesWindow = GObject.registerClass({
           case 'height':
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
             suffixWidget.connect('activate', () => {
-              this.propertyManager.setItemProperties('height', suffixWidget.text);
+              this.propertyManager.setItemProperties(`${property}`, Number(suffixWidget.text));
             });
             break;
           case 'string':
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
             suffixWidget.connect('activate', () => {
-              this.propertyManager.setItemProperties('string', suffixWidget.text);
+              this.propertyManager.setItemProperties(`${property}`, suffixWidget.text);
             });
             break;
           default:
@@ -143,7 +144,7 @@ export const PropertiesWindow = GObject.registerClass({
             break;
         }
 
-        const propRow = new Adw.ActionRow({title: properties[i]});
+        const propRow = new Adw.ActionRow({title: property});
         propRow.add_suffix(suffixWidget);
         this._elementList.append(propRow);
       }
