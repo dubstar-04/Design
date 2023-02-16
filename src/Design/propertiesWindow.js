@@ -114,6 +114,7 @@ export const PropertiesWindow = GObject.registerClass({
           case 'rotation':
           case 'radius':
           case 'width':
+          case 'lineWidth':
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
             const changedSignal = suffixWidget.connect('changed', () => {
               // TODO: allow only one point.
@@ -159,6 +160,22 @@ export const PropertiesWindow = GObject.registerClass({
             suffixWidget.set_input_purpose(Gtk.INPUT_PURPOSE_FREEFORM);
             suffixWidget.connect('activate', () => {
               this.propertyManager.setItemProperties(`${property}`, suffixWidget.text);
+            });
+            break;
+            // String type properties
+          case 'colour':
+            suffixWidget = new Gtk.ColorButton({valign: Gtk.Align.CENTER});
+            if (value.toUpperCase().includes('LAYER') ) {
+              // TODO: Handle colour bu layer
+            } else {
+              suffixWidget.rgba = this.toRgba(value);
+            }
+            suffixWidget.connect('color-set', () => {
+              // TODO: move this to core
+              const rgba = suffixWidget.rgba.to_string();
+              const rgb = rgba.substr(4).split(')')[0].split(',');
+              const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
+              this.propertyManager.setItemProperties(`${property}`, colour);
             });
             break;
           default:
