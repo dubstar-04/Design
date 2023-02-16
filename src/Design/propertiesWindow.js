@@ -146,6 +146,32 @@ export const PropertiesWindow = GObject.registerClass({
     }
   }
 
+  getModel(property) {
+    let model = [];
+    switch (property) {
+      case 'layer':
+        model = [];
+        const layerManager = this.getLayerManager();
+        for (const layer of layerManager.getLayers()) {
+          model.push(layer.name);
+        }
+        break;
+      case 'styleName':
+        // TODO: build model for styles
+        model = ['style1', 'style2', 'style3'];
+        break;
+      case 'horizontalAlignment':
+        // TODO: build human readable model for alignment
+        model = ['0', '1', '2', '3', '4', '5'];
+        break;
+      case 'verticalAlignment':
+        // TODO: build human readable model for alignment
+        model = ['0', '1', '2', '3'];
+        break;
+    }
+    return model;
+  }
+
   // TODO: this is duplicated on the layers window
   toRgba(layerColour) {
     const rgba = new Gdk.RGBA();
