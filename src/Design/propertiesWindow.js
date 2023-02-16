@@ -108,38 +108,61 @@ export const PropertiesWindow = GObject.registerClass({
         let suffixWidget;
         const property = properties[i];
 
-        switch (properties[i]) {
-          /*
-            case "width":
-                break;
-            case "height":
-                break;
-            case "rotation":
-                break;
-            */
-          case 'radius':
-            suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
-            break;
-            // case "lineWidth":
-            //     break;
-            // case "colour":
-            //     suffixWidget = new Gtk.ColorButton({ valign: Gtk.Align.CENTER, 'rgba': this.toRgba(value) });
-            //     break;
-            // case "layer":
-            //    break;
+        switch (property) {
+          // Numeric type properties
           case 'height':
+          case 'rotation':
+          case 'radius':
+          case 'width':
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
+            const changedSignal = suffixWidget.connect('changed', () => {
+              // TODO: allow only one point.
+              const text = suffixWidget.text.replace(/[^0-9.]/g, '');
+              // block the change signal being emitted during update
+              GObject.signal_handler_block(suffixWidget, changedSignal);
+              suffixWidget.set_text(text);
+              // unblock the change signal
+              GObject.signal_handler_unblock(suffixWidget, changedSignal);
+              // TODO: set the cursor position
+            });
             suffixWidget.connect('activate', () => {
               this.propertyManager.setItemProperties(`${property}`, Number(suffixWidget.text));
             });
             break;
+          // Boolean type properties
+          case 'backwards':
+          case 'upsideDown':
+            suffixWidget = new Gtk.Switch({valign: Gtk.Align.CENTER, state: value});
+            suffixWidget.connect('notify::active', () => {
+              this.propertyManager.setItemProperties(`${property}`, suffixWidget.state);
+            });
+            break;
+            // option type properties
+          case 'layer':
+          case 'styleName':
+          case 'horizontalAlignment':
+          case 'verticalAlignment':
+            const model = this.getModel(property);
+            suffixWidget = Gtk.DropDown.new_from_strings(model);
+            // get the position of the current value
+            const selectedIndex = model.indexOf(value);
+            if (selectedIndex >= 0) {
+              suffixWidget.set_selected(selectedIndex);
+            }
+            suffixWidget.connect('notify::selected-item', () => {
+              this.propertyManager.setItemProperties(`${property}`, suffixWidget.get_selected_item().get_string());
+            });
+            break;
+          // String type properties
           case 'string':
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
+            suffixWidget.set_input_purpose(Gtk.INPUT_PURPOSE_FREEFORM);
             suffixWidget.connect('activate', () => {
               this.propertyManager.setItemProperties(`${property}`, suffixWidget.text);
             });
             break;
           default:
+            // Non-editable properties
             suffixWidget = new Gtk.Label({valign: Gtk.Align.CENTER, label: `${value}`});
             break;
         }
