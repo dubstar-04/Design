@@ -119,14 +119,26 @@ export const PropertiesWindow = GObject.registerClass({
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
             suffixWidget.width_request = widgetWidth;
             const changedSignal = suffixWidget.connect('changed', () => {
-              // TODO: allow only one point.
-              const text = suffixWidget.text.replace(/[^0-9.]/g, '');
               // block the change signal being emitted during update
               GObject.signal_handler_block(suffixWidget, changedSignal);
-              suffixWidget.set_text(text);
+
+              let text = suffixWidget.text;
+              // Check if the entry characters that aren't numbers
+              if (text.match(/[^\d.]/i)) {
+                // remove anything thats not a number or a decimal point
+                text = text.replace(/[^\d.]/g, '');
+                suffixWidget.set_text(text);
+              }
+              // Allow only one point.
+              const dots = text.match(/\./g) || [];
+              if (dots.length > 1) {
+                const index = text.lastIndexOf('.');
+                log('index', index);
+                text = text.slice(0, index) + text.slice(index + 1);
+                suffixWidget.set_text(text);
+              }
               // unblock the change signal
               GObject.signal_handler_unblock(suffixWidget, changedSignal);
-              // TODO: set the cursor position
             });
             suffixWidget.connect('activate', () => {
               this.propertyManager.setItemProperties(`${property}`, Number(suffixWidget.text));
@@ -235,5 +247,4 @@ export const PropertiesWindow = GObject.registerClass({
   }
 }, // window
 );
-
 
