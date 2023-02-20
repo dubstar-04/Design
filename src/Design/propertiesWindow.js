@@ -133,7 +133,6 @@ export const PropertiesWindow = GObject.registerClass({
               const dots = text.match(/\./g) || [];
               if (dots.length > 1) {
                 const index = text.lastIndexOf('.');
-                log('index', index);
                 text = text.slice(0, index) + text.slice(index + 1);
                 suffixWidget.set_text(text);
               }
