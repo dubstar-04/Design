@@ -107,6 +107,7 @@ export const PropertiesWindow = GObject.registerClass({
 
         let suffixWidget;
         const property = properties[i];
+        const widgetWidth = 175;
 
         switch (property) {
           // Numeric type properties
@@ -116,6 +117,7 @@ export const PropertiesWindow = GObject.registerClass({
           case 'width':
           case 'lineWidth':
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
+            suffixWidget.width_request = widgetWidth;
             const changedSignal = suffixWidget.connect('changed', () => {
               // TODO: allow only one point.
               const text = suffixWidget.text.replace(/[^0-9.]/g, '');
@@ -145,6 +147,8 @@ export const PropertiesWindow = GObject.registerClass({
           case 'verticalAlignment':
             const model = this.getModel(property);
             suffixWidget = Gtk.DropDown.new_from_strings(model);
+            suffixWidget.width_request = widgetWidth;
+            suffixWidget.valign = Gtk.Align.CENTER;
             // get the position of the current value
             const selectedIndex = model.indexOf(value);
             if (selectedIndex >= 0) {
@@ -157,6 +161,7 @@ export const PropertiesWindow = GObject.registerClass({
           // String type properties
           case 'string':
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
+            suffixWidget.width_request = widgetWidth;
             suffixWidget.connect('activate', () => {
               this.propertyManager.setItemProperties(`${property}`, suffixWidget.text);
             });
@@ -164,6 +169,7 @@ export const PropertiesWindow = GObject.registerClass({
             // String type properties
           case 'colour':
             suffixWidget = new Gtk.ColorButton({valign: Gtk.Align.CENTER});
+            suffixWidget.width_request = widgetWidth;
             if (value.toUpperCase().includes('LAYER') ) {
               // TODO: Handle colour bu layer
             } else {
@@ -180,6 +186,7 @@ export const PropertiesWindow = GObject.registerClass({
           default:
             // Non-editable properties
             suffixWidget = new Gtk.Label({valign: Gtk.Align.CENTER, label: `${value}`});
+            suffixWidget.width_request = widgetWidth;
             break;
         }
 
