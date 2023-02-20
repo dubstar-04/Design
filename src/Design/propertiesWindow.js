@@ -179,19 +179,31 @@ export const PropertiesWindow = GObject.registerClass({
             break;
             // String type properties
           case 'colour':
-            suffixWidget = new Gtk.ColorButton({valign: Gtk.Align.CENTER});
+            // TODO: Create a custom widget that can display, bylayer, various and show a colour
+            suffixWidget = new Gtk.Button({valign: Gtk.Align.CENTER});
             suffixWidget.width_request = widgetWidth;
-            if (value.toUpperCase().includes('LAYER') ) {
-              // TODO: Handle colour bu layer
-            } else {
-              suffixWidget.rgba = this.toRgba(value);
-            }
-            suffixWidget.connect('color-set', () => {
-              // TODO: move this to core
-              const rgba = suffixWidget.rgba.to_string();
-              const rgb = rgba.substr(4).split(')')[0].split(',');
-              const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
-              this.propertyManager.setItemProperties(`${property}`, colour);
+            suffixWidget.set_label(value);
+
+            suffixWidget.connect('clicked', () => {
+              const colorChooser = new Gtk.ColorChooserDialog({
+                modal: true,
+                // TODO: Set the current colour
+                // rgba: currentColour,
+                transient_for: this,
+              });
+
+              colorChooser.show();
+              colorChooser.connect('response', (dialog, response) => {
+                if (response == Gtk.ResponseType.OK) {
+                  const rgba = dialog.get_rgba().to_string();
+                  const rgb = rgba.substr(4).split(')')[0].split(',');
+                  const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
+                  suffixWidget.set_label(colour);
+                  this.propertyManager.setItemProperties(`${property}`, colour);
+                }
+
+                dialog.destroy();
+              });
             });
             break;
           default:
