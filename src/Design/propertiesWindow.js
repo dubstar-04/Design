@@ -160,10 +160,14 @@ export const PropertiesWindow = GObject.registerClass({
             });
             break;
             // option type properties
+          case 'horizontalAlignment':
+            // TODO: Enable Alignment Values
+            continue;
+          case 'verticalAlignment':
+            // TODO: Enable Alignment Values
+            continue;
           case 'layer':
           case 'styleName':
-          case 'horizontalAlignment':
-          case 'verticalAlignment':
             const model = this.getModel(property);
             suffixWidget = Gtk.DropDown.new_from_strings(model);
             suffixWidget.width_request = widgetWidth;
