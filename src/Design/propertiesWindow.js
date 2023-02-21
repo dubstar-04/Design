@@ -88,6 +88,14 @@ export const PropertiesWindow = GObject.registerClass({
     this._elementSelector.set_model(model);
   }
 
+  formatDisplayName(name) {
+    // Ensure first char is uppercase
+    let formattedName = name.charAt(0).toUpperCase() + name.slice(1);
+    // Add a space before uppercase chars
+    formattedName = formattedName.split(/(?=[A-Z])/).join(' ');
+    return formattedName;
+  }
+
   on_type_changed() {
     const selectedIndex = this._elementSelector.get_selected();
     const typeStringList = this._elementSelector.get_model();
@@ -213,7 +221,9 @@ export const PropertiesWindow = GObject.registerClass({
             break;
         }
 
-        const propRow = new Adw.ActionRow({title: property});
+        // Get a formatted version of the property name
+        const formattedName = this.formatDisplayName(property);
+        const propRow = new Adw.ActionRow({title: formattedName});
         propRow.add_suffix(suffixWidget);
         this._elementList.append(propRow);
       }
