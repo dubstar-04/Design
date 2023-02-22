@@ -56,6 +56,10 @@ export const PropertiesWindow = GObject.registerClass({
     this.propertyManager = this.mainWindow.get_active_canvas().core.propertyManager;
   }
 
+  getLayerManager() {
+    return this.mainWindow.get_active_canvas().core.layerManager;
+  }
+
   clear_list() {
     // delete all current children
     let child = this._elementList.get_first_child();
@@ -84,6 +88,14 @@ export const PropertiesWindow = GObject.registerClass({
     this._elementSelector.set_model(model);
   }
 
+  formatDisplayName(name) {
+    // Ensure first char is uppercase
+    let formattedName = name.charAt(0).toUpperCase() + name.slice(1);
+    // Add a space before uppercase chars
+    formattedName = formattedName.split(/(?=[A-Z])/).join(' ');
+    return formattedName;
+  }
+
   on_type_changed() {
     const selectedIndex = this._elementSelector.get_selected();
     const typeStringList = this._elementSelector.get_model();
@@ -102,36 +114,150 @@ export const PropertiesWindow = GObject.registerClass({
         const value = this.propertyManager.getItemPropertyValue(selectedType, properties[i]);
 
         let suffixWidget;
+        const property = properties[i];
+        const widgetWidth = 175;
 
-        switch (properties[i]) {
-          /*
-            case "width":
-                break;
-            case "height":
-                break;
-            case "rotation":
-                break;
-            */
+        switch (property) {
+          // Numeric type properties
+          case 'height':
+          case 'rotation':
           case 'radius':
+          case 'width':
+          case 'lineWidth':
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
+            suffixWidget.width_request = widgetWidth;
+            const changedSignal = suffixWidget.connect('changed', () => {
+              // block the change signal being emitted during update
+              GObject.signal_handler_block(suffixWidget, changedSignal);
+
+              let text = suffixWidget.text;
+              // Check if the entry characters that aren't numbers
+              if (text.match(/[^\d.]/i)) {
+                // remove anything thats not a number or a decimal point
+                text = text.replace(/[^\d.]/g, '');
+                suffixWidget.set_text(text);
+              }
+              // Allow only one point.
+              const dots = text.match(/\./g) || [];
+              if (dots.length > 1) {
+                const index = text.lastIndexOf('.');
+                text = text.slice(0, index) + text.slice(index + 1);
+                suffixWidget.set_text(text);
+              }
+              // unblock the change signal
+              GObject.signal_handler_unblock(suffixWidget, changedSignal);
+            });
+            suffixWidget.connect('activate', () => {
+              this.propertyManager.setItemProperties(`${property}`, Number(suffixWidget.text));
+            });
             break;
-            // case "lineWidth":
-            //     break;
-            // case "colour":
-            //     suffixWidget = new Gtk.ColorButton({ valign: Gtk.Align.CENTER, 'rgba': this.toRgba(value) });
-            //     break;
-            // case "layer":
-            //    break;
+          // Boolean type properties
+          case 'backwards':
+          case 'upsideDown':
+            suffixWidget = new Gtk.Switch({valign: Gtk.Align.CENTER, state: value});
+            suffixWidget.connect('notify::active', () => {
+              this.propertyManager.setItemProperties(`${property}`, suffixWidget.state);
+            });
+            break;
+            // option type properties
+          case 'horizontalAlignment':
+            // TODO: Enable Alignment Values
+            continue;
+          case 'verticalAlignment':
+            // TODO: Enable Alignment Values
+            continue;
+          case 'layer':
+          case 'styleName':
+            const model = this.getModel(property);
+            suffixWidget = Gtk.DropDown.new_from_strings(model);
+            suffixWidget.width_request = widgetWidth;
+            suffixWidget.valign = Gtk.Align.CENTER;
+            // get the position of the current value
+            const selectedIndex = model.indexOf(value);
+            if (selectedIndex >= 0) {
+              suffixWidget.set_selected(selectedIndex);
+            }
+            suffixWidget.connect('notify::selected-item', () => {
+              this.propertyManager.setItemProperties(`${property}`, suffixWidget.get_selected_item().get_string());
+            });
+            break;
+          // String type properties
+          case 'string':
+            suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
+            suffixWidget.width_request = widgetWidth;
+            suffixWidget.connect('activate', () => {
+              this.propertyManager.setItemProperties(`${property}`, suffixWidget.text);
+            });
+            break;
+            // String type properties
+          case 'colour':
+            // TODO: Create a custom widget that can display, bylayer, various and show a colour
+            suffixWidget = new Gtk.Button({valign: Gtk.Align.CENTER});
+            suffixWidget.width_request = widgetWidth;
+            suffixWidget.set_label(value);
+
+            suffixWidget.connect('clicked', () => {
+              const colorChooser = new Gtk.ColorChooserDialog({
+                modal: true,
+                // TODO: Set the current colour
+                // rgba: currentColour,
+                transient_for: this,
+              });
+
+              colorChooser.show();
+              colorChooser.connect('response', (dialog, response) => {
+                if (response == Gtk.ResponseType.OK) {
+                  const rgba = dialog.get_rgba().to_string();
+                  const rgb = rgba.substr(4).split(')')[0].split(',');
+                  const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
+                  suffixWidget.set_label(colour);
+                  this.propertyManager.setItemProperties(`${property}`, colour);
+                }
+
+                dialog.destroy();
+              });
+            });
+            break;
           default:
+            // Non-editable properties
             suffixWidget = new Gtk.Label({valign: Gtk.Align.CENTER, label: `${value}`});
+            suffixWidget.width_request = widgetWidth;
             break;
         }
 
-        const propRow = new Adw.ActionRow({title: properties[i]});
+        // Get a formatted version of the property name
+        const formattedName = this.formatDisplayName(property);
+        const propRow = new Adw.ActionRow({title: formattedName});
         propRow.add_suffix(suffixWidget);
         this._elementList.append(propRow);
       }
     }
+  }
+
+  getModel(property) {
+    let model = [];
+    switch (property) {
+      case 'layer':
+        model = [];
+        const layerManager = this.getLayerManager();
+        for (const layer of layerManager.getLayers()) {
+          model.push(layer.name);
+        }
+        break;
+      case 'styleName':
+        // TODO: build model for styles
+        model = ['style1', 'style2', 'style3'];
+        break;
+      case 'horizontalAlignment':
+        // TODO: build human readable model for alignment
+        model = ['0', '1', '2', '3', '4', '5'];
+        break;
+      case 'verticalAlignment':
+        // TODO: build human readable model for alignment
+        model = ['0', '1', '2', '3'];
+        break;
+    }
+    return model;
   }
 
   // TODO: this is duplicated on the layers window
@@ -146,5 +272,4 @@ export const PropertiesWindow = GObject.registerClass({
   }
 }, // window
 );
-
 
