@@ -95,6 +95,8 @@ export class FileIO {
       if (success) {
         // TODO: Janky sending notifications through core
         window.get_active_canvas().core.notify('File Saved');
+        window.title = 'Design';
+        window.file_saved();
       } else {
         window.get_active_canvas().core.notify('Error Saving File');
       }
