@@ -26,6 +26,7 @@
     <file>Design-Core/core/lib/scene.js</file>
     <file>Design-Core/core/lib/settings.js</file>
     <file>Design-Core/core/lib/snapping.js</file>
+    <file>Design-Core/core/lib/strings.js</file>
     <file>Design-Core/core/lib/utils.js</file>
 
     <file>Design-Core/core/properties/propertyManager.js</file>
@@ -34,6 +35,7 @@
     <file>Design-Core/core/entities/block.js</file>
     <file>Design-Core/core/entities/circle.js</file>
     <file>Design-Core/core/entities/dimension.js</file>
+    <file>Design-Core/core/entities/entity.js</file>
     <file>Design-Core/core/entities/ellipse.js</file>
     <file>Design-Core/core/entities/filledRectangle.js</file>
     <file>Design-Core/core/entities/insert.js</file>
