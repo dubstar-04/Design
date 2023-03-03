@@ -41,11 +41,6 @@ export const PropertiesWindow = GObject.registerClass({
     this.reload();
   }
 
-  on_close() {
-    // console.log("properties closing")
-
-  }
-
   getPropertyManager() {
     return this.get_transient_for().get_active_canvas().core.propertyManager;
   }
@@ -55,11 +50,11 @@ export const PropertiesWindow = GObject.registerClass({
   }
 
   reload() {
-    this.clear_list();
+    this.clearPropertiesList();
     this.loadSelectedItems();
   }
 
-  clear_list() {
+  clearPropertiesList() {
     // delete all current children
     let child = this._elementList.get_first_child();
     while (child) {
@@ -94,7 +89,7 @@ export const PropertiesWindow = GObject.registerClass({
     return formattedName;
   }
 
-  on_type_changed() {
+  onTypeChanged() {
     const selectedIndex = this._elementSelector.get_selected();
     const typeStringList = this._elementSelector.get_model();
     const selectedType = typeStringList.get_string(selectedIndex);
@@ -105,7 +100,7 @@ export const PropertiesWindow = GObject.registerClass({
       return;
     }
 
-    this.clear_list();
+    this.clearPropertiesList();
 
     if (properties.length) {
       for (let i = 0; i < properties.length; i++) {
