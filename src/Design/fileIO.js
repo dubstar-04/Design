@@ -71,6 +71,8 @@ export class FileIO {
     window.get_active_canvas().core.openFile(fileContents);
     // set the active file path
     window.get_active_canvas().setFilePath(file.get_path());
+    // handle tab changes in the window object
+    window.on_tab_change();
   }
 
   static save(window) {
