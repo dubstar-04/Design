@@ -101,6 +101,12 @@ export const LayersWindow = GObject.registerClass({
 
 
   reloadLayers() {
+  reload() {
+    this.clearList();
+    this.loadLayers();
+  }
+
+  clearList() {
     // delete all current children
     let child = this._layerList.get_first_child();
 
