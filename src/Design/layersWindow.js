@@ -40,7 +40,7 @@ export const LayersWindow = GObject.registerClass({
       name: 'layerEditAction',
       parameter_type: GLib.VariantType.new('s'),
     });
-    layerEditAction.connect('activate', this.on_edit_action.bind(this));
+    layerEditAction.connect('activate', this.onEditAction.bind(this));
     this.add_action(layerEditAction);
 
     // Action to delete layers
@@ -48,7 +48,7 @@ export const LayersWindow = GObject.registerClass({
       name: 'layerDeleteAction',
       parameter_type: GLib.VariantType.new('s'),
     });
-    layerDeleteAction.connect('activate', this.on_delete_action.bind(this));
+    layerDeleteAction.connect('activate', this.onDeleteAction.bind(this));
     this.add_action(layerDeleteAction);
 
     // Action to make layers current
@@ -56,7 +56,7 @@ export const LayersWindow = GObject.registerClass({
       name: 'layerCurrentAction',
       parameter_type: GLib.VariantType.new('s'),
     });
-    layerCurrentAction.connect('activate', this.on_current_action.bind(this));
+    layerCurrentAction.connect('activate', this.onCurrentAction.bind(this));
     this.add_action(layerCurrentAction);
   }
 
@@ -65,20 +65,20 @@ export const LayersWindow = GObject.registerClass({
     this.reload();
   }
 
-  on_edit_action(simpleAction, parameters) {
+  onEditAction(simpleAction, parameters) {
     const layerName = parameters.deep_unpack();
     this.selected_layer = this.getLayerManager().getLayerByName(layerName);
-    this.on_edit_layer();
+    this.onEditLayer();
   }
 
-  on_delete_action(simpleAction, parameters) {
+  onDeleteAction(simpleAction, parameters) {
     // console.log("delete action")
     const layerName = parameters.deep_unpack();
     this.selected_layer = this.getLayerManager().getLayerByName(layerName);
-    this.on_layer_delete();
+    this.onLayerDelete();
   }
 
-  on_current_action(simpleAction, parameters) {
+  onCurrentAction(simpleAction, parameters) {
     // console.log("current action")
     const layerName = parameters.deep_unpack();
     this.getLayerManager().setCLayer(layerName);
@@ -86,7 +86,7 @@ export const LayersWindow = GObject.registerClass({
   }
 
   getLayerManager() {
-    return this.get_transient_for().get_active_canvas().core.layerManager;
+    return this.get_transient_for().getActiveCanvas().core.layerManager;
   }
 
   toRgba(layerColour) {
@@ -121,10 +121,10 @@ export const LayersWindow = GObject.registerClass({
 
     for (let i = 0; i < layers.length; i++) {
       const colourButton = new Gtk.ColorButton({'valign': Gtk.Align.CENTER, 'rgba': this.toRgba(layers[i].colour)});
-      colourButton.connect('color-set', this.on_change_colour.bind(this));
+      colourButton.connect('color-set', this.onColourChange.bind(this));
 
       const layerSwitch = new Gtk.Switch({valign: Gtk.Align.CENTER, active: layers[i].on});
-      layerSwitch.connect('state-set', this.on_toggled.bind(this));
+      layerSwitch.connect('state-set', this.onToggled.bind(this));
 
       const menu = new Gio.Menu();
       menu.append(_('Edit'), `win.layerEditAction("${layers[i].name}")`);
@@ -135,7 +135,7 @@ export const LayersWindow = GObject.registerClass({
       const menuButton = new Gtk.MenuButton({popover: appMenu, valign: Gtk.Align.CENTER, icon_name: 'view-more-symbolic'});
 
       const row = new Adw.ActionRow({title: layers[i].name, activatable: true});
-      row.connect('activated', this.on_layer_selected.bind(this));
+      row.connect('activated', this.onLayerSelected.bind(this));
 
       row.add_prefix(colourButton);
       row.add_suffix(layerSwitch);
@@ -149,11 +149,7 @@ export const LayersWindow = GObject.registerClass({
     }
   }
 
-  on_menu_clicked() {
-    // console.log("menu clicked")
-  }
-
-  on_change_colour(colourButton) {
+  onColourChange(colourButton) {
     const row = colourButton.get_ancestor(Adw.ActionRow);
     const layer = this.getLayerManager().getLayerByName(row.title);
     const rgba = colourButton.rgba.to_string();
@@ -162,10 +158,10 @@ export const LayersWindow = GObject.registerClass({
     const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
     // log(colour)
     layer.colour = colour;
-    this.get_transient_for().get_active_canvas().queue_draw();
+    this.get_transient_for().getActiveCanvas().queue_draw();
   }
 
-  on_toggled(toggle, state) {
+  onToggled(toggle, state) {
     // Get the row of the switch
     const row = toggle.get_ancestor(Adw.ActionRow);
     // get the layer reference from the layer manager
@@ -173,30 +169,30 @@ export const LayersWindow = GObject.registerClass({
     // change the layer state
     layer.on = state;
     // redraw
-    this.get_transient_for().get_active_canvas().queue_draw();
+    this.get_transient_for().getActiveCanvas().queue_draw();
   }
 
-  on_back_clicked() {
+  onBackClicked() {
     this._stack.set_visible_child_name('layerListPage');
     this._backButton.visible = false;
     this.reload();
   }
 
-  on_new_clicked() {
+  onNewClicked() {
     // console.log("new clicked")
     this.getLayerManager().newLayer();
     this.reload();
   }
 
-  on_layer_selected(row) {
+  onLayerSelected(row) {
     if (row) {
       this._layerList.unselect_row(row);
       this.selected_layer = this.getLayerManager().getLayerByName(row.title);
-      this.on_edit_layer();
+      this.onEditLayer();
     }
   }
 
-  on_edit_layer() {
+  onEditLayer() {
     this._nameEntry.text = this.selected_layer.name;
     this._frozenSwitch.active = this.selected_layer.frozen;
     this._lockedSwitch.active = this.selected_layer.locked;
@@ -208,7 +204,7 @@ export const LayersWindow = GObject.registerClass({
     this._backButton.visible = true;
   }
 
-  on_layer_update() {
+  onLayerUpdate() {
     // console.log("update layer")
     this.selected_layer.name = this._nameEntry.text;
     this.selected_layer.frozen = this._frozenSwitch.active;
@@ -218,7 +214,7 @@ export const LayersWindow = GObject.registerClass({
     this.selected_layer.plotting = this._plottingSwitch.active;
   }
 
-  on_layer_delete() {
+  onLayerDelete() {
     // console.log("delete")
     const dialog = new Adw.MessageDialog();
     dialog.set_transient_for(this);
@@ -227,22 +223,22 @@ export const LayersWindow = GObject.registerClass({
     dialog.add_response('cancel', 'Cancel');
     dialog.add_response('delete', 'Delete');
     dialog.set_response_appearance('delete', Adw.ResponseAppearance.DESTRUCTIVE);
-    dialog.connect('response', this.on_dialog_confirm.bind(this));
+    dialog.connect('response', this.onConfirmDialog.bind(this));
     dialog.present();
   }
 
-  on_dialog_confirm(dialog, response) {
+  onConfirmDialog(dialog, response) {
     // console.log("delete dialog callback")
     if (response === 'delete') {
-      this.delete_layer(this.selected_layer.name);
-      this.on_back_clicked();
+      this.deleteLayer(this.selected_layer.name);
+      this.onBackClicked();
     }
   }
 
-  delete_layer(layerName) {
+  deleteLayer(layerName) {
     // console.log("delete layer")
     this.getLayerManager().deleteLayerName(layerName);
-    this.get_transient_for().get_active_canvas().queue_draw();
+    this.get_transient_for().getActiveCanvas().queue_draw();
   }
 }, // window
 );

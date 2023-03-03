@@ -38,10 +38,10 @@ class Settings extends Gio.Settings {
     });
   }
 
-  sync_settings() {
+  syncSettings() {
     // sync the app settings with core
     this.list_keys().forEach((keyName) => {
-      this.set_core_setting(keyName, this.get_setting(keyName));
+      this.setCoreSetting(keyName, this.getSetting(keyName));
     });
   }
 
@@ -50,26 +50,26 @@ class Settings extends Gio.Settings {
     // TODO: add function to reset all settings to default
   }
 
-  on_setting_toggled(setting) {
-    const state = this.get_setting(setting);
-    this.set_core_setting(setting, !state);
-    this.set_setting(setting, !state);
+  onSettingToggled(setting) {
+    const state = this.getSetting(setting);
+    this.setCoreSetting(setting, !state);
+    this.setSetting(setting, !state);
   }
 
-  get_core_setting(name) {
-    const value = this.window.get_active_canvas().core.settings.getSetting(name);
+  getCoreSetting(name) {
+    const value = this.window.getActiveCanvas().core.settings.getSetting(name);
     return value;
   }
 
-  set_core_setting(name, value) {
-    this.window.get_active_canvas().core.settings.setSetting(name, value);
+  setCoreSetting(name, value) {
+    this.window.getActiveCanvas().core.settings.setSetting(name, value);
   }
 
-  get_setting(name) {
+  getSetting(name) {
     return this.get_value(name).deep_unpack();
   }
 
-  set_setting(name, value) {
+  setSetting(name, value) {
     this.set_value(name, GLib.Variant.new(this._keyTypes[name], value));
   }
 });

@@ -64,22 +64,22 @@ export const Canvas = GObject.registerClass({
     this.add_controller(dragGesture);
 
     const keyController = Gtk.EventControllerKey.new();
-    keyController.connect('key-pressed', this.on_key_press.bind(this));
+    keyController.connect('key-pressed', this.onKeyPress.bind(this));
     this.add_controller(keyController);
 
     // #region CTRL + '' shortcuts
     const shortcutController = new Gtk.ShortcutController();
 
-    const copyShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.CallbackAction.new(this.on_copy.bind(this))});
+    const copyShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.CallbackAction.new(this.onCopy.bind(this))});
     shortcutController.add_shortcut(copyShortcut);
 
-    const pasteShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>V'), action: Gtk.CallbackAction.new(this.on_paste.bind(this))});
+    const pasteShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>V'), action: Gtk.CallbackAction.new(this.onPaste.bind(this))});
     shortcutController.add_shortcut(pasteShortcut);
 
-    const undoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Z'), action: Gtk.CallbackAction.new(this.on_undo.bind(this))});
+    const undoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Z'), action: Gtk.CallbackAction.new(this.onUndo.bind(this))});
     shortcutController.add_shortcut(undoShortcut);
 
-    const cutShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>X'), action: Gtk.CallbackAction.new(this.on_cut.bind(this))});
+    const cutShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>X'), action: Gtk.CallbackAction.new(this.onCut.bind(this))});
     shortcutController.add_shortcut(cutShortcut);
 
     this.add_controller(shortcutController);
@@ -88,17 +88,17 @@ export const Canvas = GObject.registerClass({
     this.core = new Core();
 
     this.styleManager = Adw.StyleManager.get_default();
-    this.styleManager.connect('notify::dark', this.on_style_change.bind(this));
+    this.styleManager.connect('notify::dark', this.onStyleChange.bind(this));
 
     this.core.canvas.setCanvasWidget(this._drawingArea, this.ctx);
-    this.set_draw_func(this.on_draw.bind(this));
+    this.set_draw_func(this.onDraw.bind(this));
 
     this.core.commandLine.setUpdateFunction(this.commandLineUpdateCallback.bind(this));
-    this.core.canvas.setExternalPaintCallbackFunction(this.painting_callback.bind(this));
+    this.core.canvas.setExternalPaintCallbackFunction(this.paintingCallback.bind(this));
     this.core.propertyManager.setPropertyCallbackFunction(this.propertyCallback.bind(this));
 
     this.grab_focus();
-    this.on_style_change();
+    this.onStyleChange();
 
     // set the cursor style
     this.set_cursor(Gdk.Cursor.new_from_name('crosshair', null));
@@ -116,27 +116,27 @@ export const Canvas = GObject.registerClass({
     return this.file_path;
   }
 
-  on_copy() {
+  onCopy() {
     // TODO: implement copy
     this.core.notify('Copy not implemented');
   }
 
-  on_paste() {
+  onPaste() {
     // TODO: implement paste
     this.core.notify('Paste not implemented');
   }
 
-  on_undo() {
+  onUndo() {
     // TODO: implement undo
     this.core.notify('Undo not implemented');
   }
 
-  on_cut() {
+  onCut() {
     // TODO: implement cut
     this.core.notify('Cut not implemented');
   }
 
-  on_style_change() {
+  onStyleChange() {
     if (this.styleManager.get_dark()) {
       this.core.settings.canvasbackgroundcolour = '#1e1e1e';
     } else {
@@ -145,7 +145,7 @@ export const Canvas = GObject.registerClass({
     this.queue_draw();
   }
 
-  painting_callback() {
+  paintingCallback() {
     this.queue_draw();
   }
 
@@ -154,9 +154,9 @@ export const Canvas = GObject.registerClass({
     this.emit('selection-updated');
   }
 
-  on_draw(area, cr, width, height) {
+  onDraw(area, cr, width, height) {
     // this is the main drawing function for the canvas
-    // this is triggered by design core calling the painting_callback()
+    // this is triggered by design core calling the paintingCallback()
     this.core.canvas.paint(cr, width, height);
     cr.$dispose();
   }
@@ -165,7 +165,7 @@ export const Canvas = GObject.registerClass({
     this.emit('commandline-updated', commandLineValue);
   }
 
-  on_key_press(controller, keyval, keycode, state) {
+  onKeyPress(controller, keyval, keycode, state) {
     // forward key press info to the commandline object
     // unless a modifier key is pressed CTRL, TAB, CAPSLOCK
 
@@ -181,7 +181,7 @@ export const Canvas = GObject.registerClass({
       return;
     }
 
-    this.commandLine.key_pressed(keyval, keycode);
+    this.commandLine.keyPressed(keyval, keycode);
   }
 
   mouseMove(controller, x, y) {

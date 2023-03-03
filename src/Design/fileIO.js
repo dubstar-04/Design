@@ -9,12 +9,12 @@ export class FileIO {
   // 4. Autosave will need to be tracked on the canvas with a timer
   // 5. Success notifications will need to be returned to the application window
 
-  static format_filename(fileName) {
+  static formatFilename(fileName) {
     const formattedName = fileName.replace(/\.[^/.]+$/, '');
     return formattedName;
   }
 
-  static get_file_extension(fileName) {
+  static getFileExtension(fileName) {
     const extension = fileName.split('.').pop();
     return extension;
   }
@@ -56,8 +56,8 @@ export class FileIO {
 
     // get filename
     const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
-    const fileName = this.format_filename(info.get_name());
-    const ext = this.get_file_extension(info.get_name());
+    const fileName = this.formatFilename(info.get_name());
+    const ext = this.getFileExtension(info.get_name());
 
     if (ext.toLowerCase() !== 'dxf') {
       // TODO: inform user that the file type is not supported.
@@ -66,17 +66,17 @@ export class FileIO {
 
     const fileContents = this.openFile(file);
     // create a new canvas with the filename in the tab
-    window.add_canvas(fileName);
+    window.addCanvas(fileName);
     // load the file contents into the active canvas
-    window.get_active_canvas().core.openFile(fileContents);
+    window.getActiveCanvas().core.openFile(fileContents);
     // set the active file path
-    window.get_active_canvas().setFilePath(file.get_path());
+    window.getActiveCanvas().setFilePath(file.get_path());
     // handle tab changes in the window object
-    window.on_tab_change();
+    window.onTabChange();
   }
 
   static save(window) {
-    const filePath = window.get_active_canvas().getFilePath();
+    const filePath = window.getActiveCanvas().getFilePath();
     if (filePath) {
       // Save to existing file
       this.saveFile(filePath, window);
@@ -90,15 +90,15 @@ export class FileIO {
     if (filePath) {
       const file = Gio.File.new_for_path(filePath);
 
-      const dxfContents = window.get_active_canvas().core.saveFile();
+      const dxfContents = window.getActiveCanvas().core.saveFile();
 
       const [success] = file.replace_contents(dxfContents, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
 
       if (success) {
         // TODO: Janky sending notifications through core
-        window.get_active_canvas().core.notify('File Saved');
+        window.getActiveCanvas().core.notify('File Saved');
       } else {
-        window.get_active_canvas().core.notify('Error Saving File');
+        window.getActiveCanvas().core.notify('Error Saving File');
       }
     }
   }
@@ -115,7 +115,7 @@ export class FileIO {
       title: 'Save As',
     });
 
-    const name = this.format_filename(window._tabView.get_selected_page().get_title());
+    const name = this.formatFilename(window._tabView.get_selected_page().get_title());
     dialog.set_current_name(`${name}.dxf`);
 
     dialog.show();
@@ -132,7 +132,7 @@ export class FileIO {
         const tabTitle = window._tabView.get_selected_page().get_title();
 
         // set the active file path
-        window.get_active_canvas().setFilePath(filePath);
+        window.getActiveCanvas().setFilePath(filePath);
 
         if (fileName !== tabTitle) {
           const page = window._tabView.get_selected_page();

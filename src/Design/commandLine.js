@@ -31,20 +31,20 @@ export const CommandLine = GObject.registerClass({
     this.mainWindow = window;
 
     const keyController = Gtk.EventControllerKey.new();
-    keyController.connect('key-pressed', this.on_key_press.bind(this));
+    keyController.connect('key-pressed', this.onKeyPress.bind(this));
     this.add_controller(keyController);
   }
 
   reset() {
     // reset the commandline
-    this.mainWindow.get_active_canvas().core.commandLine.resetPrompt();
+    this.mainWindow.getActiveCanvas().core.commandLine.resetPrompt();
   }
 
-  on_key_press(controller, keyVal, keyCode, state) {
-    this.key_pressed(keyVal, keyCode);
+  onKeyPress(controller, keyVal, keyCode, state) {
+    this.keyPressed(keyVal, keyCode);
   }
 
-  key_pressed(keyVal, keyCode) {
+  keyPressed(keyVal, keyCode) {
     // console.log('Commandline - keycode:', keyCode, 'keyval:', keyVal);
 
     let key;
@@ -86,7 +86,7 @@ export const CommandLine = GObject.registerClass({
     }
 
     if (key) {
-      this.mainWindow.get_active_canvas().core.commandLine.handleKeys(key);
+      this.mainWindow.getActiveCanvas().core.commandLine.handleKeys(key);
     }
   }
 });
