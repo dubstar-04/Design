@@ -9,12 +9,12 @@ export class FileIO {
   // 4. Autosave will need to be tracked on the canvas with a timer
   // 5. Success notifications will need to be returned to the application window
 
-  static format_filename(fileName) {
+  static formatFilename(fileName) {
     const formattedName = fileName.replace(/\.[^/.]+$/, '');
     return formattedName;
   }
 
-  static get_file_extension(fileName) {
+  static getFileExtension(fileName) {
     const extension = fileName.split('.').pop();
     return extension;
   }
@@ -56,8 +56,8 @@ export class FileIO {
 
     // get filename
     const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
-    const fileName = this.format_filename(info.get_name());
-    const ext = this.get_file_extension(info.get_name());
+    const fileName = this.formatFilename(info.get_name());
+    const ext = this.getFileExtension(info.get_name());
 
     if (ext.toLowerCase() !== 'dxf') {
       // TODO: inform user that the file type is not supported.
@@ -115,7 +115,7 @@ export class FileIO {
       title: 'Save As',
     });
 
-    const name = this.format_filename(window._tabView.get_selected_page().get_title());
+    const name = this.formatFilename(window._tabView.get_selected_page().get_title());
     dialog.set_current_name(`${name}.dxf`);
 
     dialog.show();
