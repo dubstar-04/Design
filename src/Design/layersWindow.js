@@ -30,11 +30,9 @@ export const LayersWindow = GObject.registerClass({
   Template: 'resource:///io/github/dubstar_04/design/ui/layers.ui',
   InternalChildren: ['layerList', 'stack', 'backButton', 'nameEntry', 'frozenSwitch', 'lockedSwitch', 'lineTypeLabel', 'lineWeightLabel', 'plottingSwitch'],
 }, class LayersWindow extends Adw.ApplicationWindow {
-  constructor(parent) {
+  constructor() {
     super({});
 
-    // TODO: can this be replaced with .getTransientFor() ?
-    this.mainWindow = parent;
     this.selected_layer;
 
     // Action to edit layers
@@ -60,7 +58,10 @@ export const LayersWindow = GObject.registerClass({
     });
     layerCurrentAction.connect('activate', this.on_current_action.bind(this));
     this.add_action(layerCurrentAction);
+  }
 
+  show() {
+    this.present();
     this.reload();
   }
 
@@ -85,7 +86,7 @@ export const LayersWindow = GObject.registerClass({
   }
 
   getLayerManager() {
-    return this.mainWindow.get_active_canvas().core.layerManager;
+    return this.get_transient_for().get_active_canvas().core.layerManager;
   }
 
   toRgba(layerColour) {
@@ -97,7 +98,6 @@ export const LayersWindow = GObject.registerClass({
     rgba.alpha = 1.0;
     return rgba;
   }
-
 
   reload() {
     this.clearList();
@@ -162,7 +162,7 @@ export const LayersWindow = GObject.registerClass({
     const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
     // log(colour)
     layer.colour = colour;
-    this.mainWindow.get_active_canvas().queue_draw();
+    this.get_transient_for().get_active_canvas().queue_draw();
   }
 
   on_toggled(toggle, state) {
@@ -173,7 +173,7 @@ export const LayersWindow = GObject.registerClass({
     // change the layer state
     layer.on = state;
     // redraw
-    this.mainWindow.get_active_canvas().queue_draw();
+    this.get_transient_for().get_active_canvas().queue_draw();
   }
 
   on_back_clicked() {
@@ -242,7 +242,7 @@ export const LayersWindow = GObject.registerClass({
   delete_layer(layerName) {
     // console.log("delete layer")
     this.getLayerManager().deleteLayerName(layerName);
-    this.mainWindow.get_active_canvas().queue_draw();
+    this.get_transient_for().get_active_canvas().queue_draw();
   }
 }, // window
 );

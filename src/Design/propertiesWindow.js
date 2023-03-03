@@ -29,28 +29,29 @@ export const PropertiesWindow = GObject.registerClass({
   Template: 'resource:///io/github/dubstar_04/design/ui/properties.ui',
   InternalChildren: ['stack', 'elementSelector', 'elementList'],
 }, class PropertiesWindow extends Adw.ApplicationWindow {
-  constructor(parent) {
+  constructor() {
     super({});
 
-    this.mainWindow = parent;
-    this.connection = this.mainWindow.connect('canvas-selection-updated', this.reload.bind(this));
-    this.connect('close-request', this.on_close.bind(this));
 
-    // attempt to load any currently selected entities
+    // this.connect('close-request', this.on_close.bind(this));
+  }
+
+  show() {
+    this.present();
     this.reload();
   }
 
   on_close() {
     // console.log("properties closing")
-    this.mainWindow.disconnect(this.connection);
+
   }
 
   getPropertyManager() {
-    return this.mainWindow.get_active_canvas().core.propertyManager;
+    return this.get_transient_for().get_active_canvas().core.propertyManager;
   }
 
   getLayerManager() {
-    return this.mainWindow.get_active_canvas().core.layerManager;
+    return this.get_transient_for().get_active_canvas().core.layerManager;
   }
 
   reload() {
