@@ -46,7 +46,7 @@ export const PreferencesWindow = GObject.registerClass({
 
   onToggled(widget) {
     // update core with the changed setting
-    this.settings.set_core_setting(widget.name, widget.state);
+    this.settings.setCoreSetting(widget.name, widget.state);
   }
 },
 );

@@ -120,16 +120,16 @@ export const DesignWindow = GObject.registerClass({
 
     const shortcutController = new Gtk.ShortcutController();
 
-    const toggleGridShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>G'), action: Gtk.CallbackAction.new(this.settings.on_setting_toggled.bind(this.settings, 'drawgrid'))});
+    const toggleGridShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>G'), action: Gtk.CallbackAction.new(this.settings.onSettingToggled.bind(this.settings, 'drawgrid'))});
     shortcutController.add_shortcut(toggleGridShortcut);
 
     const helpShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F1'), action: Gtk.CallbackAction.new(this.openHelp.bind(this))});
     shortcutController.add_shortcut(helpShortcut);
 
-    const toggleOrthoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F8'), action: Gtk.CallbackAction.new(this.settings.on_setting_toggled.bind(this.settings, 'ortho'))});
+    const toggleOrthoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F8'), action: Gtk.CallbackAction.new(this.settings.onSettingToggled.bind(this.settings, 'ortho'))});
     shortcutController.add_shortcut(toggleOrthoShortcut);
 
-    const togglePolarShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F9'), action: Gtk.CallbackAction.new(this.settings.on_setting_toggled.bind(this.settings, 'polar'))});
+    const togglePolarShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F9'), action: Gtk.CallbackAction.new(this.settings.onSettingToggled.bind(this.settings, 'polar'))});
     shortcutController.add_shortcut(togglePolarShortcut);
 
     this.add_controller(shortcutController);
@@ -168,7 +168,7 @@ export const DesignWindow = GObject.registerClass({
 
   onTabChange() {
     // Ensure the settings are synced to the selected tab
-    this.settings.sync_settings();
+    this.settings.syncSettings();
 
     if (this.layersWindow) {
       this.layersWindow.reload();
@@ -205,7 +205,7 @@ export const DesignWindow = GObject.registerClass({
     this.commandLine.reset();
     // make the new page current
     this._tabView.set_selected_page(page);
-    this.settings.sync_settings();
+    this.settings.syncSettings();
 
     // set the callback function to trigger toasts
     // TODO: would this be better handles in canvas and use a signal?
