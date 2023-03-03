@@ -82,7 +82,7 @@ export const DesignWindow = GObject.registerClass({
       name: 'preferences',
       parameter_type: null,
     });
-    preferences.connect('activate', this.show_preferences_window.bind(this));
+    preferences.connect('activate', this.showPreferencesWindow.bind(this));
     application.add_action(preferences);
     application.set_accels_for_action('app.preferences', ['<primary>comma']);
 
@@ -90,7 +90,7 @@ export const DesignWindow = GObject.registerClass({
       name: 'showlayers',
       parameter_type: null,
     });
-    showLayers.connect('activate', this.show_layers_window.bind(this));
+    showLayers.connect('activate', this.showLayersWindow.bind(this));
     application.add_action(showLayers);
     application.set_accels_for_action('app.showlayers', ['<primary>L']);
 
@@ -98,7 +98,7 @@ export const DesignWindow = GObject.registerClass({
       name: 'showproperties',
       parameter_type: null,
     });
-    showProperties.connect('activate', this.show_properties_window.bind(this));
+    showProperties.connect('activate', this.showPropertiesWindow.bind(this));
     application.add_action(showProperties);
     application.set_accels_for_action('app.showproperties', ['<primary>1']);
 
@@ -106,7 +106,7 @@ export const DesignWindow = GObject.registerClass({
       name: 'shortcuts',
       parameter_type: null,
     });
-    shortcuts.connect('activate', this.show_shortcuts_window.bind(this));
+    shortcuts.connect('activate', this.showShortcutsWindow.bind(this));
     this.add_action(shortcuts);
     application.set_accels_for_action('win.shortcuts', ['<primary>question']);
 
@@ -114,7 +114,7 @@ export const DesignWindow = GObject.registerClass({
       name: 'new',
       parameter_type: null,
     });
-    newDoc.connect('activate', this.new_document.bind(this));
+    newDoc.connect('activate', this.createNewDocument.bind(this));
     this.add_action(newDoc);
     application.set_accels_for_action('win.new', ['<primary>N']);
 
@@ -123,7 +123,7 @@ export const DesignWindow = GObject.registerClass({
     const toggleGridShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>G'), action: Gtk.CallbackAction.new(this.settings.on_setting_toggled.bind(this.settings, 'drawgrid'))});
     shortcutController.add_shortcut(toggleGridShortcut);
 
-    const helpShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F1'), action: Gtk.CallbackAction.new(this.open_help.bind(this))});
+    const helpShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F1'), action: Gtk.CallbackAction.new(this.openHelp.bind(this))});
     shortcutController.add_shortcut(helpShortcut);
 
     const toggleOrthoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F8'), action: Gtk.CallbackAction.new(this.settings.on_setting_toggled.bind(this.settings, 'ortho'))});
@@ -134,10 +134,10 @@ export const DesignWindow = GObject.registerClass({
 
     this.add_controller(shortcutController);
 
-    this._tabView.connect('notify::selected-page', this.on_tab_change.bind(this));
+    this._tabView.connect('notify::selected-page', this.onTabChange.bind(this));
 
-    this.add_canvas();
-    this.load_toolbars();
+    this.addCanvas();
+    this.loadToolbars();
 
     // store a reference to open windows
     // Only show these windows once and update open windows
@@ -145,7 +145,7 @@ export const DesignWindow = GObject.registerClass({
     this.propertiesWindow;
   }
 
-  on_show_toast(message) {
+  onShowToast(message) {
     const toast = new Adw.Toast({
       title: message,
       // timeout: 3,
@@ -154,19 +154,19 @@ export const DesignWindow = GObject.registerClass({
     this._toastoverlay.add_toast(toast);
   }
 
-  on_show_toolbars(canvas, show) {
+  onShowToolbars(canvas, show) {
     // show or hide the toolbars and commandline
     // these are only suitable for mouse and keyboard
     // hide on touch
     this.toolbars_visible = show;
   }
 
-  open_help() {
+  openHelp() {
     const uri = 'https://design-app.readthedocs.io/en/latest/index.html';
     Gio.AppInfo.launch_default_for_uri_async(uri, null, null, null);
   }
 
-  on_tab_change() {
+  onTabChange() {
     // Ensure the settings are synced to the selected tab
     this.settings.sync_settings();
 
@@ -179,13 +179,13 @@ export const DesignWindow = GObject.registerClass({
     }
   }
 
-  new_document() {
-    this.add_canvas();
+  createNewDocument() {
+    this.addCanvas();
   }
 
-  add_canvas(name) {
+  addCanvas(name) {
     // Check if the current canvas is empty
-    let canvas = this.get_active_canvas();
+    let canvas = this.getActiveCanvas();
     let page = this._tabView.get_selected_page();
 
     if (!canvas || canvas.core.scene.items.length !== 0 || canvas.getFilePath()) {
@@ -198,10 +198,10 @@ export const DesignWindow = GObject.registerClass({
 
     const tabname = name || 'new';
     page.set_title(tabname);
-    canvas.connect('commandline-updated', this.update_commandline.bind(this));
-    canvas.connect('mouseposition-updated', this.update_mouse_position.bind(this));
-    canvas.connect('selection-updated', this.canvas_selection_updated.bind(this));
-    canvas.connect('input-changed', this.on_show_toolbars.bind(this));
+    canvas.connect('commandline-updated', this.updateCommandline.bind(this));
+    canvas.connect('mouseposition-updated', this.updateMousePosition.bind(this));
+    canvas.connect('selection-updated', this.canvasSelectionUpdated.bind(this));
+    canvas.connect('input-changed', this.onShowToolbars.bind(this));
     this.commandLine.reset();
     // make the new page current
     this._tabView.set_selected_page(page);
@@ -209,11 +209,11 @@ export const DesignWindow = GObject.registerClass({
 
     // set the callback function to trigger toasts
     // TODO: would this be better handles in canvas and use a signal?
-    canvas.core.setExternalNotifyCallbackFunction(this.on_show_toast.bind(this));
+    canvas.core.setExternalNotifyCallbackFunction(this.onShowToast.bind(this));
   }
 
-  load_toolbars() {
-    const commands = this.get_active_canvas().core.commandManager.getCommands();
+  loadToolbars() {
+    const commands = this.getActiveCanvas().core.commandManager.getCommands();
 
     for (let index = 0; index < commands.length; index++) {
       const designCommand = commands[index];
@@ -235,7 +235,7 @@ export const DesignWindow = GObject.registerClass({
           tooltip_text: `${commandName} (${designCommand.shortcut})`,
         });
 
-        button.connect('clicked', this.toolbar_button_press.bind(this, designCommand.shortcut));
+        button.connect('clicked', this.onToolbarButtonPress.bind(this, designCommand.shortcut));
 
         if (designCommand.type === 'Entity') {
           this._entitiesToolbar.append(button);
@@ -248,23 +248,23 @@ export const DesignWindow = GObject.registerClass({
     }
   }
 
-  toolbar_button_press(command) {
-    this.get_active_canvas().core.designEngine.sceneControl('Enter', [`${command}`]);
+  onToolbarButtonPress(command) {
+    this.getActiveCanvas().core.designEngine.sceneControl('Enter', [`${command}`]);
   }
 
-  show_shortcuts_window() {
+  showShortcutsWindow() {
     const shortcutsWin = Gtk.Builder.new_from_resource('/io/github/dubstar_04/design/ui/shortcuts.ui').get_object('shortcuts');
     shortcutsWin.set_transient_for(this);
     shortcutsWin.present();
   }
 
-  show_preferences_window() {
+  showPreferencesWindow() {
     const preferencesWin = new PreferencesWindow(this.settings);
     preferencesWin.set_transient_for(this);
     preferencesWin.present();
   }
 
-  show_layers_window() {
+  showLayersWindow() {
     if (!this.layersWindow) {
       this.layersWindow = new LayersWindow(this);
       this.layersWindow.set_transient_for(this);
@@ -276,7 +276,7 @@ export const DesignWindow = GObject.registerClass({
     }
   }
 
-  show_properties_window() {
+  showPropertiesWindow() {
     if (!this.propertiesWindow) {
       this.propertiesWindow = new PropertiesWindow(this);
       this.propertiesWindow.set_transient_for(this);
@@ -292,19 +292,19 @@ export const DesignWindow = GObject.registerClass({
     }
   }
 
-  update_commandline(canvas, commandLineValue) {
+  updateCommandline(canvas, commandLineValue) {
     this._commandLineEntry.text = commandLineValue;
   }
 
-  update_mouse_position(canvas, position) {
+  updateMousePosition(canvas, position) {
     this._mousePosLabel.label = position;
   }
 
-  canvas_selection_updated() {
+  canvasSelectionUpdated() {
     this.emit('canvas-selection-updated');
   }
 
-  get_active_canvas() {
+  getActiveCanvas() {
     const activePage = this._tabView.get_selected_page();
     if (activePage) {
       const activeCanvas = activePage.get_child();

@@ -86,7 +86,7 @@ export const LayersWindow = GObject.registerClass({
   }
 
   getLayerManager() {
-    return this.get_transient_for().get_active_canvas().core.layerManager;
+    return this.get_transient_for().getActiveCanvas().core.layerManager;
   }
 
   toRgba(layerColour) {
@@ -158,7 +158,7 @@ export const LayersWindow = GObject.registerClass({
     const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
     // log(colour)
     layer.colour = colour;
-    this.get_transient_for().get_active_canvas().queue_draw();
+    this.get_transient_for().getActiveCanvas().queue_draw();
   }
 
   onToggled(toggle, state) {
@@ -169,7 +169,7 @@ export const LayersWindow = GObject.registerClass({
     // change the layer state
     layer.on = state;
     // redraw
-    this.get_transient_for().get_active_canvas().queue_draw();
+    this.get_transient_for().getActiveCanvas().queue_draw();
   }
 
   onBackClicked() {
@@ -238,7 +238,7 @@ export const LayersWindow = GObject.registerClass({
   deleteLayer(layerName) {
     // console.log("delete layer")
     this.getLayerManager().deleteLayerName(layerName);
-    this.get_transient_for().get_active_canvas().queue_draw();
+    this.get_transient_for().getActiveCanvas().queue_draw();
   }
 }, // window
 );

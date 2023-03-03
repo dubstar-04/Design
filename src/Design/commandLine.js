@@ -37,7 +37,7 @@ export const CommandLine = GObject.registerClass({
 
   reset() {
     // reset the commandline
-    this.mainWindow.get_active_canvas().core.commandLine.resetPrompt();
+    this.mainWindow.getActiveCanvas().core.commandLine.resetPrompt();
   }
 
   on_key_press(controller, keyVal, keyCode, state) {
@@ -86,7 +86,7 @@ export const CommandLine = GObject.registerClass({
     }
 
     if (key) {
-      this.mainWindow.get_active_canvas().core.commandLine.handleKeys(key);
+      this.mainWindow.getActiveCanvas().core.commandLine.handleKeys(key);
     }
   }
 });

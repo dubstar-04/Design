@@ -57,12 +57,12 @@ class Settings extends Gio.Settings {
   }
 
   get_core_setting(name) {
-    const value = this.window.get_active_canvas().core.settings.getSetting(name);
+    const value = this.window.getActiveCanvas().core.settings.getSetting(name);
     return value;
   }
 
   set_core_setting(name, value) {
-    this.window.get_active_canvas().core.settings.setSetting(name, value);
+    this.window.getActiveCanvas().core.settings.setSetting(name, value);
   }
 
   get_setting(name) {

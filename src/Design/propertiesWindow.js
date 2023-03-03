@@ -42,11 +42,11 @@ export const PropertiesWindow = GObject.registerClass({
   }
 
   getPropertyManager() {
-    return this.get_transient_for().get_active_canvas().core.propertyManager;
+    return this.get_transient_for().getActiveCanvas().core.propertyManager;
   }
 
   getLayerManager() {
-    return this.get_transient_for().get_active_canvas().core.layerManager;
+    return this.get_transient_for().getActiveCanvas().core.layerManager;
   }
 
   reload() {
