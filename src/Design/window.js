@@ -268,7 +268,7 @@ export const DesignWindow = GObject.registerClass({
     if (!this.layersWindow) {
       this.layersWindow = new LayersWindow(this);
       this.layersWindow.set_transient_for(this);
-      this.layersWindow.present();
+      this.layersWindow.show();
 
       this.layersWindow.connect('close-request', ()=>{
         this.layersWindow = null;
@@ -280,10 +280,14 @@ export const DesignWindow = GObject.registerClass({
     if (!this.propertiesWindow) {
       this.propertiesWindow = new PropertiesWindow(this);
       this.propertiesWindow.set_transient_for(this);
-      this.propertiesWindow.present();
+      this.propertiesWindow.show();
+
+      const reloadConnection = this.connect('canvas-selection-updated', this.propertiesWindow.reload.bind(this.propertiesWindow));
 
       this.propertiesWindow.connect('close-request', ()=>{
         this.propertiesWindow = null;
+        // disconnect the property window reload
+        this.disconnect(reloadConnection);
       });
     }
   }
