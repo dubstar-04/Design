@@ -169,6 +169,14 @@ export const DesignWindow = GObject.registerClass({
   on_tab_change() {
     // Ensure the settings are synced to the selected tab
     this.settings.sync_settings();
+
+    if (this.layersWindow) {
+      this.layersWindow.reload();
+    }
+
+    if (this.propertiesWindow) {
+      this.propertiesWindow.reload();
+    }
   }
 
   new_document() {
