@@ -21,7 +21,7 @@ template LayersWindow : Adw.ApplicationWindow {
         focus-on-click: false;
         focusable: false;
         visible: bind backButton.visible inverted bidirectional;
-        clicked => on_new_clicked();
+        clicked => onNewClicked();
         icon-name: 'list-add-symbolic';
         }
 
@@ -29,7 +29,7 @@ template LayersWindow : Adw.ApplicationWindow {
         focus-on-click: false;
         focusable: false;
         visible: false;
-        clicked => on_back_clicked();
+        clicked => onBackClicked();
         icon-name: 'go-previous-symbolic';
         }
 
@@ -46,7 +46,7 @@ template LayersWindow : Adw.ApplicationWindow {
         label: _("_Delete");
         visible: bind backButton.visible bidirectional;
         use-underline: true;
-        clicked => on_layer_delete();
+        clicked => onLayerDelete();
         styles ['destructive-action']
       }
 
@@ -114,7 +114,7 @@ template LayersWindow : Adw.ApplicationWindow {
             Adw.EntryRow nameEntry{
               title: _("Name");
               show-apply-button: true;
-              apply => on_layer_update();
+              apply => onLayerUpdate();
             }
 
             Adw.ActionRow {
