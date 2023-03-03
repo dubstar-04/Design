@@ -60,6 +60,11 @@ export const PropertiesWindow = GObject.registerClass({
     return this.mainWindow.get_active_canvas().core.layerManager;
   }
 
+  reload() {
+    this.clear_list();
+    this.loadSelectedItems();
+  }
+
   clear_list() {
     // delete all current children
     let child = this._elementList.get_first_child();
