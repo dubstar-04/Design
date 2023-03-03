@@ -118,7 +118,6 @@ export const DesignWindow = GObject.registerClass({
     this.add_action(newDoc);
     application.set_accels_for_action('win.new', ['<primary>N']);
 
-    // #region CTRL + '' shortcuts
     const shortcutController = new Gtk.ShortcutController();
 
     const toggleGridShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>G'), action: Gtk.CallbackAction.new(this.settings.on_setting_toggled.bind(this.settings, 'drawgrid'))});
@@ -134,12 +133,16 @@ export const DesignWindow = GObject.registerClass({
     shortcutController.add_shortcut(togglePolarShortcut);
 
     this.add_controller(shortcutController);
-    // #endregion
 
     this._tabView.connect('notify::selected-page', this.on_tab_change.bind(this));
 
     this.add_canvas();
     this.load_toolbars();
+
+    // store a reference to open windows
+    // Only show these windows once and update open windows
+    this.layersWindow;
+    this.propertiesWindow;
   }
 
   on_show_toast(message) {
@@ -166,6 +169,14 @@ export const DesignWindow = GObject.registerClass({
   on_tab_change() {
     // Ensure the settings are synced to the selected tab
     this.settings.sync_settings();
+
+    if (this.layersWindow) {
+      this.layersWindow.reload();
+    }
+
+    if (this.propertiesWindow) {
+      this.propertiesWindow.reload();
+    }
   }
 
   new_document() {
@@ -254,17 +265,27 @@ export const DesignWindow = GObject.registerClass({
   }
 
   show_layers_window() {
-    console.log('Show Layers Window');
-    const layersWin = new LayersWindow(this);
-    layersWin.set_transient_for(this);
-    layersWin.present();
+    if (!this.layersWindow) {
+      this.layersWindow = new LayersWindow(this);
+      this.layersWindow.set_transient_for(this);
+      this.layersWindow.present();
+
+      this.layersWindow.connect('close-request', ()=>{
+        this.layersWindow = null;
+      });
+    }
   }
 
   show_properties_window() {
-    // console.log("Show Properties Window")
-    const propertiesWin = new PropertiesWindow(this);
-    propertiesWin.set_transient_for(this);
-    propertiesWin.present();
+    if (!this.propertiesWindow) {
+      this.propertiesWindow = new PropertiesWindow(this);
+      this.propertiesWindow.set_transient_for(this);
+      this.propertiesWindow.present();
+
+      this.propertiesWindow.connect('close-request', ()=>{
+        this.propertiesWindow = null;
+      });
+    }
   }
 
   update_commandline(canvas, commandLineValue) {

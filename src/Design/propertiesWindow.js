@@ -33,13 +33,11 @@ export const PropertiesWindow = GObject.registerClass({
     super({});
 
     this.mainWindow = parent;
-    this.connection = this.mainWindow.connect('canvas-selection-updated', this.on_selection_updated.bind(this));
+    this.connection = this.mainWindow.connect('canvas-selection-updated', this.reload.bind(this));
     this.connect('close-request', this.on_close.bind(this));
-    this.propertyManager;
-    this.getPropertyManager();
 
     // attempt to load any currently selected entities
-    this.on_selection_updated();
+    this.reload();
   }
 
   on_close() {
@@ -47,23 +45,22 @@ export const PropertiesWindow = GObject.registerClass({
     this.mainWindow.disconnect(this.connection);
   }
 
-  on_selection_updated() {
-    // console.log("Properties Window: Selection Updated")
-    this.loadSelectedItems();
-  }
-
   getPropertyManager() {
-    this.propertyManager = this.mainWindow.get_active_canvas().core.propertyManager;
+    return this.mainWindow.get_active_canvas().core.propertyManager;
   }
 
   getLayerManager() {
     return this.mainWindow.get_active_canvas().core.layerManager;
   }
 
+  reload() {
+    this.clear_list();
+    this.loadSelectedItems();
+  }
+
   clear_list() {
     // delete all current children
     let child = this._elementList.get_first_child();
-
     while (child) {
       const next = child.get_next_sibling();
       this._elementList.remove(child);
@@ -72,7 +69,7 @@ export const PropertiesWindow = GObject.registerClass({
   }
 
   loadSelectedItems() {
-    const types = this.propertyManager.getItemTypes();
+    const types = this.getPropertyManager().getItemTypes();
     if (types.length) {
       this._stack.set_visible_child_name('elementsPage');
     } else {
@@ -101,7 +98,7 @@ export const PropertiesWindow = GObject.registerClass({
     const typeStringList = this._elementSelector.get_model();
     const selectedType = typeStringList.get_string(selectedIndex);
 
-    const properties = this.propertyManager.getItemProperties(selectedType);
+    const properties = this.getPropertyManager().getItemProperties(selectedType);
 
     if (!properties) {
       return;
@@ -111,7 +108,7 @@ export const PropertiesWindow = GObject.registerClass({
 
     if (properties.length) {
       for (let i = 0; i < properties.length; i++) {
-        const value = this.propertyManager.getItemPropertyValue(selectedType, properties[i]);
+        const value = this.getPropertyManager().getItemPropertyValue(selectedType, properties[i]);
 
         let suffixWidget;
         const property = properties[i];
@@ -148,7 +145,7 @@ export const PropertiesWindow = GObject.registerClass({
               GObject.signal_handler_unblock(suffixWidget, changedSignal);
             });
             suffixWidget.connect('activate', () => {
-              this.propertyManager.setItemProperties(`${property}`, Number(suffixWidget.text));
+              this.getPropertyManager().setItemProperties(`${property}`, Number(suffixWidget.text));
             });
             break;
           // Boolean type properties
@@ -156,7 +153,7 @@ export const PropertiesWindow = GObject.registerClass({
           case 'upsideDown':
             suffixWidget = new Gtk.Switch({valign: Gtk.Align.CENTER, state: value});
             suffixWidget.connect('notify::active', () => {
-              this.propertyManager.setItemProperties(`${property}`, suffixWidget.state);
+              this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.state);
             });
             break;
             // option type properties
@@ -178,7 +175,7 @@ export const PropertiesWindow = GObject.registerClass({
               suffixWidget.set_selected(selectedIndex);
             }
             suffixWidget.connect('notify::selected-item', () => {
-              this.propertyManager.setItemProperties(`${property}`, suffixWidget.get_selected_item().get_string());
+              this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.get_selected_item().get_string());
             });
             break;
           // String type properties
@@ -186,7 +183,7 @@ export const PropertiesWindow = GObject.registerClass({
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
             suffixWidget.width_request = widgetWidth;
             suffixWidget.connect('activate', () => {
-              this.propertyManager.setItemProperties(`${property}`, suffixWidget.text);
+              this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.text);
             });
             break;
             // String type properties
@@ -211,7 +208,7 @@ export const PropertiesWindow = GObject.registerClass({
                   const rgb = rgba.substr(4).split(')')[0].split(',');
                   const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
                   suffixWidget.set_label(colour);
-                  this.propertyManager.setItemProperties(`${property}`, colour);
+                  this.getPropertyManager().setItemProperties(`${property}`, colour);
                 }
 
                 dialog.destroy();
