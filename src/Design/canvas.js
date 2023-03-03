@@ -181,7 +181,7 @@ export const Canvas = GObject.registerClass({
       return;
     }
 
-    this.commandLine.key_pressed(keyval, keycode);
+    this.commandLine.keyPressed(keyval, keycode);
   }
 
   mouseMove(controller, x, y) {
