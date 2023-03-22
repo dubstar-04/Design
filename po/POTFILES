@@ -1,7 +1,19 @@
 data/io.github.dubstar_04.design.desktop
 data/io.github.dubstar_04.design.metainfo.xml
 data/io.github.dubstar_04.design.gschema.xml
-src/window.ui
-src/main.js
-src/window.js
 
+data/ui/layers.blp
+data/ui/preferences.blp
+data/ui/properties.blp
+data/ui/shortcuts.blp
+data/ui/window.blp
+
+src/Design/canvas.js
+src/Design/commandLine.js
+src/Design/fileIO.js
+src/Design/layersWindow.js
+src/Design/main.js
+src/Design/preferencesWindow.js
+src/Design/propertiesWindow.js
+src/Design/settings.js
+src/Design/window.js
