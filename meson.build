@@ -1,5 +1,5 @@
 project('design',
-          version: '43-alpha4',
+          version: '44-alpha1',
     meson_version: '>= 0.59.0',
   default_options: [ 'warning_level=2',
                      'werror=false',
