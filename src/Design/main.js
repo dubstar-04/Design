@@ -49,6 +49,8 @@ export const DesignApplication = GObject.registerClass(
             artists: [
               'Brage Fuglseth',
             ],
+            // TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
+            translator_credits: _('translator-credits'),
             transient_for: this.activeWindow,
             modal: true,
             version: pkg.version,
