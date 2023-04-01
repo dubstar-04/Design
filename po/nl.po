@@ -1,0 +1,377 @@
+# Dutch translations for design package.
+# Copyright (C) 2023 THE design'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the design package.
+# Automatically generated, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: design\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-16 15:56+0100\n"
+"PO-Revision-Date: 2023-03-17 15:03+0100\n"
+"Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
+"Language-Team: none\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#: data/io.github.dubstar_04.design.desktop:3
+#: data/io.github.dubstar_04.design.metainfo.xml:7
+msgid "Design"
+msgstr "Design"
+
+#: data/io.github.dubstar_04.design.desktop:10
+msgid "CAD;DXF;drawing;design;vector;"
+msgstr "CAD;DXF;drawing;design;vector;tekenen;tekening;ontwerp;"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:8
+msgid "2D CAD for GNOME"
+msgstr "2D-CAD voor GNOME"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:10
+msgid "Design is a 2D computer aided design application (CAD), created to meet the needs of makers and designers, hobbyists and professionals that require a first class CAD application."
+msgstr "Design is een app voor 2D computer-aided design (CAD), gemaakt om te voldoen aan de behoeften van makers en ontwerpers, hobbyisten en professionals, die een eersteklas CAD-app nodig hebben."
+
+#: data/io.github.dubstar_04.design.metainfo.xml:13
+msgid "Features:"
+msgstr "Functies:"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:15
+msgid "Supports the industry standard DXF format"
+msgstr "Ondersteunt de industriestandaard DXF"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:16
+msgid "Uses common CAD workflows, commands and canvas management"
+msgstr "Maakt gebruik van gangbare CAD-workflows, commando's en canvasbeheer"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:17
+msgid "Drawing creation and manipulation using commandline or toolbar input"
+msgstr "Maak tekeningen en manipuleer deze met behulp van opdrachtregel- of werkbalkinvoer"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:18
+msgid "Layer management and manipulation"
+msgstr "Laagbeheer en -manipulatie"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:19
+msgid "Entity interogation and modification"
+msgstr "Entiteit-interogatie en -modificatie"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:25
+msgid "Main Window"
+msgstr "Hoofdvenster"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:29
+msgid "Layer Manager"
+msgstr "Laagbeheer"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:33 data/ui/properties.blp:17
+#: data/ui/window.blp:39
+msgid "Properties"
+msgstr "Eigenschappen"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:41
+msgid "-"
+msgstr "-"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:48
+msgid "Fix tabs not being shown"
+msgstr "Probleem met niet-getoonde tabbladen opgelost"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:49
+msgid "Show crosshair cursor on the canvas"
+msgstr "Kruisdraadaanwijzer wordt getoond op het canvas"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:50
+msgid "Add touch controls, pan, pinch to zoom and double tap to zoom all"
+msgstr "Aanraakbediening toegevoegd: slepen om te bewegen, knijpen om te zoomen en dubbeltikken om alles te zoomen"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:51
+msgid "Hide toolbars and commandline on touch input"
+msgstr "Werkbalken en opdrachtregel verborgen bij aanraakinvoer"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:52
+msgid "Add layer manager and properties to app menu. Remove header bar buttons"
+msgstr "Laagbeheer en eigenschappen toegevoegd aan app-menu. Knoppen in de titelbalk verwijderd"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:53
+msgid "Fixes for text rotation"
+msgstr "Problemen met tekstrotatie opgelost"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:54
+msgid "Show app name capitalised in overview"
+msgstr "App-naam met hoofdletter weergegeven in overzicht"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:55
+msgid "Invert zoom direction"
+msgstr "Zoomrichting omgedraaid"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:56
+msgid "Load any preselected entities when opening the properties window"
+msgstr "Voorgeselecteerde entiteiten worden geladen bij het openen van het eigenschappen-venster"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:57
+msgid "Fix right mouse button behaviour"
+msgstr "Probleem met gedrag van rechtermuisknop opgelost"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:58
+msgid "Fix files being read incorrectly"
+msgstr "Probleem met incorrect ingelezen bestanden opgelost"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:59
+msgid "Fix ARC selection"
+msgstr "Probleem met ARC-selectie opgelost"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:60
+msgid "Improve selection precision"
+msgstr "Selectieprecisie verbeterd"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:61
+msgid "Added ability to Save As"
+msgstr "Mogelijkheid voor ‘Opslaan als’ toegevoegd"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:62
+msgid "Added keyboard shortcuts: CTRL+N (New), CTRL+S (Save), CTRL+SHIFT+S (Save As) CTRL+O (Open)"
+msgstr "Sneltoetsen toegevoegd: Ctrl+N (Nieuw), Ctrl+S (Opslaan), Ctrl+Shift+S (Opslaan als), Ctrl+O (Openen)"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:63
+msgid "CTRL+1 (Properties),CTRL+G (Toggle Grid), F1 (Help)"
+msgstr "Ctrl+1 (Eigenschappen), Ctrl+G (Raster omschakelen), F1 (Hulp)"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:64
+msgid "F8 (Toggle Ortho), F9 (Toggle Polar)"
+msgstr "F8 (Orthogonaal omschakelen), F9 (Polair omschakelen)"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:71
+msgid "FOSDEM release!"
+msgstr "FOSDEM-uitgave!"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:72
+msgid "Enable 'open with' from the file browser"
+msgstr "‘Openen met…’ ingeschakeld vanuit bestanden"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:73
+msgid "Show notifications for DI and ID commands"
+msgstr "Meldingen voor DI- en ID-opdrachten worden getoond"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:74
+msgid "Recolor the canvas for dark/light styles"
+msgstr "Canvaskleuren bewerkt voor donkere/lichte stijlen"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:75
+msgid "End current command with a right click"
+msgstr "Huidige opdracht kan worden geëindigd met een rechtermuisklik"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:76
+msgid "Enable changing preferences"
+msgstr "Voorkeuren kunnen worden aangepast"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:77
+msgid "New icon!"
+msgstr "Nieuw pictogram!"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:84
+msgid "Preview release"
+msgstr "Voorvertoningsuitgave"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:99
+msgid "Daniel Wood"
+msgstr "Daniel Wood"
+
+#: data/ui/layers.blp:17 data/ui/window.blp:34
+msgid "Layers"
+msgstr "Lagen"
+
+#: data/ui/layers.blp:38
+msgid "_Cancel"
+msgstr "_Annuleren"
+
+#: data/ui/layers.blp:46
+msgid "_Delete"
+msgstr "_Verwijderen"
+
+#: data/ui/layers.blp:115
+msgid "Name"
+msgstr "Naam"
+
+#: data/ui/layers.blp:121
+msgid "Frozen"
+msgstr "Bevroren"
+
+#: data/ui/layers.blp:122
+msgid "Frozen layers are not shown or available for any actions"
+msgstr "Bevroren lagen worden niet getoond en zijn niet beschikbaar voor enkele actie"
+
+#: data/ui/layers.blp:132
+msgid "Locked"
+msgstr "Vergrendeld"
+
+#: data/ui/layers.blp:133
+msgid "Locked layers are visible but not able to be selected"
+msgstr "Vergrendelde lagen zijn zichtbaar maar kunnen niet worden geselecteerd"
+
+#: data/ui/layers.blp:142
+msgid "Line Type"
+msgstr "Lijntype"
+
+#: data/ui/layers.blp:143
+msgid "Line type for the selected layer. Not implimented"
+msgstr "Lijntype voor de geselecteerde laag; niet geïmplementeerd"
+
+#: data/ui/layers.blp:152
+msgid "Line Weight"
+msgstr "Lijndikte"
+
+#: data/ui/layers.blp:153
+msgid "Line weight for the selected layer. Not implimented"
+msgstr "Lijndikte voor de geselecteerde laag; niet geïmplementeerd"
+
+#: data/ui/layers.blp:162
+msgid "Plotting"
+msgstr "Tekenen"
+
+#: data/ui/layers.blp:163
+msgid "Layers with plotting true will appear on prints"
+msgstr "Lagen met de eigenschap tekenen zullen op afdrukken verschijnen"
+
+#: data/ui/preferences.blp:13 data/ui/preferences.blp:16
+msgid "Snaps"
+msgstr "Kleven"
+
+#: data/ui/preferences.blp:19
+msgid "End Snap"
+msgstr "Kleven aan eind"
+
+#: data/ui/preferences.blp:31
+msgid "Mid Snap"
+msgstr "Kleven aan midden"
+
+#: data/ui/preferences.blp:43
+msgid "Centre Snap"
+msgstr "Kleven aan centrum"
+
+#: data/ui/preferences.blp:55
+msgid "Nearest Snap"
+msgstr "Kleven aan dichtstbijzijnde"
+
+#: data/ui/preferences.blp:67
+msgid "Polar"
+msgstr "Polair"
+
+#: data/ui/preferences.blp:100
+msgid "Ortho"
+msgstr "Orthogonaal"
+
+#: data/ui/preferences.blp:113
+msgid "Canvas"
+msgstr "Canvas"
+
+#: data/ui/preferences.blp:116
+msgid "Draw Grid"
+msgstr "Raster tekenen"
+
+#: data/ui/shortcuts.blp:9
+msgid "Entities"
+msgstr "Entiteiten"
+
+#: data/ui/shortcuts.blp:12
+msgid "Draw Line"
+msgstr "Lijn tekenen"
+
+#: data/ui/shortcuts.blp:16
+msgid "Draw Polyline"
+msgstr "Polylijn tekenen"
+
+#: data/ui/shortcuts.blp:20
+msgid "Draw Circle"
+msgstr "Cirkel tekenen"
+
+#: data/ui/shortcuts.blp:24
+msgid "Draw Arc"
+msgstr "Boog tekenen"
+
+#: data/ui/shortcuts.blp:28
+msgid "Draw Rectangle"
+msgstr "Rechthoek tekenen"
+
+#: data/ui/shortcuts.blp:33
+msgid "Tools"
+msgstr "Hulpmiddelen"
+
+#: data/ui/shortcuts.blp:36
+msgid "Move"
+msgstr "Verplaatsen"
+
+#: data/ui/shortcuts.blp:40
+msgid "Copy"
+msgstr "Kopiëren"
+
+#: data/ui/shortcuts.blp:44
+msgid "Rotate"
+msgstr "Draaien"
+
+#: data/ui/shortcuts.blp:48
+msgid "Trim"
+msgstr "Trim"
+
+#: data/ui/shortcuts.blp:52
+msgid "Extend"
+msgstr "Uitbreiden"
+
+#: data/ui/shortcuts.blp:56
+msgid "Erase"
+msgstr "Wissen"
+
+#: data/ui/shortcuts.blp:60
+msgid "Distance"
+msgstr "Afstand"
+
+#: data/ui/shortcuts.blp:64
+msgid "Identify"
+msgstr "Identificeren"
+
+#: data/ui/window.blp:10
+msgid "Open"
+msgstr "Openen"
+
+#: data/ui/window.blp:15
+msgid "Save"
+msgstr "Opslaan"
+
+#: data/ui/window.blp:20
+msgid "Save As"
+msgstr "Opslaan als"
+
+#: data/ui/window.blp:29
+msgid "Preferences"
+msgstr "Voorkeuren"
+
+#: data/ui/window.blp:44
+msgid "Keyboard Shortcuts"
+msgstr "Sneltoetsen"
+
+#: data/ui/window.blp:49
+msgid "About Design"
+msgstr "Over Design"
+
+#: data/ui/window.blp:70
+msgid "Create a new design"
+msgstr "Nieuw ontwerp aanmaken"
+
+#: data/ui/window.blp:79
+msgid "Open application menu"
+msgstr "App-menu openen"
+
+#: src/Design/layersWindow.js:130
+msgid "Edit"
+msgstr "Bewerken"
+
+#: src/Design/layersWindow.js:131
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: src/Design/layersWindow.js:132
+msgid "Make Current"
+msgstr "Selecteren"
