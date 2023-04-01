@@ -35,10 +35,15 @@
   	</screenshots>
 	<content_rating type="oars-1.1" />
   	<releases>
-			<release version="43.alpha4" date="2023-02-xx">
+			<release version="44.alpha1" date="2023-04-xx">
 			<description>
 				<ul>
-					<li>-</li>
+					<li>Update Design-Core to use new DXF parser</li>
+					<li>Update to GNOME 44 runtime - Fixes Panning</li>
+					<li>Enable updating entities from the properties window</li>
+					<li>Only allow single instances of layer and properties windows</li>
+					<li>Added Dutch and Spanish translations (Core not translated yet)</li>
+					<li>Use native file chooser</li>
 				</ul>
 			</description>
 		</release>
@@ -99,5 +104,6 @@
 	<developer_name>Daniel Wood</developer_name>
 	<custom>
 		<value key="Purism::form_factor">workstation</value>
+		<value key="Purism::form_factor">mobile</value>
 	</custom>
 </component>
