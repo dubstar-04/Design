@@ -42,6 +42,7 @@
     <file>Design-Core/core/properties/propertyManager.js</file>
 
     <file>Design-Core/core/entities/arc.js</file>
+    <file>Design-Core/core/entities/basePolyline.js</file>
     <file>Design-Core/core/entities/block.js</file>
     <file>Design-Core/core/entities/circle.js</file>
     <file>Design-Core/core/entities/dimension.js</file>
@@ -50,6 +51,7 @@
     <file>Design-Core/core/entities/filledRectangle.js</file>
     <file>Design-Core/core/entities/insert.js</file>
     <file>Design-Core/core/entities/line.js</file>
+    <file>Design-Core/core/entities/lwpolyline.js</file>
     <file>Design-Core/core/entities/point.js</file>
     <file>Design-Core/core/entities/polyline.js</file>
     <file>Design-Core/core/entities/rectangle.js</file>
