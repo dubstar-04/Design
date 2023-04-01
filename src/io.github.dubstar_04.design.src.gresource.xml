@@ -18,7 +18,6 @@
     <file>Design-Core/core/lib/commandLine.js</file>
     <file>Design-Core/core/lib/commandManager.js</file>
     <file>Design-Core/core/lib/designEngine.js</file>
-    <file>Design-Core/core/lib/dxf.js</file>
     <file>Design-Core/core/lib/fileio.js</file>
     <file>Design-Core/core/lib/intersect.js</file>
     <file>Design-Core/core/lib/matrix.js</file>
@@ -28,10 +27,22 @@
     <file>Design-Core/core/lib/snapping.js</file>
     <file>Design-Core/core/lib/strings.js</file>
     <file>Design-Core/core/lib/utils.js</file>
+    <!-- DXF -->
+    <file>Design-Core/core/lib/dxf/dxf.js</file>
+    <file>Design-Core/core/lib/dxf/dxfRead.js</file>
+    <file>Design-Core/core/lib/dxf/dxfWrite.js</file>
+    <file>Design-Core/core/lib/dxf/dxfIterator.js</file>
+
+    <file>Design-Core/core/lib/dxf/sections/blocks.js</file>
+    <file>Design-Core/core/lib/dxf/sections/entities.js</file>
+    <file>Design-Core/core/lib/dxf/sections/header.js</file>
+    <file>Design-Core/core/lib/dxf/sections/section.js</file>
+    <file>Design-Core/core/lib/dxf/sections/tables.js</file>
 
     <file>Design-Core/core/properties/propertyManager.js</file>
 
     <file>Design-Core/core/entities/arc.js</file>
+    <file>Design-Core/core/entities/basePolyline.js</file>
     <file>Design-Core/core/entities/block.js</file>
     <file>Design-Core/core/entities/circle.js</file>
     <file>Design-Core/core/entities/dimension.js</file>
@@ -40,6 +51,7 @@
     <file>Design-Core/core/entities/filledRectangle.js</file>
     <file>Design-Core/core/entities/insert.js</file>
     <file>Design-Core/core/entities/line.js</file>
+    <file>Design-Core/core/entities/lwpolyline.js</file>
     <file>Design-Core/core/entities/point.js</file>
     <file>Design-Core/core/entities/polyline.js</file>
     <file>Design-Core/core/entities/rectangle.js</file>

@@ -4,7 +4,7 @@ icons = [
   'entities/arc-symbolic.svg',
   'entities/line-symbolic.svg',
   'entities/circle-symbolic.svg',
-  'entities/polyline-symbolic.svg',
+  'entities/lwpolyline-symbolic.svg',
   'entities/rectangle-symbolic.svg',
   'entities/text-symbolic.svg',
 
