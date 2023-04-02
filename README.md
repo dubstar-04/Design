@@ -1,4 +1,9 @@
-# Design &emsp;[![Design QA](https://github.com/dubstar-04/Design/actions/workflows/DesignQA.yml/badge.svg?branch=main)](https://github.com/dubstar-04/Design/actions/workflows/DesignQA.yml)
+<img style="vertical-align: middle;" src="data/icons/hicolor/scalable/io.github.dubstar_04.design.svg" width="120" height="120" align="left">
+
+# Design 
+
+2D CAD for GNOME 
+&emsp;[![Design QA](https://github.com/dubstar-04/Design/actions/workflows/DesignQA.yml/badge.svg?branch=main)](https://github.com/dubstar-04/Design/actions/workflows/DesignQA.yml)
 
 Design is a 2D computer aided design application (CAD), created to meet the needs of makers and designers, 
 hobbyists and professionals that require a first-class CAD application.
