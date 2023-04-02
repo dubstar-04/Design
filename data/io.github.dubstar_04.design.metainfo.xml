@@ -40,10 +40,12 @@
 				<ul>
 					<li>Update Design-Core to use new DXF parser</li>
 					<li>Update to GNOME 44 runtime - Fixes Panning</li>
-					<li>Enable updating entities from the properties window</li>
+					<li>Properties window:Enable updating entities from the properties window</li>
 					<li>Only allow single instances of layer and properties windows</li>
 					<li>Added Dutch and Spanish translations (Core not translated yet)</li>
 					<li>Use native file chooser</li>
+					<li>Improve selection window performance</li>
+					<li>Properties window: Show common properties when 'All' selected</li>
 				</ul>
 			</description>
 		</release>
