@@ -197,7 +197,7 @@ export const LayersWindow = GObject.registerClass({
     this._frozenSwitch.active = this.selected_layer.frozen;
     this._lockedSwitch.active = this.selected_layer.locked;
     this._lineTypeLabel.label = this.selected_layer.lineType;
-    this._lineWeightLabel.label = this.selected_layer.lineWeight;
+    this._lineWeightLabel.label = this.selected_layer.lineWeight.toString();
     this._plottingSwitch.active = this.selected_layer.plotting;
 
     this._stack.set_visible_child_name('LayerDetailsPage');
