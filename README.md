@@ -2,6 +2,8 @@
 
 Design is a 2D computer aided design application (CAD), created to meet the needs of makers and designers, 
 hobbyists and professionals that require a first-class CAD application.
+
+<a href='https://flathub.org/apps/details/io.github.dubstar_04.design'><img width='180' height='60' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
 ___
 
 ### History
