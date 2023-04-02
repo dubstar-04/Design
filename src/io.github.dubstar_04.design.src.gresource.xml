@@ -25,6 +25,7 @@
     <file>Design-Core/core/lib/scene.js</file>
     <file>Design-Core/core/lib/settings.js</file>
     <file>Design-Core/core/lib/snapping.js</file>
+    <file>Design-Core/core/lib/selection.js</file>
     <file>Design-Core/core/lib/strings.js</file>
     <file>Design-Core/core/lib/utils.js</file>
     <!-- DXF -->
