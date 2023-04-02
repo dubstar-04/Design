@@ -22,7 +22,6 @@ import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
 
 import {Colours} from '../Design-Core/core/lib/colours.js';
-// import resource from "../../ui/layers.ui";
 
 export const PropertiesWindow = GObject.registerClass({
   GTypeName: 'PropertiesWindow',
@@ -31,9 +30,6 @@ export const PropertiesWindow = GObject.registerClass({
 }, class PropertiesWindow extends Adw.ApplicationWindow {
   constructor() {
     super({});
-
-
-    // this.connect('close-request', this.on_close.bind(this));
   }
 
   show() {
