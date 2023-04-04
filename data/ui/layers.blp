@@ -114,7 +114,7 @@ template LayersWindow : Adw.ApplicationWindow {
             Adw.EntryRow nameEntry{
               title: _("Name");
               show-apply-button: true;
-              apply => onLayerUpdate();
+              notify::active => onLayerUpdate();
             }
 
             Adw.ActionRow {
@@ -124,7 +124,7 @@ template LayersWindow : Adw.ApplicationWindow {
                 [suffix]
                 Switch frozenSwitch{
                   valign: center;
-                  //state-set => on_update_layer();
+                  notify::active => onLayerUpdate();
                 }
               }
 
@@ -135,6 +135,7 @@ template LayersWindow : Adw.ApplicationWindow {
                 [suffix]
                 Switch lockedSwitch{
                   valign: center;
+                  notify::active => onLayerUpdate();
                 }
               }
 
@@ -165,6 +166,7 @@ template LayersWindow : Adw.ApplicationWindow {
                 [suffix]
                 Switch plottingSwitch{
                   valign: center;
+                  notify::active => onLayerUpdate();
                 }
               }
             }// group
