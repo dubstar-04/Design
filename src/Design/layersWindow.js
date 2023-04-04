@@ -212,6 +212,7 @@ export const LayersWindow = GObject.registerClass({
     // this.selected_layer.lineType = this._lineTypeLabel.label;
     // this.selected_layer.lineWeight = this._lineWeightLabel.label;
     this.selected_layer.plotting = this._plottingSwitch.active;
+    this.get_transient_for().getActiveCanvas().queue_draw();
   }
 
   onLayerDelete() {
