@@ -46,6 +46,7 @@
 					<li>Use native file chooser</li>
 					<li>Improve selection window performance</li>
 					<li>Properties window: Show common properties when 'All' selected</li>
+					<li>Layers window: Fix layer frozen and lock toggles</li>
 				</ul>
 			</description>
 		</release>
