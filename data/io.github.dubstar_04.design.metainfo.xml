@@ -35,7 +35,13 @@
   	</screenshots>
 	<content_rating type="oars-1.1" />
   	<releases>
-			<release version="44.alpha1" date="2023-04-11">
+		<release version="44.alpha2" date="2023-xx-xx">
+			<description>
+				<ul>
+				</ul>
+			</description>
+		</release>
+		<release version="44.alpha1" date="2023-04-11">
 			<description>
 				<ul>
 					<li>Update Design-Core to use new DXF parser</li>
