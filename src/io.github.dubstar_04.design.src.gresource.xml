@@ -68,6 +68,7 @@
     <file>Design-Core/core/tools/move.js</file>
     <file>Design-Core/core/tools/rotate.js</file>
     <file>Design-Core/core/tools/trim.js</file>
+    <file>Design-Core/core/tools/tool.js</file>
 
     <file>Design-Core/core/layers/layer.js</file>
     <file>Design-Core/core/layers/layerManager.js</file>
