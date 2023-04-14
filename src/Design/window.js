@@ -249,7 +249,7 @@ export const DesignWindow = GObject.registerClass({
   }
 
   onToolbarButtonPress(command) {
-    this.getActiveCanvas().core.designEngine.sceneControl('Enter', [`${command}`]);
+    this.getActiveCanvas().core.designEngine.onCommand(`${command}`);
   }
 
   showShortcutsWindow() {
