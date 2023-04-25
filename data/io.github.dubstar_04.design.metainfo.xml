@@ -41,7 +41,7 @@
 				<li>Refactored all input to work Asynchronously</li>
 				<li>Updated all command prompts to use common language</li>
 				<li>Updated text tool to accept rotation and draw dynamically during creation</li>
-				<li>Provide default values in the command prompt <default></li>
+				<li>Provide default values in the command prompt</li>
 				</ul>
 			</description>
 		</release>
