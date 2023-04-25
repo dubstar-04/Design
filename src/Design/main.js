@@ -86,5 +86,5 @@ export const DesignApplication = GObject.registerClass(
 
 export function main(argv) {
   const application = new DesignApplication();
-  return application.run(argv);
+  return application.runAsync(argv);
 }
