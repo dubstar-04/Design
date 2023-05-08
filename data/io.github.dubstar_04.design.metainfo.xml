@@ -42,6 +42,7 @@
 				<li>Updated all command prompts to use common language</li>
 				<li>Updated text tool to accept rotation and draw dynamically during creation</li>
 				<li>Provide default values in the command prompt</li>
+				<li>Support for Polyline Arcs</li>
 				</ul>
 			</description>
 		</release>
