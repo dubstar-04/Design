@@ -35,9 +35,10 @@
   	</screenshots>
 	<content_rating type="oars-1.1" />
   	<releases>
-		<release version="44.alpha2" date="2023-xx-xx">
+		<release version="44.alpha2" date="2023-08-05">
 			<description>
 				<ul>
+				<li>Coronation release!</li>
 				<li>Refactored all input to work Asynchronously</li>
 				<li>Updated all command prompts to use common language</li>
 				<li>Updated text tool to accept rotation and draw dynamically during creation</li>
