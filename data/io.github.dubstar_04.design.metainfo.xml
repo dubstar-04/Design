@@ -35,10 +35,10 @@
   	</screenshots>
 	<content_rating type="oars-1.1" />
   	<releases>
-			<release version="44.alpha3" date="2023-xx-xx">
+			<release version="44.alpha3" date="2023-05-09">
 			<description>
 				<ul>
-				<li></li>
+				<li>Fix packaging issue</li>
 				</ul>
 			</description>
 		</release>
