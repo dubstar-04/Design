@@ -32,6 +32,7 @@
     <file>Design-Core/core/lib/utils.js</file>
     <!-- DXF -->
     <file>Design-Core/core/lib/dxf/dxf.js</file>
+    <file>Design-Core/core/lib/dxf/dxfFile.js</file>
     <file>Design-Core/core/lib/dxf/dxfRead.js</file>
     <file>Design-Core/core/lib/dxf/dxfWrite.js</file>
     <file>Design-Core/core/lib/dxf/dxfIterator.js</file>
