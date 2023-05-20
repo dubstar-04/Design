@@ -38,7 +38,8 @@
 		<release version="44.alpha4" date="2023-xx-xx">
 			<description>
 				<ul>
-				<li></li>
+				<li>Support Line Types</li>
+				<li>Fix polar snapping offset</li>
 				</ul>
 			</description>
 		</release>
