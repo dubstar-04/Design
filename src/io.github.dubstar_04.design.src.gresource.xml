@@ -71,7 +71,9 @@
 
     <file>Design-Core/core/layers/layer.js</file>
     <file>Design-Core/core/layers/layerManager.js</file>
-
+    <file>Design-Core/core/styles/ltype.js</file>
+    <file>Design-Core/core/styles/ltypeManager.js</file>
+    <file>Design-Core/core/styles/styleManagerBase.js</file>
     <file>Design-Core/core/styles/dimStyle.js</file>
     <file>Design-Core/core/styles/dimStyleManager.js</file>
     <file>Design-Core/core/styles/style.js</file>
