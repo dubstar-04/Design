@@ -38,8 +38,9 @@
 		<release version="44.alpha4" date="2023-xx-xx">
 			<description>
 				<ul>
-				<li>Support Line Types</li>
+				<li>Support line types</li>
 				<li>Fix polar snapping offset</li>
+				<li>Fix zoom extents with polyline arcs</li>
 				</ul>
 			</description>
 		</release>
