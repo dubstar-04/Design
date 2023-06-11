@@ -22,7 +22,8 @@ blueprints = custom_target('blueprints',
         'ui/shortcuts.blp',
         'ui/preferences.blp',
         'ui/layers.blp',
-        'ui/properties.blp'
+        'ui/properties.blp',
+        'ui/export.blp'
     ),
     output: '.',
     command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@']

@@ -6,5 +6,6 @@
     <file>ui/preferences.ui</file>
     <file>ui/layers.ui</file>
     <file>ui/properties.ui</file>
+    <file>ui/export.ui</file>
   </gresource>
 </gresources>

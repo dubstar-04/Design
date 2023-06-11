@@ -6,6 +6,7 @@
     <file>Design/canvas.js</file>
     <file>Design/preferencesWindow.js</file>
     <file>Design/layersWindow.js</file>
+    <file>Design/exportWindow.js</file>
     <file>Design/propertiesWindow.js</file>
     <file>Design/commandLine.js</file>
     <file>Design/settings.js</file>
