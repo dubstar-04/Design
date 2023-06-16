@@ -75,6 +75,7 @@ export const DesignWindow = GObject.registerClass({
       name: 'save-as',
       parameter_type: null,
     });
+
     saveAs.connect('activate', () => FileIO.saveDialog(this));
     this.add_action(saveAs);
     application.set_accels_for_action('win.save-as', ['<primary><SHIFT>S']);
@@ -288,8 +289,9 @@ export const DesignWindow = GObject.registerClass({
   showExportWindow() {
     log('show export window');
     if (!this.exportWindow) {
-      this.exportWindow = new ExportWindow(this);
+      this.exportWindow = new ExportWindow();
       this.exportWindow.set_transient_for(this);
+      this.exportWindow.set_modal(true);
       this.exportWindow.show();
 
       this.exportWindow.connect('close-request', ()=>{
