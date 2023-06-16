@@ -67,7 +67,6 @@ export const ExportWindow = GObject.registerClass({
     const state = radioButton.get_active();
     if (state) {
       this.version = radioButton.id;
-      log('Selected Version', this.version);
     }
   }
 
