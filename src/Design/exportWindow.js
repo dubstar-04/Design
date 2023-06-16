@@ -20,11 +20,13 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 
+import {FileIO} from './fileIO.js';
+
 export const ExportWindow = GObject.registerClass({
   GTypeName: 'ExportWindow',
   Template: 'resource:///io/github/dubstar_04/design/ui/export.ui',
   InternalChildren: ['versionList'],
-}, class ExportWindow extends Adw.ApplicationWindow {
+}, class ExportWindow extends Adw.Window {
   constructor() {
     super({});
 
@@ -70,7 +72,9 @@ export const ExportWindow = GObject.registerClass({
   }
 
   onSaveAsClicked() {
-    log('save as version:', this.version);
+    const mainWindow = this.get_transient_for();
+    FileIO.saveDialog(mainWindow, this.version);
+    this.close();
   }
 }, // window
 );

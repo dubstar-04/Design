@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template ExportWindow : Adw.ApplicationWindow {
+template ExportWindow : Adw.Window {
   modal: false;
   default-width: 500;
   default-height: 600;
@@ -47,7 +47,7 @@ template ExportWindow : Adw.ApplicationWindow {
 
           Button{
             styles ["pill", "suggested-action"]
-            label: _("Save As");
+            label: _("Save As...");
             halign: center;
             clicked => onSaveAsClicked();
           }
