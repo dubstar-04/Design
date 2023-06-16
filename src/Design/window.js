@@ -19,7 +19,6 @@
 import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 import Gio from 'gi://Gio';
-import GLib from 'gi://GLib';
 import Adw from 'gi://Adw?version=1';
 
 import {Canvas} from './canvas.js';
