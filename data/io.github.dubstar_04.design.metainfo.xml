@@ -35,12 +35,13 @@
   	</screenshots>
 	<content_rating type="oars-1.1" />
   	<releases>
-		<release version="44.alpha4" date="2023-xx-xx">
+		<release version="44.alpha4" date="2023-06-16">
 			<description>
 				<ul>
 				<li>Support line types</li>
 				<li>Fix polar snapping offset</li>
 				<li>Fix zoom extents with polyline arcs</li>
+				<li>Add Export for alternative DXF versions</li>
 				</ul>
 			</description>
 		</release>
