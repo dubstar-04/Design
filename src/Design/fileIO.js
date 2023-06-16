@@ -86,11 +86,11 @@ export class FileIO {
     }
   }
 
-  static saveFile(filePath, window) {
+  static saveFile(filePath, window, version) {
     if (filePath) {
       const file = Gio.File.new_for_path(filePath);
 
-      const dxfContents = window.getActiveCanvas().core.saveFile();
+      const dxfContents = window.getActiveCanvas().core.saveFile(version);
 
       const [success] = file.replace_contents(dxfContents, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
 
@@ -103,7 +103,7 @@ export class FileIO {
     }
   }
 
-  static saveDialog(window) {
+  static saveDialog(window, version=undefined) {
     const filter = new Gtk.FileFilter();
     filter.add_pattern('*.dxf');
 
@@ -124,7 +124,12 @@ export class FileIO {
         const file = dialog.get_file();
         const filePath = file.get_path();
 
-        this.saveFile(filePath, window);
+        if (version === undefined) {
+        // load the file contents into the active canvas
+          version = window.getActiveCanvas().core.dxfVersion;
+        }
+
+        this.saveFile(filePath, window, version);
 
         // update page name
         const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
