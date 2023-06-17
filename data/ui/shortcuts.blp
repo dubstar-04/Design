@@ -4,7 +4,7 @@ ShortcutsWindow shortcuts {
     modal: true;
     section-name: 'shortcuts';
     ShortcutsSection {
-        visible: true;
+        max-height: 10;
         ShortcutsGroup {
             title: _("Entities");
             ShortcutsShortcut {
@@ -62,6 +62,42 @@ ShortcutsWindow shortcuts {
             ShortcutsShortcut {
                 accelerator: 'I+D';
                 title: _("Identify");
+            }
+        }
+
+        ShortcutsGroup {
+            title: _("General");
+            ShortcutsShortcut {
+                accelerator: "<primary>N";
+                title: _("Create a New Design");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary>O";
+                title: _("Open");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary>S";
+                title: _("Save");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary><shift>S";
+                title: _("Save as");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary>comma";
+                title: _("Show Preferences");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary>L";
+                title: _("Show Layers");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary>1";
+                title: _("Show Properties");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary>question";
+                title: _("Show Keyboard Shortcuts");
             }
         }
     }
