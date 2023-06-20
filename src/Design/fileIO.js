@@ -28,7 +28,7 @@ export class FileIO {
       filter: filter,
       select_multiple: false,
       transient_for: window,
-      title: 'Open',
+      title: _('Open'),
     });
 
     dialog.show();
@@ -96,9 +96,9 @@ export class FileIO {
 
       if (success) {
         // TODO: Janky sending notifications through core
-        window.getActiveCanvas().core.notify('File Saved');
+        window.getActiveCanvas().core.notify(_('File Saved'));
       } else {
-        window.getActiveCanvas().core.notify('Error Saving File');
+        window.getActiveCanvas().core.notify(_('Error Saving File'));
       }
     }
   }
@@ -112,7 +112,7 @@ export class FileIO {
       filter: filter,
       select_multiple: false,
       transient_for: window,
-      title: 'Save As',
+      title: _('Save As'),
     });
 
     const name = this.formatFilename(window._tabView.get_selected_page().get_title());

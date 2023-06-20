@@ -2,6 +2,7 @@ data/io.github.dubstar_04.design.desktop
 data/io.github.dubstar_04.design.metainfo.xml
 data/io.github.dubstar_04.design.gschema.xml
 
+data/ui/export.blp
 data/ui/layers.blp
 data/ui/preferences.blp
 data/ui/properties.blp
@@ -10,6 +11,7 @@ data/ui/window.blp
 
 src/Design/canvas.js
 src/Design/commandLine.js
+src/Design/exportWindow.js
 src/Design/fileIO.js
 src/Design/layersWindow.js
 src/Design/main.js
