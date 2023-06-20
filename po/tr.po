@@ -1,0 +1,537 @@
+# Turkish translation of io.github.dubstar_04.design.
+# Copyright (C) 2023 io.github.dubstar_04.design COPYRIGHT HOLDER
+# This file is distributed under the same license as the io.github.dubstar_04.design package.
+#
+# Sabri Ünal <libreajans@gmail.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: io.github.dubstar_04.design\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-18 01:09+0300\n"
+"PO-Revision-Date: 2023-06-18 01:13+0300\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"Language-Team: Turkish <takim@gnome.org.tr>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: data/io.github.dubstar_04.design.desktop:3
+#: data/io.github.dubstar_04.design.metainfo.xml:7
+msgid "Design"
+msgstr "Tasarım"
+
+#: data/io.github.dubstar_04.design.desktop:10
+msgid "CAD;DXF;drawing;design;vector;"
+msgstr "CAD;DXF;drawing;design;vector;çizim;tasarım;vektör;"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:8
+msgid "2D CAD for GNOME"
+msgstr "GNOME için 2D CAD"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:10
+msgid ""
+"Design is a 2D computer aided design application (CAD), created to meet the "
+"needs of makers and designers, hobbyists and professionals that require a "
+"first class CAD application."
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:13
+msgid "Features:"
+msgstr "Özellikler:"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:15
+msgid "Supports the industry standard DXF format"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:16
+msgid "Uses common CAD workflows, commands and canvas management"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:17
+msgid "Drawing creation and manipulation using commandline or toolbar input"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:18
+msgid "Layer management and manipulation"
+msgstr "Katman yönetimi ve düzenlemesi"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:19
+msgid "Entity interogation and modification"
+msgstr "Varlık tümleşimi ve düzenlemesi"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:25
+msgid "Main Window"
+msgstr "Ana Pencere"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:29
+msgid "Layer Manager"
+msgstr "Katman Yönetici"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:33 data/ui/properties.blp:17
+#: data/ui/window.blp:45
+msgid "Properties"
+msgstr "Özellikler"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:41
+msgid "Support line types"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:42
+msgid "Fix polar snapping offset"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:43
+msgid "Fix zoom extents with polyline arcs"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:44
+msgid "Add Export for alternative DXF versions"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:51
+msgid "Fix packaging issue"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:58
+msgid "Coronation release!"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:59
+msgid "Refactored all input to work Asynchronously"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:60
+msgid "Updated all command prompts to use common language"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:61
+msgid ""
+"Updated text tool to accept rotation and draw dynamically during creation"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:62
+msgid "Provide default values in the command prompt"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:63
+msgid "Support for Polyline Arcs"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:70
+msgid "Update Design-Core to use new DXF parser"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:71
+msgid "Update to GNOME 44 runtime - Fixes Panning"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:72
+msgid "Properties window:Enable updating entities from the properties window"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:73
+msgid "Only allow single instances of layer and properties windows"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:74
+msgid "Added Dutch and Spanish translations (Core not translated yet)"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:75
+msgid "Use native file chooser"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:76
+msgid "Improve selection window performance"
+msgstr "Seçim penceresi performansını iyileştir"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:77
+msgid "Properties window: Show common properties when 'All' selected"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:78
+msgid "Layers window: Fix layer frozen and lock toggles"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:79
+msgid "Fix erase command deleting unselected entities"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:86
+msgid "Fix tabs not being shown"
+msgstr "Sekmelerin gösterilmemesi hatası düzeltildi"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:87
+msgid "Show crosshair cursor on the canvas"
+msgstr "Tuvalde artı simgesi göster"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:88
+msgid "Add touch controls, pan, pinch to zoom and double tap to zoom all"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:89
+msgid "Hide toolbars and commandline on touch input"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:90
+msgid "Add layer manager and properties to app menu. Remove header bar buttons"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:91
+msgid "Fixes for text rotation"
+msgstr "Metin döndürme düzeltildi"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:92
+msgid "Show app name capitalised in overview"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:93
+msgid "Invert zoom direction"
+msgstr "Yakınlaştırma yönünü ters çevir"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:94
+msgid "Load any preselected entities when opening the properties window"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:95
+msgid "Fix right mouse button behaviour"
+msgstr "Sağ fare düğmesi davranışını düzelt"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:96
+msgid "Fix files being read incorrectly"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:97
+msgid "Fix ARC selection"
+msgstr "Yay seçimini düzelt"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:98
+msgid "Improve selection precision"
+msgstr "Seçim hassasiyetini iyileştir"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:99
+msgid "Added ability to Save As"
+msgstr "Farklı kaydetme yeteneği eklendi"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:100
+msgid ""
+"Added keyboard shortcuts: CTRL+N (New), CTRL+S (Save), CTRL+SHIFT+S (Save "
+"As) CTRL+O (Open)"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:101
+msgid "CTRL+1 (Properties),CTRL+G (Toggle Grid), F1 (Help)"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:102
+msgid "F8 (Toggle Ortho), F9 (Toggle Polar)"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:109
+msgid "FOSDEM release!"
+msgstr "FOSDEM sürümü!"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:110
+msgid "Enable 'open with' from the file browser"
+msgstr "Dosya tarayıcıda \"Birlikte Aç\" özelliği etkinleştirildi"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:111
+msgid "Show notifications for DI and ID commands"
+msgstr ""
+
+#: data/io.github.dubstar_04.design.metainfo.xml:112
+msgid "Recolor the canvas for dark/light styles"
+msgstr "Açık ve koyu biçemler için tuvali yeniden renklendir"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:113
+msgid "End current command with a right click"
+msgstr "Geçerli komutu sağ tıklamayla sonlandır"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:114
+msgid "Enable changing preferences"
+msgstr "Tercihleri değiştirme etkinleştirildi"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:115
+msgid "New icon!"
+msgstr "Yeni simge!"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:122
+msgid "Preview release"
+msgstr "Ön izleme sürümü"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:137
+msgid "Daniel Wood"
+msgstr "Daniel Wood"
+
+#: data/ui/export.blp:19 data/ui/window.blp:25
+msgid "Export"
+msgstr "Dışa Aktar"
+
+#: data/ui/export.blp:44
+msgid "Choose a Version"
+msgstr "Sürüm Seçin"
+
+#: data/ui/export.blp:45
+msgid ""
+"Export the current drawing to an alternative version. Exporting to earlier "
+"versions may result in data loss"
+msgstr ""
+"Geçerli çizimi bir başka sürüme aktarın. Önceki sürümlere dışa aktarma, veri "
+"kaybına neden olabilir"
+
+#: data/ui/export.blp:50
+msgid "Save As..."
+msgstr "Farklı Kaydet..."
+
+#: data/ui/layers.blp:17 data/ui/window.blp:40
+msgid "Layers"
+msgstr "Katmanlar"
+
+#: data/ui/layers.blp:38
+msgid "_Cancel"
+msgstr "İ_ptal"
+
+#: data/ui/layers.blp:46
+msgid "_Delete"
+msgstr "_Sil"
+
+#: data/ui/layers.blp:115
+msgid "Name"
+msgstr "Ad"
+
+#: data/ui/layers.blp:121
+msgid "Frozen"
+msgstr "Dondurulmuş"
+
+#: data/ui/layers.blp:122
+msgid "Frozen layers are not shown or available for any actions"
+msgstr "Dondurulmuş katmanlar gösterilmez ve onlara hiçbir eylem uygulanamaz"
+
+#: data/ui/layers.blp:132
+msgid "Locked"
+msgstr "Kilitli"
+
+#: data/ui/layers.blp:133
+msgid "Locked layers are visible but not able to be selected"
+msgstr "Kilitli katmanlar gösterilir fakat seçilemez"
+
+#: data/ui/layers.blp:143
+msgid "Line Type"
+msgstr "Çizgi Türü"
+
+#: data/ui/layers.blp:144
+msgid "Line type for the selected layer. Not implimented"
+msgstr "Seçilen katman için çizgi türü. Henüz uygulanmadı."
+
+#: data/ui/layers.blp:153
+msgid "Line Weight"
+msgstr "Çizgi Kalınlığı"
+
+#: data/ui/layers.blp:154
+msgid "Line weight for the selected layer. Not implimented"
+msgstr "Seçilan katman için çizgi kalınlığı. Henüz uygulanmadı."
+
+#: data/ui/layers.blp:163
+msgid "Plotting"
+msgstr "Çizim"
+
+#: data/ui/layers.blp:164
+msgid "Layers with plotting true will appear on prints"
+msgstr "Çizimin doğru işaretlendiği katmanlar baskılarda görünecektir"
+
+#: data/ui/preferences.blp:13 data/ui/preferences.blp:16
+msgid "Snaps"
+msgstr "Yakalamalar"
+
+#: data/ui/preferences.blp:19
+msgid "End Snap"
+msgstr "Son Yakalama"
+
+#: data/ui/preferences.blp:31
+msgid "Mid Snap"
+msgstr "Orta Yakalama"
+
+#: data/ui/preferences.blp:43
+msgid "Centre Snap"
+msgstr "Merkez Yakalama"
+
+#: data/ui/preferences.blp:55
+msgid "Nearest Snap"
+msgstr "En Yakın Yakalama"
+
+#: data/ui/preferences.blp:67
+msgid "Polar"
+msgstr "Kutup"
+
+#: data/ui/preferences.blp:100
+msgid "Ortho"
+msgstr "Çarpı"
+
+#: data/ui/preferences.blp:113
+msgid "Canvas"
+msgstr "Tuval"
+
+#: data/ui/preferences.blp:116
+msgid "Draw Grid"
+msgstr "Izgara Çiz"
+
+#: data/ui/properties.blp:32
+msgid "Nothing Selected"
+msgstr "Hiçbir Şey Seçilmedi"
+
+#: data/ui/properties.blp:33
+msgid "Select items on the canvas"
+msgstr "Ögeleri tuvalde seç"
+
+#: data/ui/shortcuts.blp:9
+msgid "Entities"
+msgstr "Varlıklar"
+
+#: data/ui/shortcuts.blp:12
+msgid "Draw Line"
+msgstr "Çizgi Çiz"
+
+#: data/ui/shortcuts.blp:16
+msgid "Draw Polyline"
+msgstr "Çoklu Çizgi Çiz"
+
+#: data/ui/shortcuts.blp:20
+msgid "Draw Circle"
+msgstr "Daire Çiz"
+
+#: data/ui/shortcuts.blp:24
+msgid "Draw Arc"
+msgstr "Yay Çiz"
+
+#: data/ui/shortcuts.blp:28
+msgid "Draw Rectangle"
+msgstr "Dikdörtgen Çiz"
+
+#: data/ui/shortcuts.blp:33
+msgid "Tools"
+msgstr "Araçlar"
+
+#: data/ui/shortcuts.blp:36
+msgid "Move"
+msgstr "Taşı"
+
+#: data/ui/shortcuts.blp:40
+msgid "Copy"
+msgstr "Kopyala"
+
+#: data/ui/shortcuts.blp:44
+msgid "Rotate"
+msgstr "Döndür"
+
+#: data/ui/shortcuts.blp:48
+msgid "Trim"
+msgstr "Kırp"
+
+#: data/ui/shortcuts.blp:52
+msgid "Extend"
+msgstr "Genişlet"
+
+#: data/ui/shortcuts.blp:56
+msgid "Erase"
+msgstr "Temizle"
+
+#: data/ui/shortcuts.blp:60
+msgid "Distance"
+msgstr "Uzaklık"
+
+#: data/ui/shortcuts.blp:64
+msgid "Identify"
+msgstr "Tanıla"
+
+#: data/ui/shortcuts.blp:69
+msgid "General"
+msgstr "Genel"
+
+#: data/ui/shortcuts.blp:72
+msgid "Create a New Design"
+msgstr "Yeni Tasarım Oluştur"
+
+#: data/ui/shortcuts.blp:76 data/ui/window.blp:10
+msgid "Open"
+msgstr "Aç"
+
+#: data/ui/shortcuts.blp:80 data/ui/window.blp:15
+msgid "Save"
+msgstr "Kaydet"
+
+#: data/ui/shortcuts.blp:84
+msgid "Save as"
+msgstr "Farklı Kaydet"
+
+#: data/ui/shortcuts.blp:88
+msgid "Show Preferences"
+msgstr "Tercihleri Göster"
+
+#: data/ui/shortcuts.blp:92
+msgid "Show Layers"
+msgstr "Katmanları Göster"
+
+#: data/ui/shortcuts.blp:96
+msgid "Show Properties"
+msgstr "Özellikleri Göster"
+
+#: data/ui/shortcuts.blp:100
+msgid "Show Keyboard Shortcuts"
+msgstr "Klavye Kısayollarını Göster"
+
+#: data/ui/window.blp:20 src/Design/fileIO.js:115
+msgid "Save As"
+msgstr "Farklı Kaydet"
+
+#: data/ui/window.blp:35
+msgid "Preferences"
+msgstr "Tercihler"
+
+#: data/ui/window.blp:50
+msgid "Keyboard Shortcuts"
+msgstr "Klavye Kısayolları"
+
+#: data/ui/window.blp:55
+msgid "About Design"
+msgstr "Tasarım Hakkında"
+
+#: data/ui/window.blp:76
+msgid "Create a new design"
+msgstr "Yeni tasarım oluştur"
+
+#: data/ui/window.blp:85
+msgid "Open application menu"
+msgstr "Uygulama menüsünü aç"
+
+#. TODO: Janky sending notifications through core
+#: src/Design/fileIO.js:99
+msgid "File Saved"
+msgstr "Dosya Kaydedildi"
+
+#: src/Design/fileIO.js:101
+msgid "Error Saving File"
+msgstr "Dosya Kaydedilemedi"
+
+#: src/Design/layersWindow.js:130
+msgid "Edit"
+msgstr "Düzenle"
+
+#: src/Design/layersWindow.js:131
+msgid "Delete"
+msgstr "Sil"
+
+#: src/Design/layersWindow.js:132
+msgid "Make Current"
+msgstr "Geçerli Kıl"
+
+#. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
+#: src/Design/main.js:53
+msgid "translator-credits"
+msgstr "Sabri Ünal <libreajans@gmail.com>"
+
+#~ msgid "-"
+#~ msgstr "-"
