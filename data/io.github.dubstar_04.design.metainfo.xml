@@ -35,6 +35,13 @@
   	</screenshots>
 	<content_rating type="oars-1.1" />
   	<releases>
+		<release version="44.alpha4" date="2023-10-09">
+		<description>
+			<ul>
+			<li>Use GNOME 45 Runtime</li>
+			</ul>
+		</description>
+		</release>
 		<release version="44.alpha4" date="2023-06-16">
 			<description>
 				<ul>
