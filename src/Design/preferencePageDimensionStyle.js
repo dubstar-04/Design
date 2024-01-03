@@ -34,7 +34,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     // Dimension
     /* 'DIMLWD',*/ 'DIMDLI', 'DIMSD1', 'DIMSD2',
     // Extensions
-    /* 'DIMLWE',*/ 'DIMSE1', 'DIMSE2', 'DIMEXE', 'DIMEXO', 'DIMFXLON', 'DIMFXL',
+    /* 'DIMLWE',*/ 'DIMSE1', 'DIMSE2', 'DIMEXE', 'DIMEXO', /* 'DIMFXLON', 'DIMFXL',*/
   ],
 }, class PreferencePageDimensionStyle extends Adw.PreferencesPage {
   constructor() {
