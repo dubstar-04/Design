@@ -30,7 +30,7 @@ export const PreferencePageTextStyle = GObject.registerClass({
 }, class PreferencePageTextStyle extends Adw.PreferencesPage {
   constructor() {
     super({});
-    this.loading = false;
+    this.loading = true;
     this.reload();
   }
 
