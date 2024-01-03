@@ -279,6 +279,9 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                   }
                 */
 
+
+                  /*
+                  // Omitted: DIMLTYPE Supported from R2007
                   Adw.ComboRow DIMLTEX1{
                     name: 'DIMLTEX1';
                     title: _("Extension line one linetype");
@@ -294,15 +297,19 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     model: StringList{ strings ['one', 'two']};
                     notify::selected => $onStyleUpdate();
                   }
+                  */
 
+                  /*
+                  // Omitted: Line weight not currely supported
                   Adw.ComboRow  DIMLWE {
                     name: 'DIMLWE';
                     title: _("Lineweight");
                     subtitle: _("Set the lineweight of the extension lines (DIMLWE)");
-                    model: StringList{ strings ['ByLayer', 'ByBlock']};
-                    notify::selected => onStyleUpdate();
+                    //model: StringList{ strings ['ByLayer', 'ByBlock']};
+                    notify::selected => $onStyleUpdate();
                     sensitive: false;
                   }
+                  */
 
                   Adw.SwitchRow DIMSE1 {
                     name: 'DIMSE1';
