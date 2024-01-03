@@ -1,6 +1,6 @@
 /* preferencesWindow.js
  *
- * Copyright 2022 Daniel Wood
+ * Copyright 2024 Daniel Wood
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
-// import Gio from 'gi://Gio';
 import Pango from 'gi://Pango';
 
 import {Core} from '../Design-Core/core/core.js';
@@ -27,11 +26,12 @@ import {Core} from '../Design-Core/core/core.js';
 export const PreferencePageTextStyle = GObject.registerClass({
   GTypeName: 'PreferencePageTextStyle',
   Template: 'resource:///io/github/dubstar_04/design/ui/preferencePageTextStyle.ui',
-  InternalChildren: ['stylesList', 'name', 'font_button', 'fontupsidedown', 'fontbackwards'],
+  InternalChildren: ['stylesList', 'name', 'font', 'upsidedown', 'backwards'],
 }, class PreferencePageTextStyle extends Adw.PreferencesPage {
   constructor() {
     super({});
-    this.load();
+    this.loading = false;
+    this.reload();
   }
 
   reload() {
@@ -49,9 +49,7 @@ export const PreferencePageTextStyle = GObject.registerClass({
     }
   }
 
-
   load() {
-    console.log('load ....');
     const styles = Core.StyleManager.getStyles();
 
     styles.forEach((style, index) => {
@@ -70,7 +68,6 @@ export const PreferencePageTextStyle = GObject.registerClass({
 
       if (style.name === Core.StyleManager.getCstyle()) {
         radioButton.set_active(true);
-        this._stylesList.select_row(row);
         this.onStyleSelected(row);
       }
 
@@ -80,38 +77,34 @@ export const PreferencePageTextStyle = GObject.registerClass({
   }
 
   onStyleSelected(row) {
-    console.log('onStyleSelected ....', row.id);
+    this.loading = true;
 
     if (row) {
+      // set the selected row
+      this._stylesList.select_row(row);
+
       const style = Core.StyleManager.getStyleByName(row.title);
-
-      console.log(style.upsideDown, style.backwards);
-
-      this._fontupsidedown.set_active(style.upsideDown);
-
       const fontDesc = Pango.font_description_from_string(`${style.font} ${style.textHeight}`);
       this._name.set_text(style.name);
-      this._font_button.set_font_desc(fontDesc);
-      this._fontupsidedown.set_active(style.upsideDown);
-      this._fontbackwards.set_active(style.backwards);
+      this._font.set_font_desc(fontDesc);
+      this._upsidedown.set_active(style.upsidedown);
+      this._backwards.set_active(style.backwards);
     }
+
+    this.loading = false;
   }
 
   setCurrentStyle(row) {
     if (row) {
-      console.log('Set Current Style:', row.title, row.id);
       Core.StyleManager.setCstyle(row.title);
     }
   }
 
   addStyle() {
-    console.log('Add Style');
     Core.StyleManager.newStyle();
     this.reload();
 
     const newRow = this._stylesList.get_row_at_index(Core.StyleManager.styleCount() - 1);
-    console.log(newRow);
-    this._stylesList.select_row(newRow);
     this.onStyleSelected(newRow);
   }
 
@@ -140,48 +133,37 @@ export const PreferencePageTextStyle = GObject.registerClass({
   deleteStyle() {
     const row = this._stylesList.get_selected_row();
     if (row) {
-      console.log('Remove Style:', row.title, row.id);
       Core.StyleManager.deleteStyle(row.id);
       this.reload();
     }
   }
 
-  onStyleUpdate() {
+  onStyleUpdate(widget) {
+    if (!this.loading) {
     // update core with the changed setting
-    console.log('onStyleUpdate - UI Loaded:', this.loaded);
+      // get the widget value
+      const value = widget.text || widget.selected || widget.active || widget.font_desc;
 
-    const row = this._stylesList.get_selected_row();
-    if (row) {
-      console.log(
-          this._name.text,
-          this._font_button.get_font_desc().get_family(),
-          this._font_button.get_font_desc().get_size() / Pango.SCALE,
-          this._fontupsidedown.get_active(),
-          this._fontbackwards.get_active(),
-      );
+      const row = this._stylesList.get_selected_row();
+      if (row) {
+        if (widget.name === 'font') {
+          const font = value.get_family();
+          const textHeight = value.get_size() / Pango.SCALE;
+          Core.StyleManager.updateStyle(row.id, 'font', font);
+          Core.StyleManager.updateStyle(row.id, 'textHeight', textHeight);
+        } else {
+          Core.StyleManager.updateStyle(row.id, widget.name, value);
 
-      const name = this._name.text;
-      const font = this._font_button.get_font_desc().get_family();
-      const textHeight = this._font_button.get_font_desc().get_size() / Pango.SCALE;
-      const upsideDown = this._fontupsidedown.get_active();
-      const backwards = this._fontbackwards.get_active();
-
-
-      Core.StyleManager.updateStyle(row.id, 'name', name);
-      row.title = name;
-      Core.StyleManager.updateStyle(row.id, 'font', font);
-      Core.StyleManager.updateStyle(row.id, 'textHeight', textHeight);
-      Core.StyleManager.updateStyle(row.id, 'upsideDown', upsideDown);
-      Core.StyleManager.updateStyle(row.id, 'backwards', backwards);
+          if (widget.name === 'name') {
+            // update the name in the style list if the name in core has changed
+            const newName = Core.StyleManager.getStyleByIndex(row.id).name;
+            row.title = newName;
+            // set the _name string - this is needed when the style name passed to core was invalid and a different name is used
+            this._name.text = newName;
+          }
+        }
+      }
     }
-    /*
-      // this.reload();
-      // get the reloaded row
-      // const reloadedRow = this._stylesList.get_row_at_index(row.id);
-      // this._stylesList.select_row(reloadedRow);
-      // this.onStyleSelected(reloadedRow);
-
-    }*/
   }
 },
 );
