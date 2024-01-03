@@ -150,7 +150,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMTAD';
                     title: _("Vertical Placement");
                     subtitle: _("Set the vertical placement of the dimension text (DIMTAD)");
-                    model: StringList{ strings ['Centered', 'Above']};
+                    model: StringList{ strings ['Centered', 'Above', 'Outside', 'JIS', 'Below']};
                     notify::selected => $onStyleUpdate();
                   }
 
@@ -158,7 +158,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMJUST';
                     title: _("Horizontal Placement");
                     subtitle: _("Set the horizontal placement of the dimension text (DIMJUST)");
-                    model: StringList{ strings ['Centered', 'Ext line 1', 'Ext line 2']};
+                    model: StringList{ strings ['Centered', 'Ext line 1', 'Ext line 2', 'Over Ext line 1', 'Over Ext line 2',]};
                     notify::selected => $onStyleUpdate();
                   }
 
