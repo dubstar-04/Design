@@ -31,12 +31,12 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
               
                   Button {
                     icon-name: 'list-add-symbolic';
-                    clicked => addStyle();
+                    clicked => $addStyle();
                   }
                 
                   Button {
                     icon-name: 'list-remove-symbolic';
-                    clicked => removeStyle();
+                    clicked => $removeStyle();
                   }  
               }
             }
@@ -59,7 +59,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                   title: _("Name");
                   //text: bind PreferencePageDimensionStyle.example-property.name as <string>; 
                   //bind $my_closure() as <string>; //bind PreferencePageDimensionStyle.example-property;
-                  entry-activated => onStyleUpdate();
+                  entry-activated => $onStyleUpdate();
                 }
 
                 Adw.ActionRow {
@@ -72,7 +72,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     DropDown DIMCLR {
                       name: 'DIMCLR';
                       valign: center;
-                      //activate => onStyleUpdate();
+                      //activate => $onStyleUpdate();
                     }
                   }
 
@@ -80,7 +80,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMASZ';
                     title: _("Arrow size");
                     subtitle: _("Set the arrow head size (DIMASZ)");
-                    notify::value => onStyleUpdate();
+                    notify::value => $onStyleUpdate();
 
                     adjustment: Adjustment {
                       lower: 0;
@@ -95,14 +95,14 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     title: _("Center mark style");
                     subtitle: _("Set the vertical placement of the dimension text (DIMCEN)");
                     model: StringList{ strings ['None', 'Mark', 'Line']};
-                    notify::selected => onStyleUpdate();
+                    notify::selected => $onStyleUpdate();
                   }
 
                   Adw.SpinRow DIMCEN {
                     name: 'DIMCEN';
                     title: _("Center mark size");
                     subtitle: _("Set the center mark size (DIMCEN)");
-                    notify::value => onStyleUpdate();
+                    notify::value => $onStyleUpdate();
 
                     adjustment: Adjustment {
                       lower: 0;
@@ -123,7 +123,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     title: _("Text style");
                     subtitle: _("Set the text style for the dimension (DIMTXSTY)");
                     model: StringList{ strings ['one', 'two']};
-                    notify::selected => onStyleUpdate();
+                    notify::selected => $onStyleUpdate();
                   }
 
                 Adw.ActionRow {
@@ -142,7 +142,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMTXTBOX';
                     title: _("Draw frame around the text");
                     subtitle: _("Draw frame around the text using a negative value for DIMGAP");
-                    notify::active => onStyleUpdate();
+                    notify::active => $onStyleUpdate();
                   }
 
                 Adw.ComboRow DIMTAD {
@@ -150,7 +150,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     title: _("Vertical Placement");
                     subtitle: _("Set the vertical placement of the dimension text (DIMTAD)");
                     model: StringList{ strings ['Centered', 'Above']};
-                    notify::selected => onStyleUpdate();
+                    notify::selected => $onStyleUpdate();
                   }
 
                 Adw.ComboRow DIMJUST {
@@ -158,14 +158,14 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     title: _("Horizontal Placement");
                     subtitle: _("Set the horizontal placement of the dimension text (DIMJUST)");
                     model: StringList{ strings ['Centered', 'Ext line 1', 'Ext line 2']};
-                    notify::selected => onStyleUpdate();
+                    notify::selected => $onStyleUpdate();
                   }
 
                   Adw.SpinRow DIMGAP {
                     name: 'DIMGAP';
                     title: _("Offset from dimension line");
                     subtitle: _("Set the offset distance around the text (DIMGAP)");
-                    notify::value => onStyleUpdate();
+                    notify::value => $onStyleUpdate();
 
                     adjustment: Adjustment {
                       lower: 0;
@@ -181,7 +181,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     title: _("Alignment");
                     subtitle: _("Set the alignment of the dimension text (DIMTIH)");
                     model: StringList{ strings ['Horizontal', 'Aligned', 'ISO']};
-                    notify::selected => onStyleUpdate();
+                    notify::selected => $onStyleUpdate();
                   }
 
                 };
@@ -199,7 +199,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     [suffix]
                     DropDown DIMCLRD{
                       valign: center;
-                      //activate => onStyleUpdate();
+                      //activate => $onStyleUpdate();
                     }
                   }
                 */
@@ -209,7 +209,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     title: _("Linetype");
                     subtitle: _("Set the linetype of the dimension line (DIMLTYPE)");
                     model: StringList{ strings ['one', 'two']};
-                    notify::selected => onStyleUpdate();
+                    notify::selected => $onStyleUpdate();
                   }
 
                   Adw.ComboRow DIMLWD {
@@ -217,7 +217,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     title: _("Lineweight");
                     subtitle: _("Set the lineweight of the dimension line (DIMLWD)");
                     model: StringList{ strings ['one', 'two']};
-                    notify::selected => onStyleUpdate();
+                    notify::selected => $onStyleUpdate();
                   }
 
 
@@ -225,7 +225,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMDLI';
                     title: _("Baseline spacing");
                     subtitle: _("Set the spacing between dimension lines of baseline dimensions (DIMDLI)");
-                    notify::value => onStyleUpdate();
+                    notify::value => $onStyleUpdate();
 
                     adjustment: Adjustment {
                       lower: 0;
@@ -239,14 +239,14 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMSD1';
                     title: _("Hide dimension line one");
                     subtitle: _("Suppress the first dimension line (DIMSD1)");
-                    notify::active => onStyleUpdate();
+                    notify::active => $onStyleUpdate();
                   }
 
                   Adw.SwitchRow DIMSD2 {
                     name: 'DIMSD2';
                     title: _("Hide dimension line two");
                     subtitle: _("Suppress the second dimension line (DIMSD2)");
-                    notify::active => onStyleUpdate();
+                    notify::active => $onStyleUpdate();
                   }
               }; // Pref Group
             } // Stack Page
@@ -264,7 +264,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     [suffix]
                     DropDown DIMCLRE{
                       valign: center;
-                      activate => onStyleUpdate();
+                      activate => $onStyleUpdate();
                     }
                   }
                 */
@@ -274,7 +274,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     title: _("Extension line one linetype");
                     subtitle: _("Set the linetype for extension line one (DIMLTEX1)");
                     model: StringList{ strings ['one', 'two']};
-                    notify::selected => onStyleUpdate();
+                    notify::selected => $onStyleUpdate();
                   }
 
                   Adw.ComboRow DIMLTEX2{
@@ -282,7 +282,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     title: _("Extension line two linetype");
                     subtitle: _("Set the linetype for extension line two (DIMLTEX2)");
                     model: StringList{ strings ['one', 'two']};
-                    notify::selected => onStyleUpdate();
+                    notify::selected => $onStyleUpdate();
                   }
 
                   Adw.ComboRow  DIMLWE {
@@ -305,14 +305,14 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMSE2';
                     title: _("Hide extension line two");
                     subtitle: _("Suppress the second extension line (DIMSE2)");
-                    notify::active => onStyleUpdate();
+                    notify::active => $onStyleUpdate();
                   }
 
                   Adw.SpinRow DIMEXE {
                     name: 'DIMEXE';
                     title: _("Extend beyond dim lines");
                     subtitle: _("Distance the extension lines go beyond the dimension line (DIMEXE)");
-                    notify::value => onStyleUpdate();
+                    notify::value => $onStyleUpdate();
 
                     adjustment: Adjustment {
                       lower: 0;
@@ -326,7 +326,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMEXO';
                     title: _("Offset from origin");
                     subtitle: _("Distance the extension lines are offset from origin (DIMEXO)");
-                    notify::value  => onStyleUpdate();
+                    notify::value  => $onStyleUpdate();
 
                     adjustment: Adjustment {
                       lower: 0;
@@ -340,14 +340,14 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMFXLON';
                     title: _("Fixed Length extension lines");
                     subtitle: _("Enable fixed length extension lines (DIMFXLON)");
-                    notify::active => onStyleUpdate();
+                    notify::active => $onStyleUpdate();
                   }
 
                   Adw.SpinRow  DIMFXL {
                     name: 'DIMFXL';
                     title: _("Fixed Length entension length");
                     subtitle: _("Set the length of extension lines (DIMFXL)");
-                    notify::value  => onStyleUpdate();
+                    notify::value  => $onStyleUpdate();
                     sensitive: bind DIMFXLON.active;
 
                     adjustment: Adjustment {
