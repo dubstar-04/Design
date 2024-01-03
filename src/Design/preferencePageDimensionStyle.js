@@ -223,7 +223,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
       // get the widget value
       const value = widget.value || widget.text || widget.selected || widget.active;
 
-      const value = widget.text || widget.selected || widget.active;
+      console.log('\nvalues - text:', widget.text, 'value:', widget.value, 'selected:', widget.selected, 'active:', widget.active);
 
       if (widget.model !== undefined) {
         console.log('model value', widget.model.get_string(widget.selected));
