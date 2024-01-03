@@ -206,14 +206,21 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                   }
                 */
 
+                  
+                  /*
+                  // Omitted: DIMLTYPE Supported from R2007
                   Adw.ComboRow DIMLTYPE {
                     name: 'DIMLTYPE';
                     title: _("Linetype");
                     subtitle: _("Set the linetype of the dimension line (DIMLTYPE)");
                     model: StringList{ strings ['one', 'two']};
                     notify::selected => $onStyleUpdate();
+                    sensitive: false;
                   }
+                  */
 
+                  /*
+                  // Omitted: Line weight not currely supported
                   Adw.ComboRow DIMLWD {
                     name: 'DIMLWD';
                     title: _("Lineweight");
@@ -221,7 +228,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     model: StringList{ strings ['one', 'two']};
                     notify::selected => $onStyleUpdate();
                   }
-
+                  */
 
                   Adw.SpinRow DIMDLI {
                     name: 'DIMDLI';
