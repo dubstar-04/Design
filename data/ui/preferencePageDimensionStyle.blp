@@ -140,12 +140,16 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     }
                   }
 
+                /*
+                // Omitted: removed to simplify the preferences ui and code
+                // users can create this behaviour by setting DIMGAP to a negative value
                 Adw.SwitchRow DIMTXTBOX {
                     name: 'DIMTXTBOX';
                     title: _("Draw frame");
                     subtitle: _("Draw frame around the text using a negative value for DIMGAP");
                     notify::active => $onStyleUpdate();
                   }
+                */
 
                 Adw.ComboRow DIMTAD {
                     name: 'DIMTAD';
@@ -356,6 +360,8 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     };
                   }
 
+                  /*
+                  // Omitted: DIMFXL and DIMFXLON Supported from R2007
                   Adw.SwitchRow DIMFXLON {
                     name: 'DIMFXLON';
                     title: _("Fixed Length");
@@ -378,6 +384,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                       step-increment: 1;
                     };
                   }
+                  */
                 };// Pref Group
 
 
