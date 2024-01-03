@@ -117,7 +117,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
   }
 
   onStyleSelected(row) {
-    this.updating = true;
+    this.loading = true;
 
     if (row) {
       const style = Core.DimStyleManager.getStyleByName(row.title);
@@ -129,7 +129,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
       }
     }
 
-    this.updating = false;
+    this.loading = false;
   }
 
   setRowValue(propertyName, value) {
