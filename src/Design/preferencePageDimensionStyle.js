@@ -26,8 +26,16 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
   Properties: {},
   GTypeName: 'PreferencePageDimensionStyle',
   Template: 'resource:///io/github/dubstar_04/design/ui/preferencePageDimensionStyle.ui',
-  InternalChildren: ['stylesList', 'style_name'],
-
+  InternalChildren: [
+    // General
+    'stylesList', 'name', 'DIMCLRD', 'DIMASZ', 'DIMCEN',
+    // Text
+    'DIMTXSTY', 'DIMCLRT', 'DIMGAP', 'DIMTAD', 'DIMJUST', 'DIMTIH',
+    // Dimension
+    /* 'DIMLWD',*/ 'DIMDLI', 'DIMSD1', 'DIMSD2',
+    // Extensions
+    /* 'DIMLWE',*/ 'DIMSE1', 'DIMSE2', 'DIMEXE', 'DIMEXO', 'DIMFXLON', 'DIMFXL',
+  ],
 }, class PreferencePageDimensionStyle extends Adw.PreferencesPage {
   constructor() {
     super();
