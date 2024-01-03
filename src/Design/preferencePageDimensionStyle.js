@@ -89,7 +89,6 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
 
   load() {
-    console.log('load ....');
     const styles = Core.DimStyleManager.getStyles();
 
     styles.forEach((style, index) => {
@@ -118,18 +117,13 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
   }
 
   onStyleSelected(row) {
-    console.log('onStyleSelected ....', row.id);
-
     this.updating = true;
 
     if (row) {
       const style = Core.DimStyleManager.getStyleByName(row.title);
-      // this._name.set_text(style.name);
-      // this.setRowValue('name', style.name);
 
       for (const property in style) {
         if (Object.hasOwn(style, property)) {
-          // console.log(`${property}: ${style[property]}`);
           this.setRowValue(property, style[property]);
         }
       }
@@ -139,21 +133,9 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
   }
 
   setRowValue(propertyName, value) {
-    const widget = this[`_${propertyName}`]; // this.builder.get_object(propertyName);
+    const widget = this[`_${propertyName}`];
     if (widget) {
-      console.log('set row value:', widget, propertyName, value);
-      console.log('value type:', typeof value);
-
-      /*
-      for (const property in widget) {
-        if (true) { // Object.hasOwn(widget, property)) {
-          console.log(`${property}: ${widget[property]}`);
-        }
-      }
-      */
-
       if ('model' in widget) {
-        console.log('we can set the model index');
         // check if the widget has a model set
         if (!widget.model) {
           return;
@@ -174,21 +156,18 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
       if ('set_text' in widget) {
         if (typeof value === 'string') {
-          console.log('we can set the text');
           widget.set_text(value);
         }
       }
 
       if ('set_value' in widget) {
         if (typeof value === 'number') {
-          console.log('we can set the value');
           widget.set_value(value);
         }
       }
 
       if ('set_active' in widget) {
         if ( typeof value === 'boolean') {
-          console.log('we can set active');
           widget.set_active(value);
         }
       }
@@ -197,19 +176,14 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
   setCurrentStyle(row) {
     if (row) {
-      console.log('Set Current Style:', row.title, row.id);
       Core.DimStyleManager.setCstyle(row.title);
     }
   }
 
   addStyle() {
-    console.log('Add Style');
     Core.DimStyleManager.newStyle();
     this.reload();
-
     const newRow = this._stylesList.get_row_at_index(Core.DimStyleManager.styleCount() - 1);
-    console.log(newRow);
-    this._stylesList.select_row(newRow);
     this.onStyleSelected(newRow);
   }
 
@@ -238,7 +212,6 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
   deleteStyle() {
     const row = this._stylesList.get_selected_row();
     if (row) {
-      console.log('Remove Style:', row.title, row.id);
       Core.DimStyleManager.deleteStyle(row.id);
       this.reload();
     }
@@ -246,9 +219,9 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
   onStyleUpdate(widget) {
     // update core with the changed setting
-    if (!this.updating) {
-      console.log('onStyleUpdate - widget name:', widget.name);
-
+    if (!this.loading) {
+      // get the widget value
+      const value = widget.value || widget.text || widget.selected || widget.active;
 
       const value = widget.text || widget.selected || widget.active;
 
@@ -257,19 +230,19 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
         console.log('selected item value', widget.get_selected_item().get_string());
       }
 
-      console.log('widget value:', value);
+      const row = this._stylesList.get_selected_row();
+      if (row) {
+        console.log('Style Update - Property:', widget.name, 'value:', value);
+        Core.DimStyleManager.updateStyle(row.id, widget.name, value);
 
-    /*
-    const row = this._stylesList.get_selected_row();
-    if (row) {
-      console.log(
-          this._name.text,
-      );
-
-      const name = this._name.text;
-      Core.DimStyleManager.updateStyle(row.id, 'name', name);
-    }
-    */
+        if (widget.name === 'name') {
+          // update the name in the style list if the name in core has changed
+          const newName = Core.DimStyleManager.getStyleByIndex(row.id).name;
+          row.title = newName;
+          // set the _name string - this is needed when the style name passed to core was invalid and a different name is used
+          this._name.text = newName;
+        }
+      }
     }
   }
 },
