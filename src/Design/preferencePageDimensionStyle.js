@@ -120,6 +120,8 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
   onStyleSelected(row) {
     console.log('onStyleSelected ....', row.id);
 
+    this.updating = true;
+
     if (row) {
       const style = Core.DimStyleManager.getStyleByName(row.title);
       // this._name.set_text(style.name);
@@ -244,17 +246,18 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
   onStyleUpdate(widget) {
     // update core with the changed setting
-    console.log('onStyleUpdate - widget name:', widget.name, widget.type);
+    if (!this.updating) {
+      console.log('onStyleUpdate - widget name:', widget.name);
 
 
-    const value = widget.text || widget.selected || widget.active;
+      const value = widget.text || widget.selected || widget.active;
 
-    if (widget.model !== undefined) {
-      console.log('model value', widget.model.get_string(widget.selected));
-      console.log('selected item value', widget.get_selected_item().get_string());
-    }
+      if (widget.model !== undefined) {
+        console.log('model value', widget.model.get_string(widget.selected));
+        console.log('selected item value', widget.get_selected_item().get_string());
+      }
 
-    console.log('widget value:', value);
+      console.log('widget value:', value);
 
     /*
     const row = this._stylesList.get_selected_row();
@@ -267,6 +270,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
       Core.DimStyleManager.updateStyle(row.id, 'name', name);
     }
     */
+    }
   }
 },
 );
