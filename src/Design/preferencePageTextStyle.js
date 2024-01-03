@@ -79,18 +79,6 @@ export const PreferencePageTextStyle = GObject.registerClass({
     });
   }
 
-  blockUpdate() {
-    GObject.signal_handlers_block_by_func(this._font_button, this.onStyleUpdate);
-    GObject.signal_handlers_block_by_func(this._style_name, this.onStyleUpdate);
-    GObject.signal_handlers_block_by_func(this._fontbackwards, this.onStyleUpdate);
-    GObject.signal_handlers_block_by_func(this._fontupsidedown, this.onStyleUpdate);
-  }
-
-  unblockUpdate() {
-    GObject.signal_handlers_unblock_by_func(this._font_button, this.onStyleUpdate);
-  }
-
-
   onStyleSelected(row) {
     console.log('onStyleSelected ....', row.id);
 
