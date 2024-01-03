@@ -3,6 +3,7 @@ application_id = 'io.github.dubstar_04.design'
 icons = [
   'entities/arc-symbolic.svg',
   'entities/line-symbolic.svg',
+  'entities/dimension-symbolic.svg',
   'entities/circle-symbolic.svg',
   'entities/polyline-symbolic.svg',
   'entities/rectangle-symbolic.svg',
