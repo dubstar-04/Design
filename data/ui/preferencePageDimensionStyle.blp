@@ -97,6 +97,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     subtitle: _("Set the center mark style for DIMCEN");
                     model: StringList{ strings ['None', 'Mark', 'Line']};
                     notify::selected => $onStyleUpdate();
+                    sensitive: false;
                   }
 
                   Adw.SpinRow DIMCEN {
