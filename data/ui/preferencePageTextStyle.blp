@@ -1,0 +1,100 @@
+using Gtk 4.0;
+using Adw 1;
+
+template PreferencePageTextStyle : Adw.PreferencesPage {
+    icon-name: "preferences-desktop-font-symbolic";
+    title: _("Font");
+
+    FontDialog font_dialog {
+      title: 'Select a font';
+      modal: true;
+    }
+  
+    ScrolledWindow {
+      child: Adw.Clamp {
+        child: Box {
+            orientation: vertical;
+            margin-top: 24;
+            margin-bottom: 24;
+            margin-start: 12;
+            margin-end: 12;
+            spacing: 6;
+
+            Box {
+              orientation: vertical;
+              spacing: 6;
+
+              ListBox stylesList{
+                selection-mode: single;
+                styles ["boxed-list"]
+                }
+
+              Box {
+                orientation:horizontal;
+                halign: end;
+                styles ["linked"]
+              
+                  Button {
+                    icon-name: 'list-add-symbolic';
+                    clicked => addStyle();
+                  }
+                
+                  Button {
+                    icon-name: 'list-remove-symbolic';
+                    clicked => removeStyle();
+                  }  
+              }
+            }
+
+        Adw.PreferencesGroup {
+        title: _("Style Settings");
+
+        Adw.ActionRow {
+            title: _("Name");
+
+            [suffix]
+            Entry style_name{
+              valign: center;
+              activate => onStyleUpdate();
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Font");
+
+            [suffix]
+            FontDialogButton font_button {
+              dialog: font_dialog;
+              valign: center;
+              //use-size: false;
+              //use-font: false;
+              notify::font-desc => onStyleUpdate();
+            }
+          }
+                    
+          Adw.ActionRow {
+            title: _("Font Upsidedown");
+
+            [suffix]
+            Switch fontupsidedown{
+              //name: 'fontupsidedown';
+              valign: center;
+              notify::active => onStyleUpdate();
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Font Backwards");
+
+            [suffix]
+            Switch fontbackwards{
+              //name: 'fontbackwards';
+              valign: center;
+              notify::active => onStyleUpdate();
+            }
+          }
+      }
+    }; //Box
+  }; //Clamp
+  } //ScrolledWindow
+}
