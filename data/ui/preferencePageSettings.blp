@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template PreferencePageSettings : Adw.PreferencesPage {
+template $PreferencePageSettings : Adw.PreferencesPage {
     icon-name: "emblem-system-symbolic";
     title: _("Snaps");
 
@@ -15,7 +15,7 @@ template PreferencePageSettings : Adw.PreferencesPage {
           Switch{
             name: "endsnap";
             valign: center;
-            notify::active => onToggled();
+            notify::active => $onToggled();
             action-name: "settings.endsnap";
           }
         }
@@ -27,7 +27,7 @@ template PreferencePageSettings : Adw.PreferencesPage {
           Switch{
             name: "midsnap";
             valign: center;
-            notify::active => onToggled();
+            notify::active => $onToggled();
             action-name: "settings.midsnap";
           }
         }
@@ -39,7 +39,7 @@ template PreferencePageSettings : Adw.PreferencesPage {
           Switch{
             name: "centresnap";
             valign: center;
-            notify::active => onToggled();
+            notify::active => $onToggled();
             action-name: "settings.centresnap";
           }
         }
@@ -51,7 +51,7 @@ template PreferencePageSettings : Adw.PreferencesPage {
           Switch{
             name: "nearestsnap";
             valign: center;
-            notify::active => onToggled();
+            notify::active => $onToggled();
             action-name: "settings.nearestsnap";
           }
         }
@@ -63,7 +63,7 @@ template PreferencePageSettings : Adw.PreferencesPage {
           Switch polar_switch{
             name: "polar";
             valign: center;
-            notify::active => onToggled();
+            notify::active => $onToggled();
             action-name: "settings.polar";
           }
         }
@@ -96,7 +96,7 @@ template PreferencePageSettings : Adw.PreferencesPage {
           Switch{
             name: "ortho";
             valign: center;
-            notify::active => onToggled();
+            notify::active => $onToggled();
             action-name: "settings.ortho";
           }
         }
@@ -112,7 +112,7 @@ template PreferencePageSettings : Adw.PreferencesPage {
           Switch{
             name: "drawgrid";
             valign: center;
-            notify::active => onToggled();
+            notify::active => $onToggled();
             action-name: "settings.drawgrid";
           }
         }

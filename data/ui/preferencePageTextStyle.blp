@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template PreferencePageTextStyle : Adw.PreferencesPage {
+template $PreferencePageTextStyle : Adw.PreferencesPage {
     icon-name: "preferences-desktop-font-symbolic";
     title: _("Font");
 
@@ -36,12 +36,12 @@ template PreferencePageTextStyle : Adw.PreferencesPage {
               
                   Button {
                     icon-name: 'list-add-symbolic';
-                    clicked => addStyle();
+                    clicked => $addStyle();
                   }
                 
                   Button {
                     icon-name: 'list-remove-symbolic';
-                    clicked => removeStyle();
+                    clicked => $removeStyle();
                   }  
               }
             }
@@ -49,49 +49,37 @@ template PreferencePageTextStyle : Adw.PreferencesPage {
         Adw.PreferencesGroup {
         title: _("Style Settings");
 
-        Adw.ActionRow {
-            title: _("Name");
-
-            [suffix]
-            Entry style_name{
-              valign: center;
-              activate => onStyleUpdate();
-            }
-          }
+        Adw.EntryRow name {
+          name: "name";
+          title: _("Style Name");
+          entry-activated => $onStyleUpdate();
+        }
 
           Adw.ActionRow {
             title: _("Font");
+            subtitle: _("Font used for the style");
 
             [suffix]
             FontDialogButton font_button {
               dialog: font_dialog;
               valign: center;
-              //use-size: false;
-              //use-font: false;
-              notify::font-desc => onStyleUpdate();
-            }
-          }
-                    
-          Adw.ActionRow {
-            title: _("Font Upsidedown");
-
-            [suffix]
-            Switch fontupsidedown{
-              //name: 'fontupsidedown';
-              valign: center;
-              notify::active => onStyleUpdate();
+              //width-request: 200;
+              notify::font-desc => $onStyleUpdate();
             }
           }
 
-          Adw.ActionRow {
-            title: _("Font Backwards");
+          Adw.SwitchRow fontupsidedown {
+            name: 'fontupsidedown';
+            title: _("Upside down");
+            subtitle: _("Show the font upside down");
+            notify::active => $onStyleUpdate();
+          }
 
-            [suffix]
-            Switch fontbackwards{
-              //name: 'fontbackwards';
-              valign: center;
-              notify::active => onStyleUpdate();
-            }
+          Adw.SwitchRow fontbackwards {
+            name: 'fontbackwards';
+            title: _("Backwards");
+            subtitle: _("Show the font backwards");
+            notify::active => $onStyleUpdate();
           }
       }
     }; //Box
