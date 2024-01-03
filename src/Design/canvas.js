@@ -103,6 +103,9 @@ export const Canvas = GObject.registerClass({
 
     // pinch to zoom delta
     this.pinchDelta = 0;
+
+    // activate the core
+    this.activate();
   }
 
   setFilePath(filePath) {
@@ -132,6 +135,15 @@ export const Canvas = GObject.registerClass({
   onCut() {
     // TODO: implement cut
     this.core.notify('Cut not implemented');
+  }
+
+  activate() {
+    // activate the core
+    // Core uses static methods to access the current core context
+    // if this is not set changes to one tab may affect other tabs
+
+    // Must be called on tab changes
+    this.core.activate();
   }
 
   onStyleChange() {

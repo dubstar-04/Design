@@ -177,8 +177,12 @@ export const DesignWindow = GObject.registerClass({
   }
 
   onTabChange() {
+    // activate the tabs canvas
+    this.getActiveCanvas().activate();
+
     // Ensure the settings are synced to the selected tab
     this.settings.syncSettings();
+
 
     if (this.layersWindow) {
       this.layersWindow.reload();
