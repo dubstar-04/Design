@@ -80,6 +80,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMASZ';
                     title: _("Arrow size");
                     subtitle: _("Set the arrow head size (DIMASZ)");
+                    digits: 2;
                     notify::value => $onStyleUpdate();
 
                     adjustment: Adjustment {
@@ -102,6 +103,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMCEN';
                     title: _("Center mark size");
                     subtitle: _("Set the center mark size (DIMCEN)");
+                    digits: 2;
                     notify::value => $onStyleUpdate();
 
                     adjustment: Adjustment {
@@ -165,6 +167,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMGAP';
                     title: _("Offset from dimension line");
                     subtitle: _("Set the offset distance around the text (DIMGAP)");
+                    digits: 2;
                     notify::value => $onStyleUpdate();
 
                     adjustment: Adjustment {
@@ -225,6 +228,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMDLI';
                     title: _("Baseline spacing");
                     subtitle: _("Set the spacing between dimension lines of baseline dimensions (DIMDLI)");
+                    digits: 2;
                     notify::value => $onStyleUpdate();
 
                     adjustment: Adjustment {
@@ -312,6 +316,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMEXE';
                     title: _("Extend beyond dim lines");
                     subtitle: _("Distance the extension lines go beyond the dimension line (DIMEXE)");
+                    digits: 2;
                     notify::value => $onStyleUpdate();
 
                     adjustment: Adjustment {
@@ -326,6 +331,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMEXO';
                     title: _("Offset from origin");
                     subtitle: _("Distance the extension lines are offset from origin (DIMEXO)");
+                    digits: 2;
                     notify::value  => $onStyleUpdate();
 
                     adjustment: Adjustment {
@@ -347,6 +353,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMFXL';
                     title: _("Fixed Length entension length");
                     subtitle: _("Set the length of extension lines (DIMFXL)");
+                    digits: 2;
                     notify::value  => $onStyleUpdate();
                     sensitive: bind DIMFXLON.active;
 
