@@ -54,9 +54,9 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
               title: _("General");
               child: Adw.PreferencesGroup {
 
-                Adw.EntryRow style_name{
+                Adw.EntryRow name {
                   name: "name";
-                  title: _("Name");
+                  title: _("Style Name");
                   //text: bind PreferencePageDimensionStyle.example-property.name as <string>; 
                   //bind $my_closure() as <string>; //bind PreferencePageDimensionStyle.example-property;
                   entry-activated => $onStyleUpdate();
@@ -69,8 +69,8 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     subtitle: _("Set the colour for the dimension lines (DIMCLRD, DIMCLRE)");
 
                     [suffix]
-                    DropDown DIMCLR {
-                      name: 'DIMCLR';
+                    DropDown DIMCLRD {
+                      name: 'DIMCLRD';
                       valign: center;
                       //activate => $onStyleUpdate();
                     }
