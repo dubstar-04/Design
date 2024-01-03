@@ -315,7 +315,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMSE1';
                     title: _("Hide line one");
                     subtitle: _("Suppress the first extension line (DIMSE1)");
-                    notify::active => onStyleUpdate();
+                    notify::active => $onStyleUpdate();
                   }
 
                   Adw.SwitchRow DIMSE2 {
