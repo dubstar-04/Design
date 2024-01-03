@@ -1,6 +1,6 @@
 /* preferencesWindow.js
  *
- * Copyright 2022 Daniel Wood
+ * Copyright 2024 Daniel Wood
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
