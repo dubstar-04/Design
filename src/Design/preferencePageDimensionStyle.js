@@ -23,14 +23,7 @@ import Gtk from 'gi://Gtk';
 import {Core} from '../Design-Core/core/core.js';
 
 export const PreferencePageDimensionStyle = GObject.registerClass({
-  Properties: {
-    'example-property': GObject.ParamSpec.jsobject(
-        'example-property',
-        'Example Property',
-        'A property that holds a JavaScript Object',
-        GObject.ParamFlags.READWRITE,
-    ),
-  },
+  Properties: {},
   GTypeName: 'PreferencePageDimensionStyle',
   Template: 'resource:///io/github/dubstar_04/design/ui/preferencePageDimensionStyle.ui',
   InternalChildren: ['stylesList', 'style_name'],
