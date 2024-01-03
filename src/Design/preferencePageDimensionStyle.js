@@ -120,6 +120,9 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     this.loading = true;
 
     if (row) {
+      // set the selected row
+      this._stylesList.select_row(row);
+
       const style = Core.DimStyleManager.getStyleByName(row.title);
 
       for (const property in style) {
