@@ -122,8 +122,74 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
     if (row) {
       const style = Core.DimStyleManager.getStyleByName(row.title);
-      // this.example_property = style;
-      this._style_name.set_text(style.name);
+      // this._name.set_text(style.name);
+      // this.setRowValue('name', style.name);
+
+      for (const property in style) {
+        if (Object.hasOwn(style, property)) {
+          // console.log(`${property}: ${style[property]}`);
+          this.setRowValue(property, style[property]);
+        }
+      }
+    }
+
+    this.updating = false;
+  }
+
+  setRowValue(propertyName, value) {
+    const widget = this[`_${propertyName}`]; // this.builder.get_object(propertyName);
+    if (widget) {
+      console.log('set row value:', widget, propertyName, value);
+      console.log('value type:', typeof value);
+
+      /*
+      for (const property in widget) {
+        if (true) { // Object.hasOwn(widget, property)) {
+          console.log(`${property}: ${widget[property]}`);
+        }
+      }
+      */
+
+      if ('model' in widget) {
+        console.log('we can set the model index');
+        // check if the widget has a model set
+        if (!widget.model) {
+          return;
+        }
+        if ('set_selected' in widget) {
+          if (typeof value === 'number') {
+            // check the value (index) is within the bounds of the model elements
+            if (value <= widget.model.get_n_items()) {
+              widget.set_selected(value);
+            } else {
+              const msg = 'Invalid Model Index';
+              const err = (`${this.type} - ${msg}: ${value}`);
+              throw Error(err);
+            }
+          }
+        }
+      }
+
+      if ('set_text' in widget) {
+        if (typeof value === 'string') {
+          console.log('we can set the text');
+          widget.set_text(value);
+        }
+      }
+
+      if ('set_value' in widget) {
+        if (typeof value === 'number') {
+          console.log('we can set the value');
+          widget.set_value(value);
+        }
+      }
+
+      if ('set_active' in widget) {
+        if ( typeof value === 'boolean') {
+          console.log('we can set active');
+          widget.set_active(value);
+        }
+      }
     }
   }
 
