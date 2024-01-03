@@ -124,7 +124,6 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMTXSTY';
                     title: _("Style");
                     subtitle: _("Set the text style for the dimension (DIMTXSTY)");
-                    model: StringList{ strings ['one', 'two']};
                     notify::selected => $onStyleUpdate();
                   }
 
