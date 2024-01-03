@@ -60,7 +60,8 @@ template $PreferencePageTextStyle : Adw.PreferencesPage {
             subtitle: _("Font used for the style");
 
             [suffix]
-            FontDialogButton font_button {
+            FontDialogButton font {
+              name: "font";
               dialog: font_dialog;
               valign: center;
               //width-request: 200;
@@ -68,15 +69,15 @@ template $PreferencePageTextStyle : Adw.PreferencesPage {
             }
           }
 
-          Adw.SwitchRow fontupsidedown {
-            name: 'fontupsidedown';
+          Adw.SwitchRow upsidedown {
+            name: 'upsidedown';
             title: _("Upside down");
             subtitle: _("Show the font upside down");
             notify::active => $onStyleUpdate();
           }
 
-          Adw.SwitchRow fontbackwards {
-            name: 'fontbackwards';
+          Adw.SwitchRow backwards {
+            name: 'backwards';
             title: _("Backwards");
             subtitle: _("Show the font backwards");
             notify::active => $onStyleUpdate();
