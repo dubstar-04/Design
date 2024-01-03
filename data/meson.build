@@ -21,6 +21,7 @@ blueprints = custom_target('blueprints',
         'ui/window.blp',
         'ui/shortcuts.blp',
         'ui/preferences.blp',
+        'ui/preferencePageSettings.blp',
         'ui/layers.blp',
         'ui/properties.blp',
         'ui/export.blp'
