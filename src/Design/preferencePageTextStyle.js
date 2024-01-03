@@ -27,7 +27,7 @@ import {Core} from '../Design-Core/core/core.js';
 export const PreferencePageTextStyle = GObject.registerClass({
   GTypeName: 'PreferencePageTextStyle',
   Template: 'resource:///io/github/dubstar_04/design/ui/preferencePageTextStyle.ui',
-  InternalChildren: ['stylesList', 'style_name', 'font_button', 'fontupsidedown', 'fontbackwards'],
+  InternalChildren: ['stylesList', 'name', 'font_button', 'fontupsidedown', 'fontbackwards'],
 }, class PreferencePageTextStyle extends Adw.PreferencesPage {
   constructor() {
     super({});
@@ -90,7 +90,7 @@ export const PreferencePageTextStyle = GObject.registerClass({
       this._fontupsidedown.set_active(style.upsideDown);
 
       const fontDesc = Pango.font_description_from_string(`${style.font} ${style.textHeight}`);
-      this._style_name.set_text(style.name);
+      this._name.set_text(style.name);
       this._font_button.set_font_desc(fontDesc);
       this._fontupsidedown.set_active(style.upsideDown);
       this._fontbackwards.set_active(style.backwards);
@@ -153,14 +153,14 @@ export const PreferencePageTextStyle = GObject.registerClass({
     const row = this._stylesList.get_selected_row();
     if (row) {
       console.log(
-          this._style_name.text,
+          this._name.text,
           this._font_button.get_font_desc().get_family(),
           this._font_button.get_font_desc().get_size() / Pango.SCALE,
           this._fontupsidedown.get_active(),
           this._fontbackwards.get_active(),
       );
 
-      const name = this._style_name.text;
+      const name = this._name.text;
       const font = this._font_button.get_font_desc().get_family();
       const textHeight = this._font_button.get_font_desc().get_size() / Pango.SCALE;
       const upsideDown = this._fontupsidedown.get_active();
