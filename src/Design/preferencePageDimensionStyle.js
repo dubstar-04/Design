@@ -45,38 +45,37 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
   reload() {
     this.clearStyleList();
+    this.setModels();
     this.load();
   }
 
-  getTextStyles() {
-    // return new Gtk.StringList(['one', 'two']);
-
-    const textStyles = new Gtk.StringList();
+  setModels() {
     const styles = Core.StyleManager.getStyles();
+    const styleNames = styles.map((style) => style.name);
+    const textStyleModel = Gtk.StringList.new(styleNames);
+    this._DIMTXSTY.set_model(textStyleModel);
 
-    styles.forEach((style) => {
-      textStyles.append(style.name);
-    });
 
-    return textStyles;
+    /*
+    // Line Types only supported from R2007
+    const lineTypes = Core.LTypeManager.getStyles();
+    const lineTypeNames = lineTypes.map((ltype) => ltype.name);
+    const lineTypeModel = Gtk.StringList.new(lineTypeNames);
+    this._DIMLTYPE.set_model(lineTypeModel);
+    */
   }
 
   /*
-  loadStyleData() {
-    console.log(this.get_internal_children());
-    // delete all current children
-    let child = this.get_first_child();
-    while (child) {
-      console.log('child', child);
-      const next = child.get_next_sibling();
-      child = next;
-    }
+  modelFromArray( arrayData) {
+    const model = new Gtk.StringList();
+
+    arrayData.forEach((data) => {
+      model.append(style.name);
+    });
+
+    return model;
   }
   */
-
-  getValue() {
-    console.log('getting value');
-  }
 
   clearStyleList() {
     // delete all current children
