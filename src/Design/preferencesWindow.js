@@ -22,6 +22,7 @@ import Adw from 'gi://Adw?version=1';
 
 import {PreferencePageSettings} from './preferencePageSettings.js';
 import {PreferencePageTextStyle} from './preferencePageTextStyle.js';
+import {PreferencePageDimensionStyle} from './preferencePageDimensionStyle.js';
 
 export const PreferencesWindow = GObject.registerClass({
   GTypeName: 'PreferencesWindow',

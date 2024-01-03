@@ -7,6 +7,7 @@
     <file>Design/preferencesWindow.js</file>
     <file>Design/preferencePageSettings.js</file>
     <file>Design/preferencePageDimensionStyle.js</file>
+    <file>Design/preferencePageTextStyle.js</file>
     <file>Design/layersWindow.js</file>
     <file>Design/exportWindow.js</file>
     <file>Design/propertiesWindow.js</file>
