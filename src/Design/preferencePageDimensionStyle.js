@@ -39,7 +39,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 }, class PreferencePageDimensionStyle extends Adw.PreferencesPage {
   constructor() {
     super();
-    this.updating = false;
+    this.loading = true;
     this.reload();
   }
 
