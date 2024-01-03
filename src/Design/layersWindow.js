@@ -132,7 +132,8 @@ export const LayersWindow = GObject.registerClass({
       menu.append(_('Make Current'), `win.layerCurrentAction("${layers[i].name}")`);
       const appMenu = Gtk.PopoverMenu.new_from_model(menu);
 
-      const menuButton = new Gtk.MenuButton({popover: appMenu, valign: Gtk.Align.CENTER, icon_name: 'view-more-symbolic'});
+      const menuButton = new Gtk.MenuButton({popover: appMenu, valign: Gtk.Align.CENTER, icon_name: 'view-more-symbolic', css_classes: ['flat']});
+
 
       const row = new Adw.ActionRow({title: layers[i].name, activatable: true});
       row.connect('activated', this.onLayerSelected.bind(this));
