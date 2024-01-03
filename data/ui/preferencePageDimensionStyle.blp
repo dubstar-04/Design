@@ -94,7 +94,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                   Adw.ComboRow DIMCENSTYL {
                     name: 'DIMCENSTYL';
                     title: _("Center mark style");
-                    subtitle: _("Set the vertical placement of the dimension text (DIMCEN)");
+                    subtitle: _("Set the center mark style for DIMCEN");
                     model: StringList{ strings ['None', 'Mark', 'Line']};
                     notify::selected => $onStyleUpdate();
                   }
@@ -122,14 +122,14 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
 
                 Adw.ComboRow DIMTXSTY {
                     name: 'DIMTXSTY';
-                    title: _("Text style");
+                    title: _("Style");
                     subtitle: _("Set the text style for the dimension (DIMTXSTY)");
                     model: StringList{ strings ['one', 'two']};
                     notify::selected => $onStyleUpdate();
                   }
 
                 Adw.ActionRow {
-                    title: _("Text Colour");
+                    title: _("Colour");
                     subtitle: _("Set the text colour (DIMCLRT)");
 
                     [suffix]
@@ -142,7 +142,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
 
                 Adw.SwitchRow DIMTXTBOX {
                     name: 'DIMTXTBOX';
-                    title: _("Draw frame around the text");
+                    title: _("Draw frame");
                     subtitle: _("Draw frame around the text using a negative value for DIMGAP");
                     notify::active => $onStyleUpdate();
                   }
@@ -241,14 +241,14 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
 
                   Adw.SwitchRow DIMSD1 {
                     name: 'DIMSD1';
-                    title: _("Hide dimension line one");
+                    title: _("Hide line one");
                     subtitle: _("Suppress the first dimension line (DIMSD1)");
                     notify::active => $onStyleUpdate();
                   }
 
                   Adw.SwitchRow DIMSD2 {
                     name: 'DIMSD2';
-                    title: _("Hide dimension line two");
+                    title: _("Hide line two");
                     subtitle: _("Suppress the second dimension line (DIMSD2)");
                     notify::active => $onStyleUpdate();
                   }
@@ -300,14 +300,14 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
 
                   Adw.SwitchRow DIMSE1 {
                     name: 'DIMSE1';
-                    title: _("Hide extension line one");
+                    title: _("Hide line one");
                     subtitle: _("Suppress the first extension line (DIMSE1)");
                     notify::active => onStyleUpdate();
                   }
 
                   Adw.SwitchRow DIMSE2 {
                     name: 'DIMSE2';
-                    title: _("Hide extension line two");
+                    title: _("Hide line two");
                     subtitle: _("Suppress the second extension line (DIMSE2)");
                     notify::active => $onStyleUpdate();
                   }
@@ -344,14 +344,14 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
 
                   Adw.SwitchRow DIMFXLON {
                     name: 'DIMFXLON';
-                    title: _("Fixed Length extension lines");
+                    title: _("Fixed Length");
                     subtitle: _("Enable fixed length extension lines (DIMFXLON)");
                     notify::active => $onStyleUpdate();
                   }
 
                   Adw.SpinRow  DIMFXL {
                     name: 'DIMFXL';
-                    title: _("Fixed Length entension length");
+                    title: _("Fixed entension length");
                     subtitle: _("Set the length of extension lines (DIMFXL)");
                     digits: 2;
                     notify::value  => $onStyleUpdate();
