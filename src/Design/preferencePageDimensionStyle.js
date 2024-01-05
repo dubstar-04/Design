@@ -20,7 +20,7 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 
-import {Core} from '../Design-Core/core/core.js';
+import {DesignCore} from '../Design-Core/core/designCore.js';
 
 export const PreferencePageDimensionStyle = GObject.registerClass({
   Properties: {},
@@ -50,7 +50,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
   }
 
   setModels() {
-    const styles = Core.StyleManager.getStyles();
+    const styles = DesignCore.StyleManager.getStyles();
     const styleNames = styles.map((style) => style.name);
     const textStyleModel = Gtk.StringList.new(styleNames);
     this._DIMTXSTY.set_model(textStyleModel);
@@ -58,7 +58,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
     /*
     // Line Types only supported from R2007
-    const lineTypes = Core.LTypeManager.getStyles();
+    const lineTypes = DesignCore.LTypeManager.getStyles();
     const lineTypeNames = lineTypes.map((ltype) => ltype.name);
     const lineTypeModel = Gtk.StringList.new(lineTypeNames);
     this._DIMLTYPE.set_model(lineTypeModel);
@@ -89,7 +89,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
 
   load() {
-    const styles = Core.DimStyleManager.getStyles();
+    const styles = DesignCore.DimStyleManager.getStyles();
 
     styles.forEach((style, index) => {
       const row = new Adw.ActionRow({title: style.name, activatable: true});
@@ -105,7 +105,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
         radioButton.group = this.radioButtonGroup;
       }
 
-      if (style.name === Core.DimStyleManager.getCstyle()) {
+      if (style.name === DesignCore.DimStyleManager.getCstyle()) {
         radioButton.set_active(true);
         this._stylesList.select_row(row);
         this.onStyleSelected(row);
@@ -123,7 +123,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
       // set the selected row
       this._stylesList.select_row(row);
 
-      const style = Core.DimStyleManager.getStyleByName(row.title);
+      const style = DesignCore.DimStyleManager.getStyleByName(row.title);
 
       for (const property in style) {
         if (Object.hasOwn(style, property)) {
@@ -179,14 +179,14 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
   setCurrentStyle(row) {
     if (row) {
-      Core.DimStyleManager.setCstyle(row.title);
+      DesignCore.DimStyleManager.setCstyle(row.title);
     }
   }
 
   addStyle() {
-    Core.DimStyleManager.newStyle();
+    DesignCore.DimStyleManager.newStyle();
     this.reload();
-    const newRow = this._stylesList.get_row_at_index(Core.DimStyleManager.styleCount() - 1);
+    const newRow = this._stylesList.get_row_at_index(DesignCore.DimStyleManager.styleCount() - 1);
     this.onStyleSelected(newRow);
   }
 
@@ -215,7 +215,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
   deleteStyle() {
     const row = this._stylesList.get_selected_row();
     if (row) {
-      Core.DimStyleManager.deleteStyle(row.id);
+      DesignCore.DimStyleManager.deleteStyle(row.id);
       this.reload();
     }
   }
@@ -229,12 +229,12 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
       const row = this._stylesList.get_selected_row();
       if (row) {
-        console.log('Style Update - Property:', widget.name, 'value:', value);
-        Core.DimStyleManager.updateStyle(row.id, widget.name, value);
+        // console.log('Style Update - Property:', widget.name, 'value:', value);
+        DesignCore.DimStyleManager.updateStyle(row.id, widget.name, value);
 
         if (widget.name === 'name') {
           // update the name in the style list if the name in core has changed
-          const newName = Core.DimStyleManager.getStyleByIndex(row.id).name;
+          const newName = DesignCore.DimStyleManager.getStyleByIndex(row.id).name;
           row.title = newName;
           // set the _name string - this is needed when the style name passed to core was invalid and a different name is used
           this._name.text = newName;

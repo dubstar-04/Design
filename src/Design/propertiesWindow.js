@@ -22,6 +22,7 @@ import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
 
 import {Colours} from '../Design-Core/core/lib/colours.js';
+import {DesignCore} from '../Design-Core/core/designCore.js';
 
 export const PropertiesWindow = GObject.registerClass({
   GTypeName: 'PropertiesWindow',

@@ -21,12 +21,12 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 import Pango from 'gi://Pango';
 
-import {Core} from '../Design-Core/core/core.js';
+import {DesignCore} from '../Design-Core/core/designCore.js';
 
 export const PreferencePageTextStyle = GObject.registerClass({
   GTypeName: 'PreferencePageTextStyle',
   Template: 'resource:///io/github/dubstar_04/design/ui/preferencePageTextStyle.ui',
-  InternalChildren: ['stylesList', 'name', 'font', 'upsidedown', 'backwards'],
+  InternalChildren: ['stylesList', 'name', 'font', 'upsideDown', 'backwards'],
 }, class PreferencePageTextStyle extends Adw.PreferencesPage {
   constructor() {
     super({});
@@ -50,7 +50,7 @@ export const PreferencePageTextStyle = GObject.registerClass({
   }
 
   load() {
-    const styles = Core.StyleManager.getStyles();
+    const styles = DesignCore.StyleManager.getStyles();
 
     styles.forEach((style, index) => {
       const row = new Adw.ActionRow({title: style.name, activatable: true});
@@ -66,7 +66,7 @@ export const PreferencePageTextStyle = GObject.registerClass({
         radioButton.group = this.radioButtonGroup;
       }
 
-      if (style.name === Core.StyleManager.getCstyle()) {
+      if (style.name === DesignCore.StyleManager.getCstyle()) {
         radioButton.set_active(true);
         this.onStyleSelected(row);
       }
@@ -83,11 +83,11 @@ export const PreferencePageTextStyle = GObject.registerClass({
       // set the selected row
       this._stylesList.select_row(row);
 
-      const style = Core.StyleManager.getStyleByName(row.title);
+      const style = DesignCore.StyleManager.getStyleByName(row.title);
       const fontDesc = Pango.font_description_from_string(`${style.font} ${style.textHeight}`);
       this._name.set_text(style.name);
       this._font.set_font_desc(fontDesc);
-      this._upsidedown.set_active(style.upsidedown);
+      this._upsideDown.set_active(style.upsideDown);
       this._backwards.set_active(style.backwards);
     }
 
@@ -96,15 +96,15 @@ export const PreferencePageTextStyle = GObject.registerClass({
 
   setCurrentStyle(row) {
     if (row) {
-      Core.StyleManager.setCstyle(row.title);
+      DesignCore.StyleManager.setCstyle(row.title);
     }
   }
 
   addStyle() {
-    Core.StyleManager.newStyle();
+    DesignCore.StyleManager.newStyle();
     this.reload();
 
-    const newRow = this._stylesList.get_row_at_index(Core.StyleManager.styleCount() - 1);
+    const newRow = this._stylesList.get_row_at_index(DesignCore.StyleManager.styleCount() - 1);
     this.onStyleSelected(newRow);
   }
 
@@ -133,7 +133,7 @@ export const PreferencePageTextStyle = GObject.registerClass({
   deleteStyle() {
     const row = this._stylesList.get_selected_row();
     if (row) {
-      Core.StyleManager.deleteStyle(row.id);
+      DesignCore.StyleManager.deleteStyle(row.id);
       this.reload();
     }
   }
@@ -149,14 +149,14 @@ export const PreferencePageTextStyle = GObject.registerClass({
         if (widget.name === 'font') {
           const font = value.get_family();
           const textHeight = value.get_size() / Pango.SCALE;
-          Core.StyleManager.updateStyle(row.id, 'font', font);
-          Core.StyleManager.updateStyle(row.id, 'textHeight', textHeight);
+          DesignCore.StyleManager.updateStyle(row.id, 'font', font);
+          DesignCore.StyleManager.updateStyle(row.id, 'textHeight', textHeight);
         } else {
-          Core.StyleManager.updateStyle(row.id, widget.name, value);
+          DesignCore.StyleManager.updateStyle(row.id, widget.name, value);
 
           if (widget.name === 'name') {
             // update the name in the style list if the name in core has changed
-            const newName = Core.StyleManager.getStyleByIndex(row.id).name;
+            const newName = DesignCore.StyleManager.getStyleByIndex(row.id).name;
             row.title = newName;
             // set the _name string - this is needed when the style name passed to core was invalid and a different name is used
             this._name.text = newName;
