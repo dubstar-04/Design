@@ -38,14 +38,6 @@ export const PropertiesWindow = GObject.registerClass({
     this.reload();
   }
 
-  getPropertyManager() {
-    return this.get_transient_for().getActiveCanvas().core.propertyManager;
-  }
-
-  getLayerManager() {
-    return this.get_transient_for().getActiveCanvas().core.layerManager;
-  }
-
   reload() {
     this.clearPropertiesList();
     this.loadSelectedItems();
@@ -62,7 +54,7 @@ export const PropertiesWindow = GObject.registerClass({
   }
 
   loadSelectedItems() {
-    const types = this.getPropertyManager().getItemTypes();
+    const types = DesignCore.PropertyManager.getItemTypes();
     if (types.length) {
       this._stack.set_visible_child_name('elementsPage');
     } else {
@@ -91,7 +83,7 @@ export const PropertiesWindow = GObject.registerClass({
     const typeStringList = this._elementSelector.get_model();
     const selectedType = typeStringList.get_string(selectedIndex);
 
-    const properties = this.getPropertyManager().getItemProperties(selectedType);
+    const properties = DesignCore.PropertyManager.getItemProperties(selectedType);
 
     if (!properties) {
       return;
@@ -101,7 +93,7 @@ export const PropertiesWindow = GObject.registerClass({
 
     if (properties.length) {
       for (let i = 0; i < properties.length; i++) {
-        const value = this.getPropertyManager().getItemPropertyValue(selectedType, properties[i]);
+        const value = DesignCore.PropertyManager.getItemPropertyValue(selectedType, properties[i]);
 
         let suffixWidget;
         const property = properties[i];
@@ -138,7 +130,7 @@ export const PropertiesWindow = GObject.registerClass({
               GObject.signal_handler_unblock(suffixWidget, changedSignal);
             });
             suffixWidget.connect('activate', () => {
-              this.getPropertyManager().setItemProperties(`${property}`, Number(suffixWidget.text));
+              DesignCore.PropertyManager.setItemProperties(`${property}`, Number(suffixWidget.text));
             });
             break;
           // Boolean type properties
@@ -146,7 +138,7 @@ export const PropertiesWindow = GObject.registerClass({
           case 'upsideDown':
             suffixWidget = new Gtk.Switch({valign: Gtk.Align.CENTER, state: value});
             suffixWidget.connect('notify::active', () => {
-              this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.state);
+              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.state);
             });
             break;
             // option type properties
@@ -163,7 +155,7 @@ export const PropertiesWindow = GObject.registerClass({
             }
             suffixWidget.connect('notify::selected-item', () => {
               // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
-              this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.get_selected());
+              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.get_selected());
             });
             break;
           case 'verticalAlignment':
@@ -179,7 +171,7 @@ export const PropertiesWindow = GObject.registerClass({
             }
             suffixWidget.connect('notify::selected-item', () => {
               // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
-              this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.get_selected());
+              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.get_selected());
             });
             break;
           case 'layer':
@@ -195,7 +187,7 @@ export const PropertiesWindow = GObject.registerClass({
             }
             suffixWidget.connect('notify::selected-item', () => {
               // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
-              this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.get_selected_item().get_string());
+              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.get_selected_item().get_string());
             });
             break;
           // String type properties
@@ -203,7 +195,7 @@ export const PropertiesWindow = GObject.registerClass({
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
             suffixWidget.width_request = widgetWidth;
             suffixWidget.connect('activate', () => {
-              this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.text);
+              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.text);
             });
             break;
             // String type properties
@@ -228,7 +220,7 @@ export const PropertiesWindow = GObject.registerClass({
                   const rgb = rgba.substr(4).split(')')[0].split(',');
                   const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
                   suffixWidget.set_label(colour);
-                  this.getPropertyManager().setItemProperties(`${property}`, colour);
+                  DesignCore.PropertyManager.setItemProperties(`${property}`, colour);
                 }
 
                 dialog.destroy();
@@ -256,8 +248,7 @@ export const PropertiesWindow = GObject.registerClass({
     switch (property) {
       case 'layer':
         model = [];
-        const layerManager = this.getLayerManager();
-        for (const layer of layerManager.getLayers()) {
+        for (const layer of DesignCore.LayerManager.getLayers()) {
           model.push(layer.name);
         }
         break;

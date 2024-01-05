@@ -31,6 +31,8 @@ import {Settings} from './settings.js';
 
 import {FileIO} from './fileIO.js';
 
+import {DesignCore} from '../Design-Core/core/designCore.js';
+
 export const DesignWindow = GObject.registerClass({
   GTypeName: 'DesignWindow',
   Properties: {
@@ -227,7 +229,7 @@ export const DesignWindow = GObject.registerClass({
   }
 
   loadToolbars() {
-    const commands = this.getActiveCanvas().core.commandManager.getCommands();
+    const commands = DesignCore.CommandManager.getCommands();
 
     for (let index = 0; index < commands.length; index++) {
       const designCommand = commands[index];
@@ -263,7 +265,7 @@ export const DesignWindow = GObject.registerClass({
   }
 
   onToolbarButtonPress(command) {
-    this.getActiveCanvas().core.scene.inputManager.onCommand(`${command}`);
+    DesignCore.Scene.inputManager.onCommand(`${command}`);
   }
 
   showShortcutsWindow() {

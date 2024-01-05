@@ -20,6 +20,8 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 
+import {DesignCore} from '../Design-Core/core/designCore.js';
+
 import {FileIO} from './fileIO.js';
 
 export const ExportWindow = GObject.registerClass({
@@ -40,8 +42,7 @@ export const ExportWindow = GObject.registerClass({
   }
 
   loadVersions() {
-    const core = this.get_transient_for().getActiveCanvas().core;
-    const versions = core.supportedDXFVersions();
+    const versions = DesignCore.Core.supportedDXFVersions();
 
 
     for (const [key, value] of Object.entries(versions)) {
