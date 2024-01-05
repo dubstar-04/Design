@@ -162,7 +162,7 @@ export const PropertiesWindow = GObject.registerClass({
               suffixWidget.set_selected(halignIndex);
             }
             suffixWidget.connect('notify::selected-item', () => {
-              console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
+              // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
               this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.get_selected());
             });
             break;
@@ -178,7 +178,7 @@ export const PropertiesWindow = GObject.registerClass({
               suffixWidget.set_selected(valignIndex);
             }
             suffixWidget.connect('notify::selected-item', () => {
-              console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
+              // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
               this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.get_selected());
             });
             break;
@@ -194,7 +194,7 @@ export const PropertiesWindow = GObject.registerClass({
               suffixWidget.set_selected(selectedIndex);
             }
             suffixWidget.connect('notify::selected-item', () => {
-              console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
+              // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
               this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.get_selected_item().get_string());
             });
             break;
