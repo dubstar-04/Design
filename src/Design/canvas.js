@@ -3,7 +3,7 @@ import GObject from 'gi://GObject';
 import Gdk from 'gi://Gdk';
 import Adw from 'gi://Adw?version=1';
 
-import {Core} from '../Design-Core/core/core.js';
+import {Core} from '../Design-Core/core/core/core.js';
 
 export const Canvas = GObject.registerClass({
   GTypeName: 'Canvas',
@@ -83,6 +83,7 @@ export const Canvas = GObject.registerClass({
 
     this.add_controller(shortcutController);
 
+    // create and activate a design core
     this.core = new Core();
 
     this.styleManager = Adw.StyleManager.get_default();
