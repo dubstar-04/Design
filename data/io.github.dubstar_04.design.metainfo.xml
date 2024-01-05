@@ -40,6 +40,7 @@
 			<ul>
 			<li>Inspect, Modify and Create text styles from the preferences window</li>
 			<li>Change text styles, vertical and horizontal alignment from the properties window</li>
+			<li>Highlight design entities on mouse hover</li>
 			</ul>
 		</description>
 		</release>
