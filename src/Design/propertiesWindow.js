@@ -151,11 +151,37 @@ export const PropertiesWindow = GObject.registerClass({
             break;
             // option type properties
           case 'horizontalAlignment':
-            // TODO: Enable Alignment Values
-            continue;
+            const halignModel = this.getModel(property);
+            suffixWidget = Gtk.DropDown.new_from_strings(halignModel);
+            suffixWidget.width_request = widgetWidth;
+            suffixWidget.valign = Gtk.Align.CENTER;
+            // get the position of the current value
+            const halignIndex = halignModel.indexOf(value);
+
+            if (halignIndex >= 0) {
+              suffixWidget.set_selected(halignIndex);
+            }
+            suffixWidget.connect('notify::selected-item', () => {
+              console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
+              this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.get_selected());
+            });
+            break;
           case 'verticalAlignment':
-            // TODO: Enable Alignment Values
-            continue;
+            const valignModel = this.getModel(property);
+            suffixWidget = Gtk.DropDown.new_from_strings(valignModel);
+            suffixWidget.width_request = widgetWidth;
+            suffixWidget.valign = Gtk.Align.CENTER;
+            // get the position of the current value
+            const valignIndex = valignModel.indexOf(value);
+
+            if (valignIndex >= 0) {
+              suffixWidget.set_selected(valignIndex);
+            }
+            suffixWidget.connect('notify::selected-item', () => {
+              console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
+              this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.get_selected());
+            });
+            break;
           case 'layer':
           case 'styleName':
             const model = this.getModel(property);
@@ -168,6 +194,7 @@ export const PropertiesWindow = GObject.registerClass({
               suffixWidget.set_selected(selectedIndex);
             }
             suffixWidget.connect('notify::selected-item', () => {
+              console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
               this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.get_selected_item().get_string());
             });
             break;
@@ -236,15 +263,17 @@ export const PropertiesWindow = GObject.registerClass({
         break;
       case 'styleName':
         // TODO: build model for styles
-        model = ['style1', 'style2', 'style3'];
+        const styles = DesignCore.StyleManager.getStyles();
+        const styleNames = styles.map((style) => style.name);
+        model = styleNames;
         break;
       case 'horizontalAlignment':
         // TODO: build human readable model for alignment
-        model = ['0', '1', '2', '3', '4', '5'];
+        model = ['Left', 'Center', 'Right'];
         break;
       case 'verticalAlignment':
         // TODO: build human readable model for alignment
-        model = ['0', '1', '2', '3'];
+        model = ['Baseline', 'Bottom', 'Middle', 'Top'];
         break;
     }
     return model;
