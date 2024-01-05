@@ -5,6 +5,9 @@
     <file>Design/window.js</file>
     <file>Design/canvas.js</file>
     <file>Design/preferencesWindow.js</file>
+    <file>Design/preferencePageSettings.js</file>
+    <file>Design/preferencePageDimensionStyle.js</file>
+    <file>Design/preferencePageTextStyle.js</file>
     <file>Design/layersWindow.js</file>
     <file>Design/exportWindow.js</file>
     <file>Design/propertiesWindow.js</file>
@@ -13,7 +16,8 @@
     <file>Design/fileIO.js</file>
 
     <!-- Design Core -->
-    <file>Design-Core/core/core.js</file>
+    <file>Design-Core/core/designCore.js</file>
+    <file>Design-Core/core/core/core.js</file>
     <file>Design-Core/core/lib/boundingBox.js</file>
     <file>Design-Core/core/lib/canvas.js</file>
     <file>Design-Core/core/lib/colours.js</file>
@@ -52,6 +56,11 @@
     <file>Design-Core/core/entities/block.js</file>
     <file>Design-Core/core/entities/circle.js</file>
     <file>Design-Core/core/entities/dimension.js</file>
+    <file>Design-Core/core/entities/angularDimension.js</file>
+    <file>Design-Core/core/entities/alignedDimension.js</file>
+    <file>Design-Core/core/entities/diametricDimension.js</file>
+    <file>Design-Core/core/entities/radialDimension.js</file>
+    <file>Design-Core/core/entities/baseDimension.js</file>
     <file>Design-Core/core/entities/entity.js</file>
     <file>Design-Core/core/entities/insert.js</file>
     <file>Design-Core/core/entities/line.js</file>
@@ -59,6 +68,7 @@
     <file>Design-Core/core/entities/point.js</file>
     <file>Design-Core/core/entities/polyline.js</file>
     <file>Design-Core/core/entities/rectangle.js</file>
+    <file>Design-Core/core/entities/solid.js</file>
     <file>Design-Core/core/entities/text.js</file>
 
     <file>Design-Core/core/tools/copy.js</file>

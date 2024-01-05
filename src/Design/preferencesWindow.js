@@ -18,7 +18,11 @@
 
 import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
-import Gio from 'gi://Gio';
+// import Gio from 'gi://Gio';
+
+import {PreferencePageSettings} from './preferencePageSettings.js';
+import {PreferencePageTextStyle} from './preferencePageTextStyle.js';
+// import {PreferencePageDimensionStyle} from './preferencePageDimensionStyle.js';
 
 export const PreferencesWindow = GObject.registerClass({
   GTypeName: 'PreferencesWindow',
@@ -29,24 +33,9 @@ export const PreferencesWindow = GObject.registerClass({
     super({});
     this.settings = settings;
 
-    // create a new action group for the preference window
-    this.settings_group = new Gio.SimpleActionGroup();
-    this.insert_action_group('settings', this.settings_group);
-
-    // get a list of settings keys
-    const settingsKeys = this.settings.list_keys();
-    settingsKeys.forEach((key) => {
-      // Create an action for each key
-      // These actions are assigned to the preference widgets in the .blp
-      // These actions sync the widget state to the settings
-      const action = this.settings.create_action(key);
-      this.settings_group.add_action(action);
-    });
-  }
-
-  onToggled(widget) {
-    // update core with the changed setting
-    this.settings.setCoreSetting(widget.name, widget.state);
+    this.add(new PreferencePageSettings(settings));
+    this.add(new PreferencePageTextStyle());
+    // this.add(new PreferencePageDimensionStyle());
   }
 },
 );

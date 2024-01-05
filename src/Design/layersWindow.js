@@ -24,6 +24,7 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
 import {Colours} from '../Design-Core/core/lib/colours.js';
+import {DesignCore} from '../Design-Core/core/designCore.js';
 
 export const LayersWindow = GObject.registerClass({
   GTypeName: 'LayersWindow',
@@ -67,26 +68,22 @@ export const LayersWindow = GObject.registerClass({
 
   onEditAction(simpleAction, parameters) {
     const layerName = parameters.deep_unpack();
-    this.selected_layer = this.getLayerManager().getLayerByName(layerName);
+    this.selected_layer = DesignCore.LayerManager.getLayerByName(layerName);
     this.onEditLayer();
   }
 
   onDeleteAction(simpleAction, parameters) {
     // console.log("delete action")
     const layerName = parameters.deep_unpack();
-    this.selected_layer = this.getLayerManager().getLayerByName(layerName);
+    this.selected_layer = DesignCore.LayerManager.getLayerByName(layerName);
     this.onLayerDelete();
   }
 
   onCurrentAction(simpleAction, parameters) {
     // console.log("current action")
     const layerName = parameters.deep_unpack();
-    this.getLayerManager().setCLayer(layerName);
+    DesignCore.LayerManager.setCLayer(layerName);
     this.reload();
-  }
-
-  getLayerManager() {
-    return this.get_transient_for().getActiveCanvas().core.layerManager;
   }
 
   toRgba(layerColour) {
@@ -116,8 +113,8 @@ export const LayersWindow = GObject.registerClass({
   }
 
   loadLayers() {
-    const layers = this.getLayerManager().getLayers();
-    const clayer = this.getLayerManager().getCLayer();
+    const layers = DesignCore.LayerManager.getLayers();
+    const clayer = DesignCore.LayerManager.getCLayer();
 
     for (let i = 0; i < layers.length; i++) {
       const colourButton = new Gtk.ColorButton({'valign': Gtk.Align.CENTER, 'rgba': this.toRgba(layers[i].colour)});
@@ -132,7 +129,8 @@ export const LayersWindow = GObject.registerClass({
       menu.append(_('Make Current'), `win.layerCurrentAction("${layers[i].name}")`);
       const appMenu = Gtk.PopoverMenu.new_from_model(menu);
 
-      const menuButton = new Gtk.MenuButton({popover: appMenu, valign: Gtk.Align.CENTER, icon_name: 'view-more-symbolic'});
+      const menuButton = new Gtk.MenuButton({popover: appMenu, valign: Gtk.Align.CENTER, icon_name: 'view-more-symbolic', css_classes: ['flat']});
+
 
       const row = new Adw.ActionRow({title: layers[i].name, activatable: true});
       row.connect('activated', this.onLayerSelected.bind(this));
@@ -151,7 +149,7 @@ export const LayersWindow = GObject.registerClass({
 
   onColourChange(colourButton) {
     const row = colourButton.get_ancestor(Adw.ActionRow);
-    const layer = this.getLayerManager().getLayerByName(row.title);
+    const layer = DesignCore.LayerManager.getLayerByName(row.title);
     const rgba = colourButton.rgba.to_string();
     const rgb = rgba.substr(4).split(')')[0].split(',');
     // log(rgb)
@@ -165,7 +163,7 @@ export const LayersWindow = GObject.registerClass({
     // Get the row of the switch
     const row = toggle.get_ancestor(Adw.ActionRow);
     // get the layer reference from the layer manager
-    const layer = this.getLayerManager().getLayerByName(row.title);
+    const layer = DesignCore.LayerManager.getLayerByName(row.title);
     // change the layer state
     layer.on = state;
     // redraw
@@ -180,14 +178,14 @@ export const LayersWindow = GObject.registerClass({
 
   onNewClicked() {
     // console.log("new clicked")
-    this.getLayerManager().newLayer();
+    DesignCore.LayerManager.newLayer();
     this.reload();
   }
 
   onLayerSelected(row) {
     if (row) {
       this._layerList.unselect_row(row);
-      this.selected_layer = this.getLayerManager().getLayerByName(row.title);
+      this.selected_layer = DesignCore.LayerManager.getLayerByName(row.title);
       this.onEditLayer();
     }
   }
@@ -238,7 +236,7 @@ export const LayersWindow = GObject.registerClass({
 
   deleteLayer(layerName) {
     // console.log("delete layer")
-    this.getLayerManager().deleteLayerName(layerName);
+    DesignCore.LayerManager.deleteLayerName(layerName);
     this.get_transient_for().getActiveCanvas().queue_draw();
   }
 }, // window

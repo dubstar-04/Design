@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template LayersWindow : Adw.ApplicationWindow {
+template $LayersWindow : Adw.ApplicationWindow {
   modal: false;
   default-width: 500;
   default-height: 600;
@@ -10,10 +10,10 @@ template LayersWindow : Adw.ApplicationWindow {
     Box {
     orientation: vertical;
 
-    .AdwHeaderBar {
+    $AdwHeaderBar {
       show-end-title-buttons: false;
       title-widget:
-      .AdwWindowTitle {
+      $AdwWindowTitle {
         title: _("Layers");
       };
 
@@ -21,7 +21,7 @@ template LayersWindow : Adw.ApplicationWindow {
         focus-on-click: false;
         focusable: false;
         visible: bind backButton.visible inverted bidirectional;
-        clicked => onNewClicked();
+        clicked => $onNewClicked();
         icon-name: 'list-add-symbolic';
         }
 
@@ -29,7 +29,7 @@ template LayersWindow : Adw.ApplicationWindow {
         focus-on-click: false;
         focusable: false;
         visible: false;
-        clicked => onBackClicked();
+        clicked => $onBackClicked();
         icon-name: 'go-previous-symbolic';
         }
 
@@ -46,7 +46,7 @@ template LayersWindow : Adw.ApplicationWindow {
         label: _("_Delete");
         visible: bind backButton.visible bidirectional;
         use-underline: true;
-        clicked => onLayerDelete();
+        clicked => $onLayerDelete();
         styles ['destructive-action']
       }
 
@@ -114,7 +114,7 @@ template LayersWindow : Adw.ApplicationWindow {
             Adw.EntryRow nameEntry{
               title: _("Name");
               show-apply-button: true;
-              notify::active => onLayerUpdate();
+              notify::active => $onLayerUpdate();
             }
 
             Adw.ActionRow {
@@ -124,7 +124,7 @@ template LayersWindow : Adw.ApplicationWindow {
                 [suffix]
                 Switch frozenSwitch{
                   valign: center;
-                  notify::active => onLayerUpdate();
+                  notify::active => $onLayerUpdate();
                 }
               }
 
@@ -135,7 +135,7 @@ template LayersWindow : Adw.ApplicationWindow {
                 [suffix]
                 Switch lockedSwitch{
                   valign: center;
-                  notify::active => onLayerUpdate();
+                  notify::active => $onLayerUpdate();
                 }
               }
 
@@ -166,7 +166,7 @@ template LayersWindow : Adw.ApplicationWindow {
                 [suffix]
                 Switch plottingSwitch{
                   valign: center;
-                  notify::active => onLayerUpdate();
+                  notify::active => $onLayerUpdate();
                 }
               }
             }// group

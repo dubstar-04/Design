@@ -3,7 +3,7 @@ import GObject from 'gi://GObject';
 import Gdk from 'gi://Gdk';
 import Adw from 'gi://Adw?version=1';
 
-import {Core} from '../Design-Core/core/core.js';
+import {Core} from '../Design-Core/core/core/core.js';
 
 export const Canvas = GObject.registerClass({
   GTypeName: 'Canvas',
@@ -67,7 +67,6 @@ export const Canvas = GObject.registerClass({
     keyController.connect('key-pressed', this.onKeyPress.bind(this));
     this.add_controller(keyController);
 
-    // #region CTRL + '' shortcuts
     const shortcutController = new Gtk.ShortcutController();
 
     const copyShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.CallbackAction.new(this.onCopy.bind(this))});
@@ -83,8 +82,8 @@ export const Canvas = GObject.registerClass({
     shortcutController.add_shortcut(cutShortcut);
 
     this.add_controller(shortcutController);
-    // #endregion
 
+    // create and activate a design core
     this.core = new Core();
 
     this.styleManager = Adw.StyleManager.get_default();
@@ -105,6 +104,9 @@ export const Canvas = GObject.registerClass({
 
     // pinch to zoom delta
     this.pinchDelta = 0;
+
+    // activate the core
+    this.activate();
   }
 
   setFilePath(filePath) {
@@ -134,6 +136,15 @@ export const Canvas = GObject.registerClass({
   onCut() {
     // TODO: implement cut
     this.core.notify('Cut not implemented');
+  }
+
+  activate() {
+    // activate the core
+    // Core uses static methods to access the current core context
+    // if this is not set changes to one tab may affect other tabs
+
+    // Must be called on tab changes
+    this.core.activate();
   }
 
   onStyleChange() {
