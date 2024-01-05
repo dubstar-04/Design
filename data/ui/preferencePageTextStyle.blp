@@ -69,8 +69,8 @@ template $PreferencePageTextStyle : Adw.PreferencesPage {
             }
           }
 
-          Adw.SwitchRow upsidedown {
-            name: 'upsidedown';
+          Adw.SwitchRow upsideDown {
+            name: 'upsideDown';
             title: _("Upside down");
             subtitle: _("Show the font upside down");
             notify::active => $onStyleUpdate();
