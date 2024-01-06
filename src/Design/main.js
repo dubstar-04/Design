@@ -22,6 +22,8 @@ import Gtk from 'gi://Gtk?version=4.0';
 import Adw from 'gi://Adw?version=1';
 
 import {DesignWindow} from './window.js';
+import {FileIO} from './fileIO.js';
+import {Logging} from '../Design-Core/core/lib/logging.js';
 
 pkg.initGettext();
 pkg.initFormat();
@@ -68,9 +70,10 @@ export const DesignApplication = GObject.registerClass(
 
         // open signal only emitted if files are passed as argv. See activate signal.
         this.connect('open', (self, files) => {
+          Logging.instance.debug('Main - Opening File');
           const activeWindow = new DesignWindow(this);
           files.forEach((file) => {
-            activeWindow.load_file(file);
+            FileIO.loadFile(file, activeWindow);
           });
           activeWindow.present();
         });
