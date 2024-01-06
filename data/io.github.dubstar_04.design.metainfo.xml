@@ -35,7 +35,7 @@
   	</screenshots>
 	<content_rating type="oars-1.1" />
   	<releases>
-		<release version="45.alpha2" date="2023-xx-x">
+		<release version="46.alpha1" date="2024-02-x">
 		<description>
 			<ul>
 			<li>Inspect, Modify and Create text styles from the preferences window</li>
