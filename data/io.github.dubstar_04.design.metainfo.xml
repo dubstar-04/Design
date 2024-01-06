@@ -41,6 +41,7 @@
 			<li>Inspect, Modify and Create text styles from the preferences window</li>
 			<li>Change text styles, vertical and horizontal alignment from the properties window</li>
 			<li>Highlight design entities on mouse hover</li>
+			<li>Fix opening files as arguments e.g. 'open with' from file browser</li>
 			</ul>
 		</description>
 		</release>
