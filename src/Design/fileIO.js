@@ -52,7 +52,7 @@ export class FileIO {
 
   static loadFile(file, window) {
     if (!file.query_exists(null)) {
-      // TODO: inform user that the selected file is invalid.
+      DesignCore.Core.notify('Invalid file');
       return;
     }
 
@@ -61,8 +61,10 @@ export class FileIO {
     const fileName = this.formatFilename(info.get_name());
     const ext = this.getFileExtension(info.get_name());
 
+    console.log('file details:', fileName, ext);
+
     if (ext.toLowerCase() !== 'dxf') {
-      // TODO: inform user that the file type is not supported.
+      DesignCore.Core.notify(`Invalid file format: ${ext}`);
       return;
     }
 
