@@ -22,6 +22,7 @@ import Gtk from 'gi://Gtk?version=4.0';
 import Adw from 'gi://Adw?version=1';
 
 import {DesignWindow} from './window.js';
+import {FileIO} from './fileIO.js';
 
 pkg.initGettext();
 pkg.initFormat();
@@ -70,7 +71,7 @@ export const DesignApplication = GObject.registerClass(
         this.connect('open', (self, files) => {
           const activeWindow = new DesignWindow(this);
           files.forEach((file) => {
-            activeWindow.load_file(file);
+            FileIO.loadFile(file, activeWindow);
           });
           activeWindow.present();
         });
