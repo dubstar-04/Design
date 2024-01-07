@@ -176,6 +176,7 @@ export const PropertiesWindow = GObject.registerClass({
             break;
           case 'layer':
           case 'styleName':
+          case 'lineType':
             const model = this.getModel(property);
             suffixWidget = Gtk.DropDown.new_from_strings(model);
             suffixWidget.width_request = widgetWidth;
@@ -253,7 +254,6 @@ export const PropertiesWindow = GObject.registerClass({
         }
         break;
       case 'styleName':
-        // TODO: build model for styles
         const styles = DesignCore.StyleManager.getStyles();
         const styleNames = styles.map((style) => style.name);
         model = styleNames;
@@ -266,6 +266,10 @@ export const PropertiesWindow = GObject.registerClass({
         // TODO: build human readable model for alignment
         model = ['Baseline', 'Bottom', 'Middle', 'Top'];
         break;
+      case 'lineType':
+        const lineStyles = DesignCore.LTypeManager.getStyles();
+        const lineStyleNames = lineStyles.map((style) => style.name);
+        model = lineStyleNames;
     }
     return model;
   }
