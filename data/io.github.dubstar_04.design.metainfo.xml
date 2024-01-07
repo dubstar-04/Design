@@ -42,6 +42,9 @@
 			<li>Change text styles, vertical and horizontal alignment from the properties window</li>
 			<li>Highlight design entities on mouse hover</li>
 			<li>Fix opening files as arguments e.g. 'open with' from file browser</li>
+			<li>Add line styles selection to preferences window</li>
+			<li>Add line styles selection to layers window</li>
+			<li>Add line styles selection to properties window</li>
 			</ul>
 		</description>
 		</release>
