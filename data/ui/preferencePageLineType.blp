@@ -1,0 +1,31 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $PreferencePageLineType : Adw.PreferencesPage {
+    icon-name: "preferences-desktop-font-symbolic";
+    title: _("Line Type");
+  
+    ScrolledWindow {
+      child: Adw.Clamp {
+        child: Box {
+            orientation: vertical;
+            margin-top: 24;
+            margin-bottom: 24;
+            margin-start: 12;
+            margin-end: 12;
+            spacing: 6;
+
+            Box {
+              orientation: vertical;
+              spacing: 6;
+
+              ListBox stylesList{
+                selection-mode: none;
+                styles ["boxed-list"]
+                }
+            }
+
+    }; //Box
+  }; //Clamp
+  } //ScrolledWindow
+}
