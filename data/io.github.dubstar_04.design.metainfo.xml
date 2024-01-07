@@ -45,6 +45,10 @@
 			<li>Add line styles selection to preferences window</li>
 			<li>Add line styles selection to layers window</li>
 			<li>Add line styles selection to properties window</li>
+			<li>Improve Trim and Extend command selection highlighting</li>
+			<li>Fix Enter and return behaviour when no commands have been performed</li>
+			<li>Improve property display in the properties window</li>
+			<li>Prevent selection of items on locked or frozen layers</li>
 			</ul>
 		</description>
 		</release>
