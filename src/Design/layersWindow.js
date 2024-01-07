@@ -29,7 +29,7 @@ import {DesignCore} from '../Design-Core/core/designCore.js';
 export const LayersWindow = GObject.registerClass({
   GTypeName: 'LayersWindow',
   Template: 'resource:///io/github/dubstar_04/design/ui/layers.ui',
-  InternalChildren: ['layerList', 'stack', 'backButton', 'nameEntry', 'frozenSwitch', 'lockedSwitch', 'lineTypeLabel', 'lineWeightLabel', 'plottingSwitch'],
+  InternalChildren: ['layerList', 'stack', 'backButton', 'nameEntry', 'frozenSwitch', 'lockedSwitch', 'lineType', 'lineWeightLabel', 'plottingSwitch'],
 }, class LayersWindow extends Adw.ApplicationWindow {
   constructor() {
     super({});
@@ -94,6 +94,12 @@ export const LayersWindow = GObject.registerClass({
     rgba.blue = colour.b;
     rgba.alpha = 1.0;
     return rgba;
+  }
+
+  getLineTypes() {
+    const lineStyles = DesignCore.LTypeManager.getStyles();
+    const lineStyleNames = lineStyles.map((style) => style.name);
+    return lineStyleNames;
   }
 
   reload() {
@@ -194,7 +200,16 @@ export const LayersWindow = GObject.registerClass({
     this._nameEntry.text = this.selected_layer.name;
     this._frozenSwitch.active = this.selected_layer.frozen;
     this._lockedSwitch.active = this.selected_layer.locked;
-    this._lineTypeLabel.label = this.selected_layer.lineType;
+
+    // set line type model and current index
+    const lineTypeNames = this.getLineTypes();
+    this._lineType.set_model(Gtk.StringList.new(lineTypeNames));
+    const selectedIndex = lineTypeNames.indexOf(this.selected_layer.lineType);
+
+    if (selectedIndex >= 0) {
+      this._lineType.set_selected(selectedIndex);
+    }
+
     this._lineWeightLabel.label = this.selected_layer.lineWeight.toString();
     this._plottingSwitch.active = this.selected_layer.plotting;
 
@@ -203,14 +218,13 @@ export const LayersWindow = GObject.registerClass({
   }
 
   onLayerUpdate() {
-    // console.log('update layer');
-    // this.selected_layer.name = this._nameEntry.text;
     const layerIndex = DesignCore.LayerManager.getStyleIndex(this.selected_layer.name);
     DesignCore.LayerManager.renameStyle(layerIndex, this._nameEntry.text);
     this.selected_layer.frozen = this._frozenSwitch.active;
     this.selected_layer.locked = this._lockedSwitch.active;
-    // this.selected_layer.lineType = this._lineTypeLabel.label;
-    // this.selected_layer.lineWeight = this._lineWeightLabel.label;
+    const selectedLineType = this._lineType.get_selected_item().get_string();
+    this.selected_layer.lineType = selectedLineType;
+
     this.selected_layer.plotting = this._plottingSwitch.active;
     this.get_transient_for().getActiveCanvas().queue_draw();
   }

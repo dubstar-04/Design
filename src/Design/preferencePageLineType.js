@@ -72,7 +72,6 @@ export const PreferencePageLineType = GObject.registerClass({
 
   styleChecked(row, checkBox) {
     if (row) {
-      console.log('clicked');
       const optionalStyles = DesignCore.LTypeManager.getOptionalStyles();
       DesignCore.LTypeManager.addStyle(optionalStyles[row.id]);
       this.reload();
