@@ -113,8 +113,8 @@ template $LayersWindow : Adw.ApplicationWindow {
 
             Adw.EntryRow nameEntry{
               title: _("Name");
-              show-apply-button: true;
-              notify::active => $onLayerUpdate();
+              //show-apply-button: true;
+              entry-activated => $onLayerUpdate();
             }
 
             Adw.ActionRow {
@@ -141,11 +141,12 @@ template $LayersWindow : Adw.ApplicationWindow {
 
             Adw.ActionRow {
               title: _("Line Type");
-              subtitle: _("Line type for the selected layer. Not implimented");
+              subtitle: _("Line type for the selected layer");
 
                 [suffix]
-                Label lineTypeLabel{
+                DropDown lineType{
                   valign: center;
+                  notify::selected-item => $onLayerUpdate();
                 }
               }
 

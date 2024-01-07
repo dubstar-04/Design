@@ -8,6 +8,7 @@
     <file>Design/preferencePageSettings.js</file>
     <file>Design/preferencePageDimensionStyle.js</file>
     <file>Design/preferencePageTextStyle.js</file>
+    <file>Design/preferencePageLineType.js</file>
     <file>Design/layersWindow.js</file>
     <file>Design/exportWindow.js</file>
     <file>Design/propertiesWindow.js</file>
@@ -81,8 +82,8 @@
     <file>Design-Core/core/tools/trim.js</file>
     <file>Design-Core/core/tools/tool.js</file>
 
-    <file>Design-Core/core/layers/layer.js</file>
-    <file>Design-Core/core/layers/layerManager.js</file>
+    <file>Design-Core/core/styles/layer.js</file>
+    <file>Design-Core/core/styles/layerManager.js</file>
     <file>Design-Core/core/styles/ltype.js</file>
     <file>Design-Core/core/styles/ltypeManager.js</file>
     <file>Design-Core/core/styles/styleManagerBase.js</file>
