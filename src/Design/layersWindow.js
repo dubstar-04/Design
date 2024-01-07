@@ -68,21 +68,21 @@ export const LayersWindow = GObject.registerClass({
 
   onEditAction(simpleAction, parameters) {
     const layerName = parameters.deep_unpack();
-    this.selected_layer = DesignCore.LayerManager.getLayerByName(layerName);
+    this.selected_layer = DesignCore.LayerManager.getStyleByName(layerName);
     this.onEditLayer();
   }
 
   onDeleteAction(simpleAction, parameters) {
     // console.log("delete action")
     const layerName = parameters.deep_unpack();
-    this.selected_layer = DesignCore.LayerManager.getLayerByName(layerName);
+    this.selected_layer = DesignCore.LayerManager.getStyleByName(layerName);
     this.onLayerDelete();
   }
 
   onCurrentAction(simpleAction, parameters) {
     // console.log("current action")
     const layerName = parameters.deep_unpack();
-    DesignCore.LayerManager.setCLayer(layerName);
+    DesignCore.LayerManager.setCstyle(layerName);
     this.reload();
   }
 
@@ -113,8 +113,8 @@ export const LayersWindow = GObject.registerClass({
   }
 
   loadLayers() {
-    const layers = DesignCore.LayerManager.getLayers();
-    const clayer = DesignCore.LayerManager.getCLayer();
+    const layers = DesignCore.LayerManager.getStyles();
+    const clayer = DesignCore.LayerManager.getCstyle();
 
     for (let i = 0; i < layers.length; i++) {
       const colourButton = new Gtk.ColorButton({'valign': Gtk.Align.CENTER, 'rgba': this.toRgba(layers[i].colour)});
@@ -149,7 +149,7 @@ export const LayersWindow = GObject.registerClass({
 
   onColourChange(colourButton) {
     const row = colourButton.get_ancestor(Adw.ActionRow);
-    const layer = DesignCore.LayerManager.getLayerByName(row.title);
+    const layer = DesignCore.LayerManager.getStyleByName(row.title);
     const rgba = colourButton.rgba.to_string();
     const rgb = rgba.substr(4).split(')')[0].split(',');
     // log(rgb)
@@ -163,7 +163,7 @@ export const LayersWindow = GObject.registerClass({
     // Get the row of the switch
     const row = toggle.get_ancestor(Adw.ActionRow);
     // get the layer reference from the layer manager
-    const layer = DesignCore.LayerManager.getLayerByName(row.title);
+    const layer = DesignCore.LayerManager.getStyleByName(row.title);
     // change the layer state
     layer.on = state;
     // redraw
@@ -178,14 +178,14 @@ export const LayersWindow = GObject.registerClass({
 
   onNewClicked() {
     // console.log("new clicked")
-    DesignCore.LayerManager.newLayer();
+    DesignCore.LayerManager.newStyle();
     this.reload();
   }
 
   onLayerSelected(row) {
     if (row) {
       this._layerList.unselect_row(row);
-      this.selected_layer = DesignCore.LayerManager.getLayerByName(row.title);
+      this.selected_layer = DesignCore.LayerManager.getStyleByName(row.title);
       this.onEditLayer();
     }
   }
@@ -203,8 +203,10 @@ export const LayersWindow = GObject.registerClass({
   }
 
   onLayerUpdate() {
-    // console.log("update layer")
-    this.selected_layer.name = this._nameEntry.text;
+    // console.log('update layer');
+    // this.selected_layer.name = this._nameEntry.text;
+    const layerIndex = DesignCore.LayerManager.getStyleIndex(this.selected_layer.name);
+    DesignCore.LayerManager.renameStyle(layerIndex, this._nameEntry.text);
     this.selected_layer.frozen = this._frozenSwitch.active;
     this.selected_layer.locked = this._lockedSwitch.active;
     // this.selected_layer.lineType = this._lineTypeLabel.label;
@@ -229,14 +231,14 @@ export const LayersWindow = GObject.registerClass({
   onConfirmDialog(dialog, response) {
     // console.log("delete dialog callback")
     if (response === 'delete') {
-      this.deleteLayer(this.selected_layer.name);
+      this.deleteStyle(this.selected_layer.name);
       this.onBackClicked();
     }
   }
 
-  deleteLayer(layerName) {
+  deleteStyle(layerName) {
     // console.log("delete layer")
-    DesignCore.LayerManager.deleteLayerName(layerName);
+    DesignCore.LayerManager.deleteStyle(DesignCore.LayerManager.getStyleIndex(layerName));
     this.get_transient_for().getActiveCanvas().queue_draw();
   }
 }, // window

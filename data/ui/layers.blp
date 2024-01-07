@@ -113,8 +113,8 @@ template $LayersWindow : Adw.ApplicationWindow {
 
             Adw.EntryRow nameEntry{
               title: _("Name");
-              show-apply-button: true;
-              notify::active => $onLayerUpdate();
+              //show-apply-button: true;
+              entry-activated => $onLayerUpdate();
             }
 
             Adw.ActionRow {

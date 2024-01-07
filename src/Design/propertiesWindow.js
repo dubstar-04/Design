@@ -248,7 +248,7 @@ export const PropertiesWindow = GObject.registerClass({
     switch (property) {
       case 'layer':
         model = [];
-        for (const layer of DesignCore.LayerManager.getLayers()) {
+        for (const layer of DesignCore.LayerManager.getStyles()) {
           model.push(layer.name);
         }
         break;
