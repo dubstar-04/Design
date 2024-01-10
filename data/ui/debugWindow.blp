@@ -1,0 +1,47 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $DebugWindow : Adw.ApplicationWindow {
+  modal: false;
+  default-width: 500;
+  default-height: 600;
+  destroy-with-parent: true;
+
+    Box {
+    orientation: vertical;
+
+    $AdwHeaderBar {
+      //show-end-title-buttons: false;
+      title-widget:
+      $AdwWindowTitle {
+        title: _("Debug");
+      };
+
+      ShortcutController {
+        scope: managed;
+
+        Shortcut {
+          trigger: "Escape";
+          action: "action(window.close)";
+        }
+      }
+    } //headerbar
+
+
+      Gtk.ScrolledWindow  {
+        //height-request: 100;
+
+        child: Gtk.TextView textView {
+          vexpand: true;
+          left-margin: 12;
+          top-margin: 6;
+          bottom-margin: 6;
+          right-margin: 12;
+          editable: false;
+          wrap-mode: char;
+
+          styles ["transparent"]
+        };
+      }
+  } //Adw.Window
+}

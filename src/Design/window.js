@@ -24,6 +24,7 @@ import Adw from 'gi://Adw?version=1';
 import {Canvas} from './canvas.js';
 import {CommandLine} from './commandLine.js';
 import {PreferencesWindow} from './preferencesWindow.js';
+import {DebugWindow} from './debugWindow.js';
 import {LayersWindow} from './layersWindow.js';
 import {ExportWindow} from './exportWindow.js';
 import {PropertiesWindow} from './propertiesWindow.js';
@@ -137,6 +138,9 @@ export const DesignWindow = GObject.registerClass({
     const helpShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F1'), action: Gtk.CallbackAction.new(this.openHelp.bind(this))});
     shortcutController.add_shortcut(helpShortcut);
 
+    const debugWindowShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F2'), action: Gtk.CallbackAction.new(this.showDebugWindow.bind(this))});
+    shortcutController.add_shortcut(debugWindowShortcut);
+
     const toggleOrthoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F8'), action: Gtk.CallbackAction.new(this.settings.onSettingToggled.bind(this.settings, 'ortho'))});
     shortcutController.add_shortcut(toggleOrthoShortcut);
 
@@ -153,6 +157,7 @@ export const DesignWindow = GObject.registerClass({
     // store a reference to open windows
     // Only show these windows once and update open windows
     this.layersWindow;
+    this.debugWindow;
     this.propertiesWindow;
     this.exportWindow;
   }
@@ -185,6 +190,9 @@ export const DesignWindow = GObject.registerClass({
     // Ensure the settings are synced to the selected tab
     this.settings.syncSettings();
 
+    if (this.debugWindow) {
+      this.debugWindow.reload();
+    }
 
     if (this.layersWindow) {
       this.layersWindow.reload();
@@ -266,6 +274,18 @@ export const DesignWindow = GObject.registerClass({
 
   onToolbarButtonPress(command) {
     DesignCore.Scene.inputManager.onCommand(`${command}`);
+  }
+
+  showDebugWindow() {
+    if (!this.debugWindow) {
+      this.debugWindow = new DebugWindow();
+      this.debugWindow .set_transient_for(this);
+      this.debugWindow .present();
+
+      this.debugWindow .connect('close-request', ()=>{
+        this.debugWindow = null;
+      });
+    }
   }
 
   showShortcutsWindow() {

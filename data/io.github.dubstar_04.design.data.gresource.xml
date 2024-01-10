@@ -8,6 +8,7 @@
     <file>ui/preferencePageDimensionStyle.ui</file>
     <file>ui/preferencePageLineType.ui</file>
     <file>ui/preferencePageTextStyle.ui</file>
+    <file>ui/debugWindow.ui</file>
     <file>ui/layers.ui</file>
     <file>ui/properties.ui</file>
     <file>ui/export.ui</file>

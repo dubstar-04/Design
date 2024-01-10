@@ -25,6 +25,7 @@ blueprints = custom_target('blueprints',
         'ui/preferencePageDimensionStyle.blp',
         'ui/preferencePageLineType.blp',
         'ui/preferencePageTextStyle.blp',
+        'ui/debugWindow.blp',
         'ui/layers.blp',
         'ui/properties.blp',
         'ui/export.blp'

@@ -28,8 +28,8 @@ import {Logging} from '../Design-Core/core/lib/logging.js';
 pkg.initGettext();
 pkg.initFormat();
 
-export const DesignApplication = GObject.registerClass(
-    class DesignApplication extends Adw.Application {
+export const DesignWeblication = GObject.registerClass(
+    class DesignWeblication extends Adw.Application {
       constructor() {
         super({application_id: 'io.github.dubstar_04.design', flags: Gio.ApplicationFlags.HANDLES_OPEN});
 
@@ -88,6 +88,6 @@ export const DesignApplication = GObject.registerClass(
 );
 
 export function main(argv) {
-  const application = new DesignApplication();
+  const application = new DesignWeblication();
   return application.runAsync(argv);
 }
