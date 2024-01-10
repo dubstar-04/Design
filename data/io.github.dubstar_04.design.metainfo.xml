@@ -49,6 +49,10 @@
 			<li>Fix Enter and return behaviour when no commands have been performed</li>
 			<li>Improve property display in the properties window</li>
 			<li>Prevent selection of items on locked or frozen layers</li>
+			<li>Fix ortho and polar snaps when typed point data entered</li>
+			<li>Update rotate command to match typical workflow</li>
+			<li>Underline shortcut letter of command options</li>
+			<li>use consistent prompt for command with options</li>
 			</ul>
 		</description>
 		</release>
