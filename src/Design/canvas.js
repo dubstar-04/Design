@@ -149,9 +149,9 @@ export const Canvas = GObject.registerClass({
 
   onStyleChange() {
     if (this.styleManager.get_dark()) {
-      this.core.settings.canvasbackgroundcolour = '#1e1e1e';
+      this.core.settings.canvasbackgroundcolour = {r: 30, g: 30, b: 30};
     } else {
-      this.core.settings.canvasbackgroundcolour = '#f6f5f4';
+      this.core.settings.canvasbackgroundcolour = {r: 246, g: 245, b: 244};
     }
     this.queue_draw();
   }
