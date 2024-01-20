@@ -34,6 +34,7 @@ export const LayersWindow = GObject.registerClass({
   constructor() {
     super({});
 
+    this.loading = true;
     this.selected_layer;
 
     // Action to edit layers
@@ -86,12 +87,12 @@ export const LayersWindow = GObject.registerClass({
     this.reload();
   }
 
-  toRgba(layerColour) {
+  toRgba(colour) {
     const rgba = new Gdk.RGBA();
-    const colour = Colours.hexToScaledRGB(layerColour);
-    rgba.red = colour.r;
-    rgba.green = colour.g;
-    rgba.blue = colour.b;
+    const scaledRGB = Colours.rgbToScaledRGB(colour);
+    rgba.red = scaledRGB.r;
+    rgba.green = scaledRGB.g;
+    rgba.blue = scaledRGB.b;
     rgba.alpha = 1.0;
     return rgba;
   }
@@ -159,7 +160,7 @@ export const LayersWindow = GObject.registerClass({
     const rgba = colourButton.rgba.to_string();
     const rgb = rgba.substr(4).split(')')[0].split(',');
     // log(rgb)
-    const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
+    const colour = {r: Number(rgb[0]), g: Number(rgb[1]), b: Number(rgb[2])};
     // log(colour)
     layer.colour = colour;
     this.get_transient_for().getActiveCanvas().queue_draw();
@@ -197,6 +198,9 @@ export const LayersWindow = GObject.registerClass({
   }
 
   onEditLayer() {
+    // set loading state to prevent layer changes while setting widget state
+    this.loading = true;
+
     this._nameEntry.text = this.selected_layer.name;
     this._frozenSwitch.active = this.selected_layer.frozen;
     this._lockedSwitch.active = this.selected_layer.locked;
@@ -215,9 +219,17 @@ export const LayersWindow = GObject.registerClass({
 
     this._stack.set_visible_child_name('LayerDetailsPage');
     this._backButton.visible = true;
+
+    this.loading = false;
   }
 
   onLayerUpdate() {
+    // loading is true when setting widget state
+    // don't update layer state during loading
+    if (this.loading) {
+      return;
+    }
+
     const layerIndex = DesignCore.LayerManager.getStyleIndex(this.selected_layer.name);
     DesignCore.LayerManager.renameStyle(layerIndex, this._nameEntry.text);
     this.selected_layer.frozen = this._frozenSwitch.active;

@@ -38,21 +38,25 @@
 		<release version="46.alpha1" date="2024-02-x">
 		<description>
 			<ul>
-			<li>Inspect, Modify and Create text styles from the preferences window</li>
-			<li>Change text styles, vertical and horizontal alignment from the properties window</li>
-			<li>Highlight design entities on mouse hover</li>
-			<li>Fix opening files as arguments e.g. 'open with' from file browser</li>
-			<li>Add line styles selection to preferences window</li>
-			<li>Add line styles selection to layers window</li>
-			<li>Add line styles selection to properties window</li>
-			<li>Improve Trim and Extend command selection highlighting</li>
-			<li>Fix Enter and return behaviour when no commands have been performed</li>
-			<li>Improve property display in the properties window</li>
-			<li>Prevent selection of items on locked or frozen layers</li>
-			<li>Fix ortho and polar snaps when typed point data entered</li>
-			<li>Update rotate command to match typical workflow</li>
-			<li>Underline shortcut letter of command options</li>
-			<li>use consistent prompt for command with options</li>
+				<li>Inspect, Modify and Create text styles from the preferences window</li>
+				<li>Change text styles, vertical and horizontal alignment from the properties window</li>
+				<li>Highlight design entities on mouse hover</li>
+				<li>Fix opening files as arguments e.g. 'open with' from file browser</li>
+				<li>Add line styles selection to preferences window</li>
+				<li>Add line styles selection to layers window</li>
+				<li>Add line styles selection to properties window</li>
+				<li>Improve Trim and Extend command selection highlighting</li>
+				<li>Fix Enter and return behaviour when no commands have been performed</li>
+				<li>Improve property display in the properties window</li>
+				<li>Prevent selection of items on locked or frozen layers</li>
+				<li>Fix ortho and polar snaps when typed point data entered</li>
+				<li>Update rotate command to match typical workflow</li>
+				<li>Underline shortcut letter of command options</li>
+				<li>use consistent prompt for command with options</li>
+				<li>Remove customer headerbar buttons from layers window</li>
+				<li>Use RGB colours internally for all colour definitions</li>
+				<li>Support DXF true colours</li>
+				<li>Fix issue with layers being updated with incorrect state when editing layer data</li>
 			</ul>
 		</description>
 		</release>

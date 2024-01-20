@@ -21,6 +21,7 @@
     <file>Design-Core/core/core/core.js</file>
     <file>Design-Core/core/lib/boundingBox.js</file>
     <file>Design-Core/core/lib/canvas.js</file>
+    <file>Design-Core/core/lib/colour.js</file>
     <file>Design-Core/core/lib/colours.js</file>
     <file>Design-Core/core/lib/commandLine.js</file>
     <file>Design-Core/core/lib/commandManager.js</file>

@@ -200,7 +200,10 @@ export const PropertiesWindow = GObject.registerClass({
             });
             break;
             // String type properties
+
           case 'colour':
+            continue;
+          /*
             // TODO: Create a custom widget that can display, bylayer, various and show a colour
             suffixWidget = new Gtk.Button({valign: Gtk.Align.CENTER});
             suffixWidget.width_request = widgetWidth;
@@ -228,6 +231,7 @@ export const PropertiesWindow = GObject.registerClass({
               });
             });
             break;
+            */
           default:
             // Non-editable properties
             suffixWidget = new Gtk.Label({valign: Gtk.Align.CENTER, label: `${value}`});
