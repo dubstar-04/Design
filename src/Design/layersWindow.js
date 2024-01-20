@@ -86,12 +86,12 @@ export const LayersWindow = GObject.registerClass({
     this.reload();
   }
 
-  toRgba(layerColour) {
+  toRgba(colour) {
     const rgba = new Gdk.RGBA();
-    const colour = Colours.hexToScaledRGB(layerColour);
-    rgba.red = colour.r;
-    rgba.green = colour.g;
-    rgba.blue = colour.b;
+    const scaledRGB = Colours.rgbToScaledRGB(colour);
+    rgba.red = scaledRGB.r;
+    rgba.green = scaledRGB.g;
+    rgba.blue = scaledRGB.b;
     rgba.alpha = 1.0;
     return rgba;
   }
@@ -159,7 +159,7 @@ export const LayersWindow = GObject.registerClass({
     const rgba = colourButton.rgba.to_string();
     const rgb = rgba.substr(4).split(')')[0].split(',');
     // log(rgb)
-    const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
+    const colour = {r: Number(rgb[0]), g: Number(rgb[1]), b: Number(rgb[2])};
     // log(colour)
     layer.colour = colour;
     this.get_transient_for().getActiveCanvas().queue_draw();
