@@ -34,6 +34,7 @@ export const LayersWindow = GObject.registerClass({
   constructor() {
     super({});
 
+    this.loading = true;
     this.selected_layer;
 
     // Action to edit layers
@@ -197,6 +198,9 @@ export const LayersWindow = GObject.registerClass({
   }
 
   onEditLayer() {
+    // set loading state to prevent layer changes while setting widget state
+    this.loading = true;
+
     this._nameEntry.text = this.selected_layer.name;
     this._frozenSwitch.active = this.selected_layer.frozen;
     this._lockedSwitch.active = this.selected_layer.locked;
@@ -215,9 +219,17 @@ export const LayersWindow = GObject.registerClass({
 
     this._stack.set_visible_child_name('LayerDetailsPage');
     this._backButton.visible = true;
+
+    this.loading = false;
   }
 
   onLayerUpdate() {
+    // loading is true when setting widget state
+    // don't update layer state during loading
+    if (this.loading) {
+      return;
+    }
+
     const layerIndex = DesignCore.LayerManager.getStyleIndex(this.selected_layer.name);
     DesignCore.LayerManager.renameStyle(layerIndex, this._nameEntry.text);
     this.selected_layer.frozen = this._frozenSwitch.active;
