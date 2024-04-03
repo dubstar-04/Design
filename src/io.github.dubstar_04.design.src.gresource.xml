@@ -55,7 +55,6 @@
 
     <file>Design-Core/core/entities/arc.js</file>
     <file>Design-Core/core/entities/basePolyline.js</file>
-    <file>Design-Core/core/entities/block.js</file>
     <file>Design-Core/core/entities/circle.js</file>
     <file>Design-Core/core/entities/dimension.js</file>
     <file>Design-Core/core/entities/angularDimension.js</file>
@@ -73,10 +72,14 @@
     <file>Design-Core/core/entities/solid.js</file>
     <file>Design-Core/core/entities/text.js</file>
 
+    <file>Design-Core/core/blocks/block.js</file>
+    <file>Design-Core/core/blocks/blockManager.js</file>
+
     <file>Design-Core/core/tools/copy.js</file>
     <file>Design-Core/core/tools/distance.js</file>
     <file>Design-Core/core/tools/erase.js</file>
     <file>Design-Core/core/tools/extend.js</file>
+    <file>Design-Core/core/tools/explode.js</file>
     <file>Design-Core/core/tools/identify.js</file>
     <file>Design-Core/core/tools/move.js</file>
     <file>Design-Core/core/tools/rotate.js</file>
