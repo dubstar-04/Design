@@ -65,6 +65,7 @@
     <file>Design-Core/core/entities/baseDimension.js</file>
     <file>Design-Core/core/entities/entity.js</file>
     <file>Design-Core/core/entities/insert.js</file>
+    <file>Design-Core/core/entities/hatch.js</file>
     <file>Design-Core/core/entities/line.js</file>
     <file>Design-Core/core/entities/lwpolyline.js</file>
     <file>Design-Core/core/entities/point.js</file>
