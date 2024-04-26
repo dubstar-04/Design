@@ -23,6 +23,7 @@ import Gdk from 'gi://Gdk';
 
 import {Colours} from '../Design-Core/core/lib/colours.js';
 import {DesignCore} from '../Design-Core/core/designCore.js';
+import {Patterns} from '../Design-Core/core/lib/patterns.js';
 
 export const PropertiesWindow = GObject.registerClass({
   GTypeName: 'PropertiesWindow',
@@ -177,6 +178,7 @@ export const PropertiesWindow = GObject.registerClass({
           case 'layer':
           case 'styleName':
           case 'lineType':
+          case 'patternName':
             const model = this.getModel(property);
             suffixWidget = Gtk.DropDown.new_from_strings(model);
             suffixWidget.width_request = widgetWidth;
@@ -274,6 +276,11 @@ export const PropertiesWindow = GObject.registerClass({
         const lineStyles = DesignCore.LTypeManager.getStyles();
         const lineStyleNames = lineStyles.map((style) => style.name);
         model = lineStyleNames;
+        break;
+      case 'patternName':
+        const patternNames = Object.keys(Patterns.hatch_patterns);
+        model = patternNames;
+        break;
     }
     return model;
   }
