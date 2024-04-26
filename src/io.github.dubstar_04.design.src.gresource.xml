@@ -31,6 +31,7 @@
     <file>Design-Core/core/lib/logging.js</file>
     <file>Design-Core/core/lib/matrix.js</file>
     <file>Design-Core/core/lib/mouse.js</file>
+    <file>Design-Core/core/lib/patterns.js</file>
     <file>Design-Core/core/lib/scene.js</file>
     <file>Design-Core/core/lib/settings.js</file>
     <file>Design-Core/core/lib/snapping.js</file>
