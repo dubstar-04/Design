@@ -52,6 +52,7 @@
     <file>Design-Core/core/lib/dxf/sections/tables.js</file>
 
     <file>Design-Core/core/properties/propertyManager.js</file>
+    <file>Design-Core/core/properties/flags.js</file>
 
     <file>Design-Core/core/entities/arc.js</file>
     <file>Design-Core/core/entities/basePolyline.js</file>
