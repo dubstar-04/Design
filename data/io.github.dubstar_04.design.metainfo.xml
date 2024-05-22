@@ -60,6 +60,7 @@
 				<li>Draw entities using correct colour when part of a block, supporting colour 'ByBlock'</li>
 				<li>Add Block command, enabling creation of block</li>
 				<li>Add Explode command, enabling decomposition of blocks into primative entities</li>
+				<li>Add Hatch command and common patterns</li>
 			</ul>
 		</description>
 		</release>
