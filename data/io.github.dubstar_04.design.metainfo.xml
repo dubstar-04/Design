@@ -61,6 +61,7 @@
 				<li>Add Block command, enabling creation of block</li>
 				<li>Add Explode command, enabling decomposition of blocks into primative entities</li>
 				<li>Add Hatch command and common patterns</li>
+				<li>Update to the latest GNOME dev kit icons</li>
 			</ul>
 		</description>
 		</release>
