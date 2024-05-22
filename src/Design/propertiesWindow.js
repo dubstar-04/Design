@@ -107,6 +107,8 @@ export const PropertiesWindow = GObject.registerClass({
           case 'radius':
           case 'width':
           case 'lineWidth':
+          case 'scale':
+          case 'angle':
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
             suffixWidget.width_request = widgetWidth;
             const changedSignal = suffixWidget.connect('changed', () => {
