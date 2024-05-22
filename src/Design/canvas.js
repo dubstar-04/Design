@@ -2,6 +2,7 @@ import Gtk from 'gi://Gtk?version=4.0';
 import GObject from 'gi://GObject';
 import Gdk from 'gi://Gdk';
 import Adw from 'gi://Adw?version=1';
+import Cairo from 'cairo';
 
 import {Core} from '../Design-Core/core/core/core.js';
 
@@ -168,6 +169,9 @@ export const Canvas = GObject.registerClass({
   onDraw(area, cr, width, height) {
     // this is the main drawing function for the canvas
     // this is triggered by design core calling the paintingCallback()
+
+    // set the line cap - this is required to make dotted lines work
+    cr.setLineCap(Cairo.LineCap.SQUARE);
     this.core.canvas.paint(cr, width, height);
     cr.$dispose();
   }
