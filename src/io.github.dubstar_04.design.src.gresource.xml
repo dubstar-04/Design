@@ -88,6 +88,7 @@
     <file>Design-Core/core/tools/rotate.js</file>
     <file>Design-Core/core/tools/trim.js</file>
     <file>Design-Core/core/tools/tool.js</file>
+    <file>Design-Core/core/tools/purge.js</file>
 
     <file>Design-Core/core/styles/layer.js</file>
     <file>Design-Core/core/styles/layerManager.js</file>
