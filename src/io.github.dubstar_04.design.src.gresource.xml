@@ -75,9 +75,6 @@
     <file>Design-Core/core/entities/solid.js</file>
     <file>Design-Core/core/entities/text.js</file>
 
-    <file>Design-Core/core/blocks/block.js</file>
-    <file>Design-Core/core/blocks/blockManager.js</file>
-
     <file>Design-Core/core/tools/copy.js</file>
     <file>Design-Core/core/tools/distance.js</file>
     <file>Design-Core/core/tools/erase.js</file>
@@ -90,15 +87,17 @@
     <file>Design-Core/core/tools/tool.js</file>
     <file>Design-Core/core/tools/purge.js</file>
 
-    <file>Design-Core/core/styles/layer.js</file>
-    <file>Design-Core/core/styles/layerManager.js</file>
-    <file>Design-Core/core/styles/ltype.js</file>
-    <file>Design-Core/core/styles/ltypeManager.js</file>
-    <file>Design-Core/core/styles/styleManagerBase.js</file>
-    <file>Design-Core/core/styles/dimStyle.js</file>
-    <file>Design-Core/core/styles/dimStyleManager.js</file>
-    <file>Design-Core/core/styles/itemManagerBase.js</file>
-    <file>Design-Core/core/styles/style.js</file>
-    <file>Design-Core/core/styles/styleManager.js</file>
+    <file>Design-Core/core/tables/block.js</file>
+    <file>Design-Core/core/tables/blockManager.js</file>
+    <file>Design-Core/core/tables/dimStyle.js</file>
+    <file>Design-Core/core/tables/dimStyleManager.js</file>
+    <file>Design-Core/core/tables/layer.js</file>
+    <file>Design-Core/core/tables/layerManager.js</file>
+    <file>Design-Core/core/tables/ltype.js</file>
+    <file>Design-Core/core/tables/ltypeManager.js</file>
+    <file>Design-Core/core/tables/style.js</file>
+    <file>Design-Core/core/tables/styleManager.js</file>
+    <file>Design-Core/core/tables/styleManagerBase.js</file>
+    <file>Design-Core/core/tables/tableManagerBase.js</file>
   </gresource>
 </gresources>
