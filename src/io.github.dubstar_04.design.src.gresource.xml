@@ -97,6 +97,7 @@
     <file>Design-Core/core/styles/styleManagerBase.js</file>
     <file>Design-Core/core/styles/dimStyle.js</file>
     <file>Design-Core/core/styles/dimStyleManager.js</file>
+    <file>Design-Core/core/styles/itemManagerBase.js</file>
     <file>Design-Core/core/styles/style.js</file>
     <file>Design-Core/core/styles/styleManager.js</file>
   </gresource>

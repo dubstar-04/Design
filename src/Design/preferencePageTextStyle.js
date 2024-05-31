@@ -50,7 +50,7 @@ export const PreferencePageTextStyle = GObject.registerClass({
   }
 
   load() {
-    const styles = DesignCore.StyleManager.getStyles();
+    const styles = DesignCore.StyleManager.getItems();
 
     styles.forEach((style, index) => {
       const row = new Adw.ActionRow({title: style.name, activatable: true});
@@ -83,7 +83,7 @@ export const PreferencePageTextStyle = GObject.registerClass({
       // set the selected row
       this._stylesList.select_row(row);
 
-      const style = DesignCore.StyleManager.getStyleByName(row.title);
+      const style = DesignCore.StyleManager.getItemByName(row.title);
       const fontDesc = Pango.font_description_from_string(`${style.font} ${style.textHeight}`);
       this._name.set_text(style.name);
       this._font.set_font_desc(fontDesc);
@@ -100,11 +100,11 @@ export const PreferencePageTextStyle = GObject.registerClass({
     }
   }
 
-  addStyle() {
-    DesignCore.StyleManager.newStyle();
+  addItem() {
+    DesignCore.StyleManager.newItem();
     this.reload();
 
-    const newRow = this._stylesList.get_row_at_index(DesignCore.StyleManager.styleCount() - 1);
+    const newRow = this._stylesList.get_row_at_index(DesignCore.StyleManager.itemCount() - 1);
     this.onStyleSelected(newRow);
   }
 
@@ -149,14 +149,14 @@ export const PreferencePageTextStyle = GObject.registerClass({
         if (widget.name === 'font') {
           const font = value.get_family();
           const textHeight = value.get_size() / Pango.SCALE;
-          DesignCore.StyleManager.updateStyle(row.id, 'font', font);
-          DesignCore.StyleManager.updateStyle(row.id, 'textHeight', textHeight);
+          DesignCore.StyleManager.updateItem(row.id, 'font', font);
+          DesignCore.StyleManager.updateItem(row.id, 'textHeight', textHeight);
         } else {
-          DesignCore.StyleManager.updateStyle(row.id, widget.name, value);
+          DesignCore.StyleManager.updateItem(row.id, widget.name, value);
 
           if (widget.name === 'name') {
             // update the name in the style list if the name in core has changed
-            const newName = DesignCore.StyleManager.getStyleByIndex(row.id).name;
+            const newName = DesignCore.StyleManager.getItemByIndex(row.id).name;
             row.title = newName;
             // set the _name string - this is needed when the style name passed to core was invalid and a different name is used
             this._name.text = newName;

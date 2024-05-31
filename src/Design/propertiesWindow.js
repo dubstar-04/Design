@@ -257,12 +257,12 @@ export const PropertiesWindow = GObject.registerClass({
     switch (property) {
       case 'layer':
         model = [];
-        for (const layer of DesignCore.LayerManager.getStyles()) {
+        for (const layer of DesignCore.LayerManager.getItems()) {
           model.push(layer.name);
         }
         break;
       case 'styleName':
-        const styles = DesignCore.StyleManager.getStyles();
+        const styles = DesignCore.StyleManager.getItems();
         const styleNames = styles.map((style) => style.name);
         model = styleNames;
         break;
@@ -275,7 +275,7 @@ export const PropertiesWindow = GObject.registerClass({
         model = ['Baseline', 'Bottom', 'Middle', 'Top'];
         break;
       case 'lineType':
-        const lineStyles = DesignCore.LTypeManager.getStyles();
+        const lineStyles = DesignCore.LTypeManager.getItems();
         const lineStyleNames = lineStyles.map((style) => style.name);
         model = lineStyleNames;
         break;
