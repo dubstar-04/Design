@@ -69,14 +69,14 @@ export const LayersWindow = GObject.registerClass({
 
   onEditAction(simpleAction, parameters) {
     const layerName = parameters.deep_unpack();
-    this.selected_layer = DesignCore.LayerManager.getStyleByName(layerName);
+    this.selected_layer = DesignCore.LayerManager.getItemByName(layerName);
     this.onEditLayer();
   }
 
   onDeleteAction(simpleAction, parameters) {
     // console.log("delete action")
     const layerName = parameters.deep_unpack();
-    this.selected_layer = DesignCore.LayerManager.getStyleByName(layerName);
+    this.selected_layer = DesignCore.LayerManager.getItemByName(layerName);
     this.onLayerDelete();
   }
 
@@ -98,7 +98,7 @@ export const LayersWindow = GObject.registerClass({
   }
 
   getLineTypes() {
-    const lineStyles = DesignCore.LTypeManager.getStyles();
+    const lineStyles = DesignCore.LTypeManager.getItems();
     const lineStyleNames = lineStyles.map((style) => style.name);
     return lineStyleNames;
   }
@@ -120,7 +120,7 @@ export const LayersWindow = GObject.registerClass({
   }
 
   loadLayers() {
-    const layers = DesignCore.LayerManager.getStyles();
+    const layers = DesignCore.LayerManager.getItems();
     const clayer = DesignCore.LayerManager.getCstyle();
 
     for (let i = 0; i < layers.length; i++) {
@@ -156,7 +156,7 @@ export const LayersWindow = GObject.registerClass({
 
   onColourChange(colourButton) {
     const row = colourButton.get_ancestor(Adw.ActionRow);
-    const layer = DesignCore.LayerManager.getStyleByName(row.title);
+    const layer = DesignCore.LayerManager.getItemByName(row.title);
     const rgba = colourButton.rgba.to_string();
     const rgb = rgba.substr(4).split(')')[0].split(',');
     // log(rgb)
@@ -170,7 +170,7 @@ export const LayersWindow = GObject.registerClass({
     // Get the row of the switch
     const row = toggle.get_ancestor(Adw.ActionRow);
     // get the layer reference from the layer manager
-    const layer = DesignCore.LayerManager.getStyleByName(row.title);
+    const layer = DesignCore.LayerManager.getItemByName(row.title);
     // change the layer state
     layer.on = state;
     // redraw
@@ -185,14 +185,14 @@ export const LayersWindow = GObject.registerClass({
 
   onNewClicked() {
     // console.log("new clicked")
-    DesignCore.LayerManager.newStyle();
+    DesignCore.LayerManager.newItem();
     this.reload();
   }
 
   onLayerSelected(row) {
     if (row) {
       this._layerList.unselect_row(row);
-      this.selected_layer = DesignCore.LayerManager.getStyleByName(row.title);
+      this.selected_layer = DesignCore.LayerManager.getItemByName(row.title);
       this.onEditLayer();
     }
   }
@@ -230,7 +230,7 @@ export const LayersWindow = GObject.registerClass({
       return;
     }
 
-    const layerIndex = DesignCore.LayerManager.getStyleIndex(this.selected_layer.name);
+    const layerIndex = DesignCore.LayerManager.getItemIndex(this.selected_layer.name);
     DesignCore.LayerManager.renameStyle(layerIndex, this._nameEntry.text);
     this.selected_layer.frozen = this._frozenSwitch.active;
     this.selected_layer.locked = this._lockedSwitch.active;
@@ -264,7 +264,7 @@ export const LayersWindow = GObject.registerClass({
 
   deleteStyle(layerName) {
     // console.log("delete layer")
-    DesignCore.LayerManager.deleteStyle(DesignCore.LayerManager.getStyleIndex(layerName));
+    DesignCore.LayerManager.deleteStyle(DesignCore.LayerManager.getItemIndex(layerName));
     this.get_transient_for().getActiveCanvas().queue_draw();
   }
 }, // window

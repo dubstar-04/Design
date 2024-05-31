@@ -57,8 +57,8 @@ export const PreferencePageLineType = GObject.registerClass({
             subtitle: style.description,
           });
 
-      const styleLoaded = DesignCore.LTypeManager.styleExists(style.name);
-      const indelibleStyle = DesignCore.LTypeManager.indelibleStyles.some((iStyle) => iStyle.toUpperCase() === style.name);
+      const styleLoaded = DesignCore.LTypeManager.itemExists(style.name);
+      const indelibleStyle = DesignCore.LTypeManager.indelibleItems.some((iStyle) => iStyle.toUpperCase() === style.name);
 
       const checkBox = new Gtk.CheckButton({active: styleLoaded, sensitive: !(styleLoaded||indelibleStyle)});
       checkBox.connect('toggled', this.styleChecked.bind(this, row));
@@ -73,7 +73,7 @@ export const PreferencePageLineType = GObject.registerClass({
   styleChecked(row, checkBox) {
     if (row) {
       const optionalStyles = DesignCore.LTypeManager.getOptionalStyles();
-      DesignCore.LTypeManager.addStyle(optionalStyles[row.id]);
+      DesignCore.LTypeManager.addItem(optionalStyles[row.id]);
       this.reload();
     }
   }
