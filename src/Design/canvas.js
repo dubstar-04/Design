@@ -90,7 +90,6 @@ export const Canvas = GObject.registerClass({
     this.styleManager = Adw.StyleManager.get_default();
     this.styleManager.connect('notify::dark', this.onStyleChange.bind(this));
 
-    this.core.canvas.setCanvasWidget(this._drawingArea, this.ctx);
     this.set_draw_func(this.onDraw.bind(this));
 
     this.core.commandLine.setUpdateFunction(this.commandLineUpdateCallback.bind(this));
