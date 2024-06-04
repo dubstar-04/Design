@@ -58,7 +58,7 @@ id: "file-management";
   }
 }
 
-template DesignWindow : Adw.ApplicationWindow {
+template $DesignWindow : Adw.ApplicationWindow {
   default-height: 600;
   default-width: 800;
   title: _('Design');
@@ -125,7 +125,7 @@ hexpand: true;
 
   [overlay]
   Gtk.Revealer{
-    reveal-child: bind DesignWindow.toolbars-visible;
+    reveal-child: bind template.toolbars-visible;
     transition-type: slide_left;
     hexpand: true;
     halign: start;
@@ -142,7 +142,7 @@ hexpand: true;
 
   [overlay]
   Gtk.Revealer{
-    reveal-child: bind DesignWindow.toolbars-visible;
+    reveal-child: bind template.toolbars-visible;
     transition-type: slide_right;
     hexpand: true;
     halign: end;
@@ -163,7 +163,7 @@ hexpand: true;
 
 [overlay]
 Gtk.Revealer{
-  reveal-child: bind DesignWindow.toolbars-visible;
+  reveal-child: bind template.toolbars-visible;
   transition-type: slide_up;
   hexpand: true;
 

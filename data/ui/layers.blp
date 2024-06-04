@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template LayersWindow : Adw.ApplicationWindow {
+template $LayersWindow : Adw.ApplicationWindow {
   modal: false;
   default-width: 500;
   default-height: 600;
@@ -10,10 +10,10 @@ template LayersWindow : Adw.ApplicationWindow {
     Box {
     orientation: vertical;
 
-    .AdwHeaderBar {
-      show-end-title-buttons: false;
+    $AdwHeaderBar {
+      //show-end-title-buttons: false;
       title-widget:
-      .AdwWindowTitle {
+      $AdwWindowTitle {
         title: _("Layers");
       };
 
@@ -21,7 +21,7 @@ template LayersWindow : Adw.ApplicationWindow {
         focus-on-click: false;
         focusable: false;
         visible: bind backButton.visible inverted bidirectional;
-        clicked => onNewClicked();
+        clicked => $onNewClicked();
         icon-name: 'list-add-symbolic';
         }
 
@@ -29,26 +29,27 @@ template LayersWindow : Adw.ApplicationWindow {
         focus-on-click: false;
         focusable: false;
         visible: false;
-        clicked => onBackClicked();
+        clicked => $onBackClicked();
         icon-name: 'go-previous-symbolic';
         }
 
-      [end]
-      Button btn_cancel {
-        label: _("_Cancel");
-        visible: bind backButton.visible inverted bidirectional;
-        use-underline: true;
-        action-name: "window.close";
-      }
 
-      [end]
-      Button btn_delete{
-        label: _("_Delete");
-        visible: bind backButton.visible bidirectional;
-        use-underline: true;
-        clicked => onLayerDelete();
-        styles ['destructive-action']
-      }
+      //[end]
+      //Button btn_cancel {
+      //  label: _("_Cancel");
+      //  visible: bind backButton.visible inverted bidirectional;
+      //  use-underline: true;
+      //  action-name: "window.close";
+      //}
+
+      //[end]
+      //Button btn_delete{
+      //  label: _("_Delete");
+      //  visible: bind backButton.visible bidirectional;
+      //  use-underline: true;
+      //  clicked => $onLayerDelete();
+      //  styles ['destructive-action']
+      //}
 
       ShortcutController {
         scope: managed;
@@ -113,8 +114,8 @@ template LayersWindow : Adw.ApplicationWindow {
 
             Adw.EntryRow nameEntry{
               title: _("Name");
-              show-apply-button: true;
-              notify::active => onLayerUpdate();
+              //show-apply-button: true;
+              entry-activated => $onLayerUpdate();
             }
 
             Adw.ActionRow {
@@ -124,7 +125,7 @@ template LayersWindow : Adw.ApplicationWindow {
                 [suffix]
                 Switch frozenSwitch{
                   valign: center;
-                  notify::active => onLayerUpdate();
+                  notify::active => $onLayerUpdate();
                 }
               }
 
@@ -135,17 +136,18 @@ template LayersWindow : Adw.ApplicationWindow {
                 [suffix]
                 Switch lockedSwitch{
                   valign: center;
-                  notify::active => onLayerUpdate();
+                  notify::active => $onLayerUpdate();
                 }
               }
 
             Adw.ActionRow {
               title: _("Line Type");
-              subtitle: _("Line type for the selected layer. Not implimented");
+              subtitle: _("Line type for the selected layer");
 
                 [suffix]
-                Label lineTypeLabel{
+                DropDown lineType{
                   valign: center;
+                  notify::selected-item => $onLayerUpdate();
                 }
               }
 
@@ -166,7 +168,7 @@ template LayersWindow : Adw.ApplicationWindow {
                 [suffix]
                 Switch plottingSwitch{
                   valign: center;
-                  notify::active => onLayerUpdate();
+                  notify::active => $onLayerUpdate();
                 }
               }
             }// group

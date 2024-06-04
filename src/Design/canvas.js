@@ -2,8 +2,9 @@ import Gtk from 'gi://Gtk?version=4.0';
 import GObject from 'gi://GObject';
 import Gdk from 'gi://Gdk';
 import Adw from 'gi://Adw?version=1';
+import Cairo from 'cairo';
 
-import {Core} from '../Design-Core/core/core.js';
+import {Core} from '../Design-Core/core/core/core.js';
 
 export const Canvas = GObject.registerClass({
   GTypeName: 'Canvas',
@@ -67,7 +68,6 @@ export const Canvas = GObject.registerClass({
     keyController.connect('key-pressed', this.onKeyPress.bind(this));
     this.add_controller(keyController);
 
-    // #region CTRL + '' shortcuts
     const shortcutController = new Gtk.ShortcutController();
 
     const copyShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.CallbackAction.new(this.onCopy.bind(this))});
@@ -83,14 +83,13 @@ export const Canvas = GObject.registerClass({
     shortcutController.add_shortcut(cutShortcut);
 
     this.add_controller(shortcutController);
-    // #endregion
 
+    // create and activate a design core
     this.core = new Core();
 
     this.styleManager = Adw.StyleManager.get_default();
     this.styleManager.connect('notify::dark', this.onStyleChange.bind(this));
 
-    this.core.canvas.setCanvasWidget(this._drawingArea, this.ctx);
     this.set_draw_func(this.onDraw.bind(this));
 
     this.core.commandLine.setUpdateFunction(this.commandLineUpdateCallback.bind(this));
@@ -105,6 +104,9 @@ export const Canvas = GObject.registerClass({
 
     // pinch to zoom delta
     this.pinchDelta = 0;
+
+    // activate the core
+    this.activate();
   }
 
   setFilePath(filePath) {
@@ -136,11 +138,20 @@ export const Canvas = GObject.registerClass({
     this.core.notify('Cut not implemented');
   }
 
+  activate() {
+    // activate the core
+    // Core uses static methods to access the current core context
+    // if this is not set changes to one tab may affect other tabs
+
+    // Must be called on tab changes
+    this.core.activate();
+  }
+
   onStyleChange() {
     if (this.styleManager.get_dark()) {
-      this.core.settings.canvasbackgroundcolour = '#1e1e1e';
+      this.core.settings.canvasbackgroundcolour = {r: 30, g: 30, b: 30};
     } else {
-      this.core.settings.canvasbackgroundcolour = '#f6f5f4';
+      this.core.settings.canvasbackgroundcolour = {r: 246, g: 245, b: 244};
     }
     this.queue_draw();
   }
@@ -157,6 +168,9 @@ export const Canvas = GObject.registerClass({
   onDraw(area, cr, width, height) {
     // this is the main drawing function for the canvas
     // this is triggered by design core calling the paintingCallback()
+
+    // set the line cap - this is required to make dotted lines work
+    cr.setLineCap(Cairo.LineCap.SQUARE);
     this.core.canvas.paint(cr, width, height);
     cr.$dispose();
   }

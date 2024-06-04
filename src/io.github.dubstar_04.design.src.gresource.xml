@@ -5,6 +5,10 @@
     <file>Design/window.js</file>
     <file>Design/canvas.js</file>
     <file>Design/preferencesWindow.js</file>
+    <file>Design/preferencePageSettings.js</file>
+    <file>Design/preferencePageDimensionStyle.js</file>
+    <file>Design/preferencePageTextStyle.js</file>
+    <file>Design/preferencePageLineType.js</file>
     <file>Design/layersWindow.js</file>
     <file>Design/exportWindow.js</file>
     <file>Design/propertiesWindow.js</file>
@@ -13,9 +17,11 @@
     <file>Design/fileIO.js</file>
 
     <!-- Design Core -->
-    <file>Design-Core/core/core.js</file>
+    <file>Design-Core/core/designCore.js</file>
+    <file>Design-Core/core/core/core.js</file>
     <file>Design-Core/core/lib/boundingBox.js</file>
     <file>Design-Core/core/lib/canvas.js</file>
+    <file>Design-Core/core/lib/colour.js</file>
     <file>Design-Core/core/lib/colours.js</file>
     <file>Design-Core/core/lib/commandLine.js</file>
     <file>Design-Core/core/lib/commandManager.js</file>
@@ -25,6 +31,7 @@
     <file>Design-Core/core/lib/logging.js</file>
     <file>Design-Core/core/lib/matrix.js</file>
     <file>Design-Core/core/lib/mouse.js</file>
+    <file>Design-Core/core/lib/patterns.js</file>
     <file>Design-Core/core/lib/scene.js</file>
     <file>Design-Core/core/lib/settings.js</file>
     <file>Design-Core/core/lib/snapping.js</file>
@@ -45,40 +52,53 @@
     <file>Design-Core/core/lib/dxf/sections/section.js</file>
     <file>Design-Core/core/lib/dxf/sections/tables.js</file>
 
+    <file>Design-Core/core/properties/property.js</file>
     <file>Design-Core/core/properties/propertyManager.js</file>
+    <file>Design-Core/core/properties/flags.js</file>
 
     <file>Design-Core/core/entities/arc.js</file>
     <file>Design-Core/core/entities/basePolyline.js</file>
-    <file>Design-Core/core/entities/block.js</file>
     <file>Design-Core/core/entities/circle.js</file>
     <file>Design-Core/core/entities/dimension.js</file>
+    <file>Design-Core/core/entities/angularDimension.js</file>
+    <file>Design-Core/core/entities/alignedDimension.js</file>
+    <file>Design-Core/core/entities/diametricDimension.js</file>
+    <file>Design-Core/core/entities/radialDimension.js</file>
+    <file>Design-Core/core/entities/baseDimension.js</file>
     <file>Design-Core/core/entities/entity.js</file>
     <file>Design-Core/core/entities/insert.js</file>
+    <file>Design-Core/core/entities/hatch.js</file>
     <file>Design-Core/core/entities/line.js</file>
     <file>Design-Core/core/entities/lwpolyline.js</file>
     <file>Design-Core/core/entities/point.js</file>
     <file>Design-Core/core/entities/polyline.js</file>
     <file>Design-Core/core/entities/rectangle.js</file>
+    <file>Design-Core/core/entities/solid.js</file>
     <file>Design-Core/core/entities/text.js</file>
 
     <file>Design-Core/core/tools/copy.js</file>
     <file>Design-Core/core/tools/distance.js</file>
     <file>Design-Core/core/tools/erase.js</file>
     <file>Design-Core/core/tools/extend.js</file>
+    <file>Design-Core/core/tools/explode.js</file>
     <file>Design-Core/core/tools/identify.js</file>
     <file>Design-Core/core/tools/move.js</file>
     <file>Design-Core/core/tools/rotate.js</file>
     <file>Design-Core/core/tools/trim.js</file>
     <file>Design-Core/core/tools/tool.js</file>
+    <file>Design-Core/core/tools/purge.js</file>
 
-    <file>Design-Core/core/layers/layer.js</file>
-    <file>Design-Core/core/layers/layerManager.js</file>
-    <file>Design-Core/core/styles/ltype.js</file>
-    <file>Design-Core/core/styles/ltypeManager.js</file>
-    <file>Design-Core/core/styles/styleManagerBase.js</file>
-    <file>Design-Core/core/styles/dimStyle.js</file>
-    <file>Design-Core/core/styles/dimStyleManager.js</file>
-    <file>Design-Core/core/styles/style.js</file>
-    <file>Design-Core/core/styles/styleManager.js</file>
+    <file>Design-Core/core/tables/block.js</file>
+    <file>Design-Core/core/tables/blockManager.js</file>
+    <file>Design-Core/core/tables/dimStyle.js</file>
+    <file>Design-Core/core/tables/dimStyleManager.js</file>
+    <file>Design-Core/core/tables/layer.js</file>
+    <file>Design-Core/core/tables/layerManager.js</file>
+    <file>Design-Core/core/tables/ltype.js</file>
+    <file>Design-Core/core/tables/ltypeManager.js</file>
+    <file>Design-Core/core/tables/style.js</file>
+    <file>Design-Core/core/tables/styleManager.js</file>
+    <file>Design-Core/core/tables/styleManagerBase.js</file>
+    <file>Design-Core/core/tables/tableManagerBase.js</file>
   </gresource>
 </gresources>

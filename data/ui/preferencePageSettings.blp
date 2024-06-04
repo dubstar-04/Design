@@ -1,0 +1,120 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $PreferencePageSettings : Adw.PreferencesPage {
+    icon-name: "emblem-system-symbolic";
+    title: _("Snaps");
+
+    Adw.PreferencesGroup {
+      title: _("Snaps");
+
+      Adw.ActionRow endSnap{
+        title: _("End Snap");
+
+          [suffix]
+          Switch{
+            name: "endsnap";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.endsnap";
+          }
+        }
+
+      Adw.ActionRow midSnap{
+        title: _("Mid Snap");
+
+          [suffix]
+          Switch{
+            name: "midsnap";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.midsnap";
+          }
+        }
+
+      Adw.ActionRow centreSnap{
+        title: _("Centre Snap");
+
+          [suffix]
+          Switch{
+            name: "centresnap";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.centresnap";
+          }
+        }
+
+      Adw.ActionRow nearestSnap{
+        title: _("Nearest Snap");
+
+          [suffix]
+          Switch{
+            name: "nearestsnap";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.nearestsnap";
+          }
+        }
+
+      Adw.ActionRow polar{
+        title: _("Polar");
+
+          [suffix]
+          Switch polar_switch{
+            name: "polar";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.polar";
+          }
+        }
+
+        /*
+        //TODO: Fix loading of the polar angle
+        Adw.ComboRow polarAngle {
+            title: "Polar Angle";
+            name: "polarangle";
+            subtitle: "Snap Angle For Polar";
+            notify::selected => on_selected();
+            //action-name: "settings.polarangle";
+            sensitive: bind polar_switch.active;
+
+            model: Gtk.StringList {
+                strings [
+                    "22.5",
+                    "45",
+                    "90",
+                    "135"
+                ]
+            };
+        }
+        */
+
+      Adw.ActionRow ortho{
+        title: _("Ortho");
+
+          [suffix]
+          Switch{
+            name: "ortho";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.ortho";
+          }
+        }
+    }
+
+  Adw.PreferencesGroup {
+      title: _("Canvas");
+
+      Adw.ActionRow drawGrid{
+        title: _("Draw Grid");
+
+          [suffix]
+          Switch{
+            name: "drawgrid";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.drawgrid";
+          }
+        }
+      }
+    }

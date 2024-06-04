@@ -24,15 +24,17 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
 import {Colours} from '../Design-Core/core/lib/colours.js';
+import {DesignCore} from '../Design-Core/core/designCore.js';
 
 export const LayersWindow = GObject.registerClass({
   GTypeName: 'LayersWindow',
   Template: 'resource:///io/github/dubstar_04/design/ui/layers.ui',
-  InternalChildren: ['layerList', 'stack', 'backButton', 'nameEntry', 'frozenSwitch', 'lockedSwitch', 'lineTypeLabel', 'lineWeightLabel', 'plottingSwitch'],
+  InternalChildren: ['layerList', 'stack', 'backButton', 'nameEntry', 'frozenSwitch', 'lockedSwitch', 'lineType', 'lineWeightLabel', 'plottingSwitch'],
 }, class LayersWindow extends Adw.ApplicationWindow {
   constructor() {
     super({});
 
+    this.loading = true;
     this.selected_layer;
 
     // Action to edit layers
@@ -67,36 +69,38 @@ export const LayersWindow = GObject.registerClass({
 
   onEditAction(simpleAction, parameters) {
     const layerName = parameters.deep_unpack();
-    this.selected_layer = this.getLayerManager().getLayerByName(layerName);
+    this.selected_layer = DesignCore.LayerManager.getItemByName(layerName);
     this.onEditLayer();
   }
 
   onDeleteAction(simpleAction, parameters) {
     // console.log("delete action")
     const layerName = parameters.deep_unpack();
-    this.selected_layer = this.getLayerManager().getLayerByName(layerName);
+    this.selected_layer = DesignCore.LayerManager.getItemByName(layerName);
     this.onLayerDelete();
   }
 
   onCurrentAction(simpleAction, parameters) {
     // console.log("current action")
     const layerName = parameters.deep_unpack();
-    this.getLayerManager().setCLayer(layerName);
+    DesignCore.LayerManager.setCstyle(layerName);
     this.reload();
   }
 
-  getLayerManager() {
-    return this.get_transient_for().getActiveCanvas().core.layerManager;
-  }
-
-  toRgba(layerColour) {
+  toRgba(colour) {
     const rgba = new Gdk.RGBA();
-    const colour = Colours.hexToScaledRGB(layerColour);
-    rgba.red = colour.r;
-    rgba.green = colour.g;
-    rgba.blue = colour.b;
+    const scaledRGB = Colours.rgbToScaledRGB(colour);
+    rgba.red = scaledRGB.r;
+    rgba.green = scaledRGB.g;
+    rgba.blue = scaledRGB.b;
     rgba.alpha = 1.0;
     return rgba;
+  }
+
+  getLineTypes() {
+    const lineStyles = DesignCore.LTypeManager.getItems();
+    const lineStyleNames = lineStyles.map((style) => style.name);
+    return lineStyleNames;
   }
 
   reload() {
@@ -116,8 +120,8 @@ export const LayersWindow = GObject.registerClass({
   }
 
   loadLayers() {
-    const layers = this.getLayerManager().getLayers();
-    const clayer = this.getLayerManager().getCLayer();
+    const layers = DesignCore.LayerManager.getItems();
+    const clayer = DesignCore.LayerManager.getCstyle();
 
     for (let i = 0; i < layers.length; i++) {
       const colourButton = new Gtk.ColorButton({'valign': Gtk.Align.CENTER, 'rgba': this.toRgba(layers[i].colour)});
@@ -132,7 +136,8 @@ export const LayersWindow = GObject.registerClass({
       menu.append(_('Make Current'), `win.layerCurrentAction("${layers[i].name}")`);
       const appMenu = Gtk.PopoverMenu.new_from_model(menu);
 
-      const menuButton = new Gtk.MenuButton({popover: appMenu, valign: Gtk.Align.CENTER, icon_name: 'view-more-symbolic'});
+      const menuButton = new Gtk.MenuButton({popover: appMenu, valign: Gtk.Align.CENTER, icon_name: 'view-more-symbolic', css_classes: ['flat']});
+
 
       const row = new Adw.ActionRow({title: layers[i].name, activatable: true});
       row.connect('activated', this.onLayerSelected.bind(this));
@@ -151,11 +156,11 @@ export const LayersWindow = GObject.registerClass({
 
   onColourChange(colourButton) {
     const row = colourButton.get_ancestor(Adw.ActionRow);
-    const layer = this.getLayerManager().getLayerByName(row.title);
+    const layer = DesignCore.LayerManager.getItemByName(row.title);
     const rgba = colourButton.rgba.to_string();
     const rgb = rgba.substr(4).split(')')[0].split(',');
     // log(rgb)
-    const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
+    const colour = {r: Number(rgb[0]), g: Number(rgb[1]), b: Number(rgb[2])};
     // log(colour)
     layer.colour = colour;
     this.get_transient_for().getActiveCanvas().queue_draw();
@@ -165,7 +170,7 @@ export const LayersWindow = GObject.registerClass({
     // Get the row of the switch
     const row = toggle.get_ancestor(Adw.ActionRow);
     // get the layer reference from the layer manager
-    const layer = this.getLayerManager().getLayerByName(row.title);
+    const layer = DesignCore.LayerManager.getItemByName(row.title);
     // change the layer state
     layer.on = state;
     // redraw
@@ -180,37 +185,58 @@ export const LayersWindow = GObject.registerClass({
 
   onNewClicked() {
     // console.log("new clicked")
-    this.getLayerManager().newLayer();
+    DesignCore.LayerManager.newItem();
     this.reload();
   }
 
   onLayerSelected(row) {
     if (row) {
       this._layerList.unselect_row(row);
-      this.selected_layer = this.getLayerManager().getLayerByName(row.title);
+      this.selected_layer = DesignCore.LayerManager.getItemByName(row.title);
       this.onEditLayer();
     }
   }
 
   onEditLayer() {
+    // set loading state to prevent layer changes while setting widget state
+    this.loading = true;
+
     this._nameEntry.text = this.selected_layer.name;
     this._frozenSwitch.active = this.selected_layer.frozen;
     this._lockedSwitch.active = this.selected_layer.locked;
-    this._lineTypeLabel.label = this.selected_layer.lineType;
+
+    // set line type model and current index
+    const lineTypeNames = this.getLineTypes();
+    this._lineType.set_model(Gtk.StringList.new(lineTypeNames));
+    const selectedIndex = lineTypeNames.indexOf(this.selected_layer.lineType);
+
+    if (selectedIndex >= 0) {
+      this._lineType.set_selected(selectedIndex);
+    }
+
     this._lineWeightLabel.label = this.selected_layer.lineWeight.toString();
     this._plottingSwitch.active = this.selected_layer.plotting;
 
     this._stack.set_visible_child_name('LayerDetailsPage');
     this._backButton.visible = true;
+
+    this.loading = false;
   }
 
   onLayerUpdate() {
-    // console.log("update layer")
-    this.selected_layer.name = this._nameEntry.text;
+    // loading is true when setting widget state
+    // don't update layer state during loading
+    if (this.loading) {
+      return;
+    }
+
+    const layerIndex = DesignCore.LayerManager.getItemIndex(this.selected_layer.name);
+    DesignCore.LayerManager.renameStyle(layerIndex, this._nameEntry.text);
     this.selected_layer.frozen = this._frozenSwitch.active;
     this.selected_layer.locked = this._lockedSwitch.active;
-    // this.selected_layer.lineType = this._lineTypeLabel.label;
-    // this.selected_layer.lineWeight = this._lineWeightLabel.label;
+    const selectedLineType = this._lineType.get_selected_item().get_string();
+    this.selected_layer.lineType = selectedLineType;
+
     this.selected_layer.plotting = this._plottingSwitch.active;
     this.get_transient_for().getActiveCanvas().queue_draw();
   }
@@ -231,14 +257,14 @@ export const LayersWindow = GObject.registerClass({
   onConfirmDialog(dialog, response) {
     // console.log("delete dialog callback")
     if (response === 'delete') {
-      this.deleteLayer(this.selected_layer.name);
+      this.deleteStyle(this.selected_layer.name);
       this.onBackClicked();
     }
   }
 
-  deleteLayer(layerName) {
+  deleteStyle(layerName) {
     // console.log("delete layer")
-    this.getLayerManager().deleteLayerName(layerName);
+    DesignCore.LayerManager.deleteStyle(DesignCore.LayerManager.getItemIndex(layerName));
     this.get_transient_for().getActiveCanvas().queue_draw();
   }
 }, // window

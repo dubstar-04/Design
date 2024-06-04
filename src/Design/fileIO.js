@@ -1,6 +1,8 @@
 import Gtk from 'gi://Gtk';
 import Gio from 'gi://Gio';
 
+import {DesignCore} from '../Design-Core/core/designCore.js';
+
 export class FileIO {
   // TODO: FileIO needs to be refactored considering the following:
   // 1. File open dialogs should be transient to the application window
@@ -50,7 +52,7 @@ export class FileIO {
 
   static loadFile(file, window) {
     if (!file.query_exists(null)) {
-      // TODO: inform user that the selected file is invalid.
+      DesignCore.Core.notify('Invalid file');
       return;
     }
 
@@ -59,8 +61,10 @@ export class FileIO {
     const fileName = this.formatFilename(info.get_name());
     const ext = this.getFileExtension(info.get_name());
 
+    console.log('file details:', fileName, ext);
+
     if (ext.toLowerCase() !== 'dxf') {
-      // TODO: inform user that the file type is not supported.
+      DesignCore.Core.notify(`Invalid file format: ${ext}`);
       return;
     }
 
@@ -68,7 +72,7 @@ export class FileIO {
     // create a new canvas with the filename in the tab
     window.addCanvas(fileName);
     // load the file contents into the active canvas
-    window.getActiveCanvas().core.openFile(fileContents);
+    DesignCore.Core.openFile(fileContents);
     // set the active file path
     window.getActiveCanvas().setFilePath(file.get_path());
     // handle tab changes in the window object
@@ -90,15 +94,15 @@ export class FileIO {
     if (filePath) {
       const file = Gio.File.new_for_path(filePath);
 
-      const dxfContents = window.getActiveCanvas().core.saveFile(version);
+      const dxfContents = DesignCore.Core.saveFile(version);
 
       const [success] = file.replace_contents(dxfContents, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
 
       if (success) {
         // TODO: Janky sending notifications through core
-        window.getActiveCanvas().core.notify(_('File Saved'));
+        DesignCore.Core.notify(_('File Saved'));
       } else {
-        window.getActiveCanvas().core.notify(_('Error Saving File'));
+        DesignCore.Core.notify(_('Error Saving File'));
       }
     }
   }
@@ -126,7 +130,7 @@ export class FileIO {
 
         if (version === undefined) {
         // load the file contents into the active canvas
-          version = window.getActiveCanvas().core.dxfVersion;
+          version = DesignCore.Core.dxfVersion;
         }
 
         this.saveFile(filePath, window, version);

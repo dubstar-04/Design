@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template PropertiesWindow : Adw.ApplicationWindow {
+template $PropertiesWindow : Adw.ApplicationWindow {
 modal: false;
 default-width: 400;
 default-height: 600;
@@ -10,10 +10,10 @@ destroy-with-parent: true;
   Box {
   orientation: vertical;
 
-  .AdwHeaderBar {
+  $AdwHeaderBar {
   //show-end-title-buttons: false;
   title-widget:
-  .AdwWindowTitle {
+  $AdwWindowTitle {
   title: _("Properties");
   };
 
@@ -51,7 +51,7 @@ destroy-with-parent: true;
           spacing: 24;
 
               Gtk.DropDown elementSelector{
-                notify::selected-item => onTypeChanged();
+                notify::selected-item => $onTypeChanged();
               }
 
             ListBox elementList {
