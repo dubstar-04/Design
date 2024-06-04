@@ -1,6 +1,6 @@
 /* propertiesWindow.js
  *
- * Copyright 2022 Daniel Wood
+ * Copyright 2024 Daniel Wood
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@ import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
 
 import {Colours} from '../Design-Core/core/lib/colours.js';
+import {DesignCore} from '../Design-Core/core/designCore.js';
+import {Patterns} from '../Design-Core/core/lib/patterns.js';
 
 export const PropertiesWindow = GObject.registerClass({
   GTypeName: 'PropertiesWindow',
@@ -35,14 +37,6 @@ export const PropertiesWindow = GObject.registerClass({
   show() {
     this.present();
     this.reload();
-  }
-
-  getPropertyManager() {
-    return this.get_transient_for().getActiveCanvas().core.propertyManager;
-  }
-
-  getLayerManager() {
-    return this.get_transient_for().getActiveCanvas().core.layerManager;
   }
 
   reload() {
@@ -61,7 +55,7 @@ export const PropertiesWindow = GObject.registerClass({
   }
 
   loadSelectedItems() {
-    const types = this.getPropertyManager().getItemTypes();
+    const types = DesignCore.PropertyManager.getItemTypes();
     if (types.length) {
       this._stack.set_visible_child_name('elementsPage');
     } else {
@@ -90,7 +84,7 @@ export const PropertiesWindow = GObject.registerClass({
     const typeStringList = this._elementSelector.get_model();
     const selectedType = typeStringList.get_string(selectedIndex);
 
-    const properties = this.getPropertyManager().getItemProperties(selectedType);
+    const properties = DesignCore.PropertyManager.getItemProperties(selectedType);
 
     if (!properties) {
       return;
@@ -100,7 +94,7 @@ export const PropertiesWindow = GObject.registerClass({
 
     if (properties.length) {
       for (let i = 0; i < properties.length; i++) {
-        const value = this.getPropertyManager().getItemPropertyValue(selectedType, properties[i]);
+        const value = DesignCore.PropertyManager.getItemPropertyValue(selectedType, properties[i]);
 
         let suffixWidget;
         const property = properties[i];
@@ -113,6 +107,8 @@ export const PropertiesWindow = GObject.registerClass({
           case 'radius':
           case 'width':
           case 'lineWidth':
+          case 'scale':
+          case 'angle':
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
             suffixWidget.width_request = widgetWidth;
             const changedSignal = suffixWidget.connect('changed', () => {
@@ -137,7 +133,7 @@ export const PropertiesWindow = GObject.registerClass({
               GObject.signal_handler_unblock(suffixWidget, changedSignal);
             });
             suffixWidget.connect('activate', () => {
-              this.getPropertyManager().setItemProperties(`${property}`, Number(suffixWidget.text));
+              DesignCore.PropertyManager.setItemProperties(`${property}`, Number(suffixWidget.text));
             });
             break;
           // Boolean type properties
@@ -145,18 +141,46 @@ export const PropertiesWindow = GObject.registerClass({
           case 'upsideDown':
             suffixWidget = new Gtk.Switch({valign: Gtk.Align.CENTER, state: value});
             suffixWidget.connect('notify::active', () => {
-              this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.state);
+              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.state);
             });
             break;
             // option type properties
           case 'horizontalAlignment':
-            // TODO: Enable Alignment Values
-            continue;
+            const halignModel = this.getModel(property);
+            suffixWidget = Gtk.DropDown.new_from_strings(halignModel);
+            suffixWidget.width_request = widgetWidth;
+            suffixWidget.valign = Gtk.Align.CENTER;
+            // get the position of the current value
+            const halignIndex = halignModel.indexOf(value);
+
+            if (halignIndex >= 0) {
+              suffixWidget.set_selected(halignIndex);
+            }
+            suffixWidget.connect('notify::selected-item', () => {
+              // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
+              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.get_selected());
+            });
+            break;
           case 'verticalAlignment':
-            // TODO: Enable Alignment Values
-            continue;
+            const valignModel = this.getModel(property);
+            suffixWidget = Gtk.DropDown.new_from_strings(valignModel);
+            suffixWidget.width_request = widgetWidth;
+            suffixWidget.valign = Gtk.Align.CENTER;
+            // get the position of the current value
+            const valignIndex = valignModel.indexOf(value);
+
+            if (valignIndex >= 0) {
+              suffixWidget.set_selected(valignIndex);
+            }
+            suffixWidget.connect('notify::selected-item', () => {
+              // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
+              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.get_selected());
+            });
+            break;
           case 'layer':
           case 'styleName':
+          case 'lineType':
+          case 'patternName':
             const model = this.getModel(property);
             suffixWidget = Gtk.DropDown.new_from_strings(model);
             suffixWidget.width_request = widgetWidth;
@@ -167,7 +191,8 @@ export const PropertiesWindow = GObject.registerClass({
               suffixWidget.set_selected(selectedIndex);
             }
             suffixWidget.connect('notify::selected-item', () => {
-              this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.get_selected_item().get_string());
+              // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
+              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.get_selected_item().get_string());
             });
             break;
           // String type properties
@@ -175,11 +200,14 @@ export const PropertiesWindow = GObject.registerClass({
             suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
             suffixWidget.width_request = widgetWidth;
             suffixWidget.connect('activate', () => {
-              this.getPropertyManager().setItemProperties(`${property}`, suffixWidget.text);
+              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.text);
             });
             break;
             // String type properties
+
           case 'colour':
+            continue;
+          /*
             // TODO: Create a custom widget that can display, bylayer, various and show a colour
             suffixWidget = new Gtk.Button({valign: Gtk.Align.CENTER});
             suffixWidget.width_request = widgetWidth;
@@ -200,13 +228,14 @@ export const PropertiesWindow = GObject.registerClass({
                   const rgb = rgba.substr(4).split(')')[0].split(',');
                   const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
                   suffixWidget.set_label(colour);
-                  this.getPropertyManager().setItemProperties(`${property}`, colour);
+                  DesignCore.PropertyManager.setItemProperties(`${property}`, colour);
                 }
 
                 dialog.destroy();
               });
             });
             break;
+            */
           default:
             // Non-editable properties
             suffixWidget = new Gtk.Label({valign: Gtk.Align.CENTER, label: `${value}`});
@@ -228,22 +257,31 @@ export const PropertiesWindow = GObject.registerClass({
     switch (property) {
       case 'layer':
         model = [];
-        const layerManager = this.getLayerManager();
-        for (const layer of layerManager.getLayers()) {
+        for (const layer of DesignCore.LayerManager.getItems()) {
           model.push(layer.name);
         }
         break;
       case 'styleName':
-        // TODO: build model for styles
-        model = ['style1', 'style2', 'style3'];
+        const styles = DesignCore.StyleManager.getItems();
+        const styleNames = styles.map((style) => style.name);
+        model = styleNames;
         break;
       case 'horizontalAlignment':
         // TODO: build human readable model for alignment
-        model = ['0', '1', '2', '3', '4', '5'];
+        model = ['Left', 'Center', 'Right'];
         break;
       case 'verticalAlignment':
         // TODO: build human readable model for alignment
-        model = ['0', '1', '2', '3'];
+        model = ['Baseline', 'Bottom', 'Middle', 'Top'];
+        break;
+      case 'lineType':
+        const lineStyles = DesignCore.LTypeManager.getItems();
+        const lineStyleNames = lineStyles.map((style) => style.name);
+        model = lineStyleNames;
+        break;
+      case 'patternName':
+        const patternNames = Object.keys(Patterns.hatch_patterns);
+        model = patternNames;
         break;
     }
     return model;

@@ -1,7 +1,7 @@
 {
     "app-id" : "io.github.dubstar_04.design",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "44",
+    "runtime-version" : "46",
     "sdk" : "org.gnome.Sdk",
     "command" : "io.github.dubstar_04.design",
     "finish-args" : [
@@ -31,7 +31,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler.git",
-          "tag": "v0.6.0"
+          "tag": "v0.10.0"
         }
       ]
     	},
