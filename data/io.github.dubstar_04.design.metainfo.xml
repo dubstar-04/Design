@@ -52,7 +52,7 @@
 				<li>Fix ortho and polar snaps when typed point data entered</li>
 				<li>Update rotate command to match typical workflow</li>
 				<li>Underline shortcut letter of command options</li>
-				<li>use consistent prompt for command with options</li>
+				<li>Use consistent prompt for command with options</li>
 				<li>Remove custom headerbar buttons from layers window</li>
 				<li>Use RGB colours internally for all colour definitions</li>
 				<li>Support DXF true colours</li>
@@ -63,6 +63,7 @@
 				<li>Add Hatch command and common hatch patterns</li>
 				<li>Update to the latest GNOME dev kit icons</li>
 				<li>Add Purge command, clearing unused, blocks, layers and line types</li>
+				<li>Show suggestions for invalid command input</li>
 			</ul>
 		</description>
 		</release>
