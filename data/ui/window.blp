@@ -20,6 +20,12 @@ id: "file-management";
   label:_("Save As");
   action:"win.save-as";
   }
+
+  item{
+  label:_("Export");
+  action:"win.export";
+  }
+
 }
 
   section {
@@ -52,10 +58,10 @@ id: "file-management";
   }
 }
 
-template DesignWindow : Adw.ApplicationWindow {
+template $DesignWindow : Adw.ApplicationWindow {
   default-height: 600;
   default-width: 800;
-  title: 'Design';
+  title: _('Design');
   styles ['devel']
   content:
 
@@ -119,7 +125,7 @@ hexpand: true;
 
   [overlay]
   Gtk.Revealer{
-    reveal-child: bind DesignWindow.toolbars-visible;
+    reveal-child: bind template.toolbars-visible;
     transition-type: slide_left;
     hexpand: true;
     halign: start;
@@ -136,7 +142,7 @@ hexpand: true;
 
   [overlay]
   Gtk.Revealer{
-    reveal-child: bind DesignWindow.toolbars-visible;
+    reveal-child: bind template.toolbars-visible;
     transition-type: slide_right;
     hexpand: true;
     halign: end;
@@ -157,7 +163,7 @@ hexpand: true;
 
 [overlay]
 Gtk.Revealer{
-  reveal-child: bind DesignWindow.toolbars-visible;
+  reveal-child: bind template.toolbars-visible;
   transition-type: slide_up;
   hexpand: true;
 

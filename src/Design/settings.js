@@ -20,6 +20,8 @@ import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 import GObject from 'gi://GObject';
 
+import {DesignCore} from '../Design-Core/core/designCore.js';
+
 export const Settings = GObject.registerClass({
   GTypeName: 'Settings',
   Properties: {},
@@ -57,12 +59,12 @@ class Settings extends Gio.Settings {
   }
 
   getCoreSetting(name) {
-    const value = this.window.getActiveCanvas().core.settings.getSetting(name);
+    const value = DesignCore.Settings.getSetting(name);
     return value;
   }
 
   setCoreSetting(name, value) {
-    this.window.getActiveCanvas().core.settings.setSetting(name, value);
+    DesignCore.Settings.setSetting(name, value);
   }
 
   getSetting(name) {

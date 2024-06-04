@@ -4,28 +4,40 @@ ShortcutsWindow shortcuts {
     modal: true;
     section-name: 'shortcuts';
     ShortcutsSection {
-        visible: true;
+        max-height: 10;
         ShortcutsGroup {
             title: _("Entities");
             ShortcutsShortcut {
-                accelerator: 'L';
-                title: _("Draw Line");
+                accelerator: 'A';
+                title: _("Arc");
             }
             ShortcutsShortcut {
-                accelerator: 'P+L';
-                title: _("Draw Polyline");
+                accelerator: 'B';
+                title: _("Create Block");
             }
             ShortcutsShortcut {
                 accelerator: 'C';
-                title: _("Draw Circle");
+                title: _("Circle");
             }
             ShortcutsShortcut {
-                accelerator: 'A';
-                title: _("Draw Arc");
+                accelerator: 'D+T';
+                title: _("Text");
+            }
+            ShortcutsShortcut {
+                accelerator: 'H';
+                title: _("Hatch");
+            }
+            ShortcutsShortcut {
+                accelerator: 'L';
+                title: _("Line");
+            }
+            ShortcutsShortcut {
+                accelerator: 'P+L';
+                title: _("Polyline");
             }
             ShortcutsShortcut {
                 accelerator: 'R+E+C';
-                title: _("Draw Rectangle");
+                title: _("Rectangle");
             }
         }
 
@@ -44,16 +56,20 @@ ShortcutsWindow shortcuts {
                 title: _("Rotate");
             }
             ShortcutsShortcut {
-                accelerator: 'T+R';
-                title: _("Trim");
+                accelerator: 'E Delete';
+                title: _("Erase");
             }
-            ShortcutsShortcut {
+           ShortcutsShortcut {
                 accelerator: 'E+X';
                 title: _("Extend");
             }
             ShortcutsShortcut {
-                accelerator: 'E';
-                title: _("Erase");
+                accelerator: 'T+R';
+                title: _("Trim");
+            }
+            ShortcutsShortcut {
+                accelerator: 'X';
+                title: _("Explode");
             }
             ShortcutsShortcut {
                 accelerator: 'D+I';
@@ -62,6 +78,46 @@ ShortcutsWindow shortcuts {
             ShortcutsShortcut {
                 accelerator: 'I+D';
                 title: _("Identify");
+            }
+            ShortcutsShortcut {
+                accelerator: 'P+U';
+                title: _("Purge");
+            }
+        }
+
+        ShortcutsGroup {
+            title: _("General");
+            ShortcutsShortcut {
+                accelerator: "<primary>N";
+                title: _("Create a New Design");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary>O";
+                title: _("Open");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary>S";
+                title: _("Save");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary><shift>S";
+                title: _("Save as");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary>comma";
+                title: _("Show Preferences");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary>L";
+                title: _("Show Layers");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary>1";
+                title: _("Show Properties");
+            }
+            ShortcutsShortcut {
+                accelerator: "<primary>question";
+                title: _("Show Keyboard Shortcuts");
             }
         }
     }

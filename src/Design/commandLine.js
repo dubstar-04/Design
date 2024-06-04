@@ -20,6 +20,9 @@ import Gtk from 'gi://Gtk?version=4.0';
 import GObject from 'gi://GObject';
 import Gdk from 'gi://Gdk';
 
+import {DesignCore} from '../Design-Core/core/designCore.js';
+
+
 export const CommandLine = GObject.registerClass({
   GTypeName: 'CommandLine',
   Properties: {},
@@ -37,7 +40,7 @@ export const CommandLine = GObject.registerClass({
 
   reset() {
     // reset the commandline
-    this.mainWindow.getActiveCanvas().core.commandLine.resetPrompt();
+    DesignCore.CommandLine.resetPrompt();
   }
 
   onKeyPress(controller, keyVal, keyCode, state) {
@@ -86,7 +89,7 @@ export const CommandLine = GObject.registerClass({
     }
 
     if (key) {
-      this.mainWindow.getActiveCanvas().core.commandLine.handleKeys(key);
+      DesignCore.CommandLine.handleKeys(key);
     }
   }
 });

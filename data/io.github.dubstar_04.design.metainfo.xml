@@ -6,6 +6,7 @@
 	<project_license>GPL-3.0-or-later</project_license>
 	<name>Design</name>
 	<summary>2D CAD for GNOME</summary>
+	<developer_name>Daniel Wood</developer_name>
 	<description>
 		<p>Design is a 2D computer aided design application (CAD), 
 		created to meet the needs of makers and designers, 
@@ -35,12 +36,52 @@
   	</screenshots>
 	<content_rating type="oars-1.1" />
   	<releases>
-		<release version="44.alpha4" date="2023-xx-xx">
+		<release version="46.alpha1" date="2024-06-04">
+		<description>
+			<ul>
+				<li>Inspect, Modify and Create text styles from the preferences window</li>
+				<li>Change text styles, vertical and horizontal alignment from the properties window</li>
+				<li>Highlight design entities on mouse hover</li>
+				<li>Fix opening files as arguments e.g. 'open with' from file browser</li>
+				<li>Add line styles selection to preferences window</li>
+				<li>Add line styles selection to layers window</li>
+				<li>Add line styles selection to properties window</li>
+				<li>Improve Trim and Extend command selection highlighting</li>
+				<li>Fix Enter and return behaviour when no commands have been performed</li>
+				<li>Improve property display in the properties window</li>
+				<li>Prevent selection of items on locked or frozen layers</li>
+				<li>Fix ortho and polar snaps when typed point data entered</li>
+				<li>Update rotate command to match typical workflow</li>
+				<li>Underline shortcut letter of command options</li>
+				<li>Use consistent prompt for command with options</li>
+				<li>Remove custom headerbar buttons from layers window</li>
+				<li>Use RGB colours internally for all colour definitions</li>
+				<li>Support DXF true colours</li>
+				<li>Fix issue with layers being updated with incorrect state when editing layer data</li>
+				<li>Draw entities using correct colour when part of a block, supporting colour 'ByBlock'</li>
+				<li>Add Block command, enabling creation of blocks</li>
+				<li>Add Explode command, enabling decomposition of blocks into primative entities</li>
+				<li>Add Hatch command and common hatch patterns</li>
+				<li>Update to the latest GNOME dev kit icons</li>
+				<li>Add Purge command, clearing unused, blocks, layers and line types</li>
+				<li>Show suggestions for invalid command input</li>
+			</ul>
+		</description>
+		</release>
+		<release version="45.alpha1" date="2023-10-09">
+		<description>
+			<ul>
+			<li>Use GNOME 45 Runtime</li>
+			</ul>
+		</description>
+		</release>
+		<release version="44.alpha4" date="2023-06-16">
 			<description>
 				<ul>
 				<li>Support line types</li>
 				<li>Fix polar snapping offset</li>
 				<li>Fix zoom extents with polyline arcs</li>
+				<li>Add Export for alternative DXF versions</li>
 				</ul>
 			</description>
 		</release>
@@ -130,12 +171,4 @@
     	<control>pointing</control>
     	<control>touch</control>
   	</recommends>
-	<provides>
-		<id>io.github.dubstar_04.design</id>
-	</provides>
-	<developer_name>Daniel Wood</developer_name>
-	<custom>
-		<value key="Purism::form_factor">workstation</value>
-		<value key="Purism::form_factor">mobile</value>
-	</custom>
 </component>

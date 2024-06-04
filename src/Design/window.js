@@ -25,10 +25,13 @@ import {Canvas} from './canvas.js';
 import {CommandLine} from './commandLine.js';
 import {PreferencesWindow} from './preferencesWindow.js';
 import {LayersWindow} from './layersWindow.js';
+import {ExportWindow} from './exportWindow.js';
 import {PropertiesWindow} from './propertiesWindow.js';
 import {Settings} from './settings.js';
 
 import {FileIO} from './fileIO.js';
+
+import {DesignCore} from '../Design-Core/core/designCore.js';
 
 export const DesignWindow = GObject.registerClass({
   GTypeName: 'DesignWindow',
@@ -74,9 +77,17 @@ export const DesignWindow = GObject.registerClass({
       name: 'save-as',
       parameter_type: null,
     });
+
     saveAs.connect('activate', () => FileIO.saveDialog(this));
     this.add_action(saveAs);
     application.set_accels_for_action('win.save-as', ['<primary><SHIFT>S']);
+
+    const exportFile = new Gio.SimpleAction({
+      name: 'export',
+      parameter_type: null,
+    });
+    exportFile.connect('activate', this.showExportWindow.bind(this));
+    this.add_action(exportFile);
 
     const preferences = new Gio.SimpleAction({
       name: 'preferences',
@@ -143,6 +154,7 @@ export const DesignWindow = GObject.registerClass({
     // Only show these windows once and update open windows
     this.layersWindow;
     this.propertiesWindow;
+    this.exportWindow;
   }
 
   onShowToast(message) {
@@ -167,8 +179,12 @@ export const DesignWindow = GObject.registerClass({
   }
 
   onTabChange() {
+    // activate the tabs canvas
+    this.getActiveCanvas().activate();
+
     // Ensure the settings are synced to the selected tab
     this.settings.syncSettings();
+
 
     if (this.layersWindow) {
       this.layersWindow.reload();
@@ -213,7 +229,7 @@ export const DesignWindow = GObject.registerClass({
   }
 
   loadToolbars() {
-    const commands = this.getActiveCanvas().core.commandManager.getCommands();
+    const commands = DesignCore.CommandManager.getCommands();
 
     for (let index = 0; index < commands.length; index++) {
       const designCommand = commands[index];
@@ -249,7 +265,7 @@ export const DesignWindow = GObject.registerClass({
   }
 
   onToolbarButtonPress(command) {
-    this.getActiveCanvas().core.scene.inputManager.onCommand(`${command}`);
+    DesignCore.Scene.inputManager.onCommand(`${command}`);
   }
 
   showShortcutsWindow() {
@@ -272,6 +288,20 @@ export const DesignWindow = GObject.registerClass({
 
       this.layersWindow.connect('close-request', ()=>{
         this.layersWindow = null;
+      });
+    }
+  }
+
+  showExportWindow() {
+    log('show export window');
+    if (!this.exportWindow) {
+      this.exportWindow = new ExportWindow();
+      this.exportWindow.set_transient_for(this);
+      this.exportWindow.set_modal(true);
+      this.exportWindow.show();
+
+      this.exportWindow.connect('close-request', ()=>{
+        this.exportWindow = null;
       });
     }
   }
