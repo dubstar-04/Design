@@ -6,6 +6,10 @@
 	<project_license>GPL-3.0-or-later</project_license>
 	<name>Design</name>
 	<summary>2D CAD for GNOME</summary>
+	<provides>
+		<id>io.github.dubstar_04.design</id>
+	</provides>
+	<developer_name>Daniel Wood</developer_name>
 	<description>
 		<p>Design is a 2D computer aided design application (CAD), 
 		created to meet the needs of makers and designers, 
@@ -170,12 +174,4 @@
     	<control>pointing</control>
     	<control>touch</control>
   	</recommends>
-	<provides>
-		<id>io.github.dubstar_04.design</id>
-	</provides>
-	<developer_name>Daniel Wood</developer_name>
-	<custom>
-		<value key="Purism::form_factor">workstation</value>
-		<value key="Purism::form_factor">mobile</value>
-	</custom>
 </component>
