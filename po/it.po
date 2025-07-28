@@ -1,14 +1,14 @@
 # ITALIAN TRANSLATION.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the design package.
-# ALBANO BATTISTELLA <ALBANOBATTISTELLA@GMAIL.COM>, 2024.
+# ALBANO BATTISTELLA <ALBANOBATTISTELLA@GMAIL.COM>, 2024,2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: design\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-16 15:56+0100\n"
-"PO-Revision-Date: 2024-06-05 08:30+0100\n"
+"PO-Revision-Date: 2025-04-06 12:30+0100\n"
 "Last-Translator: Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: Italian <LL@li.org>\n"
 "Language: it\n"
@@ -35,7 +35,7 @@ msgid ""
 "needs of makers and designers, hobbyists and professionals that require a "
 "first class CAD application."
 msgstr ""
-Design è un'applicazione di progettazione assistita da computer (CAD) 2D, creata per soddisfare le "
+"Design è un'applicazione di progettazione assistita da computer (CAD) 2D, creata per soddisfare le "
 "esigenze di maker e designer, hobbisti e professionisti che necessitano di un "
 "applicazione CAD di prima classe."
 
@@ -78,7 +78,7 @@ msgstr "Proprietà"
 
 #: data/io.github.dubstar_04.design.metainfo.xml:41
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #: data/io.github.dubstar_04.design.metainfo.xml:48
 msgid "Fix tabs not being shown"
