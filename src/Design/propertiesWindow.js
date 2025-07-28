@@ -266,6 +266,11 @@ export const PropertiesWindow = GObject.registerClass({
         const styleNames = styles.map((style) => style.name);
         model = styleNames;
         break;
+      case 'dimensionStyle':
+        const dimSyles = DesignCore.DimStyleManager.getItems();
+        const dimStyleNames = dimSyles.map((style) => style.name);
+        model = dimStyleNames;
+        break;
       case 'horizontalAlignment':
         // TODO: build human readable model for alignment
         model = ['Left', 'Center', 'Right'];
