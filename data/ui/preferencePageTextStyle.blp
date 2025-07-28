@@ -9,8 +9,9 @@ template $PreferencePageTextStyle : Adw.PreferencesPage {
       title: 'Select a font';
       modal: true;
     }
-  
+
     ScrolledWindow {
+      vexpand: true;
       child: Adw.Clamp {
         child: Box {
             orientation: vertical;
@@ -33,16 +34,16 @@ template $PreferencePageTextStyle : Adw.PreferencesPage {
                 orientation:horizontal;
                 halign: end;
                 styles ["linked"]
-              
+
                   Button {
                     icon-name: 'list-add-symbolic';
                     clicked => $addItem();
                   }
-                
+
                   Button {
                     icon-name: 'list-remove-symbolic';
                     clicked => $removeStyle();
-                  }  
+                  }
               }
             }
 

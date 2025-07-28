@@ -4,8 +4,9 @@ using Adw 1;
 template $PreferencePageDimensionStyle : Adw.PreferencesPage {
     icon-name: "preferences-desktop-appearance-symbolic";
     title: _("Dimensions");
-    
+
     ScrolledWindow {
+      vexpand: true;
       child: Adw.Clamp {
         child: Box {
             orientation: vertical;
@@ -28,16 +29,16 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                 orientation:horizontal;
                 halign: end;
                 styles ["linked"]
-              
+
                   Button {
                     icon-name: 'list-add-symbolic';
                     clicked => $addItem();
                   }
-                
+
                   Button {
                     icon-name: 'list-remove-symbolic';
                     clicked => $removeStyle();
-                  }  
+                  }
               }
             }
 
@@ -57,7 +58,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                 Adw.EntryRow name {
                   name: "name";
                   title: _("Style Name");
-                  //text: bind PreferencePageDimensionStyle.example-property.name as <string>; 
+                  //text: bind PreferencePageDimensionStyle.example-property.name as <string>;
                   //bind $my_closure() as <string>; //bind PreferencePageDimensionStyle.example-property;
                   entry-activated => $onStyleUpdate();
                 }
@@ -211,7 +212,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                   }
                 */
 
-                  
+
                   /*
                   // Omitted: DIMLTYPE Supported from R2007
                   Adw.ComboRow DIMLTYPE {

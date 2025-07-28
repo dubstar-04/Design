@@ -4,8 +4,9 @@ using Adw 1;
 template $PreferencePageLineType : Adw.PreferencesPage {
     icon-name: "function-linear-symbolic";
     title: _("Line Type");
-  
+
     ScrolledWindow {
+      vexpand: true;
       child: Adw.Clamp {
         child: Box {
             orientation: vertical;

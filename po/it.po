@@ -137,12 +137,8 @@ msgid "Added ability to Save As"
 msgstr "Aggiunta la possibilità di salvare con nome"
 
 #: data/io.github.dubstar_04.design.metainfo.xml:62
-msgid ""
-"Added keyboard shortcuts: CTRL+N (New), CTRL+S (Save), CTRL+SHIFT+S (Save "
-"As) CTRL+O (Open)"
-msgstr ""
-Aggiunte scorciatoie da tastiera: CTRL+N (Nuovo), CTRL+S (Salva), CTRL+MAIUSC+S (Salva "
-"Come) CTRL+O (Apri)"
+msgid "Added keyboard shortcuts: CTRL+N (New), CTRL+S (Save), CTRL+SHIFT+S (Save As) CTRL+O (Open)"
+msgstr "Aggiunte scorciatoie da tastiera: CTRL+N (Nuovo), CTRL+S (Salva), CTRL+MAIUSC+S (Salva Come) CTRL+O (Apri)"
 
 #: data/io.github.dubstar_04.design.metainfo.xml:63
 msgid "CTRL+1 (Properties),CTRL+G (Toggle Grid), F1 (Help)"
@@ -158,7 +154,7 @@ msgstr "Rilascio FOSDEM!"
 
 #: data/io.github.dubstar_04.design.metainfo.xml:72
 msgid "Enable 'open with' from the file browser"
-msgstr "Abilita "apri con" dal browser dei file"
+msgstr "Abilita 'apri con' dal browser dei file"
 
 #: data/io.github.dubstar_04.design.metainfo.xml:73
 msgid "Show notifications for DI and ID commands"
@@ -242,7 +238,7 @@ msgstr ""
 
 #: data/ui/layers.blp:163
 msgid "Layers with plotting true will appear on prints"
-msgstr "Verranno stampati i layer con \"true"\ in \"Plot\"
+msgstr "Verranno stampati i layer con true in Plot"
 
 #: data/ui/preferences.blp:13 data/ui/preferences.blp:16
 msgid "Snaps"
