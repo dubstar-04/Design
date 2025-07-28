@@ -35,6 +35,10 @@
 		</screenshot>
   	</screenshots>
 	<content_rating type="oars-1.1" />
+	<branding>
+  	<color type="primary" scheme_preference="light">#1c71d8</color>
+  	<color type="primary" scheme_preference="dark">#3584e4</color>
+	</branding>
   	<releases>
 		<release version="48.alpha1" date="2025-07-28">
 		<description>
