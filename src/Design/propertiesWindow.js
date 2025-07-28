@@ -198,7 +198,8 @@ export const PropertiesWindow = GObject.registerClass({
             break;
           // String type properties
           case 'string':
-            suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
+          case 'textOveride':
+            suffixWidget = new Gtk.Entry({ valign: Gtk.Align.CENTER, text: `${value}` });
             suffixWidget.width_request = widgetWidth;
             suffixWidget.connect('activate', () => {
               DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.text);
