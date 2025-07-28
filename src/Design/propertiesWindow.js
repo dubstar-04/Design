@@ -144,7 +144,7 @@ export const PropertiesWindow = GObject.registerClass({
               DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.state);
             });
             break;
-            // option type properties
+          // option type properties
           case 'horizontalAlignment':
             const halignModel = this.getModel(property);
             suffixWidget = Gtk.DropDown.new_from_strings(halignModel);
@@ -205,7 +205,7 @@ export const PropertiesWindow = GObject.registerClass({
               DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.text);
             });
             break;
-            // String type properties
+          // String type properties
 
           case 'colour':
             continue;
