@@ -181,6 +181,7 @@ export const PropertiesWindow = GObject.registerClass({
           case 'styleName':
           case 'lineType':
           case 'patternName':
+          case 'dimensionStyle':
             const model = this.getModel(property);
             suffixWidget = Gtk.DropDown.new_from_strings(model);
             suffixWidget.width_request = widgetWidth;
