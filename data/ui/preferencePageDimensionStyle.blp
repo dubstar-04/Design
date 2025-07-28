@@ -68,6 +68,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     // This deviates from other CAD systems
                     title: _("Colour");
                     subtitle: _("Set the colour for the dimension lines (DIMCLRD, DIMCLRE)");
+                    sensitive: false; //inactive
 
                     [suffix]
                     DropDown DIMCLRD {
@@ -132,6 +133,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                 Adw.ActionRow {
                     title: _("Colour");
                     subtitle: _("Set the text colour (DIMCLRT)");
+                    sensitive: false; //inactive
 
                     [suffix]
                     DropDown DIMCLRT{
@@ -226,7 +228,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                   */
 
                   /*
-                  // Omitted: Line weight not currely supported
+                  // Omitted: Line weight not currently supported
                   Adw.ComboRow DIMLWD {
                     name: 'DIMLWD';
                     title: _("Lineweight");
