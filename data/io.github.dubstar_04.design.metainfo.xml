@@ -8,8 +8,8 @@
 	<summary>2D CAD for GNOME</summary>
 	<developer_name>Daniel Wood</developer_name>
 	<description>
-		<p>Design is a 2D computer aided design application (CAD), 
-		created to meet the needs of makers and designers, 
+		<p>Design is a 2D computer aided design application (CAD),
+		created to meet the needs of makers and designers,
 		hobbyists and professionals that require a first class CAD application.</p>
 		<p>Features:</p>
 		<ul>
@@ -36,6 +36,13 @@
   	</screenshots>
 	<content_rating type="oars-1.1" />
   	<releases>
+		<release version="48.alpha1" date="2025-07-28">
+		<description>
+			<ul>
+			<li>Update to Gnome 48</li>
+			</ul>
+		</description>
+		</release>
 		<release version="46.alpha1" date="2024-06-04">
 		<description>
 			<ul>
