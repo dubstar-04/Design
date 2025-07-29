@@ -158,7 +158,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     name: 'DIMTAD';
                     title: _("Vertical Placement");
                     subtitle: _("Set the vertical placement of the dimension text (DIMTAD)");
-                    model: StringList{ strings ['Centered', 'Above', 'Outside', 'JIS', 'Below']};
+                    model: StringList{ strings ['Centered', 'Above', /*'Outside', 'JIS', */ 'Below']};
                     notify::selected => $onStyleUpdate();
                   }
 
