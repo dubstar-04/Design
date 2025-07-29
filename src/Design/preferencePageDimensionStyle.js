@@ -20,7 +20,7 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 
-import {DesignCore} from '../Design-Core/core/designCore.js';
+import { DesignCore } from '../Design-Core/core/designCore.js';
 
 export const PreferencePageDimensionStyle = GObject.registerClass({
   Properties: {},
@@ -31,10 +31,12 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     'stylesList', 'name', 'DIMCLRD', 'DIMASZ', 'DIMCEN',
     // Text
     'DIMTXSTY', 'DIMCLRT', 'DIMGAP', 'DIMTAD', 'DIMJUST', 'DIMTIH',
+    'DIMDEC', 'DIMADEC', /* 'DIMTOL', 'DIMTZIN', 'DIMTZOUT', 'DIMALT', 'DIMATFIT',*/
     // Dimension
     /* 'DIMLWD',*/ 'DIMDLI', 'DIMSD1', 'DIMSD2',
     // Extensions
     /* 'DIMLWE',*/ 'DIMSE1', 'DIMSE2', 'DIMEXE', 'DIMEXO', /* 'DIMFXLON', 'DIMFXL',*/
+
   ],
 }, class PreferencePageDimensionStyle extends Adw.PreferencesPage {
   constructor() {
@@ -92,7 +94,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     const styles = DesignCore.DimStyleManager.getItems();
 
     styles.forEach((style, index) => {
-      const row = new Adw.ActionRow({title: style.name, activatable: true});
+      const row = new Adw.ActionRow({ title: style.name, activatable: true });
       const radioButton = new Gtk.CheckButton();
       row.connect('activated', this.onStyleSelected.bind(this));
       radioButton.connect('toggled', this.setCurrentStyle.bind(this, row));
@@ -170,7 +172,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
       }
 
       if ('set_active' in widget) {
-        if ( typeof value === 'boolean') {
+        if (typeof value === 'boolean') {
           widget.set_active(value);
         }
       }
