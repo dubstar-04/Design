@@ -194,8 +194,37 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     notify::selected => $onStyleUpdate();
                   }
 
-                };
-            }
+                Adw.SpinRow DIMDEC {
+                    name: 'DIMDEC';
+                    title: _("Precision");
+                    subtitle: _("Sets the number of decimal places in the dimension text (DIMDEC)");
+                    digits: 1;
+                    notify::value => $onStyleUpdate();
+
+                    adjustment: Adjustment {
+                      lower: 1;
+                      value: 1;
+                      upper: 8;
+                      step-increment: 1;
+                    };
+                  }
+
+                Adw.SpinRow DIMADEC {
+                    name: 'DIMADEC';
+                    title: _("Angular Precision");
+                    subtitle: _("Sets the number of decimal places for angular dimensions (DIMADEC)");
+                    digits: 1;
+                    notify::value => $onStyleUpdate();
+
+                    adjustment: Adjustment {
+                      lower: 1;
+                      value: 1;
+                      upper: 8;
+                      step-increment: 1;
+                    };
+                  }
+              }; // Pref Group
+            } // Stack Page
 
             Gtk.StackPage {
               title: _("Dimension");
@@ -212,11 +241,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                       //activate => $onStyleUpdate();
                     }
                   }
-                */
-
-
-                  /*
-                  // Omitted: DIMLTYPE Supported from R2007
+                // Omitted: DIMLTYPE Supported from R2007
                   Adw.ComboRow DIMLTYPE {
                     name: 'DIMLTYPE';
                     title: _("Linetype");
@@ -286,8 +311,6 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     }
                   }
                 */
-
-
                   /*
                   // Omitted: DIMLTYPE Supported from R2007
                   Adw.ComboRow DIMLTEX1{
@@ -388,24 +411,8 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     };
                   }
                   */
-                };// Pref Group
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              } // Stack Page
+              }; // Pref Group
+            } // Stack Page
           } // Stack
         }; // Box
       }; // Clamp

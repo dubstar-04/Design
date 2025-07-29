@@ -31,10 +31,12 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     'stylesList', 'name', 'DIMCLRD', 'DIMASZ', 'DIMCEN',
     // Text
     'DIMTXSTY', 'DIMCLRT', 'DIMGAP', 'DIMTAD', 'DIMJUST', 'DIMTIH',
+    'DIMDEC', 'DIMADEC', /* 'DIMTOL', 'DIMTZIN', 'DIMTZOUT', 'DIMALT', 'DIMATFIT',*/
     // Dimension
     /* 'DIMLWD',*/ 'DIMDLI', 'DIMSD1', 'DIMSD2',
     // Extensions
     /* 'DIMLWE',*/ 'DIMSE1', 'DIMSE2', 'DIMEXE', 'DIMEXO', /* 'DIMFXLON', 'DIMFXL',*/
+
   ],
 }, class PreferencePageDimensionStyle extends Adw.PreferencesPage {
   constructor() {
@@ -170,7 +172,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
       }
 
       if ('set_active' in widget) {
-        if ( typeof value === 'boolean') {
+        if (typeof value === 'boolean') {
           widget.set_active(value);
         }
       }
