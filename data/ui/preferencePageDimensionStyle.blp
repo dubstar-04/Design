@@ -189,8 +189,8 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                 Adw.ComboRow  DIMTIH{
                     name: 'DIMTIH';
                     title: _("Alignment");
-                    subtitle: _("Set the alignment of the dimension text (DIMTIH)");
-                    model: StringList{ strings ['Horizontal', 'Aligned', 'ISO']};
+                    subtitle: _("Set the alignment of the dimension text (DIMTIH / DIMTOH)");
+                    model: StringList{ strings ['Aligned', 'Horizontal']}; //'ISO']};
                     notify::selected => $onStyleUpdate();
                   }
 
