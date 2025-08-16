@@ -28,7 +28,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
   Template: 'resource:///io/github/dubstar_04/design/ui/preferencePageDimensionStyle.ui',
   InternalChildren: [
     // General
-    'stylesList', 'name', 'DIMCLRD', 'DIMASZ', 'DIMCEN',
+    'stylesList', 'name', 'DIMCLRD', 'DIMASZ', 'DIMCENVALUE', 'DIMCENSTYL',
     // Text
     'DIMTXSTY', 'DIMCLRT', 'DIMGAP', 'DIMTAD', 'DIMJUST', 'DIMTIH',
     'DIMDEC', 'DIMADEC', /* 'DIMTOL', 'DIMTZIN', 'DIMTZOUT', 'DIMALT', 'DIMATFIT',*/
