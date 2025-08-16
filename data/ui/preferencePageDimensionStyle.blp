@@ -107,6 +107,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                     subtitle: _("Set the center mark size (DIMCEN)");
                     digits: 2;
                     notify::value => $onStyleUpdate();
+                    sensitive: bind DIMCENSTYL.selected;
 
                     adjustment: Adjustment {
                       lower: 0;
