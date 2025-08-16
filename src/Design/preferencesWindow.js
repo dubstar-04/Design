@@ -22,7 +22,7 @@ import Adw from 'gi://Adw?version=1';
 
 import { PreferencePageSettings } from './preferencePageSettings.js';
 import { PreferencePageTextStyle } from './preferencePageTextStyle.js';
-// import {PreferencePageDimensionStyle} from './preferencePageDimensionStyle.js';
+import { PreferencePageDimensionStyle } from './preferencePageDimensionStyle.js';
 import { PreferencePageLineType } from './preferencePageLineType.js';
 
 export const PreferencesWindow = GObject.registerClass({
@@ -37,7 +37,7 @@ export const PreferencesWindow = GObject.registerClass({
     this.add(new PreferencePageSettings(settings));
     this.add(new PreferencePageTextStyle());
     this.add(new PreferencePageLineType());
-    // this.add(new PreferencePageDimensionStyle());
+    this.add(new PreferencePageDimensionStyle());
   }
 },
 );
