@@ -175,7 +175,8 @@
 			</description>
 		</release>
 	</releases>
-	<url type="homepage">https://github.com/dubstar-04/Design</url>
+	<url type="homepage">https://design-app.readthedocs.io</url>
+	<url type="vcs-browser">https://github.com/dubstar-04/Design</url>
   	<url type="bugtracker">https://github.com/dubstar-04/Design/issues</url>
 	<recommends>
     	<control>keyboard</control>
