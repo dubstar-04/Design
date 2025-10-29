@@ -192,14 +192,7 @@ export const DesignWindow = GObject.registerClass({
         font-style: italic;
       }
       
-      /* Tab icons size */
-      tabbar tab {
-        -gtk-icon-size: 8px;
-      }
-      
-      tabbar tab image {
-        -gtk-icon-size: 8px;
-      }
+
     `;
     cssProvider.load_from_data(css, css.length);
     Gtk.StyleContext.add_provider_for_display(
