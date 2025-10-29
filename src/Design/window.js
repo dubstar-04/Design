@@ -155,6 +155,12 @@ export const DesignWindow = GObject.registerClass({
 
     this._tabView.connect('notify::selected-page', this.onTabChange.bind(this));
 
+    // Connect close-request signal to handle unsaved changes
+    this.connect('close-request', this.onCloseRequest.bind(this));
+
+    // Connect to close-page signal to handle tab close confirmation
+    this._tabView.connect('close-page', this.onTabCloseRequest.bind(this));
+
     // Add CSS styling for draft indicator
     this.addCssStyling();
 
@@ -226,6 +232,23 @@ export const DesignWindow = GObject.registerClass({
 
     if (this.propertiesWindow) {
       this.propertiesWindow.reload();
+    }
+  }
+
+  onTabCloseRequest(tabView, page) {
+    // This method is called when a tab close is requested
+    // We need to check for unsaved changes and confirm or deny the close
+    const canvas = page.get_child();
+
+    if (canvas && canvas.getUnsaved && canvas.getUnsaved()) {
+      // Has unsaved changes, show confirmation dialog
+      this.showTabCloseConfirmationDialog(page, canvas);
+      // Return true to indicate we're handling the close request
+      return true;
+    } else {
+      // No unsaved changes, allow the close immediately
+      this._tabView.close_page_finish(page, true);
+      return true;
     }
   }
 
@@ -433,6 +456,246 @@ export const DesignWindow = GObject.registerClass({
 
     // no active canvas
     return;
+  }
+
+  hasUnsavedChanges() {
+    // Check if any tab has unsaved changes
+    const pageCount = this._tabView.get_n_pages();
+    for (let i = 0; i < pageCount; i++) {
+      const page = this._tabView.get_nth_page(i);
+      const canvas = page.get_child();
+      if (canvas && canvas.getUnsaved && canvas.getUnsaved()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  onCloseRequest() {
+    // Check if there are any unsaved changes
+    if (this.hasUnsavedChanges()) {
+      this.showCloseConfirmationDialog();
+      return true; // Prevent default close behavior
+    }
+    return false; // Allow default close behavior
+  }
+
+  showCloseConfirmationDialog() {
+    const dialog = new Adw.MessageDialog({
+      heading: _('Unsaved Changes'),
+      body: _('You have unsaved changes. Do you want to save them before closing?'),
+      transient_for: this,
+      modal: true,
+    });
+
+    // Add response buttons
+    dialog.add_response('cancel', _('_Cancel'));
+    dialog.add_response('discard', _('_Discard Changes'));
+    dialog.add_response('save', _('_Save'));
+
+    // Set button appearances
+    dialog.set_response_appearance('discard', Adw.ResponseAppearance.DESTRUCTIVE);
+    dialog.set_response_appearance('save', Adw.ResponseAppearance.SUGGESTED);
+
+    // Set default and close responses
+    dialog.set_default_response('save');
+    dialog.set_close_response('cancel');
+
+    // Connect to response signal
+    dialog.connect('response', (dialog, response) => {
+      if (response === 'save') {
+        // Save all unsaved changes
+        this.saveAllUnsavedChanges().then(() => {
+          this.destroy();
+        }).catch(() => {
+          // If save fails, don't close
+        });
+      } else if (response === 'discard') {
+        // Discard changes and close
+        this.destroy();
+      }
+      // If response is 'cancel', do nothing (dialog will close)
+    });
+
+    dialog.present();
+  }
+
+  async saveAllUnsavedChanges() {
+    // Save all tabs with unsaved changes
+    const pageCount = this._tabView.get_n_pages();
+    for (let i = 0; i < pageCount; i++) {
+      const page = this._tabView.get_nth_page(i);
+      const canvas = page.get_child();
+      if (canvas && canvas.getUnsaved && canvas.getUnsaved()) {
+        // Set this tab as active temporarily
+        this._tabView.set_selected_page(page);
+        // Save the file
+        FileIO.save(this);
+      }
+    }
+  }
+
+
+  showTabCloseConfirmationDialog(page, canvas) {
+    const dialog = new Adw.MessageDialog({
+      heading: _('Unsaved Changes'),
+      body: _('This tab has unsaved changes. Do you want to save them before closing?'),
+      transient_for: this,
+      modal: true,
+    });
+
+    // Add response buttons
+    dialog.add_response('cancel', _('_Cancel'));
+    dialog.add_response('discard', _('_Discard Changes'));
+    dialog.add_response('save', _('_Save'));
+
+    // Set button appearances
+    dialog.set_response_appearance('discard', Adw.ResponseAppearance.DESTRUCTIVE);
+    dialog.set_response_appearance('save', Adw.ResponseAppearance.SUGGESTED);
+
+    // Set default and close responses
+    dialog.set_default_response('save');
+    dialog.set_close_response('cancel');
+
+    // Connect to response signal
+    dialog.connect('response', (dialog, response) => {
+      if (response === 'save') {
+        // Save the specific canvas that's being closed
+        this.saveCanvas(canvas, page);
+      } else if (response === 'discard') {
+        // Discard changes and close the tab
+        this._tabView.close_page_finish(page, true);
+      } else {
+        // Cancel - don't close the tab
+        this._tabView.close_page_finish(page, false);
+      }
+    });
+
+    dialog.present();
+  }
+
+  saveCanvas(canvas, page) {
+    const filePath = canvas.getFilePath();
+    if (filePath) {
+      // For existing files, save directly and close
+      this.saveExistingFile(canvas, page);
+    } else {
+      // For new files, show save dialog but don't close yet
+      this.showSaveDialogForNewFile(canvas, page);
+    }
+  }
+
+  saveExistingFile(canvas, page) {
+    // Remember the currently active canvas
+    const currentCanvas = this.getActiveCanvas();
+
+    // Activate the canvas we want to save
+    canvas.activate();
+
+    // Save the file
+    this.saveFileToPath(canvas.getFilePath(), canvas);
+
+    // Reactivate the previously active canvas
+    if (currentCanvas && currentCanvas !== canvas) {
+      currentCanvas.activate();
+    }
+
+    // Close the tab after a short delay to allow save to complete
+    setTimeout(() => {
+      this._tabView.close_page_finish(page, true);
+    }, 100);
+  }
+
+  showSaveDialogForNewFile(canvas, page) {
+    // Find the page that contains our canvas
+    const pageCount = this._tabView.get_n_pages();
+    let targetPage = null;
+    for (let i = 0; i < pageCount; i++) {
+      const page = this._tabView.get_nth_page(i);
+      if (page.get_child() === canvas) {
+        targetPage = page;
+        break;
+      }
+    }
+
+    if (targetPage) {
+      // Switch to the target tab
+      this._tabView.set_selected_page(targetPage);
+
+      // Show the save dialog with a callback to close the tab when done
+      this.showSaveDialogWithCallback(() => {
+        // Close the tab after save is complete
+        this._tabView.close_page_finish(page, true);
+      });
+    }
+  }
+
+  showSaveDialogWithCallback(onComplete) {
+    const filter = new Gtk.FileFilter();
+    filter.add_pattern('*.dxf');
+
+    const dialog = new Gtk.FileChooserNative({
+      action: Gtk.FileChooserAction.SAVE,
+      filter: filter,
+      select_multiple: false,
+      transient_for: this,
+      title: _('Save As'),
+    });
+
+    const name = FileIO.formatFilename(this._tabView.get_selected_page().get_title());
+    dialog.set_current_name(`${name}.dxf`);
+
+    dialog.show();
+    dialog.connect('response', (dialog, response) => {
+      if (response == Gtk.ResponseType.ACCEPT) {
+        const file = dialog.get_file();
+        const filePath = file.get_path();
+
+        // Save the file
+        FileIO.saveFile(filePath, this);
+
+        // Update page name and file path
+        const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
+        const fileName = info.get_name();
+        const tabTitle = this._tabView.get_selected_page().get_title();
+
+        // Set the active file path
+        this.getActiveCanvas().setFilePath(filePath);
+        // Mark as saved since we just saved it
+        this.getActiveCanvas().markSaved();
+
+        if (fileName !== tabTitle) {
+          const page = this._tabView.get_selected_page();
+          page.set_title(fileName);
+        }
+
+        // Call the completion callback to close the tab
+        if (onComplete) {
+          onComplete();
+        }
+      } else {
+        // User cancelled, don't close the tab
+        // The tab close request was already denied by returning false
+        this._tabView.close_page_finish(this._tabView.get_selected_page(), false);
+      }
+    });
+  }
+
+
+  saveFileToPath(filePath, canvas) {
+    if (filePath) {
+      const file = Gio.File.new_for_path(filePath);
+      const dxfContents = DesignCore.Core.saveFile();
+      const [success] = file.replace_contents(dxfContents, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
+
+      if (success) {
+        // Mark canvas as saved
+        canvas.markSaved();
+        DesignCore.Core.notify(_('File Saved'));
+      } else {
+        DesignCore.Core.notify(_('Error Saving File'));
+      }
+    }
   }
 },
 );

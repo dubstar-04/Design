@@ -35,7 +35,7 @@ export const DesignApplication = GObject.registerClass(
 
         const quitAction = new Gio.SimpleAction({name: 'quit'});
         quitAction.connect('activate', (action) => {
-          this.quit();
+          this.quitWithConfirmation();
         });
         this.add_action(quitAction);
         this.set_accels_for_action('app.quit', ['<primary>q']);
@@ -83,6 +83,32 @@ export const DesignApplication = GObject.registerClass(
           const activeWindow = new DesignWindow(this);
           activeWindow.present();
         });
+      }
+
+      quitWithConfirmation() {
+        // Check all windows for unsaved changes
+        const windows = this.get_windows();
+        let hasUnsavedChanges = false;
+        for (const window of windows) {
+          if (window.hasUnsavedChanges && window.hasUnsavedChanges()) {
+            hasUnsavedChanges = true;
+            break;
+          }
+        }
+
+        if (hasUnsavedChanges) {
+          // Find the active window to show the dialog
+          const activeWindow = this.activeWindow;
+          if (activeWindow && activeWindow.showCloseConfirmationDialog) {
+            activeWindow.showCloseConfirmationDialog();
+          } else {
+            // Fallback: quit anyway if no active window
+            this.quit();
+          }
+        } else {
+          // No unsaved changes, quit normally
+          this.quit();
+        }
       }
     },
 );
