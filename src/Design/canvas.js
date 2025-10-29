@@ -16,6 +16,13 @@ export const Canvas = GObject.registerClass({
         GObject.ParamFlags.READWRITE,
         null,
     ),
+    'unsaved': GObject.ParamSpec.boolean(
+        'unsaved',
+        'Unsaved',
+        'Whether the file has unsaved changes',
+        GObject.ParamFlags.READWRITE,
+        false,
+    ),
   },
   Signals: {
     'commandline-updated': {param_types: [GObject.TYPE_STRING]},
@@ -87,6 +94,9 @@ export const Canvas = GObject.registerClass({
     // create and activate a design core
     this.core = new Core();
 
+    // Connect to scene changes to mark as unsaved
+    this.core.scene.setSavedStateChangedCallback(this.onSceneSavedChanged.bind(this));
+
     this.styleManager = Adw.StyleManager.get_default();
     this.styleManager.connect('notify::dark', this.onStyleChange.bind(this));
 
@@ -116,6 +126,27 @@ export const Canvas = GObject.registerClass({
 
   getFilePath() {
     return this.file_path;
+  }
+
+  setUnsaved(unsaved) {
+    this.unsaved = unsaved;
+  }
+
+  getUnsaved() {
+    return this.unsaved;
+  }
+
+  markUnsaved() {
+    this.setUnsaved(true);
+  }
+
+  markSaved() {
+    this.setUnsaved(false);
+  }
+
+  onSceneSavedChanged(saved) {
+    // When scene saved state changes, update our unsaved state
+    this.setUnsaved(!saved);
   }
 
   onCopy() {
