@@ -193,13 +193,11 @@ export const DesignWindow = GObject.registerClass({
   addCssStyling() {
     const cssProvider = new Gtk.CssProvider();
     const css = `
-      .draft-subtitle {
-        color: #888888;
-        font-style: italic;
-      }
-      
-
-    `;
+.draft-subtitle {
+  color: #888888;
+  font-style: italic;
+}
+`;
     cssProvider.load_from_data(css, css.length);
     Gtk.StyleContext.add_provider_for_display(
         Gdk.Display.get_default(),
