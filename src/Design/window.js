@@ -793,7 +793,7 @@ export const DesignWindow = GObject.registerClass({
   saveFileToPath(filePath, canvas) {
     if (filePath) {
       const file = Gio.File.new_for_path(filePath);
-      const dxfContents = DesignCore.Core.saveFile();
+      const dxfContents = canvas.core.saveFile();
       const [success] = file.replace_contents(dxfContents, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
 
       if (success) {
