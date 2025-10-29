@@ -354,11 +354,11 @@ export const DesignWindow = GObject.registerClass({
       const canvas = page.get_child();
 
       if (canvas && canvas.getFilePath() === filePath) {
-        return {isOpen: true, page: page, index: i};
+        return {isOpen: true, page: page};
       }
     }
 
-    return {isOpen: false, page: null, index: -1};
+    return {isOpen: false, page: null};
   }
 
   switchToTab(page) {
