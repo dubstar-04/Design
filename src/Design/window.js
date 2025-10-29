@@ -264,19 +264,23 @@ export const DesignWindow = GObject.registerClass({
     }
   }
 
+  setPageIconForUnsavedState(page, canvas) {
+    if (canvas.getUnsaved()) {
+      const icon = Gio.ThemedIcon.new('media-record-symbolic');
+      page.set_icon(icon);
+    } else {
+      // Remove icon for saved files
+      page.set_icon(null);
+    }
+  }
+
   updateTabIcon(canvas) {
     // Find the tab page for this canvas
     const pageCount = this._tabView.get_n_pages();
     for (let i = 0; i < pageCount; i++) {
       const page = this._tabView.get_nth_page(i);
       if (page.get_child() === canvas) {
-        if (canvas.getUnsaved()) {
-          const icon = Gio.ThemedIcon.new('media-record-symbolic');
-          page.set_icon(icon);
-        } else {
-          // Remove icon for saved files
-          page.set_icon(null);
-        }
+        this.setPageIconForUnsavedState(page, canvas);
         break;
       }
     }
@@ -289,13 +293,7 @@ export const DesignWindow = GObject.registerClass({
       const page = this._tabView.get_nth_page(i);
       const canvas = page.get_child();
       if (canvas && canvas.getUnsaved) {
-        if (canvas.getUnsaved()) {
-          const icon = Gio.ThemedIcon.new('media-record-symbolic');
-          page.set_icon(icon);
-        } else {
-          // Remove icon for saved files
-          page.set_icon(null);
-        }
+        this.setPageIconForUnsavedState(page, canvas);
       }
     }
   }
