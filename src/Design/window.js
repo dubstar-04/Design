@@ -529,19 +529,16 @@ export const DesignWindow = GObject.registerClass({
     // Collect all unsaved tabs
     const unsavedTabs = [];
     const pageCount = this._tabView.get_n_pages();
-    console.log(`Checking ${pageCount} tabs for unsaved changes...`);
 
     for (let i = 0; i < pageCount; i++) {
       const page = this._tabView.get_nth_page(i);
       const canvas = page.get_child();
       if (canvas && canvas.getUnsaved && canvas.getUnsaved()) {
         unsavedTabs.push({page, canvas});
-        console.log(`Found unsaved tab ${i}: ${page.get_title()}`);
       }
     }
 
     if (unsavedTabs.length === 0) {
-      console.log('No unsaved tabs found');
       return;
     }
 
