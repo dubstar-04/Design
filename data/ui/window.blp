@@ -70,6 +70,24 @@ Box{
   vexpand: true;
 
   Adw.HeaderBar{
+    title-widget:
+    Box {
+      orientation: vertical;
+      spacing: 0;
+      
+      Label {
+        label: _('Design');
+        halign: center;
+      }
+      
+      Label {
+        label: _('Draft');
+        halign: center;
+        visible: bind template.unsaved;
+        css-classes: ['draft-subtitle'];
+      }
+    };
+
     Button newButton{
     can-focus: false;
     icon-name: 'document-new-symbolic';

@@ -20,6 +20,7 @@ import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 import Gio from 'gi://Gio';
 import Adw from 'gi://Adw?version=1';
+import Gdk from 'gi://Gdk';
 
 import {Canvas} from './canvas.js';
 import {CommandLine} from './commandLine.js';
@@ -42,6 +43,13 @@ export const DesignWindow = GObject.registerClass({
         'Show the input toolbars',
         GObject.ParamFlags.READWRITE,
         true,
+    ),
+    'unsaved': GObject.ParamSpec.boolean(
+        'unsaved',
+        'Unsaved',
+        'Whether the current file has unsaved changes',
+        GObject.ParamFlags.READWRITE,
+        false,
     ),
   },
   Signals: {
@@ -147,6 +155,9 @@ export const DesignWindow = GObject.registerClass({
 
     this._tabView.connect('notify::selected-page', this.onTabChange.bind(this));
 
+    // Add CSS styling for draft indicator
+    this.addCssStyling();
+
     this.addCanvas();
     this.loadToolbars();
 
@@ -173,6 +184,22 @@ export const DesignWindow = GObject.registerClass({
     this.toolbars_visible = show;
   }
 
+  addCssStyling() {
+    const cssProvider = new Gtk.CssProvider();
+    const css = `
+      .draft-subtitle {
+        color: #888888;
+        font-style: italic;
+      }
+    `;
+    cssProvider.load_from_data(css, css.length);
+    Gtk.StyleContext.add_provider_for_display(
+        Gdk.Display.get_default(),
+        cssProvider,
+        Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+    );
+  }
+
   openHelp() {
     const uri = 'https://design-app.readthedocs.io/en/latest/index.html';
     Gio.AppInfo.launch_default_for_uri_async(uri, null, null, null);
@@ -185,6 +212,8 @@ export const DesignWindow = GObject.registerClass({
     // Ensure the settings are synced to the selected tab
     this.settings.syncSettings();
 
+    // Update unsaved state based on active canvas
+    this.updateUnsavedState();
 
     if (this.layersWindow) {
       this.layersWindow.reload();
@@ -192,6 +221,15 @@ export const DesignWindow = GObject.registerClass({
 
     if (this.propertiesWindow) {
       this.propertiesWindow.reload();
+    }
+  }
+
+  updateUnsavedState() {
+    const activeCanvas = this.getActiveCanvas();
+    if (activeCanvas) {
+      this.unsaved = activeCanvas.getUnsaved();
+    } else {
+      this.unsaved = false;
     }
   }
 
@@ -218,10 +256,16 @@ export const DesignWindow = GObject.registerClass({
     canvas.connect('mouseposition-updated', this.updateMousePosition.bind(this));
     canvas.connect('selection-updated', this.canvasSelectionUpdated.bind(this));
     canvas.connect('input-changed', this.onShowToolbars.bind(this));
+    canvas.connect('notify::unsaved', this.updateUnsavedState.bind(this));
     this.commandLine.reset();
     // make the new page current
     this._tabView.set_selected_page(page);
     this.settings.syncSettings();
+
+    // Mark new canvas as unsaved if it's a new document
+    if (!name) {
+      canvas.markUnsaved();
+    }
 
     // set the callback function to trigger toasts
     // TODO: would this be better handles in canvas and use a signal?
