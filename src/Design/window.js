@@ -191,6 +191,15 @@ export const DesignWindow = GObject.registerClass({
         color: #888888;
         font-style: italic;
       }
+      
+      /* Tab icons size */
+      tabbar tab {
+        -gtk-icon-size: 8px;
+      }
+      
+      tabbar tab image {
+        -gtk-icon-size: 8px;
+      }
     `;
     cssProvider.load_from_data(css, css.length);
     Gtk.StyleContext.add_provider_for_display(
@@ -215,6 +224,9 @@ export const DesignWindow = GObject.registerClass({
     // Update unsaved state based on active canvas
     this.updateUnsavedState();
 
+    // Update tab icons for all tabs
+    this.updateAllTabIcons();
+
     if (this.layersWindow) {
       this.layersWindow.reload();
     }
@@ -224,12 +236,53 @@ export const DesignWindow = GObject.registerClass({
     }
   }
 
-  updateUnsavedState() {
+  updateUnsavedState(canvas) {
+    // If canvas is provided, update that specific canvas's tab icon
+    if (canvas) {
+      this.updateTabIcon(canvas);
+    }
+
     const activeCanvas = this.getActiveCanvas();
     if (activeCanvas) {
       this.unsaved = activeCanvas.getUnsaved();
     } else {
       this.unsaved = false;
+    }
+  }
+
+  updateTabIcon(canvas) {
+    // Find the tab page for this canvas
+    const pageCount = this._tabView.get_n_pages();
+    for (let i = 0; i < pageCount; i++) {
+      const page = this._tabView.get_nth_page(i);
+      if (page.get_child() === canvas) {
+        if (canvas.getUnsaved()) {
+          const icon = Gio.ThemedIcon.new('media-record-symbolic');
+          page.set_icon(icon);
+        } else {
+          // Remove icon for saved files
+          page.set_icon(null);
+        }
+        break;
+      }
+    }
+  }
+
+  updateAllTabIcons() {
+    // Update icons for all tabs
+    const pageCount = this._tabView.get_n_pages();
+    for (let i = 0; i < pageCount; i++) {
+      const page = this._tabView.get_nth_page(i);
+      const canvas = page.get_child();
+      if (canvas && canvas.getUnsaved) {
+        if (canvas.getUnsaved()) {
+          const icon = Gio.ThemedIcon.new('media-record-symbolic');
+          page.set_icon(icon);
+        } else {
+          // Remove icon for saved files
+          page.set_icon(null);
+        }
+      }
     }
   }
 
@@ -256,7 +309,7 @@ export const DesignWindow = GObject.registerClass({
     canvas.connect('mouseposition-updated', this.updateMousePosition.bind(this));
     canvas.connect('selection-updated', this.canvasSelectionUpdated.bind(this));
     canvas.connect('input-changed', this.onShowToolbars.bind(this));
-    canvas.connect('notify::unsaved', this.updateUnsavedState.bind(this));
+    canvas.connect('notify::unsaved', (canvas) => this.updateUnsavedState(canvas));
     this.commandLine.reset();
     // make the new page current
     this._tabView.set_selected_page(page);
