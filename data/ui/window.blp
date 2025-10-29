@@ -69,13 +69,31 @@ template $DesignWindow: Adw.ApplicationWindow {
     orientation: vertical;
     vexpand: true;
 
-    Adw.HeaderBar {
-      Button newButton {
-        can-focus: false;
-        icon-name: 'document-new-symbolic';
-        tooltip-text: _("Create a new design");
-        action-name: "win.new";
+  Adw.HeaderBar{
+    title-widget:
+    Box {
+      orientation: vertical;
+      spacing: 0;
+
+      Label {
+        label: _("Design");
+        halign: center;
       }
+
+      Label {
+        label: _("Draft");
+        halign: center;
+        visible: bind template.unsaved;
+        css-classes: ['draft-subtitle'];
+      }
+    };
+
+    Button newButton{
+    can-focus: false;
+    icon-name: 'document-new-symbolic';
+    tooltip-text: _("Create a new design");
+    action-name: "win.new";
+    }
 
       [end]
       MenuButton {
