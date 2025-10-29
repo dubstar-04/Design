@@ -693,7 +693,7 @@ export const DesignWindow = GObject.registerClass({
     }
   }
 
-  saveExistingFile(canvas, page) {
+  async saveExistingFile(canvas, page) {
     // Remember the currently active canvas
     const currentCanvas = this.getActiveCanvas();
 
@@ -701,17 +701,15 @@ export const DesignWindow = GObject.registerClass({
     canvas.activate();
 
     // Save the file
-    this.saveFileToPath(canvas.getFilePath(), canvas);
+    await this.saveFileToPath(canvas.getFilePath(), canvas);
 
     // Reactivate the previously active canvas
     if (currentCanvas && currentCanvas !== canvas) {
       currentCanvas.activate();
     }
 
-    // Close the tab after a short delay to allow save to complete
-    setTimeout(() => {
-      this._tabView.close_page_finish(page, true);
-    }, 100);
+    // Close the tab
+    this._tabView.close_page_finish(page, true);
   }
 
   showSaveDialogForNewFile(canvas, page) {
