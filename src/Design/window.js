@@ -143,6 +143,9 @@ export const DesignWindow = GObject.registerClass({
     const togglePolarShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F9'), action: Gtk.CallbackAction.new(this.settings.onSettingToggled.bind(this.settings, 'polar'))});
     shortcutController.add_shortcut(togglePolarShortcut);
 
+    const selectAllShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>A'), action: Gtk.CallbackAction.new(this.selectAll.bind(this))});
+    shortcutController.add_shortcut(selectAllShortcut);
+
     this.add_controller(shortcutController);
 
     this._tabView.connect('notify::selected-page', this.onTabChange.bind(this));
@@ -343,6 +346,13 @@ export const DesignWindow = GObject.registerClass({
 
     // no active canvas
     return;
+  }
+
+  selectAll() {
+    const activeCanvas = this.getActiveCanvas();
+    if (activeCanvas && activeCanvas.core) {
+      activeCanvas.core.scene.selectionManager.selectAll();
+    }
   }
 },
 );
