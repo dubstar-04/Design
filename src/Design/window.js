@@ -41,7 +41,7 @@ export const DesignWindow = GObject.registerClass({
         'Toolbars Visible',
         'Show the input toolbars',
         GObject.ParamFlags.READWRITE,
-        true,
+        false,
     ),
   },
   Signals: {
@@ -155,6 +155,23 @@ export const DesignWindow = GObject.registerClass({
     this.layersWindow;
     this.propertiesWindow;
     this.exportWindow;
+  }
+
+  get toolbars_visible() {
+    if (this._toolbars_visible === undefined) {
+      this._toolbars_visible = false;
+    }
+
+    return this._toolbars_visible;
+  }
+
+  set toolbars_visible(value) {
+    if (this.toolbars_visible === value) {
+      return;
+    }
+
+    this._toolbars_visible = value;
+    this.notify('toolbars-visible');
   }
 
   onShowToast(message) {
