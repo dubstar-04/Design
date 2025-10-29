@@ -86,27 +86,17 @@ export const DesignApplication = GObject.registerClass(
       }
 
       quitWithConfirmation() {
-        // Check all windows for unsaved changes
+        // Instead of checking for unsaved changes here, let the window close-request
+        // signal handle it. This ensures the proper dialog flow.
         const windows = this.get_windows();
-        let hasUnsavedChanges = false;
-        for (const window of windows) {
-          if (window.hasUnsavedChanges && window.hasUnsavedChanges()) {
-            hasUnsavedChanges = true;
-            break;
-          }
-        }
-
-        if (hasUnsavedChanges) {
-          // Find the active window to show the dialog
-          const activeWindow = this.activeWindow;
-          if (activeWindow && activeWindow.showCloseConfirmationDialog) {
-            activeWindow.showCloseConfirmationDialog();
-          } else {
-            // Fallback: quit anyway if no active window
-            this.quit();
-          }
+        if (windows.length > 0) {
+          // Mark this as an application quit so the window knows to quit the app when done
+          windows[0]._isApplicationQuit = true;
+          // Close the first window - its close-request handler will check for unsaved changes
+          // and show the confirmation dialog if needed
+          windows[0].close();
         } else {
-          // No unsaved changes, quit normally
+          // No windows, quit immediately
           this.quit();
         }
       }
