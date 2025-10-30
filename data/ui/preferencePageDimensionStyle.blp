@@ -123,6 +123,21 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
               title: _("Text");
               child: Adw.PreferencesGroup {
 
+                  Adw.SpinRow DIMTXT {
+                    name: 'DIMTXT';
+                    title: _("Text size");
+                    subtitle: _("Set the text size (DIMTXT)");
+                    digits: 2;
+                    notify::value => $onStyleUpdate();
+
+                    adjustment: Adjustment {
+                      lower: 0;
+                      value: 1;
+                      upper: 100;
+                      step-increment: 0.5;
+                    };
+                  }
+
                 Adw.ComboRow DIMTXSTY {
                     name: 'DIMTXSTY';
                     title: _("Style");
