@@ -162,16 +162,21 @@ hexpand: true;
 }
 
 [overlay]
-InfoBar{
-  Box{
-    Entry commandLineEntry{
-      hexpand: true;
-      can-focus: false;
-    }
+  reveal-child: bind template.toolbars-visible;
+  transition-type: slide_up;
+  hexpand: true;
 
-    Label mousePosLabel{
-      halign: end;
-      width-request: 150;
+  InfoBar{
+    Box{
+      Entry commandLineEntry{
+        hexpand: true;
+        can-focus: false;
+      }
+
+      Label mousePosLabel{
+        halign: end;
+        width-request: 150;
+      }
     }
   }
 }
