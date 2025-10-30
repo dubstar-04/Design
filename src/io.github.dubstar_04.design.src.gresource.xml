@@ -87,6 +87,7 @@
     <file>Design-Core/core/tools/trim.js</file>
     <file>Design-Core/core/tools/tool.js</file>
     <file>Design-Core/core/tools/purge.js</file>
+    <file>Design-Core/core/tools/zoom.js</file>
 
     <file>Design-Core/core/tables/block.js</file>
     <file>Design-Core/core/tables/blockManager.js</file>
