@@ -60,11 +60,21 @@ export class FileIO {
     const info = file.query_info('standard::*', Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, null);
     const fileName = this.formatFilename(info.get_name());
     const ext = this.getFileExtension(info.get_name());
+    const filePath = file.get_path();
 
     console.log('file details:', fileName, ext);
 
     if (ext.toLowerCase() !== 'dxf') {
       DesignCore.Core.notify(`Invalid file format: ${ext}`);
+      return;
+    }
+
+    // Check if file is already open
+    const fileCheck = window.isFileAlreadyOpen(filePath);
+    if (fileCheck.isOpen) {
+      // File is already open, switch to that tab
+      window.switchToTab(fileCheck.page);
+      DesignCore.Core.notify(`File already open: ${fileName}`);
       return;
     }
 
@@ -74,7 +84,7 @@ export class FileIO {
     // load the file contents into the active canvas
     DesignCore.Core.openFile(fileContents);
     // set the active file path
-    window.getActiveCanvas().setFilePath(file.get_path());
+    window.getActiveCanvas().setFilePath(filePath);
     // handle tab changes in the window object
     window.onTabChange();
   }

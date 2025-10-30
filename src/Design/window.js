@@ -361,6 +361,28 @@ export const DesignWindow = GObject.registerClass({
     // no active canvas
     return;
   }
+
+  isFileAlreadyOpen(filePath) {
+    // Check if a file with the given path is already open in any tab
+    const pageCount = this._tabView.get_n_pages();
+
+    for (let i = 0; i < pageCount; i++) {
+      const page = this._tabView.get_nth_page(i);
+      const canvas = page.get_child();
+
+      if (canvas && canvas.getFilePath() === filePath) {
+        return {isOpen: true, page: page};
+      }
+    }
+
+    return {isOpen: false, page: null};
+  }
+
+  switchToTab(page) {
+    // Switch to the specified tab
+    this._tabView.set_selected_page(page);
+    this.onTabChange();
+  }
 },
 );
 
