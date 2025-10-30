@@ -30,12 +30,12 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     // General
     'stylesList', 'name', 'DIMCLRD', 'DIMASZ', 'DIMCENVALUE', 'DIMCENSTYL',
     // Text
-    'DIMTXSTY', 'DIMCLRT', 'DIMGAP', 'DIMTAD', 'DIMJUST', 'DIMTIH',
+    'DIMTXT', 'DIMTXSTY', 'DIMCLRT', 'DIMGAP', 'DIMTAD', 'DIMJUST', 'DIMTIH', 'DIMTOH',
     'DIMDEC', 'DIMADEC', /* 'DIMTOL', 'DIMTZIN', 'DIMTZOUT', 'DIMALT', 'DIMATFIT',*/
     // Dimension
     /* 'DIMLWD',*/ 'DIMDLI', 'DIMSD1', 'DIMSD2',
     // Extensions
-    /* 'DIMLWE',*/ 'DIMSE1', 'DIMSE2', 'DIMEXE', 'DIMEXO', /* 'DIMFXLON', 'DIMFXL',*/
+    /* 'DIMLWE',*/ 'DIMSE1', 'DIMSE2', 'DIMEXE', 'DIMEXO', 'DIMTOFL', /* 'DIMFXLON', 'DIMFXL',*/
 
   ],
 }, class PreferencePageDimensionStyle extends Adw.PreferencesPage {
