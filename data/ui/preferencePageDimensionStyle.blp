@@ -188,8 +188,16 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                 //DIMTIH & DIMTOH?
                 Adw.ComboRow  DIMTIH{
                     name: 'DIMTIH';
-                    title: _("Alignment");
-                    subtitle: _("Set the alignment of the dimension text (DIMTIH / DIMTOH)");
+                    title: _("Internal Text Alignment");
+                    subtitle: _("Set the alignment of the dimension text (DIMTIH)");
+                    model: StringList{ strings ['Aligned', 'Horizontal']}; //'ISO']};
+                    notify::selected => $onStyleUpdate();
+                  }
+
+                Adw.ComboRow  DIMTOH{
+                    name: 'DIMTOH';
+                    title: _("External Text Alignment");
+                    subtitle: _("Set the alignment of the dimension text (DIMTOH)");
                     model: StringList{ strings ['Aligned', 'Horizontal']}; //'ISO']};
                     notify::selected => $onStyleUpdate();
                   }
@@ -384,6 +392,13 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
                       upper: 10;
                       step-increment:0.5;
                     };
+                  }
+
+                  Adw.SwitchRow DIMTOFL {
+                    name: 'DIMTOFL';
+                    title: _("Show dimension line inside circle or arc");
+                    subtitle: _("Show dimension line inside the circle or arc when the text (DIMTOFL)");
+                    notify::active => $onStyleUpdate();
                   }
 
                   /*
