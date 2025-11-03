@@ -8,7 +8,7 @@
     "eslint": "^8.45.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-n": "^17.10.2",
     "eslint-plugin-promise": "^6.1.1",
     "jest": "^30.2.0"
