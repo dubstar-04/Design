@@ -193,13 +193,8 @@ export const Canvas = GObject.registerClass({
 
     const event = controller.get_current_event();
 
-    // Handle CTRL+A for select all
+    // Don't handle shortcust and accelerators
     if (state & Gdk.ModifierType.CONTROL_MASK) {
-      // Check for CTRL+A (keyval for 'a' is 97)
-      if (keyval === 97) { // 'a' key
-        this.core.scene.selectionManager.selectAll();
-        return;
-      }
       // https://docs.gtk.org/gdk4/flags.ModifierType.html
       return;
     }
