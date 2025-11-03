@@ -6,5 +6,10 @@
   },
   "dependencies": {
     "jest": "^30.2.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.39.0",
+    "globals": "^16.5.0"
   }
 }
