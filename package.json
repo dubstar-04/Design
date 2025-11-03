@@ -5,6 +5,7 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "dependencies": {
+    "eslint": "^9.39.0",
     "jest": "^30.2.0"
   },
   "devDependencies": {
