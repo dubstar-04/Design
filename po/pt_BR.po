@@ -1,0 +1,397 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the design package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: design\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-16 15:56+0100\n"
+"PO-Revision-Date: 2025-06-27 15:33-0300\n"
+"Last-Translator: John peter sa <johnppetersa@gmail.com>\n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+
+#: data/io.github.dubstar_04.design.desktop:3
+#: data/io.github.dubstar_04.design.metainfo.xml:7
+msgid "Design"
+msgstr "Design"
+
+#: data/io.github.dubstar_04.design.desktop:10
+msgid "CAD;DXF;drawing;design;vector;"
+msgstr "CAD;DXF;desenho;design;vetor;"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:8
+msgid "2D CAD for GNOME"
+msgstr "CAD 2D para GNOME"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:10
+msgid ""
+"Design is a 2D computer aided design application (CAD), created to meet the "
+"needs of makers and designers, hobbyists and professionals that require a "
+"first class CAD application."
+msgstr ""
+"Design é um aplicativo de design auxiliado por computador (CAD) 2D, criado "
+"para atender às necessidades de fabricantes e designers, amadores e "
+"profissionais que exigem um aplicativo CAD de primeira classe."
+
+#: data/io.github.dubstar_04.design.metainfo.xml:13
+msgid "Features:"
+msgstr "Características:"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:15
+msgid "Supports the industry standard DXF format"
+msgstr "Suporta o formato DXF padrão da indústria"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:16
+msgid "Uses common CAD workflows, commands and canvas management"
+msgstr ""
+"Utiliza fluxos de trabalho CAD comuns, comandos e gerenciamento de tela"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:17
+msgid "Drawing creation and manipulation using commandline or toolbar input"
+msgstr ""
+"Criação e manipulação de desenhos usando linha de comando ou entrada de "
+"barra de ferramentas"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:18
+msgid "Layer management and manipulation"
+msgstr "Gerenciamento e manipulação de camadas"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:19
+msgid "Entity interogation and modification"
+msgstr "Interrogatório e modificação de entidades"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:25
+msgid "Main Window"
+msgstr "Janela principal"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:29
+msgid "Layer Manager"
+msgstr "Gerenciador de Camadas"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:33 data/ui/properties.blp:17
+#: data/ui/window.blp:39
+msgid "Properties"
+msgstr "Propriedades"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:41
+msgid "-"
+msgstr "-"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:48
+msgid "Fix tabs not being shown"
+msgstr "Corrigir guias que não estavam sendo exibidas"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:49
+msgid "Show crosshair cursor on the canvas"
+msgstr "Mostrar cursor de retículo na tela"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:50
+msgid "Add touch controls, pan, pinch to zoom and double tap to zoom all"
+msgstr ""
+"Adicione controles de toque, panorâmica, pinça para ampliar e toque duplo "
+"para ampliar tudo"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:51
+msgid "Hide toolbars and commandline on touch input"
+msgstr "Ocultar barras de ferramentas e linha de comando na entrada de toque"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:52
+msgid "Add layer manager and properties to app menu. Remove header bar buttons"
+msgstr ""
+"Adicionar gerenciador de camadas e propriedades ao menu do aplicativo. "
+"Remover botões da barra de cabeçalho"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:53
+msgid "Fixes for text rotation"
+msgstr "Correções para rotação de texto"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:54
+msgid "Show app name capitalised in overview"
+msgstr "Mostrar nome do aplicativo em maiúsculas na visão geral"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:55
+msgid "Invert zoom direction"
+msgstr "Inverter direção do zoom"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:56
+msgid "Load any preselected entities when opening the properties window"
+msgstr ""
+"Carregue quaisquer entidades pré-selecionadas ao abrir a janela de "
+"propriedades"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:57
+msgid "Fix right mouse button behaviour"
+msgstr "Corrigir o comportamento do botão direito do mouse"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:58
+msgid "Fix files being read incorrectly"
+msgstr "Corrigir arquivos que estão sendo lidos incorretamente"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:59
+msgid "Fix ARC selection"
+msgstr "Corrigir seleção de ARC"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:60
+msgid "Improve selection precision"
+msgstr "Melhore a precisão da seleção"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:61
+msgid "Added ability to Save As"
+msgstr "Adicionada a capacidade de Salvar como"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:62
+msgid ""
+"Added keyboard shortcuts: CTRL+N (New), CTRL+S (Save), CTRL+SHIFT+S (Save "
+"As) CTRL+O (Open)"
+msgstr ""
+"Atalhos de teclado adicionados: CTRL+N (Novo), CTRL+S (Salvar), CTRL+SHIFT+S "
+"(Salvar como) CTRL+O (Abrir)"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:63
+msgid "CTRL+1 (Properties),CTRL+G (Toggle Grid), F1 (Help)"
+msgstr "CTRL+1 (Propriedades), CTRL+G (Alternar grade), F1 (Ajuda)"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:64
+msgid "F8 (Toggle Ortho), F9 (Toggle Polar)"
+msgstr "F8 (Alternar Orto), F9 (Alternar Polar)"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:71
+msgid "FOSDEM release!"
+msgstr "Lançamento do FOSDEM!"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:72
+msgid "Enable 'open with' from the file browser"
+msgstr "Habilitar 'abrir com' no navegador de arquivos"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:73
+msgid "Show notifications for DI and ID commands"
+msgstr "Mostrar notificações para comandos DI e ID"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:74
+msgid "Recolor the canvas for dark/light styles"
+msgstr "Recolorir a tela para estilos claros/escuros"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:75
+msgid "End current command with a right click"
+msgstr "Finalizar o comando atual com um clique direito"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:76
+msgid "Enable changing preferences"
+msgstr "Habilitar a alteração de preferências"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:77
+msgid "New icon!"
+msgstr "Novo ícone!"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:84
+msgid "Preview release"
+msgstr "Versão de pré-visualização"
+
+#: data/io.github.dubstar_04.design.metainfo.xml:99
+msgid "Daniel Wood"
+msgstr "Daniel Wood"
+
+#: data/ui/layers.blp:17 data/ui/window.blp:34
+msgid "Layers"
+msgstr "Camadas"
+
+#: data/ui/layers.blp:38
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#: data/ui/layers.blp:46
+msgid "_Delete"
+msgstr "_Deletar"
+
+#: data/ui/layers.blp:115
+msgid "Name"
+msgstr "Nome"
+
+#: data/ui/layers.blp:121
+msgid "Frozen"
+msgstr "Congelado"
+
+#: data/ui/layers.blp:122
+msgid "Frozen layers are not shown or available for any actions"
+msgstr ""
+"Camadas congeladas não são mostradas nem estão disponíveis para nenhuma ação"
+
+#: data/ui/layers.blp:132
+msgid "Locked"
+msgstr "Trancado"
+
+#: data/ui/layers.blp:133
+msgid "Locked layers are visible but not able to be selected"
+msgstr "Camadas bloqueadas são visíveis, mas não podem ser selecionadas"
+
+#: data/ui/layers.blp:142
+msgid "Line Type"
+msgstr "Tipo de linha"
+
+#: data/ui/layers.blp:143
+msgid "Line type for the selected layer. Not implimented"
+msgstr "Tipo de linha para a camada selecionada. Não implementado"
+
+#: data/ui/layers.blp:152
+msgid "Line Weight"
+msgstr "Espessura da linha"
+
+#: data/ui/layers.blp:153
+msgid "Line weight for the selected layer. Not implimented"
+msgstr "Espessura da linha para a camada selecionada. Não implementado"
+
+#: data/ui/layers.blp:162
+msgid "Plotting"
+msgstr "Plotagem"
+
+#: data/ui/layers.blp:163
+msgid "Layers with plotting true will appear on prints"
+msgstr "Camadas com plotagem verdadeira aparecerão nas impressões"
+
+#: data/ui/preferences.blp:13 data/ui/preferences.blp:16
+msgid "Snaps"
+msgstr "Snaps"
+
+#: data/ui/preferences.blp:19
+msgid "End Snap"
+msgstr "Fim do snap"
+
+#: data/ui/preferences.blp:31
+msgid "Mid Snap"
+msgstr "Meio Snap"
+
+#: data/ui/preferences.blp:43
+msgid "Centre Snap"
+msgstr "Snap central"
+
+#: data/ui/preferences.blp:55
+msgid "Nearest Snap"
+msgstr "Snap mais próximo"
+
+#: data/ui/preferences.blp:67
+msgid "Polar"
+msgstr "Polar"
+
+#: data/ui/preferences.blp:100
+msgid "Ortho"
+msgstr "Orto"
+
+#: data/ui/preferences.blp:113
+msgid "Canvas"
+msgstr "Tela"
+
+#: data/ui/preferences.blp:116
+msgid "Draw Grid"
+msgstr "Desenhar grade"
+
+#: data/ui/shortcuts.blp:9
+msgid "Entities"
+msgstr "Entidades"
+
+#: data/ui/shortcuts.blp:12
+msgid "Draw Line"
+msgstr "Desenhar linha"
+
+#: data/ui/shortcuts.blp:16
+msgid "Draw Polyline"
+msgstr "Desenhar polilinha"
+
+#: data/ui/shortcuts.blp:20
+msgid "Draw Circle"
+msgstr "Desenhar Círculo"
+
+#: data/ui/shortcuts.blp:24
+msgid "Draw Arc"
+msgstr "Desenhar Arc"
+
+#: data/ui/shortcuts.blp:28
+msgid "Draw Rectangle"
+msgstr "Desenhar retângulo"
+
+#: data/ui/shortcuts.blp:33
+msgid "Tools"
+msgstr "Ferramentas"
+
+#: data/ui/shortcuts.blp:36
+msgid "Move"
+msgstr "Mover"
+
+#: data/ui/shortcuts.blp:40
+msgid "Copy"
+msgstr "Cópia"
+
+#: data/ui/shortcuts.blp:44
+msgid "Rotate"
+msgstr "Girar"
+
+#: data/ui/shortcuts.blp:48
+msgid "Trim"
+msgstr "Aparar"
+
+#: data/ui/shortcuts.blp:52
+msgid "Extend"
+msgstr "Estender"
+
+#: data/ui/shortcuts.blp:56
+msgid "Erase"
+msgstr "Apagar"
+
+#: data/ui/shortcuts.blp:60
+msgid "Distance"
+msgstr "Distância"
+
+#: data/ui/shortcuts.blp:64
+msgid "Identify"
+msgstr "Identificar"
+
+#: data/ui/window.blp:10
+msgid "Open"
+msgstr "Abrir"
+
+#: data/ui/window.blp:15
+msgid "Save"
+msgstr "Salvar"
+
+#: data/ui/window.blp:20
+msgid "Save As"
+msgstr "Salve como"
+
+#: data/ui/window.blp:29
+msgid "Preferences"
+msgstr "Preferências"
+
+#: data/ui/window.blp:44
+msgid "Keyboard Shortcuts"
+msgstr "Atalhos de teclado"
+
+#: data/ui/window.blp:49
+msgid "About Design"
+msgstr "Sobre Design"
+
+#: data/ui/window.blp:70
+msgid "Create a new design"
+msgstr "Crie um novo design"
+
+#: data/ui/window.blp:79
+msgid "Open application menu"
+msgstr "Abrir menu do aplicativo"
+
+#: src/Design/layersWindow.js:130
+msgid "Edit"
+msgstr "Editar"
+
+#: src/Design/layersWindow.js:131
+msgid "Delete"
+msgstr "Excluir"
+
+#: src/Design/layersWindow.js:132
+msgid "Make Current"
+msgstr "Tornar atual"
