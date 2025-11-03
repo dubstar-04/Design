@@ -141,6 +141,11 @@ export const Canvas = GObject.registerClass({
     this.core.notify('Cut not implemented');
   }
 
+  onSelectAll() {
+    // select all items on the canvas
+    this.core.scene.selectionManager.selectAll();
+  }
+
   activate() {
     // activate the core
     // Core uses static methods to access the current core context
