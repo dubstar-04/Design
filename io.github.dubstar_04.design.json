@@ -1,16 +1,16 @@
 {
-    "app-id" : "io.github.dubstar_04.design",
-    "runtime" : "org.gnome.Platform",
-    "runtime-version" : "46",
-    "sdk" : "org.gnome.Sdk",
-    "command" : "io.github.dubstar_04.design",
-    "finish-args" : [
+    "app-id": "io.github.dubstar_04.design",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "48",
+    "sdk": "org.gnome.Sdk",
+    "command": "io.github.dubstar_04.design",
+    "finish-args": [
         "--share=ipc",
         "--socket=fallback-x11",
         "--device=dri",
         "--socket=wayland"
     ],
-    "cleanup" : [
+    "cleanup": [
         "/include",
         "/lib/pkgconfig",
         "/man",
@@ -21,28 +21,30 @@
         "*.la",
         "*.a"
     ],
-    "modules" : [
+    "modules": [
         {
-      "name": "blueprint",
-      "buildsystem": "meson",
-      "builddir": true,
-      "cleanup": ["*"],
-      "sources": [
-        {
-          "type": "git",
-          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler.git",
-          "tag": "v0.10.0"
-        }
-      ]
-    	},
-        {
-            "name" : "design",
-            "builddir" : true,
-            "buildsystem" : "meson",
-            "sources" : [
+            "name": "blueprint",
+            "buildsystem": "meson",
+            "builddir": true,
+            "cleanup": [
+                "*"
+            ],
+            "sources": [
                 {
-                    "type" : "dir",
-                    "path" : "."
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler.git",
+                    "tag": "v0.18.0"
+                }
+            ]
+        },
+        {
+            "name": "design",
+            "builddir": true,
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "."
                 }
             ]
         }

@@ -71,7 +71,11 @@ export const DesignApplication = GObject.registerClass(
         // open signal only emitted if files are passed as argv. See activate signal.
         this.connect('open', (self, files) => {
           Logging.instance.debug('Main - Opening File');
-          const activeWindow = new DesignWindow(this);
+          // Check if there's already an active window, otherwise create a new one
+          let activeWindow = this.activeWindow;
+          if (!activeWindow) {
+            activeWindow = new DesignWindow(this);
+          }
           files.forEach((file) => {
             FileIO.loadFile(file, activeWindow);
           });
