@@ -82,6 +82,9 @@ export const Canvas = GObject.registerClass({
     const cutShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>X'), action: Gtk.CallbackAction.new(this.onCut.bind(this))});
     shortcutController.add_shortcut(cutShortcut);
 
+    const selectAllShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>A'), action: Gtk.CallbackAction.new(this.onSelectAll.bind(this))});
+    shortcutController.add_shortcut(selectAllShortcut);
+
     this.add_controller(shortcutController);
 
     // create and activate a design core
@@ -136,6 +139,11 @@ export const Canvas = GObject.registerClass({
   onCut() {
     // TODO: implement cut
     this.core.notify('Cut not implemented');
+  }
+
+  onSelectAll() {
+    // select all items on the canvas
+    this.core.scene.selectionManager.selectAll();
   }
 
   activate() {
