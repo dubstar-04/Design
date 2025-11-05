@@ -29,6 +29,7 @@ export default defineConfig([{
   settings: {},
 
   rules: {
+    'object-curly-spacing': ['error', 'always'],
     'require-jsdoc': 0,
     'valid-jsdoc': 0,
     'max-len': 0,
