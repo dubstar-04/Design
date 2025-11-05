@@ -65,7 +65,10 @@
     <file>Design-Core/core/entities/alignedDimension.js</file>
     <file>Design-Core/core/entities/diametricDimension.js</file>
     <file>Design-Core/core/entities/radialDimension.js</file>
+    <file>Design-Core/core/entities/rotatedDimension.js</file>
     <file>Design-Core/core/entities/baseDimension.js</file>
+    <file>Design-Core/core/entities/linearDimension.js</file>
+    <file>Design-Core/core/entities/baseLinearDimension.js</file>
     <file>Design-Core/core/entities/entity.js</file>
     <file>Design-Core/core/entities/insert.js</file>
     <file>Design-Core/core/entities/hatch.js</file>
