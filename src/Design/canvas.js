@@ -193,7 +193,7 @@ export const Canvas = GObject.registerClass({
 
     const event = controller.get_current_event();
 
-    // Don't handle shortcust and accelerators
+    // Don't handle shortcuts and accelerators
     if (state & Gdk.ModifierType.CONTROL_MASK) {
       // https://docs.gtk.org/gdk4/flags.ModifierType.html
       return;
