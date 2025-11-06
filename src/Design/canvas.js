@@ -218,11 +218,6 @@ export const Canvas = GObject.registerClass({
     const btn = gesture.get_current_button() - 1;
     this.core.mouse.mouseDown(btn);
 
-    // Double-click middle mouse button -> Zoom Extents
-    if (num === 2 && btn === 1) {
-      this.core.canvas.doubleClick(1);
-    }
-
     // ensure the canvas has focus to receive events
     this.grab_focus();
   }
