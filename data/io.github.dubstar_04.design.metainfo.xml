@@ -40,6 +40,17 @@
   	<color type="primary" scheme_preference="dark">#3584e4</color>
 	</branding>
   	<releases>
+		<release version="49.alpha1" date="2025-XX-XX">
+		<description>
+			<ul>
+			<li>Update to GNOME 49</li>
+			<li>Added keyboard shortcuts: CTRL+A (Select All) </li>
+			<li>Only allow files to be opened once</li>
+			<li>Show save work dialog for unsaved changes</li>
+			<li>Only show command input and toolbars for mouse input</li>
+			</ul>
+		</description>
+		</release>
 		<release version="48.alpha1" date="2025-07-28">
 		<description>
 			<ul>

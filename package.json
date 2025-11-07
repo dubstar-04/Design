@@ -4,13 +4,14 @@
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
+  "dependencies": {
+    "eslint": "^9.39.1",
+    "jest": "^30.2.0"
+  },
   "devDependencies": {
-    "eslint": "^8.45.0",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.39.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-n": "^17.10.2",
-    "eslint-plugin-promise": "^6.1.1",
-    "jest": "^29.7.0"
+    "globals": "^16.5.0"
   }
 }
