@@ -31,9 +31,9 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     'stylesList', 'name', 'DIMCLRD', 'DIMASZ', 'DIMCENVALUE', 'DIMCENSTYL',
     // Text
     'DIMTXT', 'DIMTXSTY', 'DIMCLRT', 'DIMGAP', 'DIMTAD', 'DIMJUST', 'DIMTIH', 'DIMTOH',
-    'DIMDEC', 'DIMADEC', /* 'DIMTOL', 'DIMTZIN', 'DIMTZOUT', 'DIMALT', 'DIMATFIT',*/
+    /* 'DIMTOL', 'DIMTZIN', 'DIMTZOUT', 'DIMALT', 'DIMATFIT',*/
     // Dimension
-    /* 'DIMLWD',*/ 'DIMDLI', 'DIMSD1', 'DIMSD2',
+    /* 'DIMLWD',*/ 'DIMDLI', 'DIMSD1', 'DIMSD2', 'DIMDEC', 'DIMADEC', 'DIMRND',
     // Extensions
     /* 'DIMLWE',*/ 'DIMSE1', 'DIMSE2', 'DIMEXE', 'DIMEXO', 'DIMTOFL', /* 'DIMFXLON', 'DIMFXL',*/
 
