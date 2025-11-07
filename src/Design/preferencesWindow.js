@@ -29,7 +29,7 @@ export const PreferencesWindow = GObject.registerClass({
   GTypeName: 'PreferencesWindow',
   Template: 'resource:///io/github/dubstar_04/design/ui/preferences.ui',
   InternalChildren: [],
-}, class PreferencesWindow extends Adw.PreferencesWindow {
+}, class PreferencesWindow extends Adw.PreferencesDialog {
   constructor(settings) {
     super({});
     this.settings = settings;

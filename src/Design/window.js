@@ -293,8 +293,7 @@ export const DesignWindow = GObject.registerClass({
 
   showPreferencesWindow() {
     const preferencesWin = new PreferencesWindow(this.settings);
-    preferencesWin.set_transient_for(this);
-    preferencesWin.present();
+    preferencesWin.present(this);
   }
 
   showLayersWindow() {
