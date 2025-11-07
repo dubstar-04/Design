@@ -48,6 +48,7 @@
 			<li>Only allow files to be opened once</li>
 			<li>Show save work dialog for unsaved changes</li>
 			<li>Only show command input and toolbars for mouse input</li>
+			<li>Addd Zoom Command</li>
 			</ul>
 		</description>
 		</release>
