@@ -317,7 +317,7 @@ template $PreferencePageDimensionStyle : Adw.PreferencesPage {
 
                 Adw.SpinRow DIMRND {
                     name: 'DIMRND';
-                    title: _("Angular Precision");
+                    title: _("Dimension Rounding");
                     subtitle: _("Rounds all dimensioning distances to the specified value (DIMRND)");
                     digits: 1;
                     notify::value => $onStyleUpdate();
