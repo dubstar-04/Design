@@ -4,7 +4,7 @@ import Gdk from 'gi://Gdk';
 import Adw from 'gi://Adw?version=1';
 import Cairo from 'cairo';
 
-import {Core} from '../Design-Core/core/core/core.js';
+import { Core } from '../Design-Core/core/core/core.js';
 
 export const Canvas = GObject.registerClass({
   GTypeName: 'Canvas',
@@ -18,10 +18,10 @@ export const Canvas = GObject.registerClass({
     ),
   },
   Signals: {
-    'commandline-updated': {param_types: [GObject.TYPE_STRING]},
-    'mouseposition-updated': {param_types: [GObject.TYPE_STRING]},
+    'commandline-updated': { param_types: [GObject.TYPE_STRING] },
+    'mouseposition-updated': { param_types: [GObject.TYPE_STRING] },
     'selection-updated': {},
-    'input-changed': {param_types: [GObject.TYPE_BOOLEAN]},
+    'input-changed': { param_types: [GObject.TYPE_BOOLEAN] },
   },
 }, class Canvas extends Gtk.DrawingArea {
   constructor(commandLine) {
@@ -70,19 +70,19 @@ export const Canvas = GObject.registerClass({
 
     const shortcutController = new Gtk.ShortcutController();
 
-    const copyShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.CallbackAction.new(this.onCopy.bind(this))});
+    const copyShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.CallbackAction.new(this.onCopy.bind(this)) });
     shortcutController.add_shortcut(copyShortcut);
 
-    const pasteShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>V'), action: Gtk.CallbackAction.new(this.onPaste.bind(this))});
+    const pasteShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>V'), action: Gtk.CallbackAction.new(this.onPaste.bind(this)) });
     shortcutController.add_shortcut(pasteShortcut);
 
-    const undoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Z'), action: Gtk.CallbackAction.new(this.onUndo.bind(this))});
+    const undoShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Z'), action: Gtk.CallbackAction.new(this.onUndo.bind(this)) });
     shortcutController.add_shortcut(undoShortcut);
 
-    const cutShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>X'), action: Gtk.CallbackAction.new(this.onCut.bind(this))});
+    const cutShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>X'), action: Gtk.CallbackAction.new(this.onCut.bind(this)) });
     shortcutController.add_shortcut(cutShortcut);
 
-    const selectAllShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>A'), action: Gtk.CallbackAction.new(this.onSelectAll.bind(this))});
+    const selectAllShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>A'), action: Gtk.CallbackAction.new(this.onSelectAll.bind(this)) });
     shortcutController.add_shortcut(selectAllShortcut);
 
     this.add_controller(shortcutController);
@@ -157,9 +157,9 @@ export const Canvas = GObject.registerClass({
 
   onStyleChange() {
     if (this.styleManager.get_dark()) {
-      this.core.settings.canvasbackgroundcolour = {r: 30, g: 30, b: 30};
+      this.core.settings.canvasbackgroundcolour = { r: 30, g: 30, b: 30 };
     } else {
-      this.core.settings.canvasbackgroundcolour = {r: 246, g: 245, b: 244};
+      this.core.settings.canvasbackgroundcolour = { r: 246, g: 245, b: 244 };
     }
     this.queue_draw();
   }

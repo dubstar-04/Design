@@ -21,7 +21,7 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 import Pango from 'gi://Pango';
 
-import {DesignCore} from '../Design-Core/core/designCore.js';
+import { DesignCore } from '../Design-Core/core/designCore.js';
 
 export const PreferencePageTextStyle = GObject.registerClass({
   GTypeName: 'PreferencePageTextStyle',
@@ -53,7 +53,7 @@ export const PreferencePageTextStyle = GObject.registerClass({
     const styles = DesignCore.StyleManager.getItems();
 
     styles.forEach((style, index) => {
-      const row = new Adw.ActionRow({title: style.name, activatable: true});
+      const row = new Adw.ActionRow({ title: style.name, activatable: true });
       const radioButton = new Gtk.CheckButton();
       row.connect('activated', this.onStyleSelected.bind(this));
       radioButton.connect('toggled', this.setCurrentStyle.bind(this, row));

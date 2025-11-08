@@ -20,7 +20,7 @@ import GLib from 'gi://GLib';
 import Gio from 'gi://Gio';
 import GObject from 'gi://GObject';
 
-import {DesignCore} from '../Design-Core/core/designCore.js';
+import { DesignCore } from '../Design-Core/core/designCore.js';
 
 export const Settings = GObject.registerClass({
   GTypeName: 'Settings',
@@ -28,7 +28,7 @@ export const Settings = GObject.registerClass({
   Signals: {},
 },
 class Settings extends Gio.Settings {
-  constructor(window, props = {schema_id: 'io.github.dubstar_04.design', path: '/io/github/dubstar_04/design/'}) {
+  constructor(window, props = { schema_id: 'io.github.dubstar_04.design', path: '/io/github/dubstar_04/design/' }) {
     super(props);
 
     this.window = window;

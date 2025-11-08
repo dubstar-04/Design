@@ -20,7 +20,7 @@ import Gtk from 'gi://Gtk?version=4.0';
 import GObject from 'gi://GObject';
 import Gdk from 'gi://Gdk';
 
-import {DesignCore} from '../Design-Core/core/designCore.js';
+import { DesignCore } from '../Design-Core/core/designCore.js';
 
 
 export const CommandLine = GObject.registerClass({

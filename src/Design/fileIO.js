@@ -1,7 +1,7 @@
 import Gtk from 'gi://Gtk';
 import Gio from 'gi://Gio';
 
-import {DesignCore} from '../Design-Core/core/designCore.js';
+import { DesignCore } from '../Design-Core/core/designCore.js';
 
 export class FileIO {
   // TODO: FileIO needs to be refactored considering the following:

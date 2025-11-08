@@ -20,7 +20,7 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 
-import {DesignCore} from '../Design-Core/core/designCore.js';
+import { DesignCore } from '../Design-Core/core/designCore.js';
 
 export const PreferencePageLineType = GObject.registerClass({
   GTypeName: 'PreferencePageLineType',
@@ -60,7 +60,7 @@ export const PreferencePageLineType = GObject.registerClass({
       const styleLoaded = DesignCore.LTypeManager.itemExists(style.name);
       const indelibleStyle = DesignCore.LTypeManager.indelibleItems.some((iStyle) => iStyle.toUpperCase() === style.name);
 
-      const checkBox = new Gtk.CheckButton({active: styleLoaded, sensitive: !(styleLoaded||indelibleStyle)});
+      const checkBox = new Gtk.CheckButton({ active: styleLoaded, sensitive: !(styleLoaded||indelibleStyle) });
       checkBox.connect('toggled', this.styleChecked.bind(this, row));
       row.id = index;
 
