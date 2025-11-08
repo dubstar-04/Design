@@ -21,9 +21,9 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
 
-import {Colours} from '../Design-Core/core/lib/colours.js';
-import {DesignCore} from '../Design-Core/core/designCore.js';
-import {Patterns} from '../Design-Core/core/lib/patterns.js';
+import { Colours } from '../Design-Core/core/lib/colours.js';
+import { DesignCore } from '../Design-Core/core/designCore.js';
+import { Patterns } from '../Design-Core/core/lib/patterns.js';
 
 export const PropertiesWindow = GObject.registerClass({
   GTypeName: 'PropertiesWindow',
@@ -109,7 +109,7 @@ export const PropertiesWindow = GObject.registerClass({
           case 'lineWidth':
           case 'scale':
           case 'angle':
-            suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
+            suffixWidget = new Gtk.Entry({ valign: Gtk.Align.CENTER, text: `${value}` });
             suffixWidget.width_request = widgetWidth;
             const changedSignal = suffixWidget.connect('changed', () => {
               // block the change signal being emitted during update
@@ -139,7 +139,7 @@ export const PropertiesWindow = GObject.registerClass({
           // Boolean type properties
           case 'backwards':
           case 'upsideDown':
-            suffixWidget = new Gtk.Switch({valign: Gtk.Align.CENTER, state: value});
+            suffixWidget = new Gtk.Switch({ valign: Gtk.Align.CENTER, state: value });
             suffixWidget.connect('notify::active', () => {
               DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.state);
             });
@@ -197,7 +197,7 @@ export const PropertiesWindow = GObject.registerClass({
             break;
           // String type properties
           case 'string':
-            suffixWidget = new Gtk.Entry({valign: Gtk.Align.CENTER, text: `${value}`});
+            suffixWidget = new Gtk.Entry({ valign: Gtk.Align.CENTER, text: `${value}` });
             suffixWidget.width_request = widgetWidth;
             suffixWidget.connect('activate', () => {
               DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.text);
@@ -238,14 +238,14 @@ export const PropertiesWindow = GObject.registerClass({
             */
           default:
             // Non-editable properties
-            suffixWidget = new Gtk.Label({valign: Gtk.Align.CENTER, label: `${value}`});
+            suffixWidget = new Gtk.Label({ valign: Gtk.Align.CENTER, label: `${value}` });
             suffixWidget.width_request = widgetWidth;
             break;
         }
 
         // Get a formatted version of the property name
         const formattedName = this.formatDisplayName(property);
-        const propRow = new Adw.ActionRow({title: formattedName});
+        const propRow = new Adw.ActionRow({ title: formattedName });
         propRow.add_suffix(suffixWidget);
         this._elementList.append(propRow);
       }

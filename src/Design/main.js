@@ -21,9 +21,9 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 import Adw from 'gi://Adw?version=1';
 
-import {DesignWindow} from './window.js';
-import {FileIO} from './fileIO.js';
-import {Logging} from '../Design-Core/core/lib/logging.js';
+import { DesignWindow } from './window.js';
+import { FileIO } from './fileIO.js';
+import { Logging } from '../Design-Core/core/lib/logging.js';
 
 pkg.initGettext();
 pkg.initFormat();
@@ -31,16 +31,16 @@ pkg.initFormat();
 export const DesignApplication = GObject.registerClass(
     class DesignApplication extends Adw.Application {
       constructor() {
-        super({application_id: 'io.github.dubstar_04.design', flags: Gio.ApplicationFlags.HANDLES_OPEN});
+        super({ application_id: 'io.github.dubstar_04.design', flags: Gio.ApplicationFlags.HANDLES_OPEN });
 
-        const quitAction = new Gio.SimpleAction({name: 'quit'});
+        const quitAction = new Gio.SimpleAction({ name: 'quit' });
         quitAction.connect('activate', (action) => {
           this.quit();
         });
         this.add_action(quitAction);
         this.set_accels_for_action('app.quit', ['<primary>q']);
 
-        const showAboutAction = new Gio.SimpleAction({name: 'about'});
+        const showAboutAction = new Gio.SimpleAction({ name: 'about' });
         showAboutAction.connect('activate', (action) => {
           const aboutParams = {
             developer_name: 'Daniel Wood',

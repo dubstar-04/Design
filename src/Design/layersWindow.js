@@ -23,8 +23,8 @@ import Gdk from 'gi://Gdk';
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
-import {Colours} from '../Design-Core/core/lib/colours.js';
-import {DesignCore} from '../Design-Core/core/designCore.js';
+import { Colours } from '../Design-Core/core/lib/colours.js';
+import { DesignCore } from '../Design-Core/core/designCore.js';
 
 export const LayersWindow = GObject.registerClass({
   GTypeName: 'LayersWindow',
@@ -124,10 +124,10 @@ export const LayersWindow = GObject.registerClass({
     const clayer = DesignCore.LayerManager.getCstyle();
 
     for (let i = 0; i < layers.length; i++) {
-      const colourButton = new Gtk.ColorButton({'valign': Gtk.Align.CENTER, 'rgba': this.toRgba(layers[i].colour)});
+      const colourButton = new Gtk.ColorButton({ 'valign': Gtk.Align.CENTER, 'rgba': this.toRgba(layers[i].colour) });
       colourButton.connect('color-set', this.onColourChange.bind(this));
 
-      const layerSwitch = new Gtk.Switch({valign: Gtk.Align.CENTER, active: layers[i].on});
+      const layerSwitch = new Gtk.Switch({ valign: Gtk.Align.CENTER, active: layers[i].on });
       layerSwitch.connect('state-set', this.onToggled.bind(this));
 
       const menu = new Gio.Menu();
@@ -136,10 +136,10 @@ export const LayersWindow = GObject.registerClass({
       menu.append(_('Make Current'), `win.layerCurrentAction("${layers[i].name}")`);
       const appMenu = Gtk.PopoverMenu.new_from_model(menu);
 
-      const menuButton = new Gtk.MenuButton({popover: appMenu, valign: Gtk.Align.CENTER, icon_name: 'view-more-symbolic', css_classes: ['flat']});
+      const menuButton = new Gtk.MenuButton({ popover: appMenu, valign: Gtk.Align.CENTER, icon_name: 'view-more-symbolic', css_classes: ['flat'] });
 
 
-      const row = new Adw.ActionRow({title: layers[i].name, activatable: true});
+      const row = new Adw.ActionRow({ title: layers[i].name, activatable: true });
       row.connect('activated', this.onLayerSelected.bind(this));
 
       row.add_prefix(colourButton);
@@ -160,7 +160,7 @@ export const LayersWindow = GObject.registerClass({
     const rgba = colourButton.rgba.to_string();
     const rgb = rgba.substr(4).split(')')[0].split(',');
     // log(rgb)
-    const colour = {r: Number(rgb[0]), g: Number(rgb[1]), b: Number(rgb[2])};
+    const colour = { r: Number(rgb[0]), g: Number(rgb[1]), b: Number(rgb[2]) };
     // log(colour)
     layer.colour = colour;
     this.get_transient_for().getActiveCanvas().queue_draw();

@@ -21,17 +21,17 @@ import Gtk from 'gi://Gtk';
 import Gio from 'gi://Gio';
 import Adw from 'gi://Adw?version=1';
 
-import {Canvas} from './canvas.js';
-import {CommandLine} from './commandLine.js';
-import {PreferencesWindow} from './preferencesWindow.js';
-import {LayersWindow} from './layersWindow.js';
-import {ExportWindow} from './exportWindow.js';
-import {PropertiesWindow} from './propertiesWindow.js';
-import {Settings} from './settings.js';
+import { Canvas } from './canvas.js';
+import { CommandLine } from './commandLine.js';
+import { PreferencesWindow } from './preferencesWindow.js';
+import { LayersWindow } from './layersWindow.js';
+import { ExportWindow } from './exportWindow.js';
+import { PropertiesWindow } from './propertiesWindow.js';
+import { Settings } from './settings.js';
 
-import {FileIO} from './fileIO.js';
+import { FileIO } from './fileIO.js';
 
-import {DesignCore} from '../Design-Core/core/designCore.js';
+import { DesignCore } from '../Design-Core/core/designCore.js';
 
 export const DesignWindow = GObject.registerClass({
   GTypeName: 'DesignWindow',
@@ -51,7 +51,7 @@ export const DesignWindow = GObject.registerClass({
   InternalChildren: ['tabView', 'mousePosLabel', 'commandLineEntry', 'newButton', 'entitiesToolbar', 'toolsToolbar', 'toastoverlay'],
 }, class DesignWindow extends Adw.ApplicationWindow {
   constructor(application) {
-    super({application});
+    super({ application });
 
     // initialise the application settings
     this.settings = new Settings(this);
@@ -131,16 +131,16 @@ export const DesignWindow = GObject.registerClass({
 
     const shortcutController = new Gtk.ShortcutController();
 
-    const toggleGridShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('<Primary>G'), action: Gtk.CallbackAction.new(this.settings.onSettingToggled.bind(this.settings, 'drawgrid'))});
+    const toggleGridShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>G'), action: Gtk.CallbackAction.new(this.settings.onSettingToggled.bind(this.settings, 'drawgrid')) });
     shortcutController.add_shortcut(toggleGridShortcut);
 
-    const helpShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F1'), action: Gtk.CallbackAction.new(this.openHelp.bind(this))});
+    const helpShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('F1'), action: Gtk.CallbackAction.new(this.openHelp.bind(this)) });
     shortcutController.add_shortcut(helpShortcut);
 
-    const toggleOrthoShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F8'), action: Gtk.CallbackAction.new(this.settings.onSettingToggled.bind(this.settings, 'ortho'))});
+    const toggleOrthoShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('F8'), action: Gtk.CallbackAction.new(this.settings.onSettingToggled.bind(this.settings, 'ortho')) });
     shortcutController.add_shortcut(toggleOrthoShortcut);
 
-    const togglePolarShortcut = new Gtk.Shortcut({trigger: Gtk.ShortcutTrigger.parse_string('F9'), action: Gtk.CallbackAction.new(this.settings.onSettingToggled.bind(this.settings, 'polar'))});
+    const togglePolarShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('F9'), action: Gtk.CallbackAction.new(this.settings.onSettingToggled.bind(this.settings, 'polar')) });
     shortcutController.add_shortcut(togglePolarShortcut);
 
     this.add_controller(shortcutController);
@@ -371,11 +371,11 @@ export const DesignWindow = GObject.registerClass({
       const canvas = page.get_child();
 
       if (canvas && canvas.getFilePath() === filePath) {
-        return {isOpen: true, page: page};
+        return { isOpen: true, page: page };
       }
     }
 
-    return {isOpen: false, page: null};
+    return { isOpen: false, page: null };
   }
 
   switchToTab(page) {

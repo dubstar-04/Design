@@ -20,9 +20,9 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 
-import {DesignCore} from '../Design-Core/core/designCore.js';
+import { DesignCore } from '../Design-Core/core/designCore.js';
 
-import {FileIO} from './fileIO.js';
+import { FileIO } from './fileIO.js';
 
 export const ExportWindow = GObject.registerClass({
   GTypeName: 'ExportWindow',
@@ -46,7 +46,7 @@ export const ExportWindow = GObject.registerClass({
 
 
     for (const [key, value] of Object.entries(versions)) {
-      const propRow = new Adw.ActionRow({title: key, subtitle: value});
+      const propRow = new Adw.ActionRow({ title: key, subtitle: value });
       const radioButton = new Gtk.CheckButton();
       radioButton.connect('toggled', this.onChecked.bind(this));
       radioButton.id = key;

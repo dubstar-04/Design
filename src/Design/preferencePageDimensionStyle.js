@@ -20,7 +20,7 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 
-import {DesignCore} from '../Design-Core/core/designCore.js';
+import { DesignCore } from '../Design-Core/core/designCore.js';
 
 export const PreferencePageDimensionStyle = GObject.registerClass({
   Properties: {},
@@ -92,7 +92,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     const styles = DesignCore.DimStyleManager.getItems();
 
     styles.forEach((style, index) => {
-      const row = new Adw.ActionRow({title: style.name, activatable: true});
+      const row = new Adw.ActionRow({ title: style.name, activatable: true });
       const radioButton = new Gtk.CheckButton();
       row.connect('activated', this.onStyleSelected.bind(this));
       radioButton.connect('toggled', this.setCurrentStyle.bind(this, row));

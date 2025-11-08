@@ -20,10 +20,10 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 // import Gio from 'gi://Gio';
 
-import {PreferencePageSettings} from './preferencePageSettings.js';
-import {PreferencePageTextStyle} from './preferencePageTextStyle.js';
+import { PreferencePageSettings } from './preferencePageSettings.js';
+import { PreferencePageTextStyle } from './preferencePageTextStyle.js';
 // import {PreferencePageDimensionStyle} from './preferencePageDimensionStyle.js';
-import {PreferencePageLineType} from './preferencePageLineType.js';
+import { PreferencePageLineType } from './preferencePageLineType.js';
 
 export const PreferencesWindow = GObject.registerClass({
   GTypeName: 'PreferencesWindow',
