@@ -21,13 +21,13 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
 
-import { Colours } from '../Design-Core/core/lib/colours.js';
-import { DesignCore } from '../Design-Core/core/designCore.js';
-import { Patterns } from '../Design-Core/core/lib/patterns.js';
+import { Colours } from '../../Design-Core/core/lib/colours.js';
+import { DesignCore } from '../../Design-Core/core/designCore.js';
+import { Patterns } from '../../Design-Core/core/lib/patterns.js';
 
 export const PropertiesWindow = GObject.registerClass({
   GTypeName: 'PropertiesWindow',
-  Template: 'resource:///io/github/dubstar_04/design/ui/properties.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/properties/properties.ui',
   InternalChildren: ['stack', 'elementSelector', 'elementList'],
 }, class PropertiesWindow extends Adw.ApplicationWindow {
   constructor() {

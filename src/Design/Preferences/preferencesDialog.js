@@ -1,4 +1,4 @@
-/* preferencesWindow.js
+/* PreferencesDialog.js
  *
  * Copyright 2022 Daniel Wood
  *
@@ -25,11 +25,11 @@ import { PreferencePageTextStyle } from './preferencePageTextStyle.js';
 import { PreferencePageDimensionStyle } from './preferencePageDimensionStyle.js';
 import { PreferencePageLineType } from './preferencePageLineType.js';
 
-export const PreferencesWindow = GObject.registerClass({
-  GTypeName: 'PreferencesWindow',
-  Template: 'resource:///io/github/dubstar_04/design/ui/preferences.ui',
+export const PreferencesDialog = GObject.registerClass({
+  GTypeName: 'PreferencesDialog',
+  Template: 'resource:///io/github/dubstar_04/design/ui/preferences/preferences.ui',
   InternalChildren: [],
-}, class PreferencesWindow extends Adw.PreferencesDialog {
+}, class PreferencesDialog extends Adw.PreferencesDialog {
   constructor(settings) {
     super({});
     this.settings = settings;

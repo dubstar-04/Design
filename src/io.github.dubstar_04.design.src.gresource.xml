@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/io/github/dubstar_04/design/js">
+    <!-- Main application -->
     <file>Design/main.js</file>
     <file>Design/window.js</file>
     <file>Design/canvas.js</file>
-    <file>Design/preferencesWindow.js</file>
-    <file>Design/preferencePageSettings.js</file>
-    <file>Design/preferencePageDimensionStyle.js</file>
-    <file>Design/preferencePageTextStyle.js</file>
-    <file>Design/preferencePageLineType.js</file>
-    <file>Design/layersWindow.js</file>
     <file>Design/exportWindow.js</file>
-    <file>Design/propertiesWindow.js</file>
     <file>Design/commandLine.js</file>
     <file>Design/settings.js</file>
     <file>Design/fileIO.js</file>
-
+    <!-- Properties -->
+    <file>Design/Properties/propertiesWindow.js</file>
+    <!-- Layers -->
+    <file>Design/Layers/layersWindow.js</file>
+    <!-- Preferences -->
+    <file>Design/Preferences/preferencesDialog.js</file>
+    <file>Design/Preferences/preferencePageSettings.js</file>
+    <file>Design/Preferences/preferencePageDimensionStyle.js</file>
+    <file>Design/Preferences/preferencePageTextStyle.js</file>
+    <file>Design/Preferences/preferencePageLineType.js</file>
     <!-- Design Core -->
     <file>Design-Core/core/designCore.js</file>
     <file>Design-Core/core/core/core.js</file>
@@ -45,18 +48,18 @@
     <file>Design-Core/core/lib/dxf/dxfRead.js</file>
     <file>Design-Core/core/lib/dxf/dxfWrite.js</file>
     <file>Design-Core/core/lib/dxf/dxfIterator.js</file>
-
+    <!-- DXF Sections -->
     <file>Design-Core/core/lib/dxf/sections/blocks.js</file>
     <file>Design-Core/core/lib/dxf/sections/entities.js</file>
     <file>Design-Core/core/lib/dxf/sections/header.js</file>
     <file>Design-Core/core/lib/dxf/sections/section.js</file>
     <file>Design-Core/core/lib/dxf/sections/tables.js</file>
-
+    <!-- Properties -->
     <file>Design-Core/core/properties/property.js</file>
     <file>Design-Core/core/properties/propertyManager.js</file>
     <file>Design-Core/core/properties/flags.js</file>
     <file>Design-Core/core/properties/dimType.js</file>
-
+    <!-- Dimenstions -->
     <file>Design-Core/core/dimensions/dimension.js</file>
     <file>Design-Core/core/dimensions/angularDimension.js</file>
     <file>Design-Core/core/dimensions/alignedDimension.js</file>
@@ -67,7 +70,7 @@
     <file>Design-Core/core/dimensions/linearDimension.js</file>
     <file>Design-Core/core/dimensions/baseCircularDimension.js</file>
     <file>Design-Core/core/dimensions/baseLinearDimension.js</file>
-
+    <!-- Entities -->
     <file>Design-Core/core/entities/arc.js</file>
     <file>Design-Core/core/entities/basePolyline.js</file>
     <file>Design-Core/core/entities/circle.js</file>
@@ -81,7 +84,7 @@
     <file>Design-Core/core/entities/rectangle.js</file>
     <file>Design-Core/core/entities/solid.js</file>
     <file>Design-Core/core/entities/text.js</file>
-
+    <!-- Tools -->
     <file>Design-Core/core/tools/copy.js</file>
     <file>Design-Core/core/tools/distance.js</file>
     <file>Design-Core/core/tools/erase.js</file>
@@ -94,7 +97,7 @@
     <file>Design-Core/core/tools/tool.js</file>
     <file>Design-Core/core/tools/purge.js</file>
     <file>Design-Core/core/tools/zoom.js</file>
-
+    <!-- Tables -->
     <file>Design-Core/core/tables/block.js</file>
     <file>Design-Core/core/tables/blockManager.js</file>
     <file>Design-Core/core/tables/dimStyle.js</file>

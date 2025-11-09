@@ -1,4 +1,4 @@
-/* preferencesWindow.js
+/* PreferencePageTextStyle.js
  *
  * Copyright 2024 Daniel Wood
  *
@@ -21,11 +21,11 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 import Pango from 'gi://Pango';
 
-import { DesignCore } from '../Design-Core/core/designCore.js';
+import { DesignCore } from '../../Design-Core/core/designCore.js';
 
 export const PreferencePageTextStyle = GObject.registerClass({
   GTypeName: 'PreferencePageTextStyle',
-  Template: 'resource:///io/github/dubstar_04/design/ui/preferencePageTextStyle.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/preferences/preferencePageTextStyle.ui',
   InternalChildren: ['stylesList', 'name', 'font', 'upsideDown', 'backwards'],
 }, class PreferencePageTextStyle extends Adw.PreferencesPage {
   constructor() {
@@ -112,7 +112,7 @@ export const PreferencePageTextStyle = GObject.registerClass({
     const row = this._stylesList.get_selected_row();
     if (row) {
       const dialog = new Adw.MessageDialog();
-      const parent = this.get_ancestor(Adw.PreferencesWindow);
+      const parent = this.get_ancestor(Adw.PreferencesDialog);
       dialog.set_transient_for(parent);
       dialog.set_heading('Delete Style?');
       dialog.set_body(`Delete style: ${row.title}?`);

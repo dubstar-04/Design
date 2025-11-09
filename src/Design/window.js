@@ -23,13 +23,13 @@ import Adw from 'gi://Adw?version=1';
 
 import { Canvas } from './canvas.js';
 import { CommandLine } from './commandLine.js';
-import { PreferencesWindow } from './preferencesWindow.js';
-import { LayersWindow } from './layersWindow.js';
 import { ExportWindow } from './exportWindow.js';
-import { PropertiesWindow } from './propertiesWindow.js';
 import { Settings } from './settings.js';
-
 import { FileIO } from './fileIO.js';
+
+import { PropertiesWindow } from './Properties/propertiesWindow.js';
+import { LayersWindow } from './Layers/layersWindow.js';
+import { PreferencesDialog } from './Preferences/preferencesDialog.js';
 
 import { DesignCore } from '../Design-Core/core/designCore.js';
 
@@ -93,7 +93,7 @@ export const DesignWindow = GObject.registerClass({
       name: 'preferences',
       parameter_type: null,
     });
-    preferences.connect('activate', this.showPreferencesWindow.bind(this));
+    preferences.connect('activate', this.showPreferencesDialog.bind(this));
     application.add_action(preferences);
     application.set_accels_for_action('app.preferences', ['<primary>comma']);
 
@@ -291,8 +291,8 @@ export const DesignWindow = GObject.registerClass({
     shortcutsWin.present();
   }
 
-  showPreferencesWindow() {
-    const preferencesWin = new PreferencesWindow(this.settings);
+  showPreferencesDialog() {
+    const preferencesWin = new PreferencesDialog(this.settings);
     preferencesWin.present(this);
   }
 

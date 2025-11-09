@@ -1,4 +1,4 @@
-/* preferencesWindow.js
+/* PreferencesPageDimensionStyle.js
  *
  * Copyright 2024 Daniel Wood
  *
@@ -19,28 +19,92 @@
 import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
+import Gio from 'gi://Gio';
 
-import { DesignCore } from '../Design-Core/core/designCore.js';
+import { DesignCore } from '../../Design-Core/core/designCore.js';
+
+export const DimensionStyleRow = GObject.registerClass({
+  Properties: {},
+  GTypeName: 'DimensionStyleRow',
+  Signals: {
+    'default-changed': { param_types: [GObject.TYPE_STRING] },
+    'edit-style': { param_types: [GObject.TYPE_STRING] },
+    'delete-style': { param_types: [GObject.TYPE_STRING] },
+  },
+  Template: 'resource:///io/github/dubstar_04/design/ui/preferences/dimensionStyleRow.ui',
+  InternalChildren: ['current_style_icon'],
+}, class DimensionStyleRow extends Adw.ActionRow {
+  constructor() {
+    super({});
+
+    const dimensionStyle = new Gio.SimpleActionGroup();
+    this.insert_action_group('dimension-style', dimensionStyle);
+
+    // Add actions
+    const makeDefault = new Gio.SimpleAction({ name: 'make-default' });
+    dimensionStyle.add_action(makeDefault);
+    makeDefault.connect('activate', this.makeDefault.bind(this));
+
+    const edit = new Gio.SimpleAction({ name: 'edit' });
+    dimensionStyle.add_action(edit);
+    edit.connect('activate', this.editStyle.bind(this));
+
+    const deleteStyle = new Gio.SimpleAction({ name: 'delete' });
+    dimensionStyle.add_action(deleteStyle);
+    deleteStyle.connect('activate', this.deleteStyle.bind(this));
+  }
+
+  set_current(isCurrent) {
+    if (isCurrent) {
+      this._current_style_icon.set_visible(true);
+    } else {
+      this._current_style_icon.set_visible(false);
+    }
+  }
+
+  makeDefault() {
+    console.log('Make Default:', this.title);
+    this.emit('default-changed', this.title);
+  }
+
+  editStyle() {
+    console.log('Edit Style:', this.title);
+    this.emit('edit-style', this.title);
+  }
+
+  deleteStyle() {
+    console.log('Delete Style:', this.title);
+    this.emit('delete-style', this.title);
+  }
+},
+);
 
 export const PreferencePageDimensionStyle = GObject.registerClass({
   Properties: {},
   GTypeName: 'PreferencePageDimensionStyle',
-  Template: 'resource:///io/github/dubstar_04/design/ui/preferencePageDimensionStyle.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/preferences/preferencePageDimensionStyle.ui',
   InternalChildren: [
     // General
-    'stylesList', 'name', 'DIMCLRD', 'DIMASZ', 'DIMCENVALUE', 'DIMCENSTYL',
+    'stylesList',
+    // Subpage
+    'editDimensionStylePage',
+    // Style
+    'name',
+    // Dimension Line
+    /* 'DIMCLRD',  'DIMLTYPE','DIMLWD',*/ 'DIMDLI', 'DIMSD1', 'DIMSD2', 'DIMTOFL',
+    // Extension Lines
+    /* 'DIMCLRE', 'DIMTEX1', 'DIMTEX2', 'DIMLWE'*/ 'DIMSE1', 'DIMSE2', 'DIMEXE', 'DIMEXO', /* 'DIMFXLON', 'DIMFXL'*/
+    // Symbols and Arrows
+    'DIMASZ', 'DIMCENSTYL', 'DIMCENVALUE',
     // Text
-    'DIMTXT', 'DIMTXSTY', 'DIMCLRT', 'DIMGAP', 'DIMTAD', 'DIMJUST', 'DIMTIH', 'DIMTOH',
-    /* 'DIMTOL', 'DIMTZIN', 'DIMTZOUT', 'DIMALT', 'DIMATFIT',*/
-    // Dimension
-    /* 'DIMLWD',*/ 'DIMDLI', 'DIMSD1', 'DIMSD2', 'DIMDEC', 'DIMADEC', 'DIMRND',
-    // Extensions
-    /* 'DIMLWE',*/ 'DIMSE1', 'DIMSE2', 'DIMEXE', 'DIMEXO', 'DIMTOFL', /* 'DIMFXLON', 'DIMFXL',*/
-
+    'DIMTXSTY', /* 'DIMCLRT',*/ 'DIMTXT', /* 'DIMTXTBOX',*/ 'DIMTAD', 'DIMJUST', 'DIMGAP', 'DIMTIH', 'DIMTOH',
+    // Precision
+    'DIMDEC', 'DIMADEC', 'DIMDSEP', 'DIMRND',
   ],
 }, class PreferencePageDimensionStyle extends Adw.PreferencesPage {
   constructor() {
     super();
+
     this.loading = true;
     this.reload();
   }
@@ -94,27 +158,15 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     const styles = DesignCore.DimStyleManager.getItems();
 
     styles.forEach((style, index) => {
-      const row = new Adw.ActionRow({ title: style.name, activatable: true });
-      const radioButton = new Gtk.CheckButton();
-      row.connect('activated', this.onStyleSelected.bind(this));
-      radioButton.connect('toggled', this.setCurrentStyle.bind(this, row));
-      row.id = index;
-
-
-      if (index === 0) {
-        this.radioButtonGroup = radioButton;
-      } else {
-        radioButton.group = this.radioButtonGroup;
-      }
-
-      if (style.name === DesignCore.DimStyleManager.getCstyle()) {
-        radioButton.set_active(true);
-        this._stylesList.select_row(row);
-        this.onStyleSelected(row);
-      }
-
-      row.add_prefix(radioButton);
+      const row = new DimensionStyleRow();
+      row.title = style.name;
+      row.set_current((style.name === DesignCore.DimStyleManager.getCstyle()));
       this._stylesList.append(row);
+
+      row.connect('default-changed', this.setCurrentStyle.bind(this));
+      row.connect('edit-style', this.editStyle.bind(this));
+      row.connect('delete-style', this.removeStyle.bind(this));
+      row.connect('activated', this.editStyle.bind(this));
     });
   }
 
@@ -179,45 +231,70 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     }
   }
 
+  // Action handlers for DimensionStyleRow signals
+  // set the current style
   setCurrentStyle(row) {
     if (row) {
       DesignCore.DimStyleManager.setCstyle(row.title);
+      this.reload();
     }
   }
 
+  // open the style edit subpage
+  editStyle(row) {
+    console.log('Edit Style:', row.title);
+    if (row) {
+      this.onStyleSelected(row);
+      const parent = this.get_ancestor(Adw.PreferencesDialog);
+      log(parent);
+      if (parent) {
+        parent.push_subpage(this._editDimensionStylePage);
+      }
+    }
+  }
+
+  // delete the style
+  deleteStyle(row) {
+    console.log('Delete Style:', row.title);
+    this.removeStyle(row);
+  }
+
+  // Add new Dimension Style
   addItem() {
     DesignCore.DimStyleManager.newItem();
     this.reload();
-    const newRow = this._stylesList.get_row_at_index(DesignCore.DimStyleManager.itemCount() - 1);
-    this.onStyleSelected(newRow);
   }
 
-  removeStyle() {
-    const row = this._stylesList.get_selected_row();
+  removeStyle(row) {
     if (row) {
-      const dialog = new Adw.MessageDialog();
-      const parent = this.get_ancestor(Adw.PreferencesWindow);
-      dialog.set_transient_for(parent);
-      dialog.set_heading('Delete Style?');
-      dialog.set_body(`Delete style: ${row.title}?`);
+      const dialog = new Adw.AlertDialog({
+        heading: 'Delete Style?',
+        body: `Delete style: ${row.title}?`,
+        close_response: 'cancel',
+      });
+
       dialog.add_response('cancel', 'Cancel');
       dialog.add_response('delete', 'Delete');
+
+      // Make the delete response style destructive
       dialog.set_response_appearance('delete', Adw.ResponseAppearance.DESTRUCTIVE);
-      dialog.connect('response', this.onConfirmDialog.bind(this));
-      dialog.present();
+
+      const parent = this.get_ancestor(Adw.PreferencesDialog);
+      dialog.connect('response', this.onConfirmDialog.bind(this, row));
+      dialog.present(parent);
     }
   }
 
-  onConfirmDialog(dialog, response) {
+  onConfirmDialog(row, dialog, response) {
     if (response === 'delete') {
-      this.deleteStyle();
+      this.deleteStyle(row.title);
     }
   }
 
-  deleteStyle() {
-    const row = this._stylesList.get_selected_row();
-    if (row) {
-      DesignCore.DimStyleManager.deleteStyle(row.id);
+  deleteStyle(styleName) {
+    if (styleName) {
+      const styleIndex = DesignCore.DimStyleManager.getItemIndex(styleName);
+      DesignCore.DimStyleManager.deleteStyle(styleIndex);
       this.reload();
     }
   }
