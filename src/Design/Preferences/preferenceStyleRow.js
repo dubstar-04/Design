@@ -20,17 +20,17 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gio from 'gi://Gio';
 
-export const PreferenceDimensionStyleRow = GObject.registerClass({
+export const PreferenceStyleRow = GObject.registerClass({
   Properties: {},
-  GTypeName: 'PreferenceDimensionStyleRow',
+  GTypeName: 'PreferenceStyleRow',
   Signals: {
     'default-changed': { param_types: [GObject.TYPE_STRING] },
     'edit-style': { param_types: [GObject.TYPE_STRING] },
     'delete-style': { param_types: [GObject.TYPE_STRING] },
   },
-  Template: 'resource:///io/github/dubstar_04/design/ui/preferences/preferenceDimensionStyleRow.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/preferences/preferenceStyleRow.ui',
   InternalChildren: ['current_style_icon'],
-}, class PreferenceDimensionStyleRow extends Adw.ActionRow {
+}, class PreferenceStyleRow extends Adw.ActionRow {
   constructor() {
     super({});
 
