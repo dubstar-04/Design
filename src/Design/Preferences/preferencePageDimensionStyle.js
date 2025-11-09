@@ -237,6 +237,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
 
   onStyleUpdate(widget) {
+    if (!widget) return;
     // update core with the changed setting
     if (!this.loading) {
       // get the widget value

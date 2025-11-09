@@ -148,6 +148,7 @@ export const PreferencePageTextStyle = GObject.registerClass({
   }
 
   onStyleUpdate(widget) {
+    if (!widget) return;
     if (!this.loading) {
       // update core with the changed setting
       // get the widget value
