@@ -282,7 +282,7 @@ export const DesignWindow = GObject.registerClass({
   }
 
   onToolbarButtonPress(command) {
-    DesignCore.Scene.inputManager.onCommand(`${command}`, { source: 'toolbar' });
+    DesignCore.Scene.inputManager.onCommand(`${command}`);
   }
 
   showShortcutsWindow() {
