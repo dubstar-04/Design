@@ -62,8 +62,6 @@ export class FileIO {
     const ext = this.getFileExtension(info.get_name());
     const filePath = file.get_path();
 
-    console.log('file details:', fileName, ext);
-
     if (ext.toLowerCase() !== 'dxf') {
       DesignCore.Core.notify(`Invalid file format: ${ext}`);
       return;

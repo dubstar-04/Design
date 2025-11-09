@@ -21,13 +21,13 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
 
-import { Colours } from '../Design-Core/core/lib/colours.js';
-import { DesignCore } from '../Design-Core/core/designCore.js';
-import { Patterns } from '../Design-Core/core/lib/patterns.js';
+import { Colours } from '../../Design-Core/core/lib/colours.js';
+import { DesignCore } from '../../Design-Core/core/designCore.js';
+import { Patterns } from '../../Design-Core/core/lib/patterns.js';
 
 export const PropertiesWindow = GObject.registerClass({
   GTypeName: 'PropertiesWindow',
-  Template: 'resource:///io/github/dubstar_04/design/ui/properties.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/properties/properties.ui',
   InternalChildren: ['stack', 'elementSelector', 'elementList'],
 }, class PropertiesWindow extends Adw.ApplicationWindow {
   constructor() {
@@ -144,7 +144,7 @@ export const PropertiesWindow = GObject.registerClass({
               DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.state);
             });
             break;
-            // option type properties
+          // option type properties
           case 'horizontalAlignment':
             const halignModel = this.getModel(property);
             suffixWidget = Gtk.DropDown.new_from_strings(halignModel);
@@ -181,6 +181,7 @@ export const PropertiesWindow = GObject.registerClass({
           case 'styleName':
           case 'lineType':
           case 'patternName':
+          case 'dimensionStyle':
             const model = this.getModel(property);
             suffixWidget = Gtk.DropDown.new_from_strings(model);
             suffixWidget.width_request = widgetWidth;
@@ -197,6 +198,7 @@ export const PropertiesWindow = GObject.registerClass({
             break;
           // String type properties
           case 'string':
+          case 'textOverride':
             suffixWidget = new Gtk.Entry({ valign: Gtk.Align.CENTER, text: `${value}` });
             suffixWidget.width_request = widgetWidth;
             suffixWidget.connect('activate', () => {
@@ -265,6 +267,11 @@ export const PropertiesWindow = GObject.registerClass({
         const styles = DesignCore.StyleManager.getItems();
         const styleNames = styles.map((style) => style.name);
         model = styleNames;
+        break;
+      case 'dimensionStyle':
+        const dimSyles = DesignCore.DimStyleManager.getItems();
+        const dimStyleNames = dimSyles.map((style) => style.name);
+        model = dimStyleNames;
         break;
       case 'horizontalAlignment':
         // TODO: build human readable model for alignment

@@ -20,14 +20,15 @@ blueprints = custom_target('blueprints',
     input: files(
         'ui/window.blp',
         'ui/shortcuts.blp',
-        'ui/preferences.blp',
-        'ui/preferencePageSettings.blp',
-        'ui/preferencePageDimensionStyle.blp',
-        'ui/preferencePageLineType.blp',
-        'ui/preferencePageTextStyle.blp',
-        'ui/layers.blp',
-        'ui/properties.blp',
-        'ui/export.blp'
+        'ui/export.blp',
+        'ui/preferences/preferences.blp',
+        'ui/preferences/preferencePageSettings.blp',
+        'ui/preferences/preferencePageDimensionStyle.blp',
+        'ui/preferences/preferencePageLineType.blp',
+        'ui/preferences/preferencePageTextStyle.blp',
+        'ui/preferences/preferenceStyleRow.blp',
+        'ui/layers/layers.blp',
+        'ui/properties/properties.blp'
     ),
     output: '.',
     command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@']

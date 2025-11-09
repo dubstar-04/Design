@@ -1,4 +1,4 @@
-/* preferencesWindow.js
+/* PreferencePageSettings.js
  *
  * Copyright 2022 Daniel Wood
  *
@@ -23,7 +23,7 @@ import Gio from 'gi://Gio';
 
 export const PreferencePageSettings = GObject.registerClass({
   GTypeName: 'PreferencePageSettings',
-  Template: 'resource:///io/github/dubstar_04/design/ui/preferencePageSettings.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/preferences/preferencePageSettings.ui',
   InternalChildren: [],
 }, class PreferencePageSettings extends Adw.PreferencesPage {
   constructor(settings) {

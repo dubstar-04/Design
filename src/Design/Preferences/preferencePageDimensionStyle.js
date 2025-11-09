@@ -1,4 +1,4 @@
-/* preferencesWindow.js
+/* PreferencesPageDimensionStyle.js
  *
  * Copyright 2024 Daniel Wood
  *
@@ -20,25 +20,36 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 
-import { DesignCore } from '../Design-Core/core/designCore.js';
+import { DesignCore } from '../../Design-Core/core/designCore.js';
+import { PreferenceStyleRow } from './preferenceStyleRow.js';
 
 export const PreferencePageDimensionStyle = GObject.registerClass({
   Properties: {},
   GTypeName: 'PreferencePageDimensionStyle',
-  Template: 'resource:///io/github/dubstar_04/design/ui/preferencePageDimensionStyle.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/preferences/preferencePageDimensionStyle.ui',
   InternalChildren: [
     // General
-    'stylesList', 'name', 'DIMCLRD', 'DIMASZ', 'DIMCEN',
+    'stylesList',
+    // Subpage
+    'editDimensionStylePage',
+    // Style
+    'name',
+    // Dimension Line
+    /* 'DIMCLRD',  'DIMLTYPE','DIMLWD',*/ 'DIMDLI', 'DIMSD1', 'DIMSD2', 'DIMTOFL',
+    // Extension Lines
+    /* 'DIMCLRE', 'DIMTEX1', 'DIMTEX2', 'DIMLWE'*/ 'DIMSE1', 'DIMSE2', 'DIMEXE', 'DIMEXO', /* 'DIMFXLON', 'DIMFXL'*/
+    // Symbols and Arrows
+    'DIMASZ', 'DIMCENSTYL', 'DIMCENVALUE',
     // Text
-    'DIMTXSTY', 'DIMCLRT', 'DIMGAP', 'DIMTAD', 'DIMJUST', 'DIMTIH',
-    // Dimension
-    /* 'DIMLWD',*/ 'DIMDLI', 'DIMSD1', 'DIMSD2',
-    // Extensions
-    /* 'DIMLWE',*/ 'DIMSE1', 'DIMSE2', 'DIMEXE', 'DIMEXO', /* 'DIMFXLON', 'DIMFXL',*/
+    'DIMTXSTY', /* 'DIMCLRT',*/ 'DIMTXT', /* 'DIMTXTBOX',*/ 'DIMTAD', 'DIMJUST', 'DIMGAP', 'DIMTIH', 'DIMTOH',
+    // Precision
+    'DIMDEC', 'DIMADEC', 'DIMDSEP', 'DIMRND',
   ],
 }, class PreferencePageDimensionStyle extends Adw.PreferencesPage {
   constructor() {
     super();
+
+    this.styleIndex = -1;
     this.loading = true;
     this.reload();
   }
@@ -92,43 +103,24 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     const styles = DesignCore.DimStyleManager.getItems();
 
     styles.forEach((style, index) => {
-      const row = new Adw.ActionRow({ title: style.name, activatable: true });
-      const radioButton = new Gtk.CheckButton();
-      row.connect('activated', this.onStyleSelected.bind(this));
-      radioButton.connect('toggled', this.setCurrentStyle.bind(this, row));
-      row.id = index;
-
-
-      if (index === 0) {
-        this.radioButtonGroup = radioButton;
-      } else {
-        radioButton.group = this.radioButtonGroup;
-      }
-
-      if (style.name === DesignCore.DimStyleManager.getCstyle()) {
-        radioButton.set_active(true);
-        this._stylesList.select_row(row);
-        this.onStyleSelected(row);
-      }
-
-      row.add_prefix(radioButton);
+      const row = new PreferenceStyleRow();
+      row.title = style.name;
+      row.set_current((style.name === DesignCore.DimStyleManager.getCstyle()));
       this._stylesList.append(row);
+
+      row.connect('default-changed', this.setCurrentStyle.bind(this));
+      row.connect('edit-style', this.editStyle.bind(this));
+      row.connect('delete-style', this.removeStyle.bind(this));
+      row.connect('activated', this.editStyle.bind(this));
     });
   }
 
-  onStyleSelected(row) {
+  loadStyleProps(styleName) {
     this.loading = true;
-
-    if (row) {
-      // set the selected row
-      this._stylesList.select_row(row);
-
-      const style = DesignCore.DimStyleManager.getItemByName(row.title);
-
-      for (const property in style) {
-        if (Object.hasOwn(style, property)) {
-          this.setRowValue(property, style[property]);
-        }
+    const style = DesignCore.DimStyleManager.getItemByName(styleName);
+    for (const property in style) {
+      if (Object.hasOwn(style, property)) {
+        this.setRowValue(property, style[property]);
       }
     }
 
@@ -170,75 +162,98 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
       }
 
       if ('set_active' in widget) {
-        if ( typeof value === 'boolean') {
+        if (typeof value === 'boolean') {
           widget.set_active(value);
         }
       }
     }
   }
 
+  // Action handlers for PreferenceStyleRow signals
+  // set the current style
   setCurrentStyle(row) {
     if (row) {
       DesignCore.DimStyleManager.setCstyle(row.title);
-    }
-  }
-
-  addItem() {
-    DesignCore.DimStyleManager.newItem();
-    this.reload();
-    const newRow = this._stylesList.get_row_at_index(DesignCore.DimStyleManager.itemCount() - 1);
-    this.onStyleSelected(newRow);
-  }
-
-  removeStyle() {
-    const row = this._stylesList.get_selected_row();
-    if (row) {
-      const dialog = new Adw.MessageDialog();
-      const parent = this.get_ancestor(Adw.PreferencesWindow);
-      dialog.set_transient_for(parent);
-      dialog.set_heading('Delete Style?');
-      dialog.set_body(`Delete style: ${row.title}?`);
-      dialog.add_response('cancel', 'Cancel');
-      dialog.add_response('delete', 'Delete');
-      dialog.set_response_appearance('delete', Adw.ResponseAppearance.DESTRUCTIVE);
-      dialog.connect('response', this.onConfirmDialog.bind(this));
-      dialog.present();
-    }
-  }
-
-  onConfirmDialog(dialog, response) {
-    if (response === 'delete') {
-      this.deleteStyle();
-    }
-  }
-
-  deleteStyle() {
-    const row = this._stylesList.get_selected_row();
-    if (row) {
-      DesignCore.DimStyleManager.deleteStyle(row.id);
       this.reload();
     }
   }
 
+  // open the style edit subpage
+  editStyle(row) {
+    if (row) {
+      this.styleIndex = DesignCore.DimStyleManager.getItemIndex(row.title);
+      this.loadStyleProps(row.title);
+      const parent = this.get_ancestor(Adw.PreferencesDialog);
+      if (parent) {
+        parent.push_subpage(this._editDimensionStylePage);
+      }
+    }
+  }
+
+  // delete the style
+  deleteStyle(row) {
+    this.removeStyle(row);
+  }
+
+  // Add new Dimension Style
+  addItem() {
+    DesignCore.DimStyleManager.newItem();
+    this.reload();
+  }
+
+  removeStyle(row) {
+    if (row) {
+      const dialog = new Adw.AlertDialog({
+        heading: 'Delete Style?',
+        body: `Delete style: ${row.title}?`,
+        close_response: 'cancel',
+      });
+
+      dialog.add_response('cancel', 'Cancel');
+      dialog.add_response('delete', 'Delete');
+
+      // Make the delete response style destructive
+      dialog.set_response_appearance('delete', Adw.ResponseAppearance.DESTRUCTIVE);
+
+      const parent = this.get_ancestor(Adw.PreferencesDialog);
+      dialog.connect('response', this.onConfirmDialog.bind(this, row));
+      dialog.present(parent);
+    }
+  }
+
+  onConfirmDialog(row, dialog, response) {
+    if (response === 'delete') {
+      this.deleteStyle(row.title);
+    }
+  }
+
+  deleteStyle(styleName) {
+    if (styleName) {
+      const styleIndex = DesignCore.DimStyleManager.getItemIndex(styleName);
+      DesignCore.DimStyleManager.deleteStyle(styleIndex);
+      this.reload();
+    }
+  }
+
+
   onStyleUpdate(widget) {
+    if (!widget) return;
     // update core with the changed setting
     if (!this.loading) {
       // get the widget value
-      const value = widget.value || widget.text || widget.selected || widget.active;
-      // console.log('\nvalues - text:', widget.text, 'value:', widget.value, 'selected:', widget.selected, 'active:', widget.active);
+      let value;
+      if (widget.value !== undefined) value = widget.value;
+      if (widget.text !== undefined) value = widget.text;
+      if (widget.selected !== undefined) value = widget.selected;
+      if (widget.active !== undefined) value = widget.active;
 
-      const row = this._stylesList.get_selected_row();
-      if (row) {
-        // console.log('Style Update - Property:', widget.name, 'value:', value);
-        DesignCore.DimStyleManager.updateItem(row.id, widget.name, value);
+      DesignCore.DimStyleManager.updateItem(this.styleIndex, widget.name, value);
 
-        if (widget.name === 'name') {
-          // update the name in the style list if the name in core has changed
-          const newName = DesignCore.DimStyleManager.getItemByIndex(row.id).name;
-          row.title = newName;
-          // set the _name string - this is needed when the style name passed to core was invalid and a different name is used
-          this._name.text = newName;
-        }
+      if (widget.name === 'name') {
+        // update the name in the style list if the name in core has changed
+        const newName = DesignCore.DimStyleManager.getItemByIndex(this.styleIndex).name;
+        this._name.text = newName;
+        this.reload();
       }
     }
   }

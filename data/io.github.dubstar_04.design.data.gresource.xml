@@ -3,13 +3,17 @@
   <gresource prefix="/io/github/dubstar_04/design">
     <file>ui/window.ui</file>
     <file>ui/shortcuts.ui</file>
-    <file>ui/preferences.ui</file>
-    <file>ui/preferencePageSettings.ui</file>
-    <file>ui/preferencePageDimensionStyle.ui</file>
-    <file>ui/preferencePageLineType.ui</file>
-    <file>ui/preferencePageTextStyle.ui</file>
-    <file>ui/layers.ui</file>
-    <file>ui/properties.ui</file>
     <file>ui/export.ui</file>
+    <!-- preferences -->
+    <file>ui/preferences/preferences.ui</file>
+    <file>ui/preferences/preferencePageSettings.ui</file>
+    <file>ui/preferences/preferencePageDimensionStyle.ui</file>
+    <file>ui/preferences/preferenceStyleRow.ui</file>
+    <file>ui/preferences/preferencePageLineType.ui</file>
+    <file>ui/preferences/preferencePageTextStyle.ui</file>
+    <!-- layers -->
+    <file>ui/layers/layers.ui</file>
+    <!-- properties -->
+    <file>ui/properties/properties.ui</file>
   </gresource>
 </gresources>

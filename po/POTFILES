@@ -15,7 +15,7 @@ src/Design/exportWindow.js
 src/Design/fileIO.js
 src/Design/layersWindow.js
 src/Design/main.js
-src/Design/preferencesWindow.js
+src/Design/preferencesDialog.js
 src/Design/propertiesWindow.js
 src/Design/settings.js
 src/Design/window.js
