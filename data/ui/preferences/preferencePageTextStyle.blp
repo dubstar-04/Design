@@ -2,89 +2,82 @@ using Gtk 4.0;
 using Adw 1;
 
 template $PreferencePageTextStyle : Adw.PreferencesPage {
-    icon-name: "preferences-desktop-font-symbolic";
-    title: _("Font");
+  icon-name: "preferences-desktop-font-symbolic";
+  title: _("Font");
 
-    FontDialog font_dialog {
-      title: 'Select a font';
-      modal: true;
+  FontDialog font_dialog {
+    title: 'Select a font';
+    modal: true;
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Text Styles");
+    description: _("Create and manage text styles");
+
+    [header-suffix]
+    Button {
+      halign: center;
+      valign: center;
+      icon-name: 'list-add-symbolic';
+      clicked => $addItem();
     }
 
-    ScrolledWindow {
-      vexpand: true;
-      child: Adw.Clamp {
-        child: Box {
-            orientation: vertical;
-            margin-top: 24;
-            margin-bottom: 24;
-            margin-start: 12;
-            margin-end: 12;
-            spacing: 6;
+    ListBox stylesList {
+      selection-mode: none;
+      styles ["boxed-list"]
+    }
+  }
+} // Template
 
-            Box {
-              orientation: vertical;
-              spacing: 6;
+Adw.NavigationPage editStylePage {
+  title: _("Edit Text Style");
 
-              ListBox stylesList{
-                selection-mode: single;
-                styles ["boxed-list"]
-                }
+  Box {
+    orientation: vertical;
 
-              Box {
-                orientation:horizontal;
-                halign: end;
-                styles ["linked"]
+    Adw.HeaderBar {
+      show-end-title-buttons: false;
+    }
 
-                  Button {
-                    icon-name: 'list-add-symbolic';
-                    clicked => $addItem();
-                  }
+    Adw.PreferencesPage {
 
-                  Button {
-                    icon-name: 'list-remove-symbolic';
-                    clicked => $removeStyle();
-                  }
-              }
-            }
+    Adw.PreferencesGroup {
+      title: _("Style Settings");
 
-        Adw.PreferencesGroup {
-        title: _("Style Settings");
-
-        Adw.EntryRow name {
-          name: "name";
-          title: _("Style Name");
-          entry-activated => $onStyleUpdate();
-        }
-
-          Adw.ActionRow {
-            title: _("Font");
-            subtitle: _("Font used for the style");
-
-            [suffix]
-            FontDialogButton font {
-              name: "font";
-              dialog: font_dialog;
-              valign: center;
-              //width-request: 200;
-              notify::font-desc => $onStyleUpdate();
-            }
-          }
-
-          Adw.SwitchRow upsideDown {
-            name: 'upsideDown';
-            title: _("Upside down");
-            subtitle: _("Show the font upside down");
-            notify::active => $onStyleUpdate();
-          }
-
-          Adw.SwitchRow backwards {
-            name: 'backwards';
-            title: _("Backwards");
-            subtitle: _("Show the font backwards");
-            notify::active => $onStyleUpdate();
-          }
+      Adw.EntryRow name {
+        name: "name";
+        title: _("Style Name");
+        entry-activated => $onStyleUpdate();
       }
-    }; //Box
-  }; //Clamp
-  } //ScrolledWindow
+
+      Adw.ActionRow {
+        title: _("Font");
+        subtitle: _("Font used for the style");
+
+        [suffix]
+        FontDialogButton font {
+          name: "font";
+          dialog: font_dialog;
+          valign: center;
+          //width-request: 200;
+          notify::font-desc => $onStyleUpdate();
+        }
+      }
+
+      Adw.SwitchRow upsideDown {
+        name: 'upsideDown';
+        title: _("Upside down");
+        subtitle: _("Show the font upside down");
+        notify::active => $onStyleUpdate();
+      }
+
+      Adw.SwitchRow backwards {
+        name: 'backwards';
+        title: _("Backwards");
+        subtitle: _("Show the font backwards");
+        notify::active => $onStyleUpdate();
+      }
+    }
+  }
+  }
 }
