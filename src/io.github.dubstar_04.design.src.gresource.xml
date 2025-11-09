@@ -19,6 +19,7 @@
     <file>Design/Preferences/preferencePageDimensionStyle.js</file>
     <file>Design/Preferences/preferencePageTextStyle.js</file>
     <file>Design/Preferences/preferencePageLineType.js</file>
+    <file>Design/Preferences/preferenceDimensionStyleRow.js</file>
     <!-- Design Core -->
     <file>Design-Core/core/designCore.js</file>
     <file>Design-Core/core/core/core.js</file>

@@ -8,7 +8,7 @@
     <file>ui/preferences/preferences.ui</file>
     <file>ui/preferences/preferencePageSettings.ui</file>
     <file>ui/preferences/preferencePageDimensionStyle.ui</file>
-    <file>ui/preferences/dimensionStyleRow.ui</file>
+    <file>ui/preferences/preferenceDimensionStyleRow.ui</file>
     <file>ui/preferences/preferencePageLineType.ui</file>
     <file>ui/preferences/preferencePageTextStyle.ui</file>
     <!-- layers -->

@@ -19,65 +19,9 @@
 import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
-import Gio from 'gi://Gio';
 
 import { DesignCore } from '../../Design-Core/core/designCore.js';
-
-export const DimensionStyleRow = GObject.registerClass({
-  Properties: {},
-  GTypeName: 'DimensionStyleRow',
-  Signals: {
-    'default-changed': { param_types: [GObject.TYPE_STRING] },
-    'edit-style': { param_types: [GObject.TYPE_STRING] },
-    'delete-style': { param_types: [GObject.TYPE_STRING] },
-  },
-  Template: 'resource:///io/github/dubstar_04/design/ui/preferences/dimensionStyleRow.ui',
-  InternalChildren: ['current_style_icon'],
-}, class DimensionStyleRow extends Adw.ActionRow {
-  constructor() {
-    super({});
-
-    const dimensionStyle = new Gio.SimpleActionGroup();
-    this.insert_action_group('dimension-style', dimensionStyle);
-
-    // Add actions
-    const makeDefault = new Gio.SimpleAction({ name: 'make-default' });
-    dimensionStyle.add_action(makeDefault);
-    makeDefault.connect('activate', this.makeDefault.bind(this));
-
-    const edit = new Gio.SimpleAction({ name: 'edit' });
-    dimensionStyle.add_action(edit);
-    edit.connect('activate', this.editStyle.bind(this));
-
-    const deleteStyle = new Gio.SimpleAction({ name: 'delete' });
-    dimensionStyle.add_action(deleteStyle);
-    deleteStyle.connect('activate', this.deleteStyle.bind(this));
-  }
-
-  set_current(isCurrent) {
-    if (isCurrent) {
-      this._current_style_icon.set_visible(true);
-    } else {
-      this._current_style_icon.set_visible(false);
-    }
-  }
-
-  makeDefault() {
-    console.log('Make Default:', this.title);
-    this.emit('default-changed', this.title);
-  }
-
-  editStyle() {
-    console.log('Edit Style:', this.title);
-    this.emit('edit-style', this.title);
-  }
-
-  deleteStyle() {
-    console.log('Delete Style:', this.title);
-    this.emit('delete-style', this.title);
-  }
-},
-);
+import { PreferenceDimensionStyleRow } from './preferenceDimensionStyleRow.js';
 
 export const PreferencePageDimensionStyle = GObject.registerClass({
   Properties: {},
