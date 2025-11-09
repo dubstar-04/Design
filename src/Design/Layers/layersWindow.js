@@ -23,12 +23,12 @@ import Gdk from 'gi://Gdk';
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
-import { Colours } from '../Design-Core/core/lib/colours.js';
-import { DesignCore } from '../Design-Core/core/designCore.js';
+import { Colours } from '../../Design-Core/core/lib/colours.js';
+import { DesignCore } from '../../Design-Core/core/designCore.js';
 
 export const LayersWindow = GObject.registerClass({
   GTypeName: 'LayersWindow',
-  Template: 'resource:///io/github/dubstar_04/design/ui/layers.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/layers/layers.ui',
   InternalChildren: ['layerList', 'stack', 'backButton', 'nameEntry', 'frozenSwitch', 'lockedSwitch', 'lineType', 'lineWeightLabel', 'plottingSwitch'],
 }, class LayersWindow extends Adw.ApplicationWindow {
   constructor() {

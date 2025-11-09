@@ -1,0 +1,452 @@
+
+using Gtk 4.0;
+using Adw 1;
+
+template $PreferencePageDimensionStyle : Adw.PreferencesPage {
+	icon-name: "preferences-desktop-appearance-symbolic";
+	title: _("Dimensions");
+
+	Adw.PreferencesGroup {
+		title: _("Dimensions");
+		description: _("Create and manage dimension styles");
+
+		[header-suffix]
+		Button {
+			halign: center;
+			valign: center;
+			icon-name: 'list-add-symbolic';
+			clicked => $addItem();
+		}
+
+		ListBox stylesList {
+			selection-mode: none;
+			styles ["boxed-list"]
+		}
+	}
+} // Template
+
+Adw.NavigationPage editDimensionStylePage {
+	title: _("Edit Dimension Style");
+	//icon-name: "text-symbolic";
+	Box {
+		orientation: vertical;
+
+		Adw.HeaderBar {
+			show-end-title-buttons: false;
+		}
+
+		Adw.PreferencesPage {
+			Adw.PreferencesGroup {
+				title: _("Style");
+
+				Adw.EntryRow name {
+					name: "name";
+					title: _("Style Name");
+					entry-activated => $onStyleUpdate();
+				}
+			}
+
+			Adw.PreferencesGroup {
+				title: _("Dimension Lines");
+
+				/*
+				Adw.ActionRow {
+					title: _("Colour");
+					subtitle: _("Set the colour for the dimension lines (DIMCLRD)");
+					sensitive: false; //inactive
+
+					[suffix]
+					DropDown DIMCLRD {
+						name: 'DIMCLRD';
+						valign: center;
+						//activate => $onStyleUpdate();
+					}
+				}
+				*/
+
+				/*
+				// Omitted: DIMLTYPE Supported from R2007
+				Adw.ComboRow DIMLTYPE {
+					name: 'DIMLTYPE';
+					title: _("Linetype");
+					subtitle: _("Set the linetype of the dimension line (DIMLTYPE)");
+					model: StringList{ strings ['one', 'two']};
+					notify::selected => $onStyleUpdate();
+					sensitive: false; //inactive
+				}
+				*/
+
+				/*
+				// Omitted: Line weight not currently supported
+				Adw.ComboRow DIMLWD {
+					name: 'DIMLWD';
+					title: _("Lineweight");
+					subtitle: _("Set the lineweight of the dimension line (DIMLWD)");
+					model: StringList{ strings ['one', 'two']};
+					notify::selected => $onStyleUpdate();
+					sensitive: false; //inactive
+				}
+				*/
+
+				Adw.SpinRow DIMDLI {
+					name: 'DIMDLI';
+					title: _("Baseline spacing");
+					subtitle: _("Set the spacing between dimension lines of baseline dimensions (DIMDLI)");
+					digits: 2;
+					notify::value => $onStyleUpdate();
+
+					adjustment: Adjustment {
+						lower: 0;
+						value: 1;
+						upper: 10;
+						step-increment: 0.5;
+					};
+				}
+
+				Adw.SwitchRow DIMSD1 {
+					name: 'DIMSD1';
+					title: _("Hide line one");
+					subtitle: _("Suppress the first dimension line (DIMSD1)");
+					notify::active => $onStyleUpdate();
+				}
+
+				Adw.SwitchRow DIMSD2 {
+					name: 'DIMSD2';
+					title: _("Hide line two");
+					subtitle: _("Suppress the second dimension line (DIMSD2)");
+					notify::active => $onStyleUpdate();
+				}
+
+				Adw.SwitchRow DIMTOFL {
+					name: 'DIMTOFL';
+					title: _("Show dimension line inside circle or arc");
+					subtitle: _("Show dimension line inside the circle or arc when the text (DIMTOFL)");
+					notify::active => $onStyleUpdate();
+				}
+			} // Pref Group
+
+			Adw.PreferencesGroup {
+				title: _("Extension Lines");
+
+				/*
+				Adw.ActionRow {
+					title: _("Colour");
+					subtitle: _("Set the colour for the extension lines (DIMCLRE)");
+					sensitive: false; //inactive
+
+					[suffix]
+					DropDown DIMCLRE {
+						name: 'DIMCLRE';
+						valign: center;
+						//activate => $onStyleUpdate();
+					}
+				}
+				*/
+
+				/*
+				// Omitted: DIMLTYPE Supported from R2007
+				Adw.ComboRow DIMLTEX1 {
+					name: 'DIMLTEX1';
+					title: _("Extension line one linetype");
+					subtitle: _("Set the linetype for extension line one (DIMLTEX1)");
+					model: StringList{ strings ['one', 'two']};
+					notify::selected => $onStyleUpdate();
+					sensitive: false; //inactive
+				}
+
+				Adw.ComboRow DIMLTEX2 {
+					name: 'DIMLTEX2';
+					title: _("Extension line two linetype");
+					subtitle: _("Set the linetype for extension line two (DIMLTEX2)");
+					model: StringList{ strings ['one', 'two']};
+					notify::selected => $onStyleUpdate();
+					sensitive: false; //inactive
+				}
+				*/
+
+				/*
+				// Omitted: Line weight not currely supported
+				Adw.ComboRow DIMLWE {
+					name: 'DIMLWE';
+					title: _("Lineweight");
+					subtitle: _("Set the lineweight of the extension lines (DIMLWE)");
+					//model: StringList{ strings ['ByLayer', 'ByBlock']};
+					notify::selected => $onStyleUpdate();
+					sensitive: false;
+				}
+				*/
+
+				Adw.SwitchRow DIMSE1 {
+					name: 'DIMSE1';
+					title: _("Hide line one");
+					subtitle: _("Suppress the first extension line (DIMSE1)");
+					notify::active => $onStyleUpdate();
+				}
+
+				Adw.SwitchRow DIMSE2 {
+					name: 'DIMSE2';
+					title: _("Hide line two");
+					subtitle: _("Suppress the second extension line (DIMSE2)");
+					notify::active => $onStyleUpdate();
+				}
+
+				Adw.SpinRow DIMEXE {
+					name: 'DIMEXE';
+					title: _("Extend beyond dim lines");
+					subtitle: _("Distance the extension lines go beyond the dimension line (DIMEXE)");
+					digits: 2;
+					notify::value => $onStyleUpdate();
+
+					adjustment: Adjustment {
+						lower: 0;
+						value: 1;
+						upper: 10;
+						step-increment: 0.5;
+					};
+				}
+
+				Adw.SpinRow DIMEXO {
+					name: 'DIMEXO';
+					title: _("Offset from origin");
+					subtitle: _("Distance the extension lines are offset from origin (DIMEXO)");
+					digits: 2;
+					notify::value => $onStyleUpdate();
+
+					adjustment: Adjustment {
+						lower: 0;
+						value: 1;
+						upper: 10;
+						step-increment: 0.5;
+					};
+				}
+
+				/*
+				// Omitted: DIMFXL and DIMFXLON Supported from R2007
+				Adw.SwitchRow DIMFXLON {
+					name: 'DIMFXLON';
+					title: _("Fixed Length");
+					subtitle: _("Enable fixed length extension lines (DIMFXLON)");
+					notify::active => $onStyleUpdate();
+				}
+
+				Adw.SpinRow DIMFXL {
+					name: 'DIMFXL';
+					title: _("Fixed entension length");
+					subtitle: _("Set the length of extension lines (DIMFXL)");
+					digits: 2;
+					notify::value => $onStyleUpdate();
+					sensitive: bind DIMFXLON.active;
+
+					adjustment: Adjustment {
+						lower: 0;
+						value: 1;
+						upper: 10;
+						step-increment: 1;
+					};
+				}
+				*/
+			} // Pref Group
+
+			Adw.PreferencesGroup {
+				title: _("Symbols and Arrows");
+
+				Adw.SpinRow DIMASZ {
+					name: 'DIMASZ';
+					title: _("Arrow size");
+					subtitle: _("Set the arrow head size (DIMASZ)");
+					digits: 2;
+					notify::value => $onStyleUpdate();
+
+					adjustment: Adjustment {
+						lower: 0;
+						value: 1;
+						upper: 100;
+						step-increment: 0.5;
+					};
+				}
+
+				Adw.ComboRow DIMCENSTYL {
+					name: 'DIMCENSTYL';
+					title: _("Center mark style");
+					subtitle: _("Set the center mark style for DIMCEN");
+					model: StringList{ strings ['None', 'Mark', 'Line']};
+					notify::selected => $onStyleUpdate();
+				}
+
+				Adw.SpinRow DIMCENVALUE {
+					name: 'DIMCENVALUE';
+					title: _("Center mark size");
+					subtitle: _("Set the center mark size (DIMCEN)");
+					digits: 2;
+					notify::value => $onStyleUpdate();
+					sensitive: bind DIMCENSTYL.selected;
+
+					adjustment: Adjustment {
+						lower: 0;
+						value: 1;
+						upper: 100;
+						step-increment: 0.5;
+					};
+				}
+			} // Pref Group
+
+			Adw.PreferencesGroup {
+				title: _("Text");
+
+				Adw.ComboRow DIMTXSTY {
+					name: 'DIMTXSTY';
+					title: _("Style");
+					subtitle: _("Set the text style for the dimension (DIMTXSTY)");
+					notify::selected => $onStyleUpdate();
+				}
+
+				/*
+				Adw.ActionRow {
+					title: _("Colour");
+					subtitle: _("Set the text colour (DIMCLRT)");
+					sensitive: false; //inactive
+
+					[suffix]
+					DropDown DIMCLRT {
+						name: 'DIMCLRT';
+						valign: center;
+						//activate => $onStyleUpdate();
+					}
+				}
+				*/
+
+				Adw.SpinRow DIMTXT {
+					name: 'DIMTXT';
+					title: _("Text size");
+					subtitle: _("Set the text size (DIMTXT)");
+					digits: 2;
+					notify::value => $onStyleUpdate();
+
+					adjustment: Adjustment {
+						lower: 0;
+						value: 1;
+						upper: 100;
+						step-increment: 0.5;
+					};
+				}
+
+				/*
+				// Omitted: removed to simplify the preferences ui and code
+				// users can create this behaviour by setting DIMGAP to a negative value
+				Adw.SwitchRow DIMTXTBOX {
+					name: 'DIMTXTBOX';
+					title: _("Draw frame");
+					subtitle: _("Draw frame around the text using a negative value for DIMGAP");
+					notify::active => $onStyleUpdate();
+				}
+				*/
+
+				Adw.ComboRow DIMTAD {
+					name: 'DIMTAD';
+					title: _("Vertical Placement");
+					subtitle: _("Set the vertical placement of the dimension text (DIMTAD)");
+					model: StringList{ strings ['Centered', 'Above', 'Outside', 'JIS', 'Below']};
+					notify::selected => $onStyleUpdate();
+				}
+
+				Adw.ComboRow DIMJUST {
+					name: 'DIMJUST';
+					title: _("Horizontal Placement");
+					subtitle: _("Set the horizontal placement of the dimension text (DIMJUST)");
+					model: StringList{ strings ['Centered', 'Ext line 1', 'Ext line 2', 'Over Ext line 1', 'Over Ext line 2',]};
+					notify::selected => $onStyleUpdate();
+				}
+
+				Adw.SpinRow DIMGAP {
+					name: 'DIMGAP';
+					title: _("Text offset from dimension line");
+					subtitle: _("Set the offset distance around the text (DIMGAP)");
+					digits: 2;
+					notify::value => $onStyleUpdate();
+
+					adjustment: Adjustment {
+						lower: -10;
+						value: 1;
+						upper: 10;
+						step-increment: 0.5;
+					};
+				}
+
+				Adw.ComboRow  DIMTIH {
+					name: 'DIMTIH';
+					title: _("Internal Text Alignment");
+					subtitle: _("Set the alignment of the dimension text (DIMTIH)");
+					model: StringList{ strings ['Aligned', 'Horizontal']}; //'ISO']};
+					notify::selected => $onStyleUpdate();
+				}
+
+				Adw.ComboRow  DIMTOH {
+					name: 'DIMTOH';
+					title: _("External Text Alignment");
+					subtitle: _("Set the alignment of the dimension text (DIMTOH)");
+					model: StringList{ strings ['Aligned', 'Horizontal']}; //'ISO']};
+					notify::selected => $onStyleUpdate();
+				}
+			} // Pref Group
+
+			Adw.PreferencesGroup {
+				title: _("Precision");
+
+				Adw.SpinRow DIMDEC {
+					name: 'DIMDEC';
+					title: _("Precision");
+					subtitle: _("Sets the number of decimal places in the dimension text (DIMDEC)");
+					digits: 1;
+					notify::value => $onStyleUpdate();
+
+					adjustment: Adjustment {
+						lower: 1;
+						value: 1;
+						upper: 8;
+						step-increment: 1;
+					};
+				}
+
+				Adw.SpinRow DIMADEC {
+					name: 'DIMADEC';
+					title: _("Angular Precision");
+					subtitle: _("Sets the number of decimal places for angular dimensions (DIMADEC)");
+					digits: 1;
+					notify::value => $onStyleUpdate();
+
+					adjustment: Adjustment {
+						lower: 1;
+						value: 1;
+						upper: 8;
+						step-increment: 1;
+					};
+				}
+
+				Adw.ComboRow  DIMDSEP {
+					name: 'DIMDSEP';
+					title: _("Decimal Separator");
+					subtitle: _("Sets the decimal separator character (DIMDSEP)");
+					model: StringList{ strings ['.', ',']};
+					notify::selected => $onStyleUpdate();
+				}
+
+				Adw.SpinRow DIMRND {
+					name: 'DIMRND';
+					title: _("Dimension Rounding");
+					subtitle: _("Rounds all dimensioning distances to the specified value (DIMRND)");
+					digits: 1;
+					notify::value => $onStyleUpdate();
+
+					adjustment: Adjustment {
+						lower: 0;
+						value: 0;
+						upper: 100;
+						step-increment: 1;
+					};
+				}
+			} // Pref Group
+		} //Preferences Page
+	} // Box
+} // Navigation Page
+
+

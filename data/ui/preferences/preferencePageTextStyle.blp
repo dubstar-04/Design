@@ -1,0 +1,83 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $PreferencePageTextStyle : Adw.PreferencesPage {
+  icon-name: "preferences-desktop-font-symbolic";
+  title: _("Font");
+
+  FontDialog font_dialog {
+    title: 'Select a font';
+    modal: true;
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Text Styles");
+    description: _("Create and manage text styles");
+
+    [header-suffix]
+    Button {
+      halign: center;
+      valign: center;
+      icon-name: 'list-add-symbolic';
+      clicked => $addItem();
+    }
+
+    ListBox stylesList {
+      selection-mode: none;
+      styles ["boxed-list"]
+    }
+  }
+} // Template
+
+Adw.NavigationPage editStylePage {
+  title: _("Edit Text Style");
+
+  Box {
+    orientation: vertical;
+
+    Adw.HeaderBar {
+      show-end-title-buttons: false;
+    }
+
+    Adw.PreferencesPage {
+
+    Adw.PreferencesGroup {
+      title: _("Style Settings");
+
+      Adw.EntryRow name {
+        name: "name";
+        title: _("Style Name");
+        entry-activated => $onStyleUpdate();
+      }
+
+      Adw.ActionRow {
+        title: _("Font");
+        subtitle: _("Font used for the style");
+
+        [suffix]
+        FontDialogButton font {
+          name: "font";
+          dialog: font_dialog;
+          valign: center;
+          //width-request: 200;
+          notify::font-desc => $onStyleUpdate();
+        }
+      }
+
+      Adw.SwitchRow upsideDown {
+        name: 'upsideDown';
+        title: _("Upside down");
+        subtitle: _("Show the font upside down");
+        notify::active => $onStyleUpdate();
+      }
+
+      Adw.SwitchRow backwards {
+        name: 'backwards';
+        title: _("Backwards");
+        subtitle: _("Show the font backwards");
+        notify::active => $onStyleUpdate();
+      }
+    }
+  }
+  }
+}

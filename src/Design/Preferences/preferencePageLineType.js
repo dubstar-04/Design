@@ -1,4 +1,4 @@
-/* preferencesWindow.js
+/* PreferencePageLineType.js
  *
  * Copyright 2024 Daniel Wood
  *
@@ -20,11 +20,11 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 
-import { DesignCore } from '../Design-Core/core/designCore.js';
+import { DesignCore } from '../../Design-Core/core/designCore.js';
 
 export const PreferencePageLineType = GObject.registerClass({
   GTypeName: 'PreferencePageLineType',
-  Template: 'resource:///io/github/dubstar_04/design/ui/preferencePageLineType.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/preferences/preferencePageLineType.ui',
   InternalChildren: ['stylesList'],
 }, class PreferencePageLineType extends Adw.PreferencesPage {
   constructor() {

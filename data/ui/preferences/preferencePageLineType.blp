@@ -1,0 +1,22 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $PreferencePageLineType : Adw.PreferencesPage {
+  icon-name: "function-linear-symbolic";
+  title: _("Line Style");
+
+  Adw.PreferencesGroup {
+    title: _("Line Styles");
+    description: _("Select line styles");
+
+      Box {
+        orientation: vertical;
+        spacing: 6;
+
+        ListBox stylesList {
+          selection-mode: none;
+          styles ["boxed-list"]
+        }
+      }
+    }
+}

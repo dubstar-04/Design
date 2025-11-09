@@ -1,0 +1,43 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $PreferenceStyleRow : Adw.ActionRow {
+    //title: _("Style Name");
+    activatable: true;
+    //activated => $onStyleSelected();
+
+          [suffix]
+        Gtk.Image current_style_icon {
+          halign: center;
+          valign: center;
+          margin-end: 6;
+          icon-name: "object-select-symbolic";
+          visible: false;
+        }
+
+        [suffix]
+        Gtk.MenuButton {
+          styles ["flat"]
+          halign: center;
+          valign: center;
+          icon-name: "view-more-symbolic";
+          menu-model: secondary_button_menu;
+        }
+}
+
+      menu secondary_button_menu {
+        section {
+        item {
+          label: _("Make Default");
+          action: "dimension-style.make-default";
+        }
+        item {
+          label: _("Edit");
+          action: "dimension-style.edit";
+        }
+        item {
+          label: _("Delete");
+          action: "dimension-style.delete";
+        }
+        }
+      }
