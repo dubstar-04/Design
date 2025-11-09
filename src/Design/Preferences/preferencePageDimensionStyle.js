@@ -49,6 +49,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
   constructor() {
     super();
 
+    this.styleIndex = -1;
     this.loading = true;
     this.reload();
   }
@@ -102,7 +103,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     const styles = DesignCore.DimStyleManager.getItems();
 
     styles.forEach((style, index) => {
-      const row = new DimensionStyleRow();
+      const row = new PreferenceDimensionStyleRow();
       row.title = style.name;
       row.set_current((style.name === DesignCore.DimStyleManager.getCstyle()));
       this._stylesList.append(row);
@@ -114,19 +115,12 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     });
   }
 
-  onStyleSelected(row) {
+  loadStyleProps(styleTitle) {
     this.loading = true;
-
-    if (row) {
-      // set the selected row
-      this._stylesList.select_row(row);
-
-      const style = DesignCore.DimStyleManager.getItemByName(row.title);
-
-      for (const property in style) {
-        if (Object.hasOwn(style, property)) {
-          this.setRowValue(property, style[property]);
-        }
+    const style = DesignCore.DimStyleManager.getItemByName(styleTitle);
+    for (const property in style) {
+      if (Object.hasOwn(style, property)) {
+        this.setRowValue(property, style[property]);
       }
     }
 
@@ -175,7 +169,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     }
   }
 
-  // Action handlers for DimensionStyleRow signals
+  // Action handlers for PreferenceDimensionStyleRow signals
   // set the current style
   setCurrentStyle(row) {
     if (row) {
@@ -186,11 +180,10 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
   // open the style edit subpage
   editStyle(row) {
-    console.log('Edit Style:', row.title);
     if (row) {
-      this.onStyleSelected(row);
+      this.styleIndex = DesignCore.DimStyleManager.getItemIndex(row.title);
+      this.loadStyleProps(row.title);
       const parent = this.get_ancestor(Adw.PreferencesDialog);
-      log(parent);
       if (parent) {
         parent.push_subpage(this._editDimensionStylePage);
       }
@@ -199,7 +192,6 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
 
   // delete the style
   deleteStyle(row) {
-    console.log('Delete Style:', row.title);
     this.removeStyle(row);
   }
 
@@ -248,26 +240,19 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     // update core with the changed setting
     if (!this.loading) {
       // get the widget value
-      // const value = widget.value || widget.text || widget.selected || widget.active;
-      // console.log('\nvalues - text:', widget.text, 'value:', widget.value, 'selected:', widget.selected, 'active:', widget.active);
       let value;
       if (widget.value !== undefined) value = widget.value;
       if (widget.text !== undefined) value = widget.text;
       if (widget.selected !== undefined) value = widget.selected;
       if (widget.active !== undefined) value = widget.active;
 
-      const row = this._stylesList.get_selected_row();
-      if (row) {
-        // console.log('Style Update - Property:', widget.name, 'value:', value);
-        DesignCore.DimStyleManager.updateItem(row.id, widget.name, value);
+      DesignCore.DimStyleManager.updateItem(this.styleIndex, widget.name, value);
 
-        if (widget.name === 'name') {
-          // update the name in the style list if the name in core has changed
-          const newName = DesignCore.DimStyleManager.getItemByIndex(row.id).name;
-          row.title = newName;
-          // set the _name string - this is needed when the style name passed to core was invalid and a different name is used
-          this._name.text = newName;
-        }
+      if (widget.name === 'name') {
+        // update the name in the style list if the name in core has changed
+        const newName = DesignCore.DimStyleManager.getItemByIndex(this.styleIndex).name;
+        this._name.text = newName;
+        this.reload();
       }
     }
   }
