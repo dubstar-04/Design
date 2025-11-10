@@ -92,6 +92,7 @@
     <file>Design-Core/core/tools/extend.js</file>
     <file>Design-Core/core/tools/explode.js</file>
     <file>Design-Core/core/tools/identify.js</file>
+    <file>Design-Core/core/tools/matchProp.js</file>
     <file>Design-Core/core/tools/move.js</file>
     <file>Design-Core/core/tools/pan.js</file>
     <file>Design-Core/core/tools/rotate.js</file>
