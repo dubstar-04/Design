@@ -8,16 +8,17 @@
 	<summary>2D CAD for GNOME</summary>
 	<developer_name>Daniel Wood</developer_name>
 	<description>
-		<p>Design is a 2D computer aided design application (CAD),
-		created to meet the needs of makers and designers,
-		hobbyists and professionals that require a first class CAD application.</p>
+		<p>Design is a 2D computer aided design (CAD) application built for GNOME.
+		Guided by the GNOME philosophy, it aims to deliver a powerful yet simple user experience.
+		DXF support ensures seamless interoperability with other CAD tools.</p>
 		<p>Features:</p>
 		<ul>
-		<li>Supports the industry standard DXF format</li>
-		<li>Uses common CAD workflows, commands and canvas management</li>
-		<li>Drawing creation and manipulation using commandline or toolbar input</li>
-		<li>Layer management and manipulation</li>
-		<li>Entity interogation and modification </li>
+		<li>Drawing Tools: Line, polyline, circle, arc, text, and hatch creation.</li>
+		<li>Entity Editing: Move, rotate, trim, and extend objects with precision.</li>
+		<li>Layer Management: Organize and control visibility of drawing elements.</li>
+		<li>Dimensions: Create dimensions with support for dimension styles.</li>
+		<li>DXF Support: Use the industry standard DXF format for interoperability.</li>
+		<li>Touch Support: Use touch enabled devices to view zoom and pan drawings.</li>
 	  </ul>
 	</description>
   	<screenshots>
