@@ -12,7 +12,7 @@
     <file>ui/preferences/preferencePageLineType.ui</file>
     <file>ui/preferences/preferencePageTextStyle.ui</file>
     <!-- layers -->
-    <file>ui/layers/layers.ui</file>
+    <file>ui/layers/layersWindow.ui</file>
     <!-- properties -->
     <file>ui/properties/properties.ui</file>
   </gresource>

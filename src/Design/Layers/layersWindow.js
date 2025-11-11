@@ -28,7 +28,7 @@ import { DesignCore } from '../../Design-Core/core/designCore.js';
 
 export const LayersWindow = GObject.registerClass({
   GTypeName: 'LayersWindow',
-  Template: 'resource:///io/github/dubstar_04/design/ui/layers/layers.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/layers/layersWindow.ui',
   InternalChildren: ['layerList', 'stack', 'backButton', 'nameEntry', 'frozenSwitch', 'lockedSwitch', 'lineType', 'lineWeightLabel', 'plottingSwitch'],
 }, class LayersWindow extends Adw.ApplicationWindow {
   constructor() {
