@@ -21,7 +21,7 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 
 import { DesignCore } from '../../Design-Core/core/designCore.js';
-import { PreferenceStyleRow } from './preferenceStyleRow.js';
+import { PreferenceRow } from '../Widgets/preferenceRow.js';
 
 export const PreferencePageDimensionStyle = GObject.registerClass({
   Properties: {},
@@ -103,7 +103,7 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
     const styles = DesignCore.DimStyleManager.getItems();
 
     styles.forEach((style, index) => {
-      const row = new PreferenceStyleRow();
+      const row = new PreferenceRow();
       row.title = style.name;
       row.set_current((style.name === DesignCore.DimStyleManager.getCstyle()));
       this._stylesList.append(row);

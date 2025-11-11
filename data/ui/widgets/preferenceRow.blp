@@ -1,11 +1,8 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $PreferenceStyleRow : Adw.ActionRow {
-    //title: _("Style Name");
+template $PreferenceRow : Adw.ActionRow {
     activatable: true;
-    //activated => $onStyleSelected();
-
           [suffix]
         Gtk.Image current_style_icon {
           halign: center;

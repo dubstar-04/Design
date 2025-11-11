@@ -26,7 +26,7 @@ blueprints = custom_target('blueprints',
         'ui/preferences/preferencePageDimensionStyle.blp',
         'ui/preferences/preferencePageLineType.blp',
         'ui/preferences/preferencePageTextStyle.blp',
-        'ui/preferences/preferenceStyleRow.blp',
+        'ui/widgets/preferenceRow.blp',
         'ui/layers/layersWindow.blp',
         'ui/properties/propertiesWindow.blp'
     ),
