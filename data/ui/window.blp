@@ -84,24 +84,6 @@ Box{
       menu-model: app-menu;
       tooltip-text: _("Open application menu");
     }
-
-    /*
-    [end]
-    Button layersButton{
-      can-focus: false;
-      clicked => show_layers_window();
-      icon-name: 'focus-legacy-systray-symbolic';
-      tooltip-text: _("Show layer manager");
-      }
-
-    [end]
-    Button propertiesButton{
-      can-focus: false;
-      clicked => show_properties_window();
-      icon-name: 'dialog-question-symbolic';
-      tooltip-text: _("Show properties window");
-      }
-      */
   }
 
 Adw.ToastOverlay toastoverlay {
@@ -111,7 +93,6 @@ orientation: vertical;
 
 Adw.TabBar tabBar{
 view: tabView;
-//expand-tabs: false;
 }
 
 Gtk.Overlay overlay {
