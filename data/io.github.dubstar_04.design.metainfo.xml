@@ -49,8 +49,12 @@
 			<li>Only allow files to be opened once</li>
 			<li>Show save work dialog for unsaved changes</li>
 			<li>Only show command input and toolbars for mouse input</li>
+			<li>Reset current command when selecting toolbar commands</li>
 			<li>Add Pan Command (P)</li>
 			<li>Add Zoom Command (Z)</li>
+			<li>Added Dimension Style Preference Page</li>
+			<li>Updated Text Style Preference Page</li>
+			<li>Updated Line Style Preference Page</li>
 			</ul>
 		</description>
 		</release>
