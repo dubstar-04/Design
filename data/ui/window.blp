@@ -167,17 +167,17 @@ Gtk.Revealer{
   transition-type: slide_up;
   hexpand: true;
 
-  InfoBar{
-    Box{
-      Entry commandLineEntry{
-        hexpand: true;
-        can-focus: false;
-      }
+  ActionBar{
+    [start]
+    Entry commandLineEntry{
+      hexpand: true;
+      can-focus: false;
+    }
 
-      Label mousePosLabel{
-        halign: end;
-        width-request: 150;
-      }
+    [end]
+    Label mousePosLabel{
+      halign: end;
+      width-request: 150;
     }
   }
 }
