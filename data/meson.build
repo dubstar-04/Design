@@ -28,7 +28,7 @@ blueprints = custom_target('blueprints',
         'ui/preferences/preferencePageTextStyle.blp',
         'ui/preferences/preferenceStyleRow.blp',
         'ui/layers/layersWindow.blp',
-        'ui/properties/properties.blp'
+        'ui/properties/propertiesWindow.blp'
     ),
     output: '.',
     command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@']

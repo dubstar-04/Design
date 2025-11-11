@@ -27,7 +27,7 @@ import { Patterns } from '../../Design-Core/core/lib/patterns.js';
 
 export const PropertiesWindow = GObject.registerClass({
   GTypeName: 'PropertiesWindow',
-  Template: 'resource:///io/github/dubstar_04/design/ui/properties/properties.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/properties/propertiesWindow.ui',
   InternalChildren: ['stack', 'elementSelector', 'elementList'],
 }, class PropertiesWindow extends Adw.ApplicationWindow {
   constructor() {

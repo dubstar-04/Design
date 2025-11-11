@@ -14,6 +14,6 @@
     <!-- layers -->
     <file>ui/layers/layersWindow.ui</file>
     <!-- properties -->
-    <file>ui/properties/properties.ui</file>
+    <file>ui/properties/propertiesWindow.ui</file>
   </gresource>
 </gresources>
