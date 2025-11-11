@@ -5,7 +5,7 @@
     <file>ui/shortcuts.ui</file>
     <file>ui/export.ui</file>
     <!-- preferences -->
-    <file>ui/preferences/preferences.ui</file>
+    <file>ui/preferences/preferencesDialog.ui</file>
     <file>ui/preferences/preferencePageSettings.ui</file>
     <file>ui/preferences/preferencePageDimensionStyle.ui</file>
     <file>ui/preferences/preferenceStyleRow.ui</file>
