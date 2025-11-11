@@ -11,7 +11,6 @@ template $LayersWindow : Adw.ApplicationWindow {
     orientation: vertical;
 
     $AdwHeaderBar {
-      //show-end-title-buttons: false;
       title-widget:
       $AdwWindowTitle {
         title: _("Layers");
@@ -32,24 +31,6 @@ template $LayersWindow : Adw.ApplicationWindow {
         clicked => $onBackClicked();
         icon-name: 'go-previous-symbolic';
         }
-
-
-      //[end]
-      //Button btn_cancel {
-      //  label: _("_Cancel");
-      //  visible: bind backButton.visible inverted bidirectional;
-      //  use-underline: true;
-      //  action-name: "window.close";
-      //}
-
-      //[end]
-      //Button btn_delete{
-      //  label: _("_Delete");
-      //  visible: bind backButton.visible bidirectional;
-      //  use-underline: true;
-      //  clicked => $onLayerDelete();
-      //  styles ['destructive-action']
-      //}
 
       ShortcutController {
         scope: managed;
