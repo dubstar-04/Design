@@ -3,6 +3,7 @@ import GObject from 'gi://GObject';
 import Gdk from 'gi://Gdk';
 import Adw from 'gi://Adw?version=1';
 import Cairo from 'cairo';
+import Gio from 'gi://Gio';
 
 import { Core } from '../Design-Core/core/core/core.js';
 
@@ -110,6 +111,34 @@ export const Canvas = GObject.registerClass({
 
     // activate the core
     this.activate();
+
+    this.menu = this.contextMenu();
+
+    const canvasActionGroup = new Gio.SimpleActionGroup();
+    this.insert_action_group('canvas', canvasActionGroup);
+
+    // Add actions
+    const enterAction = new Gio.SimpleAction({ name: 'enter' });
+    canvasActionGroup.add_action(enterAction);
+    enterAction.connect('activate', () => {
+      console.log('Enter action');
+    });
+
+    const escapeAction = new Gio.SimpleAction({ name: 'escape' });
+    canvasActionGroup.add_action(escapeAction);
+    escapeAction.connect('activate', () => {
+      console.log('Escape action');
+    });
+  }
+
+  contextMenu() {
+    const menu = new Gio.Menu();
+    menu.append(_('Enter'), `canvas.enter`);
+    menu.append(_('Escape'), `canvas.escape`);
+    // const appMenu = Gtk.PopoverMenu.new_from_model(menu);
+    const appMenu = new Gtk.PopoverMenu({ menu_model: menu, has_arrow: false });
+    appMenu.set_parent(this);
+    return appMenu;
   }
 
   setFilePath(filePath) {
@@ -224,7 +253,14 @@ export const Canvas = GObject.registerClass({
     }
 
     const btn = gesture.get_current_button() - 1;
-    this.core.mouse.mouseDown(btn);
+    if (btn === 2) {
+      // show right click menu
+      const position = new Gdk.Rectangle({ x: x, y: y, width: 0, height: 0 });
+      this.menu.pointing_to = position;
+      this.menu.popup();
+    } else {
+      this.core.mouse.mouseDown(btn);
+    }
 
     // ensure the canvas has focus to receive events
     this.grab_focus();
