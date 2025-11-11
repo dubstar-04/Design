@@ -5,15 +5,16 @@
     <file>ui/shortcuts.ui</file>
     <file>ui/export.ui</file>
     <!-- preferences -->
-    <file>ui/preferences/preferences.ui</file>
+    <file>ui/preferences/preferencesDialog.ui</file>
     <file>ui/preferences/preferencePageSettings.ui</file>
     <file>ui/preferences/preferencePageDimensionStyle.ui</file>
-    <file>ui/preferences/preferenceStyleRow.ui</file>
     <file>ui/preferences/preferencePageLineType.ui</file>
     <file>ui/preferences/preferencePageTextStyle.ui</file>
     <!-- layers -->
-    <file>ui/layers/layers.ui</file>
+    <file>ui/layers/layersWindow.ui</file>
     <!-- properties -->
-    <file>ui/properties/properties.ui</file>
+    <file>ui/properties/propertiesWindow.ui</file>
+    <!-- widgets -->
+    <file>ui/widgets/preferenceRow.ui</file>
   </gresource>
 </gresources>

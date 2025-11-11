@@ -8,6 +8,7 @@ icons = [
   'entities/polyline-symbolic.svg',
   'entities/rectangle-symbolic.svg',
   'entities/text-symbolic.svg',
+  'entities/ruler-angled-symbolic.svg',
 
   'tools/copy-symbolic.svg',
   'tools/erase-symbolic.svg',

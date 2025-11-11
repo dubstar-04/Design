@@ -20,17 +20,17 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gio from 'gi://Gio';
 
-export const PreferenceStyleRow = GObject.registerClass({
+export const PreferenceRow = GObject.registerClass({
   Properties: {},
-  GTypeName: 'PreferenceStyleRow',
+  GTypeName: 'PreferenceRow',
   Signals: {
     'default-changed': { param_types: [GObject.TYPE_STRING] },
     'edit-style': { param_types: [GObject.TYPE_STRING] },
     'delete-style': { param_types: [GObject.TYPE_STRING] },
   },
-  Template: 'resource:///io/github/dubstar_04/design/ui/preferences/preferenceStyleRow.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/widgets/preferenceRow.ui',
   InternalChildren: ['current_style_icon'],
-}, class PreferenceStyleRow extends Adw.ActionRow {
+}, class PreferenceRow extends Adw.ActionRow {
   constructor() {
     super({});
 
@@ -60,17 +60,17 @@ export const PreferenceStyleRow = GObject.registerClass({
   }
 
   makeDefault() {
-    console.log('Make Default:', this.title);
+    // console.log('Make Default:', this.title);
     this.emit('default-changed', this.title);
   }
 
   editStyle() {
-    console.log('Edit Style:', this.title);
+    // console.log('Edit Style:', this.title);
     this.emit('edit-style', this.title);
   }
 
   deleteStyle() {
-    console.log('Delete Style:', this.title);
+    // console.log('Delete Style:', this.title);
     this.emit('delete-style', this.title);
   }
 },

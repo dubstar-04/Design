@@ -20,7 +20,7 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Pango from 'gi://Pango';
 
-import { PreferenceStyleRow } from './preferenceStyleRow.js';
+import { PreferenceRow } from '../Widgets/preferenceRow.js';
 
 import { DesignCore } from '../../Design-Core/core/designCore.js';
 
@@ -56,7 +56,7 @@ export const PreferencePageTextStyle = GObject.registerClass({
     const styles = DesignCore.StyleManager.getItems();
 
     styles.forEach((style, index) => {
-      const row = new PreferenceStyleRow();
+      const row = new PreferenceRow();
       row.title = style.name;
       row.set_current((style.name === DesignCore.StyleManager.getCstyle()));
       this._stylesList.append(row);

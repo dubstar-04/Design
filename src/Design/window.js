@@ -287,8 +287,7 @@ export const DesignWindow = GObject.registerClass({
 
   showShortcutsWindow() {
     const shortcutsWin = Gtk.Builder.new_from_resource('/io/github/dubstar_04/design/ui/shortcuts.ui').get_object('shortcuts');
-    shortcutsWin.set_transient_for(this);
-    shortcutsWin.present();
+    shortcutsWin.present(this);
   }
 
   showPreferencesDialog() {

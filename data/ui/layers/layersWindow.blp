@@ -1,0 +1,130 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $LayersWindow: Adw.Window {
+  modal: false;
+  default-width: 500;
+  default-height: 600;
+  destroy-with-parent: true;
+
+  ShortcutController {
+    scope: managed;
+
+    Shortcut {
+      trigger: "Escape";
+      action: "action(window.close)";
+    }
+  }
+
+  Adw.NavigationView navigation {
+    Adw.NavigationPage {
+      title: _("Layers");
+
+      Box {
+        orientation: vertical;
+        Adw.HeaderBar {
+          Button newButton {
+            clicked => $onNewClicked();
+            icon-name: 'list-add-symbolic';
+          }
+        } // HeaderBar
+        Adw.PreferencesPage {
+          Adw.PreferencesGroup {
+            ListBox layerList {
+              selection-mode: none;
+              styles [
+                "boxed-list",
+              ]
+            } // List
+          } // PreferencesGroup
+        } // Page
+      } // Box
+    } // NavigationPage
+  } // View
+} // Adw.Window
+
+Adw.NavigationPage editLayerPage {
+  title: _("Edit Layer");
+
+  Box {
+    orientation: vertical;
+
+    Adw.HeaderBar {
+      show-end-title-buttons: false;
+    }
+
+    Adw.PreferencesPage {
+      Adw.PreferencesGroup {
+        Adw.EntryRow nameEntry {
+          title: _("Name");
+          entry-activated => $onLayerUpdate();
+        }
+
+        Adw.ActionRow {
+          title: _("Visibility");
+          subtitle: _("Show or hide the selected layer");
+
+          [suffix]
+          Switch visibilitySwitch {
+            valign: center;
+            notify::active => $onLayerUpdate();
+          }
+        }
+
+        Adw.ActionRow {
+          title: _("Frozen");
+          subtitle: _("Frozen layers are not shown or available for any actions");
+
+          [suffix]
+          Switch frozenSwitch {
+            valign: center;
+            notify::active => $onLayerUpdate();
+          }
+        }
+
+        Adw.ActionRow {
+          title: _("Locked");
+          subtitle: _("Locked layers are visible but not able to be selected");
+
+          [suffix]
+          Switch lockedSwitch {
+            valign: center;
+            notify::active => $onLayerUpdate();
+          }
+        }
+
+        Adw.ActionRow {
+          title: _("Line Type");
+          subtitle: _("Line type for the selected layer");
+
+          [suffix]
+          DropDown lineType {
+            valign: center;
+            notify::selected-item => $onLayerUpdate();
+          }
+        }
+
+        Adw.ActionRow {
+          title: _("Line Weight");
+          subtitle: _("Line weight for the selected layer. Not implimented");
+
+          [suffix]
+          Label lineWeightLabel {
+            valign: center;
+          }
+        }
+
+        Adw.ActionRow {
+          title: _("Plotting");
+          subtitle: _("Layers with plotting true will appear on prints");
+
+          [suffix]
+          Switch plottingSwitch {
+            valign: center;
+            notify::active => $onLayerUpdate();
+          }
+        }
+      } // Group
+    } // Page
+  } // Box
+} // Page

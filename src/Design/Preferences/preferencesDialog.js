@@ -18,7 +18,6 @@
 
 import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
-// import Gio from 'gi://Gio';
 
 import { PreferencePageSettings } from './preferencePageSettings.js';
 import { PreferencePageTextStyle } from './preferencePageTextStyle.js';
@@ -27,7 +26,7 @@ import { PreferencePageLineType } from './preferencePageLineType.js';
 
 export const PreferencesDialog = GObject.registerClass({
   GTypeName: 'PreferencesDialog',
-  Template: 'resource:///io/github/dubstar_04/design/ui/preferences/preferences.ui',
+  Template: 'resource:///io/github/dubstar_04/design/ui/preferences/preferencesDialog.ui',
   InternalChildren: [],
 }, class PreferencesDialog extends Adw.PreferencesDialog {
   constructor(settings) {

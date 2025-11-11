@@ -1,144 +1,143 @@
 using Gtk 4.0;
+using Adw 1;
 
-ShortcutsWindow shortcuts {
-    modal: true;
-    section-name: 'shortcuts';
-    ShortcutsSection {
-        max-height: 10;
-        ShortcutsGroup {
-            title: _("Entities");
-            ShortcutsShortcut {
-                accelerator: 'A';
-                title: _("Arc");
-            }
-            ShortcutsShortcut {
-                accelerator: 'B';
-                title: _("Create Block");
-            }
-            ShortcutsShortcut {
-                accelerator: 'C';
-                title: _("Circle");
-            }
-            ShortcutsShortcut {
-                accelerator: 'D+T';
-                title: _("Text");
-            }
-            ShortcutsShortcut {
-                accelerator: 'H';
-                title: _("Hatch");
-            }
-            ShortcutsShortcut {
-                accelerator: 'L';
-                title: _("Line");
-            }
-            ShortcutsShortcut {
-                accelerator: 'M+A';
-                title: _("MatchProp");
-            }
-            ShortcutsShortcut {
-                accelerator: 'P';
-                title: _("Pan");
-            }
-            ShortcutsShortcut {
-                accelerator: 'P+L';
-                title: _("Polyline");
-            }
-            ShortcutsShortcut {
-                accelerator: 'R+E+C';
-                title: _("Rectangle");
-            }
-            ShortcutsShortcut {
-                accelerator: 'D+I+M';
-                title: _("Dimension");
-            }
+Adw.ShortcutsDialog shortcuts {
+
+    Adw.ShortcutsSection {
+        title: _("General");
+
+        Adw.ShortcutsItem {
+            accelerator: "<primary>A";
+            title: _("Select All");
         }
-
-        ShortcutsGroup {
-            title: _("Tools");
-            ShortcutsShortcut {
-                accelerator: 'M';
-                title: _("Move");
-            }
-            ShortcutsShortcut {
-                accelerator: 'C+O';
-                title: _("Copy");
-            }
-            ShortcutsShortcut {
-                accelerator: 'R+O';
-                title: _("Rotate");
-            }
-            ShortcutsShortcut {
-                accelerator: 'E Delete';
-                title: _("Erase");
-            }
-           ShortcutsShortcut {
-                accelerator: 'E+X';
-                title: _("Extend");
-            }
-            ShortcutsShortcut {
-                accelerator: 'T+R';
-                title: _("Trim");
-            }
-            ShortcutsShortcut {
-                accelerator: 'X';
-                title: _("Explode");
-            }
-            ShortcutsShortcut {
-                accelerator: 'D+I';
-                title: _("Distance");
-            }
-            ShortcutsShortcut {
-                accelerator: 'I+D';
-                title: _("Identify");
-            }
-            ShortcutsShortcut {
-                accelerator: 'P+U';
-                title: _("Purge");
-            }
-            ShortcutsShortcut {
-                accelerator: 'Z';
-                title: _("Zoom");
-            }
+        Adw.ShortcutsItem {
+            accelerator: "<primary>N";
+            title: _("New Design");
         }
+        Adw.ShortcutsItem {
+            accelerator: "<primary>O";
+            title: _("Open");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "<primary>S";
+            title: _("Save");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "<primary><shift>S";
+            title: _("Save as");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "<primary>comma";
+            title: _("Show Preferences");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "<primary>L";
+            title: _("Show Layers");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "<primary>1";
+            title: _("Show Properties");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "<primary>question";
+            title: _("Show Shortcuts");
+        }
+    }
 
-        ShortcutsGroup {
-            title: _("General");
-            ShortcutsShortcut {
-                accelerator: "<primary>A";
-                title: _("Select All");
-            }
-            ShortcutsShortcut {
-                accelerator: "<primary>N";
-                title: _("Create a New Design");
-            }
-            ShortcutsShortcut {
-                accelerator: "<primary>O";
-                title: _("Open");
-            }
-            ShortcutsShortcut {
-                accelerator: "<primary>S";
-                title: _("Save");
-            }
-            ShortcutsShortcut {
-                accelerator: "<primary><shift>S";
-                title: _("Save as");
-            }
-            ShortcutsShortcut {
-                accelerator: "<primary>comma";
-                title: _("Show Preferences");
-            }
-            ShortcutsShortcut {
-                accelerator: "<primary>L";
-                title: _("Show Layers");
-            }
-            ShortcutsShortcut {
-                accelerator: "<primary>1";
-                title: _("Show Properties");
-            }
-            ShortcutsShortcut {
-                accelerator: "<primary>question";
-                title: _("Show Keyboard Shortcuts");
-            }
+    Adw.ShortcutsSection {
+        title: _("Entities");
+
+        Adw.ShortcutsItem {
+            accelerator: 'A';
+            title: _("Arc");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'B';
+            title: _("Block");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'C';
+            title: _("Circle");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'D+I+M';
+            title: _("Dimension");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'D+T';
+            title: _("Text");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'H';
+            title: _("Hatch");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'L';
+            title: _("Line");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'M+A';
+            title: _("MatchProp");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'P';
+            title: _("Pan");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'P+L';
+            title: _("Polyline");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'R+E+C';
+            title: _("Rectangle");
+        }
+    }
+
+    Adw.ShortcutsSection {
+        title: _("Tools");
+        Adw.ShortcutsItem {
+            accelerator: 'M';
+            title: _("Move");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'C+O';
+            title: _("Copy");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'R+O';
+            title: _("Rotate");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'E Delete';
+            title: _("Erase");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'E+X';
+            title: _("Extend");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'T+R';
+            title: _("Trim");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'X';
+            title: _("Explode");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'D+I';
+            title: _("Distance");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'I+D';
+            title: _("Identify");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'P+U';
+            title: _("Purge");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'Z';
+            title: _("Zoom");
         }
     }
 }
