@@ -112,7 +112,12 @@ export const Canvas = GObject.registerClass({
     // activate the core
     this.activate();
 
-    this.menu = this.contextMenu();
+    // create the context menu
+    this.contextMenu = new Gtk.PopoverMenu();
+    this.contextMenu.set_has_arrow(false);
+    this.contextMenu.set_menu_model(this.getContextMenu());
+    this.contextMenu.set_parent(this);
+    // this.contextMenu.height_request = 200;
 
     const canvasActionGroup = new Gio.SimpleActionGroup();
     this.insert_action_group('canvas', canvasActionGroup);
