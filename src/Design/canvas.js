@@ -193,14 +193,24 @@ export const Canvas = GObject.registerClass({
     });
   }
 
-  contextMenu() {
-    const menu = new Gio.Menu();
-    menu.append(_('Enter'), `canvas.enter`);
-    menu.append(_('Escape'), `canvas.escape`);
-    // const appMenu = Gtk.PopoverMenu.new_from_model(menu);
-    const appMenu = new Gtk.PopoverMenu({ menu_model: menu, has_arrow: false });
-    appMenu.set_parent(this);
-    return appMenu;
+  getContextMenu() {
+    const active = this.core.scene.inputManager.activeCommand !== undefined;
+    const mainMenu = new Gio.Menu();
+    // input actions
+    mainMenu.append(_('Enter'), `canvas.enter`);
+    mainMenu.append(_('Cancel'), active ? `canvas.escape` : 'null');
+    // clipboard actions
+    const clipboardMenu = new Gio.Menu();
+    clipboardMenu.append(_('Cut'), active ? `null`:`canvas.cut`);
+    clipboardMenu.append(_('Copy'), active ? `null`:`canvas.copy`);
+    clipboardMenu.append(_('Paste'), active ? `null`:`canvas.paste`);
+    mainMenu.append_submenu(_('Clipboard'), clipboardMenu);
+    // canvas actions
+    mainMenu.append(_('Pan'), active ? `null`:`canvas.pan`);
+    mainMenu.append(_('Zoom Extents'), active ? `null`:`canvas.zoom`);
+
+    return mainMenu;
+  }
   }
 
   setFilePath(filePath) {
