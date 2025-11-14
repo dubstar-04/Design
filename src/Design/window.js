@@ -186,6 +186,11 @@ export const DesignWindow = GObject.registerClass({
     this._toastoverlay.add_toast(toast);
   }
 
+  onToggleSnapMode() {
+    // TODO: implement snap mode toggle
+    this.onShowToast('Snap toggle not implemented');
+  }
+
   onShowToolbars(canvas, show) {
     // show or hide the toolbars and commandline
     // these are only suitable for mouse and keyboard
