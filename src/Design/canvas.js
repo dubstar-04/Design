@@ -71,20 +71,23 @@ export const Canvas = GObject.registerClass({
 
     const shortcutController = new Gtk.ShortcutController();
 
-    const copyShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.CallbackAction.new(this.onCopy.bind(this)) });
-    shortcutController.add_shortcut(copyShortcut);
+    const selectAllShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>A'), action: Gtk.ShortcutAction.parse_string('action(canvas.select-all)') });
+    shortcutController.add_shortcut(selectAllShortcut);
 
-    const pasteShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>V'), action: Gtk.CallbackAction.new(this.onPaste.bind(this)) });
-    shortcutController.add_shortcut(pasteShortcut);
-
-    const undoShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Z'), action: Gtk.CallbackAction.new(this.onUndo.bind(this)) });
-    shortcutController.add_shortcut(undoShortcut);
-
-    const cutShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>X'), action: Gtk.CallbackAction.new(this.onCut.bind(this)) });
+    const cutShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>X'), action: Gtk.ShortcutAction.parse_string('action(canvas.cut)') });
     shortcutController.add_shortcut(cutShortcut);
 
-    const selectAllShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>A'), action: Gtk.CallbackAction.new(this.onSelectAll.bind(this)) });
-    shortcutController.add_shortcut(selectAllShortcut);
+    const copyShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.ShortcutAction.parse_string('action(canvas.copy)') });
+    shortcutController.add_shortcut(copyShortcut);
+
+    const pasteShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>V'), action: Gtk.ShortcutAction.parse_string('action(canvas.paste)') });
+    shortcutController.add_shortcut(pasteShortcut);
+
+    const undoShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Z'), action: Gtk.ShortcutAction.parse_string('action(canvas.undo)') });
+    shortcutController.add_shortcut(undoShortcut);
+
+    const redoShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Y'), action: Gtk.ShortcutAction.parse_string('action(canvas.redo)') });
+    shortcutController.add_shortcut(redoShortcut);
 
     this.add_controller(shortcutController);
 
