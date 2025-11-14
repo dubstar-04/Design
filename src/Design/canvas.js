@@ -133,6 +133,9 @@ export const Canvas = GObject.registerClass({
     canvasActionGroup.add_action(escapeAction);
     escapeAction.connect('activate', () => {
       console.log('Escape action');
+    this.connect('unrealize', () => {
+      // clean up when canvas is destroyed
+      this.contextMenu.unparent();
     });
   }
 
