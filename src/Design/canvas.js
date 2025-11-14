@@ -316,10 +316,7 @@ export const Canvas = GObject.registerClass({
 
     const btn = gesture.get_current_button() - 1;
     if (btn === 2) {
-      // show right click menu
-      const position = new Gdk.Rectangle({ x: x, y: y, width: 0, height: 0 });
-      this.menu.pointing_to = position;
-      this.menu.popup();
+      this.showContextMenu(x, y);
     } else {
       this.core.mouse.mouseDown(btn);
     }
