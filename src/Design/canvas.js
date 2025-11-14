@@ -129,7 +129,7 @@ export const Canvas = GObject.registerClass({
     const enterAction = new Gio.SimpleAction({ name: 'enter' });
     canvasActionGroup.add_action(enterAction);
     enterAction.connect('activate', () => {
-      console.log('Enter action');
+      this.core.commandLine.enterPressed();
     });
 
     const escapeAction = new Gio.SimpleAction({ name: 'escape' });
