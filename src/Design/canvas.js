@@ -132,7 +132,58 @@ export const Canvas = GObject.registerClass({
     const escapeAction = new Gio.SimpleAction({ name: 'escape' });
     canvasActionGroup.add_action(escapeAction);
     escapeAction.connect('activate', () => {
-      console.log('Escape action');
+      this.core.commandLine.escapePressed();
+    });
+
+    const cutAction = new Gio.SimpleAction({ name: 'cut' });
+    canvasActionGroup.add_action(cutAction);
+    cutAction.connect('activate', () => {
+      this.onCut();
+    });
+
+    const copyAction = new Gio.SimpleAction({ name: 'copy' });
+    canvasActionGroup.add_action(copyAction);
+    copyAction.connect('activate', () => {
+      this.onCopy();
+    });
+
+    const pasteAction = new Gio.SimpleAction({ name: 'paste' });
+    canvasActionGroup.add_action(pasteAction);
+    pasteAction.connect('activate', () => {
+      this.onPaste();
+    });
+
+
+    const panAction = new Gio.SimpleAction({ name: 'pan' });
+    canvasActionGroup.add_action(panAction);
+    panAction.connect('activate', () => {
+      this.core.scene.inputManager.onCommand(`Pan`);
+    });
+
+    const zoomAction = new Gio.SimpleAction({ name: 'zoom' });
+    canvasActionGroup.add_action(zoomAction);
+    zoomAction.connect('activate', () => {
+      this.core.canvas.zoomExtents();
+    });
+
+    const undoAction = new Gio.SimpleAction({ name: 'undo' });
+    canvasActionGroup.add_action(undoAction);
+    undoAction.connect('activate', () => {
+      this.onUndo();
+    });
+
+    const redoAction = new Gio.SimpleAction({ name: 'redo' });
+    canvasActionGroup.add_action(redoAction);
+    redoAction.connect('activate', () => {
+      this.onRedo();
+    });
+
+    const selectAllAction = new Gio.SimpleAction({ name: 'select-all' });
+    canvasActionGroup.add_action(selectAllAction);
+    selectAllAction.connect('activate', () => {
+      this.onSelectAll();
+    });
+
     this.connect('unrealize', () => {
       // clean up when canvas is destroyed
       this.contextMenu.unparent();
