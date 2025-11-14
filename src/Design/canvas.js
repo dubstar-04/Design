@@ -211,6 +211,13 @@ export const Canvas = GObject.registerClass({
 
     return mainMenu;
   }
+
+  showContextMenu(x, y) {
+    const menu = this.getContextMenu();
+    this.contextMenu.set_menu_model(menu);
+    const position = new Gdk.Rectangle({ x: x, y: y, width: 0, height: 0 });
+    this.contextMenu.pointing_to = position;
+    this.contextMenu.popup();
   }
 
   setFilePath(filePath) {
