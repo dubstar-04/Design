@@ -3,6 +3,7 @@ import GObject from 'gi://GObject';
 import Gdk from 'gi://Gdk';
 import Adw from 'gi://Adw?version=1';
 import Cairo from 'cairo';
+import Gio from 'gi://Gio';
 
 import { Core } from '../Design-Core/core/core/core.js';
 
@@ -70,20 +71,23 @@ export const Canvas = GObject.registerClass({
 
     const shortcutController = new Gtk.ShortcutController();
 
-    const copyShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.CallbackAction.new(this.onCopy.bind(this)) });
-    shortcutController.add_shortcut(copyShortcut);
+    const selectAllShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>A'), action: Gtk.ShortcutAction.parse_string('action(canvas.select-all)') });
+    shortcutController.add_shortcut(selectAllShortcut);
 
-    const pasteShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>V'), action: Gtk.CallbackAction.new(this.onPaste.bind(this)) });
-    shortcutController.add_shortcut(pasteShortcut);
-
-    const undoShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Z'), action: Gtk.CallbackAction.new(this.onUndo.bind(this)) });
-    shortcutController.add_shortcut(undoShortcut);
-
-    const cutShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>X'), action: Gtk.CallbackAction.new(this.onCut.bind(this)) });
+    const cutShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>X'), action: Gtk.ShortcutAction.parse_string('action(canvas.cut)') });
     shortcutController.add_shortcut(cutShortcut);
 
-    const selectAllShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>A'), action: Gtk.CallbackAction.new(this.onSelectAll.bind(this)) });
-    shortcutController.add_shortcut(selectAllShortcut);
+    const copyShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.ShortcutAction.parse_string('action(canvas.copy)') });
+    shortcutController.add_shortcut(copyShortcut);
+
+    const pasteShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>V'), action: Gtk.ShortcutAction.parse_string('action(canvas.paste)') });
+    shortcutController.add_shortcut(pasteShortcut);
+
+    const undoShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Z'), action: Gtk.ShortcutAction.parse_string('action(canvas.undo)') });
+    shortcutController.add_shortcut(undoShortcut);
+
+    const redoShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>Y'), action: Gtk.ShortcutAction.parse_string('action(canvas.redo)') });
+    shortcutController.add_shortcut(redoShortcut);
 
     this.add_controller(shortcutController);
 
@@ -110,6 +114,110 @@ export const Canvas = GObject.registerClass({
 
     // activate the core
     this.activate();
+
+    // create the context menu
+    this.contextMenu = new Gtk.PopoverMenu();
+    this.contextMenu.set_has_arrow(false);
+    this.contextMenu.set_menu_model(this.getContextMenu());
+    this.contextMenu.set_parent(this);
+    // this.contextMenu.height_request = 200;
+
+    const canvasActionGroup = new Gio.SimpleActionGroup();
+    this.insert_action_group('canvas', canvasActionGroup);
+
+    // Add actions
+    const enterAction = new Gio.SimpleAction({ name: 'enter' });
+    canvasActionGroup.add_action(enterAction);
+    enterAction.connect('activate', () => {
+      this.core.commandLine.enterPressed();
+    });
+
+    const escapeAction = new Gio.SimpleAction({ name: 'escape' });
+    canvasActionGroup.add_action(escapeAction);
+    escapeAction.connect('activate', () => {
+      this.core.commandLine.escapePressed();
+    });
+
+    const cutAction = new Gio.SimpleAction({ name: 'cut' });
+    canvasActionGroup.add_action(cutAction);
+    cutAction.connect('activate', () => {
+      this.onCut();
+    });
+
+    const copyAction = new Gio.SimpleAction({ name: 'copy' });
+    canvasActionGroup.add_action(copyAction);
+    copyAction.connect('activate', () => {
+      this.onCopy();
+    });
+
+    const pasteAction = new Gio.SimpleAction({ name: 'paste' });
+    canvasActionGroup.add_action(pasteAction);
+    pasteAction.connect('activate', () => {
+      this.onPaste();
+    });
+
+
+    const panAction = new Gio.SimpleAction({ name: 'pan' });
+    canvasActionGroup.add_action(panAction);
+    panAction.connect('activate', () => {
+      this.core.scene.inputManager.onCommand(`Pan`);
+    });
+
+    const zoomAction = new Gio.SimpleAction({ name: 'zoom' });
+    canvasActionGroup.add_action(zoomAction);
+    zoomAction.connect('activate', () => {
+      this.core.canvas.zoomExtents();
+    });
+
+    const undoAction = new Gio.SimpleAction({ name: 'undo' });
+    canvasActionGroup.add_action(undoAction);
+    undoAction.connect('activate', () => {
+      this.onUndo();
+    });
+
+    const redoAction = new Gio.SimpleAction({ name: 'redo' });
+    canvasActionGroup.add_action(redoAction);
+    redoAction.connect('activate', () => {
+      this.onRedo();
+    });
+
+    const selectAllAction = new Gio.SimpleAction({ name: 'select-all' });
+    canvasActionGroup.add_action(selectAllAction);
+    selectAllAction.connect('activate', () => {
+      this.onSelectAll();
+    });
+
+    this.connect('unrealize', () => {
+      // clean up when canvas is destroyed
+      this.contextMenu.unparent();
+    });
+  }
+
+  getContextMenu() {
+    const active = this.core.scene.inputManager.activeCommand !== undefined;
+    const mainMenu = new Gio.Menu();
+    // input actions
+    mainMenu.append(_('Enter'), `canvas.enter`);
+    mainMenu.append(_('Cancel'), active ? `canvas.escape` : 'null');
+    // clipboard actions
+    const clipboardMenu = new Gio.Menu();
+    clipboardMenu.append(_('Cut'), active ? `null`:`canvas.cut`);
+    clipboardMenu.append(_('Copy'), active ? `null`:`canvas.copy`);
+    clipboardMenu.append(_('Paste'), active ? `null`:`canvas.paste`);
+    mainMenu.append_submenu(_('Clipboard'), clipboardMenu);
+    // canvas actions
+    mainMenu.append(_('Pan'), active ? `null`:`canvas.pan`);
+    mainMenu.append(_('Zoom Extents'), active ? `null`:`canvas.zoom`);
+
+    return mainMenu;
+  }
+
+  showContextMenu(x, y) {
+    const menu = this.getContextMenu();
+    this.contextMenu.set_menu_model(menu);
+    const position = new Gdk.Rectangle({ x: x, y: y, width: 0, height: 0 });
+    this.contextMenu.pointing_to = position;
+    this.contextMenu.popup();
   }
 
   setFilePath(filePath) {
@@ -134,6 +242,11 @@ export const Canvas = GObject.registerClass({
   onUndo() {
     // TODO: implement undo
     this.core.notify('Undo not implemented');
+  }
+
+  onRedo() {
+    // TODO: implement redo
+    this.core.notify('Redo not implemented');
   }
 
   onCut() {
@@ -224,7 +337,11 @@ export const Canvas = GObject.registerClass({
     }
 
     const btn = gesture.get_current_button() - 1;
-    this.core.mouse.mouseDown(btn);
+    if (btn === 2) {
+      this.showContextMenu(x, y);
+    } else {
+      this.core.mouse.mouseDown(btn);
+    }
 
     // ensure the canvas has focus to receive events
     this.grab_focus();

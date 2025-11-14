@@ -4,12 +4,8 @@ using Adw 1;
 Adw.ShortcutsDialog shortcuts {
 
     Adw.ShortcutsSection {
-        title: _("General");
+        title: _("Documents");
 
-        Adw.ShortcutsItem {
-            accelerator: "<primary>A";
-            title: _("Select All");
-        }
         Adw.ShortcutsItem {
             accelerator: "<primary>N";
             title: _("New Design");
@@ -27,6 +23,19 @@ Adw.ShortcutsDialog shortcuts {
             title: _("Save as");
         }
         Adw.ShortcutsItem {
+            accelerator: "<primary>Y";
+            title: _("Redo");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "<primary>Z";
+            title: _("Undo");
+        }
+    }
+
+    Adw.ShortcutsSection {
+        title: _("General");
+
+        Adw.ShortcutsItem {
             accelerator: "<primary>comma";
             title: _("Show Preferences");
         }
@@ -41,6 +50,53 @@ Adw.ShortcutsDialog shortcuts {
         Adw.ShortcutsItem {
             accelerator: "<primary>question";
             title: _("Show Shortcuts");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "<primary>Q";
+            title: _("Quit");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "F1";
+            title: _("Show Help");
+        }
+    }
+
+    Adw.ShortcutsSection {
+        title: _("Canvas");
+
+        Adw.ShortcutsItem {
+            accelerator: "<primary>G";
+            title: _("Toggle Grid");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "F8";
+            title: _("Toggle Ortho Mode");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "F9";
+            title: _("Toggle Snap Mode");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "F10";
+            title: _("Toggle Polar Mode");
+        }
+
+    }
+
+    Adw.ShortcutsSection {
+        title: _("Clipboard");
+
+        Adw.ShortcutsItem {
+            accelerator: "<primary>A";
+            title: _("Select All");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "<primary>C";
+            title: _("Copy");
+        }
+        Adw.ShortcutsItem {
+            accelerator: "<primary>V";
+            title: _("Paste");
         }
     }
 
@@ -76,14 +132,6 @@ Adw.ShortcutsDialog shortcuts {
             title: _("Line");
         }
         Adw.ShortcutsItem {
-            accelerator: 'M+A';
-            title: _("MatchProp");
-        }
-        Adw.ShortcutsItem {
-            accelerator: 'P';
-            title: _("Pan");
-        }
-        Adw.ShortcutsItem {
             accelerator: 'P+L';
             title: _("Polyline");
         }
@@ -95,17 +143,14 @@ Adw.ShortcutsDialog shortcuts {
 
     Adw.ShortcutsSection {
         title: _("Tools");
-        Adw.ShortcutsItem {
-            accelerator: 'M';
-            title: _("Move");
-        }
+
         Adw.ShortcutsItem {
             accelerator: 'C+O';
             title: _("Copy");
         }
         Adw.ShortcutsItem {
-            accelerator: 'R+O';
-            title: _("Rotate");
+            accelerator: 'D+I';
+            title: _("Distance");
         }
         Adw.ShortcutsItem {
             accelerator: 'E Delete';
@@ -116,24 +161,36 @@ Adw.ShortcutsDialog shortcuts {
             title: _("Extend");
         }
         Adw.ShortcutsItem {
+            accelerator: 'I+D';
+            title: _("Identify");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'M';
+            title: _("Move");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'M+A';
+            title: _("MatchProp");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'P';
+            title: _("Pan");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'P+U';
+            title: _("Purge");
+        }
+        Adw.ShortcutsItem {
+            accelerator: 'R+O';
+            title: _("Rotate");
+        }
+        Adw.ShortcutsItem {
             accelerator: 'T+R';
             title: _("Trim");
         }
         Adw.ShortcutsItem {
             accelerator: 'X';
             title: _("Explode");
-        }
-        Adw.ShortcutsItem {
-            accelerator: 'D+I';
-            title: _("Distance");
-        }
-        Adw.ShortcutsItem {
-            accelerator: 'I+D';
-            title: _("Identify");
-        }
-        Adw.ShortcutsItem {
-            accelerator: 'P+U';
-            title: _("Purge");
         }
         Adw.ShortcutsItem {
             accelerator: 'Z';
