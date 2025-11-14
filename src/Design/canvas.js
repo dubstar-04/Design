@@ -227,6 +227,11 @@ export const Canvas = GObject.registerClass({
     this.core.notify('Undo not implemented');
   }
 
+  onRedo() {
+    // TODO: implement redo
+    this.core.notify('Redo not implemented');
+  }
+
   onCut() {
     // TODO: implement cut
     this.core.notify('Cut not implemented');
