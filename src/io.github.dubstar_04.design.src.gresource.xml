@@ -30,6 +30,7 @@
     <file>Design-Core/core/lib/colours.js</file>
     <file>Design-Core/core/lib/commandLine.js</file>
     <file>Design-Core/core/lib/commandManager.js</file>
+    <file>Design-Core/core/lib/entityManager.js</file>
     <file>Design-Core/core/lib/inputManager.js</file>
     <file>Design-Core/core/lib/fileio.js</file>
     <file>Design-Core/core/lib/intersect.js</file>
