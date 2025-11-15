@@ -232,7 +232,7 @@ export const DesignWindow = GObject.registerClass({
     let canvas = this.getActiveCanvas();
     let page = this._tabView.get_selected_page();
 
-    if (!canvas || canvas.core.scene.items.length !== 0 || canvas.getFilePath()) {
+    if (!canvas || canvas.core.scene.entities.count() !== 0 || canvas.getFilePath()) {
       // no active canvas
       // canvas is not empty or has a filePath assigned
       // setup empty new canvas
