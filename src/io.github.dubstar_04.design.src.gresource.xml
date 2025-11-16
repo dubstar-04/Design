@@ -43,6 +43,7 @@
     <file>Design-Core/core/lib/snapping.js</file>
     <file>Design-Core/core/lib/selectionManager.js</file>
     <file>Design-Core/core/lib/selectionWindow.js</file>
+    <file>Design-Core/core/lib/stateManager.js</file>
     <file>Design-Core/core/lib/strings.js</file>
     <file>Design-Core/core/lib/utils.js</file>
     <!-- DXF -->
