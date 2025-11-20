@@ -240,13 +240,11 @@ export const Canvas = GObject.registerClass({
   }
 
   onUndo() {
-    // TODO: implement undo
-    this.core.notify('Undo not implemented');
+    this.core.scene.undo();
   }
 
   onRedo() {
-    // TODO: implement redo
-    this.core.notify('Redo not implemented');
+    this.core.scene.redo();
   }
 
   onCut() {
