@@ -243,8 +243,9 @@ export const Canvas = GObject.registerClass({
   }
 
   onCopy() {
-    // TODO: implement copy
-    this.core.notify('Copy not implemented');
+    this.core.scene.inputManager.onCommand(`Copyclip`);
+  }
+
   onCopyWithBasePoint() {
     this.core.scene.inputManager.onCommand(`Copybase`);
   }
