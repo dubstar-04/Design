@@ -212,6 +212,7 @@ export const Canvas = GObject.registerClass({
     const clipboardMenu = new Gio.Menu();
     clipboardMenu.append(_('Cut'), active ? `null`:`canvas.cut`);
     clipboardMenu.append(_('Copy'), active ? `null`:`canvas.copy`);
+    clipboardMenu.append(_('Copy with Base Point'), active ? `null`:`canvas.copy-with-base-point`);
     clipboardMenu.append(_('Paste'), active ? `null`:`canvas.paste`);
     mainMenu.append_submenu(_('Clipboard'), clipboardMenu);
     // canvas actions

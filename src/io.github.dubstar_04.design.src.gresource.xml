@@ -24,6 +24,7 @@
     <!-- Design Core -->
     <file>Design-Core/core/designCore.js</file>
     <file>Design-Core/core/core/core.js</file>
+    <file>Design-Core/core/lib/clipboard.js</file>
     <file>Design-Core/core/lib/boundingBox.js</file>
     <file>Design-Core/core/lib/canvas.js</file>
     <file>Design-Core/core/lib/colour.js</file>
@@ -90,6 +91,8 @@
     <file>Design-Core/core/entities/text.js</file>
     <!-- Tools -->
     <file>Design-Core/core/tools/copy.js</file>
+    <file>Design-Core/core/tools/copybase.js</file>
+    <file>Design-Core/core/tools/copyclip.js</file>
     <file>Design-Core/core/tools/distance.js</file>
     <file>Design-Core/core/tools/erase.js</file>
     <file>Design-Core/core/tools/extend.js</file>
@@ -101,6 +104,7 @@
     <file>Design-Core/core/tools/rotate.js</file>
     <file>Design-Core/core/tools/trim.js</file>
     <file>Design-Core/core/tools/tool.js</file>
+    <file>Design-Core/core/tools/pasteclip.js</file>
     <file>Design-Core/core/tools/purge.js</file>
     <file>Design-Core/core/tools/zoom.js</file>
     <!-- Tables -->
