@@ -204,16 +204,19 @@ export const Canvas = GObject.registerClass({
 
   getContextMenu() {
     const active = this.core.scene.inputManager.activeCommand !== undefined;
+    const selectedItems = this.core.scene.selectionManager.selectedItems.length > 0;
+    const validClipboard = this.core.clipboard.isValid;
+
     const mainMenu = new Gio.Menu();
     // input actions
     mainMenu.append(_('Enter'), `canvas.enter`);
     mainMenu.append(_('Cancel'), active ? `canvas.escape` : 'null');
     // clipboard actions
     const clipboardMenu = new Gio.Menu();
-    clipboardMenu.append(_('Cut'), active ? `null`:`canvas.cut`);
-    clipboardMenu.append(_('Copy'), active ? `null`:`canvas.copy`);
-    clipboardMenu.append(_('Copy with Base Point'), active ? `null`:`canvas.copy-with-base-point`);
-    clipboardMenu.append(_('Paste'), active ? `null`:`canvas.paste`);
+    clipboardMenu.append(_('Cut'), !active && selectedItems ? `canvas.cut`:`null`);
+    clipboardMenu.append(_('Copy'), !active && selectedItems ? `canvas.copy`:`null`);
+    clipboardMenu.append(_('Copy with Base Point'), !active && selectedItems ? `canvas.copy-with-base-point`:`null`);
+    clipboardMenu.append(_('Paste'), !active && validClipboard ? `canvas.paste`:`null`);
     mainMenu.append_submenu(_('Clipboard'), clipboardMenu);
     // canvas actions
     mainMenu.append(_('Pan'), active ? `null`:`canvas.pan`);
