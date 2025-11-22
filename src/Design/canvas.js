@@ -105,6 +105,7 @@ export const Canvas = GObject.registerClass({
     this.core.commandLine.setUpdateFunction(this.commandLineUpdateCallback.bind(this));
     this.core.canvas.setExternalPaintCallbackFunction(this.paintingCallback.bind(this));
     this.core.propertyManager.setPropertyCallbackFunction(this.propertyCallback.bind(this));
+    this.core.clipboard.setClipboardCallbackFunction(this.clipboardCallback.bind(this));
 
     this.grab_focus();
     this.onStyleChange();
