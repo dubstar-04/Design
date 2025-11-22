@@ -250,11 +250,26 @@ export const Canvas = GObject.registerClass({
   onCopyWithBasePoint() {
     this.core.scene.inputManager.onCommand(`Copybase`);
   }
+
+  clipboardCallback() {
+    const display = Gdk.Display.get_default();
+    const clipboard = display.get_clipboard();
+    const designClipboardData = this.core.clipboard.stringify();
+    clipboard.set(designClipboardData, 'text');
   }
 
   onPaste() {
-    // TODO: implement paste
-    this.core.notify('Paste not implemented');
+    const display = Gdk.Display.get_default();
+    const clipboard = display.get_clipboard();
+    clipboard.read_text_async(null, (_, res) => {
+      try {
+        const text = clipboard.read_text_finish(res);
+        this.core.clipboard.parse(text);
+        this.core.scene.inputManager.onCommand('Pasteclip');
+      } catch (e) {
+        return;
+      }
+    });
   }
 
   onUndo() {
