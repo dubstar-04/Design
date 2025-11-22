@@ -266,7 +266,7 @@ export const Canvas = GObject.registerClass({
         const text = clipboard.read_text_finish(res);
         this.core.clipboard.parse(text);
         this.core.scene.inputManager.onCommand('Pasteclip');
-      } catch (e) {
+      } catch {
         return;
       }
     });
