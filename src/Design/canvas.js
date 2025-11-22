@@ -80,6 +80,9 @@ export const Canvas = GObject.registerClass({
     const copyShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.ShortcutAction.parse_string('action(canvas.copy)') });
     shortcutController.add_shortcut(copyShortcut);
 
+    const copyWithBasePointShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary><Shift>C'), action: Gtk.ShortcutAction.parse_string('action(canvas.copy-with-base-point)') });
+    shortcutController.add_shortcut(copyWithBasePointShortcut);
+
     const pasteShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>V'), action: Gtk.ShortcutAction.parse_string('action(canvas.paste)') });
     shortcutController.add_shortcut(pasteShortcut);
 
@@ -148,6 +151,12 @@ export const Canvas = GObject.registerClass({
     canvasActionGroup.add_action(copyAction);
     copyAction.connect('activate', () => {
       this.onCopy();
+    });
+
+    const copyWithBasePointAction = new Gio.SimpleAction({ name: 'copy-with-base-point' });
+    canvasActionGroup.add_action(copyWithBasePointAction);
+    copyWithBasePointAction.connect('activate', () => {
+      this.onCopyWithBasePoint();
     });
 
     const pasteAction = new Gio.SimpleAction({ name: 'paste' });
@@ -232,6 +241,9 @@ export const Canvas = GObject.registerClass({
   onCopy() {
     // TODO: implement copy
     this.core.notify('Copy not implemented');
+  onCopyWithBasePoint() {
+    this.core.scene.inputManager.onCommand(`Copybase`);
+  }
   }
 
   onPaste() {
