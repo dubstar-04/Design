@@ -93,6 +93,7 @@
     <file>Design-Core/core/tools/copy.js</file>
     <file>Design-Core/core/tools/copybase.js</file>
     <file>Design-Core/core/tools/copyclip.js</file>
+    <file>Design-Core/core/tools/cutclip.js</file>
     <file>Design-Core/core/tools/distance.js</file>
     <file>Design-Core/core/tools/erase.js</file>
     <file>Design-Core/core/tools/extend.js</file>

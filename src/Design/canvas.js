@@ -281,8 +281,7 @@ export const Canvas = GObject.registerClass({
   }
 
   onCut() {
-    // TODO: implement cut
-    this.core.notify('Cut not implemented');
+    this.core.scene.inputManager.onCommand(`Cutclip`);
   }
 
   onSelectAll() {
