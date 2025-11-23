@@ -279,7 +279,7 @@ export const Canvas = GObject.registerClass({
       const [inputStream, mimeType] = clipboard.read_finish(res);
       console.log('Pasted mimeType:', mimeType);
       // read the stream in chunks
-      const chunkSize = 4192;
+      const chunkSize = 4096;
       // sort the bytes in parts
       const parts = [];
       while (true) {
