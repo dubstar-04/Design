@@ -80,6 +80,9 @@ export const Canvas = GObject.registerClass({
     const copyShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>C'), action: Gtk.ShortcutAction.parse_string('action(canvas.copy)') });
     shortcutController.add_shortcut(copyShortcut);
 
+    const copyWithBasePointShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary><Shift>C'), action: Gtk.ShortcutAction.parse_string('action(canvas.copy-with-base-point)') });
+    shortcutController.add_shortcut(copyWithBasePointShortcut);
+
     const pasteShortcut = new Gtk.Shortcut({ trigger: Gtk.ShortcutTrigger.parse_string('<Primary>V'), action: Gtk.ShortcutAction.parse_string('action(canvas.paste)') });
     shortcutController.add_shortcut(pasteShortcut);
 
@@ -102,6 +105,7 @@ export const Canvas = GObject.registerClass({
     this.core.commandLine.setUpdateFunction(this.commandLineUpdateCallback.bind(this));
     this.core.canvas.setExternalPaintCallbackFunction(this.paintingCallback.bind(this));
     this.core.propertyManager.setPropertyCallbackFunction(this.propertyCallback.bind(this));
+    this.core.clipboard.setClipboardCallbackFunction(this.clipboardCallback.bind(this));
 
     this.grab_focus();
     this.onStyleChange();
@@ -150,6 +154,12 @@ export const Canvas = GObject.registerClass({
       this.onCopy();
     });
 
+    const copyWithBasePointAction = new Gio.SimpleAction({ name: 'copy-with-base-point' });
+    canvasActionGroup.add_action(copyWithBasePointAction);
+    copyWithBasePointAction.connect('activate', () => {
+      this.onCopyWithBasePoint();
+    });
+
     const pasteAction = new Gio.SimpleAction({ name: 'paste' });
     canvasActionGroup.add_action(pasteAction);
     pasteAction.connect('activate', () => {
@@ -195,15 +205,19 @@ export const Canvas = GObject.registerClass({
 
   getContextMenu() {
     const active = this.core.scene.inputManager.activeCommand !== undefined;
+    const selectedItems = this.core.scene.selectionManager.selectedItems.length > 0;
+    const validClipboard = this.core.clipboard.isValid;
+
     const mainMenu = new Gio.Menu();
     // input actions
     mainMenu.append(_('Enter'), `canvas.enter`);
     mainMenu.append(_('Cancel'), active ? `canvas.escape` : 'null');
     // clipboard actions
     const clipboardMenu = new Gio.Menu();
-    clipboardMenu.append(_('Cut'), active ? `null`:`canvas.cut`);
-    clipboardMenu.append(_('Copy'), active ? `null`:`canvas.copy`);
-    clipboardMenu.append(_('Paste'), active ? `null`:`canvas.paste`);
+    clipboardMenu.append(_('Cut'), !active && selectedItems ? `canvas.cut`:`null`);
+    clipboardMenu.append(_('Copy'), !active && selectedItems ? `canvas.copy`:`null`);
+    clipboardMenu.append(_('Copy with Base Point'), !active && selectedItems ? `canvas.copy-with-base-point`:`null`);
+    clipboardMenu.append(_('Paste'), !active && validClipboard ? `canvas.paste`:`null`);
     mainMenu.append_submenu(_('Clipboard'), clipboardMenu);
     // canvas actions
     mainMenu.append(_('Pan'), active ? `null`:`canvas.pan`);
@@ -230,13 +244,74 @@ export const Canvas = GObject.registerClass({
   }
 
   onCopy() {
-    // TODO: implement copy
-    this.core.notify('Copy not implemented');
+    this.core.scene.inputManager.onCommand(`Copyclip`);
+  }
+
+  onCopyWithBasePoint() {
+    this.core.scene.inputManager.onCommand(`Copybase`);
+  }
+
+  clipboardCallback() {
+    // get the display
+    const display = Gdk.Display.get_default();
+    // get the clipboard
+    const clipboard = display.get_clipboard();
+    // get the design clipboard data
+    const designClipboardData = this.core.clipboard.stringify();
+    // encode the clipboard data
+    const data = new TextEncoder().encode(designClipboardData);
+    // set the clipboard content
+    const provider = Gdk.ContentProvider.new_for_bytes('application/json', data);
+    clipboard.set_content(provider);
   }
 
   onPaste() {
-    // TODO: implement paste
-    this.core.notify('Paste not implemented');
+    // get the display
+    const display = Gdk.Display.get_default();
+    // get the clipboard
+    const clipboard = display.get_clipboard();
+    // only paste if local clipboard
+    if (clipboard.is_local() === false) {
+      return;
+    }
+    // read the clipboard content if the mime type matches
+    clipboard.read_async(['application/json'], 0, null, (_, res) => {
+      try {
+        const [inputStream, mimeType] = clipboard.read_finish(res);
+        console.log('Pasted mimeType:', mimeType);
+        // read the stream in chunks
+        const chunkSize = 4096;
+        // sort the bytes in parts
+        const parts = [];
+        while (true) {
+          const bytes = inputStream.read_bytes(chunkSize, null); // returns GLib.Bytes
+          const len = bytes.get_size();
+          if (len > 0) parts.push(bytes);
+          if (len < chunkSize) break;
+        }
+        // close stream
+        inputStream.close(null);
+        // Calculate total size
+        const totalBytes = parts.reduce((s, b) => s + b.get_size(), 0);
+        // Combine all parts into one Uint8Array
+        const out = new Uint8Array(totalBytes);
+        let offset = 0;
+        for (const b of parts) {
+          const chunk = new Uint8Array(b.toArray());
+          out.set(chunk, offset);
+          offset += chunk.length;
+        }
+        // convert the bytes to string
+        const textDecoder = new TextDecoder();
+        const text = textDecoder.decode(out);
+        // console.log('Pasted text:', text);
+        this.core.clipboard.parse(text);
+        this.core.scene.inputManager.onCommand('Pasteclip');
+      } catch {
+        // Error reading clipboard content
+        this.core.notify('Error reading clipboard content');
+      }
+    });
   }
 
   onUndo() {
@@ -248,8 +323,7 @@ export const Canvas = GObject.registerClass({
   }
 
   onCut() {
-    // TODO: implement cut
-    this.core.notify('Cut not implemented');
+    this.core.scene.inputManager.onCommand(`Cutclip`);
   }
 
   onSelectAll() {
