@@ -276,36 +276,41 @@ export const Canvas = GObject.registerClass({
     }
     // read the clipboard content if the mime type matches
     clipboard.read_async(['application/json'], 0, null, (_, res) => {
-      const [inputStream, mimeType] = clipboard.read_finish(res);
-      console.log('Pasted mimeType:', mimeType);
-      // read the stream in chunks
-      const chunkSize = 4096;
-      // sort the bytes in parts
-      const parts = [];
-      while (true) {
-        const bytes = inputStream.read_bytes(chunkSize, null); // returns GLib.Bytes
-        const len = bytes.get_size();
-        if (len > 0) parts.push(bytes);
-        if (len < chunkSize) break;
+      try {
+        const [inputStream, mimeType] = clipboard.read_finish(res);
+        console.log('Pasted mimeType:', mimeType);
+        // read the stream in chunks
+        const chunkSize = 4096;
+        // sort the bytes in parts
+        const parts = [];
+        while (true) {
+          const bytes = inputStream.read_bytes(chunkSize, null); // returns GLib.Bytes
+          const len = bytes.get_size();
+          if (len > 0) parts.push(bytes);
+          if (len < chunkSize) break;
+        }
+        // close stream
+        inputStream.close(null);
+        // Calculate total size
+        const totalBytes = parts.reduce((s, b) => s + b.get_size(), 0);
+        // Combine all parts into one Uint8Array
+        const out = new Uint8Array(totalBytes);
+        let offset = 0;
+        for (const b of parts) {
+          const chunk = new Uint8Array(b.toArray());
+          out.set(chunk, offset);
+          offset += chunk.length;
+        }
+        // convert the bytes to string
+        const textDecoder = new TextDecoder();
+        const text = textDecoder.decode(out);
+        // console.log('Pasted text:', text);
+        this.core.clipboard.parse(text);
+        this.core.scene.inputManager.onCommand('Pasteclip');
+      } catch {
+        // Error reading clipboard content
+        this.core.notify('Error reading clipboard content');
       }
-      // close stream
-      inputStream.close(null);
-      // Calculate total size
-      const totalBytes = parts.reduce((s, b) => s + b.get_size(), 0);
-      // Combine all parts into one Uint8Array
-      const out = new Uint8Array(totalBytes);
-      let offset = 0;
-      for (const b of parts) {
-        const chunk = new Uint8Array(b.toArray());
-        out.set(chunk, offset);
-        offset += chunk.length;
-      }
-      // convert the bytes to string
-      const textDecoder = new TextDecoder();
-      const text = textDecoder.decode(out);
-      // console.log('Pasted text:', text);
-      this.core.clipboard.parse(text);
-      this.core.scene.inputManager.onCommand('Pasteclip');
     });
   }
 
