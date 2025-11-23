@@ -252,23 +252,60 @@ export const Canvas = GObject.registerClass({
   }
 
   clipboardCallback() {
+    // get the display
     const display = Gdk.Display.get_default();
+    // get the clipboard
     const clipboard = display.get_clipboard();
+    // get the design clipboard data
     const designClipboardData = this.core.clipboard.stringify();
-    clipboard.set(designClipboardData, 'text');
+    // encode the clipboard data
+    const data = new TextEncoder().encode(designClipboardData);
+    // set the clipboard content
+    const provider = Gdk.ContentProvider.new_for_bytes('application/json', data);
+    clipboard.set_content(provider);
   }
 
   onPaste() {
+    // get the display
     const display = Gdk.Display.get_default();
+    // get the clipboard
     const clipboard = display.get_clipboard();
-    clipboard.read_text_async(null, (_, res) => {
-      try {
-        const text = clipboard.read_text_finish(res);
-        this.core.clipboard.parse(text);
-        this.core.scene.inputManager.onCommand('Pasteclip');
-      } catch {
-        return;
+    // only paste if local clipboard
+    if (clipboard.is_local() === false) {
+      return;
+    }
+    // read the clipboard content if the mime type matches
+    clipboard.read_async(['application/json'], 0, null, (_, res) => {
+      const [inputStream, mimeType] = clipboard.read_finish(res);
+      console.log('Pasted mimeType:', mimeType);
+      // read the stream in chunks
+      const chunkSize = 4192;
+      // sort the bytes in parts
+      const parts = [];
+      while (true) {
+        const bytes = inputStream.read_bytes(chunkSize, null); // returns GLib.Bytes
+        const len = bytes.get_size();
+        if (len > 0 ) parts.push(bytes);
+        if (len < chunkSize) break;
       }
+      // close stream
+      inputStream.close(null);
+      // Calculate total size
+      const totalBytes = parts.reduce((s, b) => s + b.get_size(), 0);
+      // Combine all parts into one Uint8Array
+      const out = new Uint8Array(totalBytes);
+      let offset = 0;
+      for (const b of parts) {
+        const chunk = new Uint8Array(b.toArray());
+        out.set(chunk, offset);
+        offset += chunk.length;
+      }
+      // convert the bytes to string
+      const textDecoder = new TextDecoder();
+      const text = textDecoder.decode(out);
+      // console.log('Pasted text:', text);
+      this.core.clipboard.parse(text);
+      this.core.scene.inputManager.onCommand('Pasteclip');
     });
   }
 
