@@ -285,7 +285,7 @@ export const Canvas = GObject.registerClass({
       while (true) {
         const bytes = inputStream.read_bytes(chunkSize, null); // returns GLib.Bytes
         const len = bytes.get_size();
-        if (len > 0 ) parts.push(bytes);
+        if (len > 0) parts.push(bytes);
         if (len < chunkSize) break;
       }
       // close stream
