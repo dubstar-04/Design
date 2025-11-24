@@ -365,7 +365,6 @@ export const DesignWindow = GObject.registerClass({
     canvas.core.setExternalNotifyCallbackFunction(this.onShowToast.bind(this));
   }
 
-
   isFileAlreadyOpen(filePath) {
     // Check if a file with the given path is already open in any tab
     const pageCount = this._tabView.get_n_pages();
