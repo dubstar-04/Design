@@ -253,26 +253,26 @@ export const Canvas = GObject.registerClass({
     return this.file_path;
   }
 
-  setUnsaved(unsaved) {
-    this.unsaved = unsaved;
-  }
+  // setUnsaved(unsaved) {
+  //   this.unsaved = unsaved;
+  // }
 
-  getUnsaved() {
-    return this.unsaved;
-  }
+  // getUnsaved() {
+  //   return this.unsaved;
+  // }
 
-  markUnsaved() {
-    this.setUnsaved(true);
-  }
+  // markUnsaved() {
+  //   this.setUnsaved(true);
+  // }
 
-  markSaved() {
-    this.setUnsaved(false);
-  }
+  // markSaved() {
+  //   this.setUnsaved(false);
+  // }
 
-  onSceneSavedChanged(saved) {
-    // When scene saved state changes, update our unsaved state
-    this.setUnsaved(!saved);
-  }
+  // onSceneSavedChanged(saved) {
+  //   // When scene saved state changes, update our unsaved state
+  //   this.setUnsaved(!saved);
+  // }
 
   onCopy() {
     this.core.scene.inputManager.onCommand(`Copyclip`);
