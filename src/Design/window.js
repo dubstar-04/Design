@@ -349,7 +349,7 @@ export const DesignWindow = GObject.registerClass({
     canvas.connect('mouseposition-updated', this.updateMousePosition.bind(this));
     canvas.connect('selection-updated', this.canvasSelectionUpdated.bind(this));
     canvas.connect('input-changed', this.onShowToolbars.bind(this));
-    canvas.connect('notify::unsaved', (canvas) => this.updateUnsavedState(canvas));
+    // canvas.connect('notify::unsaved', (canvas) => this.updateUnsavedState(canvas));
     this.commandLine.reset();
     // make the new page current
     this._tabView.set_selected_page(page);
@@ -364,6 +364,7 @@ export const DesignWindow = GObject.registerClass({
     // TODO: would this be better handles in canvas and use a signal?
     canvas.core.setExternalNotifyCallbackFunction(this.onShowToast.bind(this));
   }
+
 
   isFileAlreadyOpen(filePath) {
     // Check if a file with the given path is already open in any tab
