@@ -73,18 +73,32 @@ template $DesignWindow: Adw.ApplicationWindow {
     title-widget:
     Box {
       orientation: vertical;
+      hexpand: true;
       spacing: 0;
+      margin-start: 12;
+      margin-end: 12;
 
-      Label {
-        label: _("Design");
-        halign: center;
-      }
+      CenterBox{
+        hexpand: true;
+        vexpand: true;
+        orientation: horizontal;
 
-      Label {
-        label: _("Draft");
-        halign: center;
-        visible: bind template.unsaved;
-        css-classes: ['draft-subtitle'];
+        [start]
+        Label isModified{
+          label: '•';
+          halign: end;
+          hexpand: true;
+          margin-end: 6;
+          visible: false;
+        }
+
+        [center]
+        Label title{
+          label: _("Design");
+          styles [
+            "heading",
+          ]
+        }
       }
     };
 
