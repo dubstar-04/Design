@@ -41,14 +41,14 @@ export const DesignWindow = GObject.registerClass({
         'Toolbars Visible',
         'Show the input toolbars',
         GObject.ParamFlags.READWRITE,
-        false,
+        true,
     ),
   },
   Signals: {
     'canvas-selection-updated': {},
   },
   Template: 'resource:///io/github/dubstar_04/design/ui/window.ui',
-  InternalChildren: ['tabView', 'mousePosLabel', 'commandLineEntry', 'newButton', 'entitiesToolbar', 'toolsToolbar', 'toastoverlay'],
+  InternalChildren: ['isModified', 'tabView', 'mousePosLabel', 'commandLineEntry', 'newButton', 'entitiesToolbar', 'toolsToolbar', 'toastoverlay'],
 }, class DesignWindow extends Adw.ApplicationWindow {
   constructor(application) {
     super({ application });
@@ -150,6 +150,12 @@ export const DesignWindow = GObject.registerClass({
 
     this._tabView.connect('notify::selected-page', this.onTabChange.bind(this));
 
+    // Connect close-request signal to handle unsaved changes
+    this.connect('close-request', this.onWindowCloseRequest.bind(this));
+
+    // Connect to close-page signal to handle tab close confirmation
+    this._tabView.connect('close-page', this.onTabCloseRequest.bind(this));
+
     this.addCanvas();
     this.loadToolbars();
 
@@ -208,11 +214,14 @@ export const DesignWindow = GObject.registerClass({
 
   onTabChange() {
     // activate the tabs canvas
-    this.getActiveCanvas().activate();
+    const canvas = this.getActiveCanvas();
+    canvas.activate();
 
     // Ensure the settings are synced to the selected tab
     this.settings.syncSettings();
 
+    // Update unsaved state based on active canvas
+    this.updateWindowState(canvas);
 
     if (this.layersWindow) {
       this.layersWindow.reload();
@@ -220,6 +229,64 @@ export const DesignWindow = GObject.registerClass({
 
     if (this.propertiesWindow) {
       this.propertiesWindow.reload();
+    }
+  }
+
+  onTabCloseRequest(tabView, page) {
+    // This method is called when a tab close is requested
+    // Check for unsaved changes and confirm or deny the close
+    const canvas = page.get_child();
+
+    if (canvas.is_modified) {
+      // create a discard action to close the tab
+      const discardAction = () => {
+        this._tabView.close_page_finish(page, true);
+      };
+      const cancelAction = () => {
+        this._tabView.close_page_finish(page, false);
+      };
+
+      this.showCloseConfirmationDialog(discardAction, cancelAction);
+      // Return true to indicate the close request is handled
+      return true;
+    } else {
+      return false; // Allow default close behavior
+    }
+  }
+
+  onWindowCloseRequest() {
+    // Check if there are any unsaved changes
+    const unsavedChanges = this.hasUnsavedChanges;
+
+    // If there are unsaved changes, show confirmation dialog
+    if (unsavedChanges) {
+      const discardAction = () => {
+        this.get_application().quit();
+      };
+
+      const cancelAction = () => {
+        // Do nothing, just close the dialog
+      };
+
+      this.showCloseConfirmationDialog(discardAction, cancelAction);
+      return true; // Prevent default close behavior
+    }
+    return false; // Allow default close behavior
+  }
+
+  saveStateChanged(page, canvas) {
+    if (page) {
+      if (canvas) {
+        const icon = Gio.ThemedIcon.new('document-modified-symbolic');
+        page.set_icon(canvas.is_modified ? icon : null);
+        this.updateWindowState(canvas);
+      }
+    }
+  }
+
+  updateWindowState(canvas) {
+    if (canvas) {
+      this._isModified.visible = canvas.is_modified;
     }
   }
 
@@ -246,6 +313,7 @@ export const DesignWindow = GObject.registerClass({
     canvas.connect('mouseposition-updated', this.updateMousePosition.bind(this));
     canvas.connect('selection-updated', this.canvasSelectionUpdated.bind(this));
     canvas.connect('input-changed', this.onShowToolbars.bind(this));
+    canvas.connect('notify::is-modified', this.saveStateChanged.bind(this, page, canvas));
     this.commandLine.reset();
     // make the new page current
     this._tabView.set_selected_page(page);
@@ -254,6 +322,25 @@ export const DesignWindow = GObject.registerClass({
     // set the callback function to trigger toasts
     // TODO: would this be better handles in canvas and use a signal?
     canvas.core.setExternalNotifyCallbackFunction(this.onShowToast.bind(this));
+  }
+
+  isFileAlreadyOpen(filePath) {
+    // Check if a file with the given path is already open in any tab
+    const pageCount = this._tabView.get_n_pages();
+    for (let i = 0; i < pageCount; i++) {
+      const page = this._tabView.get_nth_page(i);
+      const canvas = page.get_child();
+      if (canvas && canvas.getFilePath() === filePath) {
+        return page;
+      }
+    }
+    return null;
+  }
+
+  switchToTab(page) {
+    // Switch to the specified tab
+    this._tabView.set_selected_page(page);
+    this.onTabChange();
   }
 
   loadToolbars() {
@@ -319,7 +406,6 @@ export const DesignWindow = GObject.registerClass({
   }
 
   showExportWindow() {
-    log('show export window');
     if (!this.exportWindow) {
       this.exportWindow = new ExportWindow();
       this.exportWindow.set_transient_for(this);
@@ -366,33 +452,47 @@ export const DesignWindow = GObject.registerClass({
       const activeCanvas = activePage.get_child();
       return activeCanvas;
     }
-
     // no active canvas
     return;
   }
 
-  isFileAlreadyOpen(filePath) {
-    // Check if a file with the given path is already open in any tab
+  get hasUnsavedChanges() {
+    // Check if any tab has unsaved changes
     const pageCount = this._tabView.get_n_pages();
-
     for (let i = 0; i < pageCount; i++) {
       const page = this._tabView.get_nth_page(i);
       const canvas = page.get_child();
-
-      if (canvas && canvas.getFilePath() === filePath) {
-        return { isOpen: true, page: page };
-      }
+      if (canvas?.is_modified) return true;
     }
-
-    return { isOpen: false, page: null };
+    return false;
   }
 
-  switchToTab(page) {
-    // Switch to the specified tab
-    this._tabView.set_selected_page(page);
-    this.onTabChange();
+  /**
+   * Show a confirmation dialog when there are unsaved changes
+   * This is shown for tab close and window close
+   * @param {Function} discardAction
+   */
+  showCloseConfirmationDialog(discardAction, cancelAction) {
+    const dialog = new Adw.AlertDialog({
+      heading: 'Discard Changes?',
+      body: 'Unsaved changes will be permanently lost.',
+      close_response: 'cancel',
+    });
+
+    dialog.add_response('cancel', 'Cancel');
+    dialog.add_response('discard', 'Discard Changes');
+
+    // Use DESTRUCTIVE appearance to draw attention to the potentially damaging consequences of this action
+    dialog.set_response_appearance('discard', Adw.ResponseAppearance.DESTRUCTIVE);
+
+    dialog.connect('response', (dialog, response) => {
+      if (response === 'discard') {
+        discardAction();
+      } else {
+        cancelAction();
+      }
+    });
+
+    dialog.choose(this, null, null);
   }
-},
-);
-
-
+});

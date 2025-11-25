@@ -16,6 +16,8 @@ icons = [
   'tools/move-symbolic.svg',
   'tools/rotate-symbolic.svg',
   'tools/trim-symbolic.svg',
+
+  'ui/document-modified-symbolic.svg',
   ]
 
 scalable_dir = join_paths('hicolor', 'scalable', 'apps')

@@ -69,13 +69,45 @@ template $DesignWindow: Adw.ApplicationWindow {
     orientation: vertical;
     vexpand: true;
 
-    Adw.HeaderBar {
-      Button newButton {
-        can-focus: false;
-        icon-name: 'document-new-symbolic';
-        tooltip-text: _("Create a new design");
-        action-name: "win.new";
+  Adw.HeaderBar {
+    title-widget:
+    Box {
+      orientation: vertical;
+      hexpand: true;
+      spacing: 0;
+      margin-start: 12;
+      margin-end: 12;
+
+      CenterBox{
+        hexpand: true;
+        vexpand: true;
+        orientation: horizontal;
+
+        [start]
+        Label isModified{
+          label: '•';
+          halign: end;
+          hexpand: true;
+          margin-end: 6;
+          visible: false;
+        }
+
+        [center]
+        Label title{
+          label: _("Design");
+          styles [
+            "heading",
+          ]
+        }
       }
+    };
+
+    Button newButton{
+    can-focus: false;
+    icon-name: 'document-new-symbolic';
+    tooltip-text: _("Create a new design");
+    action-name: "win.new";
+    }
 
       [end]
       MenuButton {

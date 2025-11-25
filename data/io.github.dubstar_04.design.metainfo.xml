@@ -47,7 +47,8 @@
 			<li>Update to GNOME 49</li>
 			<li>Added keyboard shortcuts: CTRL+A (Select All) </li>
 			<li>Only allow files to be opened once</li>
-			<li>Show save work dialog for unsaved changes</li>
+			<li>Indicate save state on tabs and header bar</li>
+			<li>Show dialog for unsaved changes</li>
 			<li>Only show command input and toolbars for mouse input</li>
 			<li>Reset current command when selecting toolbar commands</li>
 			<li>Add Pan Command (P)</li>

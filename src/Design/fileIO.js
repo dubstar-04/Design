@@ -68,10 +68,10 @@ export class FileIO {
     }
 
     // Check if file is already open
-    const fileCheck = window.isFileAlreadyOpen(filePath);
-    if (fileCheck.isOpen) {
+    const page = window.isFileAlreadyOpen(filePath);
+    if (page) {
       // File is already open, switch to that tab
-      window.switchToTab(fileCheck.page);
+      window.switchToTab(page);
       DesignCore.Core.notify(`File already open: ${fileName}`);
       return;
     }
@@ -108,8 +108,10 @@ export class FileIO {
 
       if (success) {
         // TODO: Janky sending notifications through core
+        DesignCore.Scene.stateManager.stateChanged(false);
         DesignCore.Core.notify(_('File Saved'));
       } else {
+        DesignCore.Scene.stateManager.stateChanged(true);
         DesignCore.Core.notify(_('Error Saving File'));
       }
     }

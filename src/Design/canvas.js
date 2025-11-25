@@ -17,6 +17,13 @@ export const Canvas = GObject.registerClass({
         GObject.ParamFlags.READWRITE,
         null,
     ),
+    'is-modified': GObject.ParamSpec.boolean(
+        'is-modified',
+        'isModified',
+        'Whether the file isModified',
+        GObject.ParamFlags.READWRITE,
+        false,
+    ),
   },
   Signals: {
     'commandline-updated': { param_types: [GObject.TYPE_STRING] },
@@ -106,6 +113,7 @@ export const Canvas = GObject.registerClass({
     this.core.canvas.setExternalPaintCallbackFunction(this.paintingCallback.bind(this));
     this.core.propertyManager.setPropertyCallbackFunction(this.propertyCallback.bind(this));
     this.core.clipboard.setClipboardCallbackFunction(this.clipboardCallback.bind(this));
+    this.core.scene.stateManager.setStateCallbackFunction(this.stateChanged.bind(this));
 
     this.grab_focus();
     this.onStyleChange();
@@ -243,6 +251,10 @@ export const Canvas = GObject.registerClass({
     return this.file_path;
   }
 
+  stateChanged() {
+    this.isModified = this.core.scene.stateManager.isModified;
+  }
+
   onCopy() {
     this.core.scene.inputManager.onCommand(`Copyclip`);
   }
@@ -354,7 +366,6 @@ export const Canvas = GObject.registerClass({
   }
 
   propertyCallback() {
-    // console.log("Canvas - Property Callback")
     this.emit('selection-updated');
   }
 
