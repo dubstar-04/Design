@@ -44,13 +44,6 @@ export const DesignWindow = GObject.registerClass({
         GObject.ParamFlags.READWRITE,
         true,
     ),
-    'unsaved': GObject.ParamSpec.boolean(
-        'unsaved',
-        'Unsaved',
-        'Whether the current file has unsaved changes',
-        GObject.ParamFlags.READWRITE,
-        false,
-    ),
   },
   Signals: {
     'canvas-selection-updated': {},
