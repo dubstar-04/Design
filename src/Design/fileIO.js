@@ -83,8 +83,6 @@ export class FileIO {
     DesignCore.Core.openFile(fileContents);
     // set the active file path
     window.getActiveCanvas().setFilePath(filePath);
-    // // mark as saved since we just loaded it
-    // window.getActiveCanvas().markSaved();
     // handle tab changes in the window object
     window.onTabChange();
   }
@@ -109,8 +107,6 @@ export class FileIO {
       const [success] = file.replace_contents(dxfContents, null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
 
       if (success) {
-        // // Mark canvas as saved
-        // window.getActiveCanvas().markSaved();
         // TODO: Janky sending notifications through core
         DesignCore.Scene.stateManager.stateChanged(false);
         DesignCore.Core.notify(_('File Saved'));
@@ -156,8 +152,6 @@ export class FileIO {
 
         // set the active file path
         window.getActiveCanvas().setFilePath(filePath);
-        // // mark as saved since we just saved it
-        // window.getActiveCanvas().markSaved();
 
         if (fileName !== tabTitle) {
           const page = window._tabView.get_selected_page();
