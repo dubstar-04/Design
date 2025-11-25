@@ -112,8 +112,10 @@ export class FileIO {
         // // Mark canvas as saved
         // window.getActiveCanvas().markSaved();
         // TODO: Janky sending notifications through core
+        DesignCore.Scene.stateManager.stateChanged(false);
         DesignCore.Core.notify(_('File Saved'));
       } else {
+        DesignCore.Scene.stateManager.stateChanged(true);
         DesignCore.Core.notify(_('Error Saving File'));
       }
     }
