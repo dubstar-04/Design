@@ -299,6 +299,21 @@ export const DesignWindow = GObject.registerClass({
   //     }
   //   }
   // }
+  saveStateChanged(page, canvas) {
+    if (page) {
+      if (canvas) {
+        const icon = Gio.ThemedIcon.new('document-modified-symbolic');
+        page.set_icon(canvas.is_modified ? icon : null);
+        this.updateWindowState(canvas);
+      }
+    }
+  }
+
+  updateWindowState(canvas) {
+    if (canvas) {
+      this._isModified.visible = canvas.is_modified;
+    }
+  }
 
   createNewDocument() {
     this.addCanvas();
@@ -323,7 +338,7 @@ export const DesignWindow = GObject.registerClass({
     canvas.connect('mouseposition-updated', this.updateMousePosition.bind(this));
     canvas.connect('selection-updated', this.canvasSelectionUpdated.bind(this));
     canvas.connect('input-changed', this.onShowToolbars.bind(this));
-    // canvas.connect('notify::unsaved', (canvas) => this.updateUnsavedState(canvas));
+    canvas.connect('notify::is-modified', this.saveStateChanged.bind(this, page, canvas));
     this.commandLine.reset();
     // make the new page current
     this._tabView.set_selected_page(page);
