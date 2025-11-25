@@ -463,7 +463,7 @@ export const DesignWindow = GObject.registerClass({
     for (let i = 0; i < pageCount; i++) {
       const page = this._tabView.get_nth_page(i);
       const canvas = page.get_child();
-      if (canvas?.isModified) return true;
+      if (canvas?.is_modified) return true;
     }
     return false;
   }
