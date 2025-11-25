@@ -56,7 +56,7 @@ export const DesignWindow = GObject.registerClass({
     'canvas-selection-updated': {},
   },
   Template: 'resource:///io/github/dubstar_04/design/ui/window.ui',
-  InternalChildren: ['tabView', 'mousePosLabel', 'commandLineEntry', 'newButton', 'entitiesToolbar', 'toolsToolbar', 'toastoverlay'],
+  InternalChildren: ['isModified', 'tabView', 'mousePosLabel', 'commandLineEntry', 'newButton', 'entitiesToolbar', 'toolsToolbar', 'toastoverlay'],
 }, class DesignWindow extends Adw.ApplicationWindow {
   constructor(application) {
     super({ application });
