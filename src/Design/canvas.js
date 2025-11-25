@@ -17,10 +17,10 @@ export const Canvas = GObject.registerClass({
         GObject.ParamFlags.READWRITE,
         null,
     ),
-    'unsaved': GObject.ParamSpec.boolean(
-        'unsaved',
-        'Unsaved',
-        'Whether the file has unsaved changes',
+    'is-modified': GObject.ParamSpec.boolean(
+        'is-modified',
+        'isModified',
+        'Whether the file isModified',
         GObject.ParamFlags.READWRITE,
         false,
     ),
@@ -104,8 +104,8 @@ export const Canvas = GObject.registerClass({
     // create and activate a design core
     this.core = new Core();
 
-    // Connect to scene changes to mark as unsaved
-    // this.core.scene.setSavedStateChangedCallback(this.onSceneSavedChanged.bind(this));
+    // Connect to scene changes
+    this.core.scene.stateManager.setStateCallbackFunction(this.stateChanged.bind(this));
 
     this.styleManager = Adw.StyleManager.get_default();
     this.styleManager.connect('notify::dark', this.onStyleChange.bind(this));
@@ -116,6 +116,7 @@ export const Canvas = GObject.registerClass({
     this.core.canvas.setExternalPaintCallbackFunction(this.paintingCallback.bind(this));
     this.core.propertyManager.setPropertyCallbackFunction(this.propertyCallback.bind(this));
     this.core.clipboard.setClipboardCallbackFunction(this.clipboardCallback.bind(this));
+    this.core.scene.stateManager.setStateCallbackFunction(this.stateChanged.bind(this));
 
     this.grab_focus();
     this.onStyleChange();
@@ -253,26 +254,9 @@ export const Canvas = GObject.registerClass({
     return this.file_path;
   }
 
-  // setUnsaved(unsaved) {
-  //   this.unsaved = unsaved;
-  // }
-
-  // getUnsaved() {
-  //   return this.unsaved;
-  // }
-
-  // markUnsaved() {
-  //   this.setUnsaved(true);
-  // }
-
-  // markSaved() {
-  //   this.setUnsaved(false);
-  // }
-
-  // onSceneSavedChanged(saved) {
-  //   // When scene saved state changes, update our unsaved state
-  //   this.setUnsaved(!saved);
-  // }
+  stateChanged() {
+    this.isModified = this.core.scene.stateManager.isModified;
+  }
 
   onCopy() {
     this.core.scene.inputManager.onCommand(`Copyclip`);
@@ -385,7 +369,6 @@ export const Canvas = GObject.registerClass({
   }
 
   propertyCallback() {
-    // console.log("Canvas - Property Callback")
     this.emit('selection-updated');
   }
 
