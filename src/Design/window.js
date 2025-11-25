@@ -480,7 +480,7 @@ export const DesignWindow = GObject.registerClass({
     });
 
     dialog.add_response('cancel', 'Cancel');
-    dialog.add_response('discard', 'Discard Changes');
+    dialog.add_response('discard', 'Discard');
 
     // Use DESTRUCTIVE appearance to draw attention to the potentially damaging consequences of this action
     dialog.set_response_appearance('discard', Adw.ResponseAppearance.DESTRUCTIVE);
