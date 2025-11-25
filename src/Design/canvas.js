@@ -104,9 +104,6 @@ export const Canvas = GObject.registerClass({
     // create and activate a design core
     this.core = new Core();
 
-    // Connect to scene changes
-    this.core.scene.stateManager.setStateCallbackFunction(this.stateChanged.bind(this));
-
     this.styleManager = Adw.StyleManager.get_default();
     this.styleManager.connect('notify::dark', this.onStyleChange.bind(this));
 
