@@ -35,7 +35,7 @@ export const DesignApplication = GObject.registerClass(
 
         const quitAction = new Gio.SimpleAction({ name: 'quit' });
         quitAction.connect('activate', (action) => {
-          this.quitWithConfirmation();
+          this.quit();
         });
         this.add_action(quitAction);
         this.set_accels_for_action('app.quit', ['<primary>q']);
@@ -84,22 +84,6 @@ export const DesignApplication = GObject.registerClass(
           activeWindow.present();
         });
       }
-
-      // quitWithConfirmation() {
-      //   // Instead of checking for unsaved changes here, let the window close-request
-      //   // signal handle it. This ensures the proper dialog flow.
-      //   const windows = this.get_windows();
-      //   if (windows.length > 0) {
-      //     // Mark this as an application quit so the window knows to quit the app when done
-      //     windows[0]._isApplicationQuit = true;
-      //     // Close the first window - its close-request handler will check for unsaved changes
-      //     // and show the confirmation dialog if needed
-      //     windows[0].close();
-      //   } else {
-      //     // No windows, quit immediately
-      //     this.quit();
-      //   }
-      // }
     },
 );
 
