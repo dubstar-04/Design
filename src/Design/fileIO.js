@@ -68,10 +68,10 @@ export class FileIO {
     }
 
     // Check if file is already open
-    const fileCheck = window.isFileAlreadyOpen(filePath);
-    if (fileCheck.isOpen) {
+    const page = window.isFileAlreadyOpen(filePath);
+    if (page) {
       // File is already open, switch to that tab
-      window.switchToTab(fileCheck.page);
+      window.switchToTab(page);
       DesignCore.Core.notify(`File already open: ${fileName}`);
       return;
     }
