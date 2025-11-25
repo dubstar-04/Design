@@ -215,22 +215,6 @@ export const DesignWindow = GObject.registerClass({
     this.toolbars_visible = show;
   }
 
-  addCssStyling() {
-    const cssProvider = new Gtk.CssProvider();
-    const css = `
-      .draft-subtitle {
-        color: #888888;
-        font-style: italic;
-      }
-    `;
-    cssProvider.load_from_data(css, css.length);
-    Gtk.StyleContext.add_provider_for_display(
-        Gdk.Display.get_default(),
-        cssProvider,
-        Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-    );
-  }
-
   openHelp() {
     const uri = 'https://design-app.readthedocs.io/en/latest/index.html';
     Gio.AppInfo.launch_default_for_uri_async(uri, null, null, null);
