@@ -331,7 +331,6 @@ export const DesignWindow = GObject.registerClass({
       const page = this._tabView.get_nth_page(i);
       const canvas = page.get_child();
       if (canvas && canvas.getFilePath() === filePath) {
-        // consider returning page or null
         return page;
       }
     }
