@@ -159,13 +159,10 @@ export const DesignWindow = GObject.registerClass({
     this._tabView.connect('notify::selected-page', this.onTabChange.bind(this));
 
     // Connect close-request signal to handle unsaved changes
-    // this.connect('close-request', this.onCloseRequest.bind(this));
+    this.connect('close-request', this.onWindowCloseRequest.bind(this));
 
     // Connect to close-page signal to handle tab close confirmation
-    // this._tabView.connect('close-page', this.onTabCloseRequest.bind(this));
-
-    // Add CSS styling for draft indicator
-    this.addCssStyling();
+    this._tabView.connect('close-page', this.onTabCloseRequest.bind(this));
 
     this.addCanvas();
     this.loadToolbars();
