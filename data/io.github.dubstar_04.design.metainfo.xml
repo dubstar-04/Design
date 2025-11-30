@@ -58,6 +58,9 @@
 			<li>Updated Line Style Preference Page</li>
 			<li>Show context menu on rightclick</li>
 			<li>Enable undo and redo</li>
+			<li>Improved Trim (TR) command with Arc, Circle and Line entities</li>
+			<li>Fixed how properties are filtered in the properties window</li>
+			<li>Allow opening multiple files from a file manager</li>
 			</ul>
 		</description>
 		</release>
