@@ -88,6 +88,7 @@
     <file>Design-Core/core/entities/polyline.js</file>
     <file>Design-Core/core/entities/rectangle.js</file>
     <file>Design-Core/core/entities/solid.js</file>
+    <file>Design-Core/core/entities/arctext.js</file>
     <file>Design-Core/core/entities/text.js</file>
     <!-- Tools -->
     <file>Design-Core/core/tools/copy.js</file>
