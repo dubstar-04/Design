@@ -254,41 +254,54 @@ export const PropertiesWindow = GObject.registerClass({
     }
   }
 
+  /**
+   * Return array of objects with keys: display and value
+   * display is the human readable name
+   * value is the actual value to be set
+   * {display: 'Display Name', value: 0'}
+   */
   getModel(property) {
     let model = [];
     switch (property) {
       case 'layer':
         model = [];
         for (const layer of DesignCore.LayerManager.getItems()) {
-          model.push(layer.name);
+          model.push({ display: layer.name, value: layer.name });
         }
         break;
       case 'styleName':
         const styles = DesignCore.StyleManager.getItems();
-        const styleNames = styles.map((style) => style.name);
+        const styleNames = styles.map((style) => ({ display: style.name, value: style.name }));
         model = styleNames;
         break;
       case 'dimensionStyle':
         const dimSyles = DesignCore.DimStyleManager.getItems();
-        const dimStyleNames = dimSyles.map((style) => style.name);
+        const dimStyleNames = dimSyles.map((style) => ({ display: style.name, value: style.name }));
         model = dimStyleNames;
         break;
       case 'horizontalAlignment':
-        // TODO: build human readable model for alignment
         model = ['Left', 'Center', 'Right'];
         break;
       case 'verticalAlignment':
-        // TODO: build human readable model for alignment
-        model = ['Baseline', 'Bottom', 'Middle', 'Top'];
+        model = [{ display: 'Baseline', value: 0 }, { display: 'Bottom', value: 1 }, { display: 'Middle', value: 2 }, { display: 'Top', value: 3 }];
         break;
       case 'lineType':
         const lineStyles = DesignCore.LTypeManager.getItems();
-        const lineStyleNames = lineStyles.map((style) => style.name);
+        const lineStyleNames = lineStyles.map((style) => ({ display: style.name, value: style.name }));
         model = lineStyleNames;
         break;
       case 'patternName':
         const patternNames = Object.keys(Patterns.hatch_patterns);
-        model = patternNames;
+        model = patternNames.map((patternName) => ({ display: patternName, value: patternName }));
+        break;
+      case 'textAlignment':
+        model = [{ display: 'Fit', value: 1 }, { display: 'Left', value: 2 }, { display: 'Right', value: 3 }, { display: 'Center', value: 4 }];
+        break;
+      case 'textOrientation':
+        model = [{ display: 'Outward', value: 1 }, { display: 'Inward', value: 2 }];
+        break;
+      case 'arcSide':
+        model = [{ display: 'Convex', value: 1 }, { display: 'Concave', value: 2 }];
         break;
     }
     return model;
