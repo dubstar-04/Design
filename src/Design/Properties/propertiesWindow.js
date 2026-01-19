@@ -109,6 +109,14 @@ export const PropertiesWindow = GObject.registerClass({
           case 'lineWidth':
           case 'scale':
           case 'angle':
+          case 'characterSpacing':
+          case 'lineSpacing':
+          case 'startAngle':
+          case 'endAngle':
+          case 'offsetFromArc':
+          case 'offsetFromLeft':
+          case 'offsetFromRight':
+          case 'widthFactor':
             suffixWidget = new Gtk.Entry({ valign: Gtk.Align.CENTER, text: `${value}` });
             suffixWidget.width_request = widgetWidth;
             const changedSignal = suffixWidget.connect('changed', () => {
@@ -138,7 +146,11 @@ export const PropertiesWindow = GObject.registerClass({
             break;
           // Boolean type properties
           case 'backwards':
+          case 'textReversed':
           case 'upsideDown':
+          case 'bold':
+          case 'underline':
+          case 'italic':
             suffixWidget = new Gtk.Switch({ valign: Gtk.Align.CENTER, state: value });
             suffixWidget.connect('notify::active', () => {
               DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.state);
@@ -182,18 +194,24 @@ export const PropertiesWindow = GObject.registerClass({
           case 'lineType':
           case 'patternName':
           case 'dimensionStyle':
+          case 'textAlignment':
+          case 'textOrientation':
+          case 'arcSide':
             const model = this.getModel(property);
-            suffixWidget = Gtk.DropDown.new_from_strings(model);
+            suffixWidget = Gtk.DropDown.new_from_strings(model.map((item) => item.display));
             suffixWidget.width_request = widgetWidth;
             suffixWidget.valign = Gtk.Align.CENTER;
             // get the position of the current value
-            const selectedIndex = model.indexOf(value);
+            const selectedIndex = model.findIndex((item) => item.value === value);
             if (selectedIndex >= 0) {
               suffixWidget.set_selected(selectedIndex);
             }
             suffixWidget.connect('notify::selected-item', () => {
               // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
-              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.get_selected_item().get_string());
+              const selectedString = suffixWidget.get_selected_item().get_string();
+              const selectedItem = model.find((item) => item.display === selectedString);
+              DesignCore.PropertyManager.setItemProperties(`${property}`, selectedItem.value);
+              // suffixWidget.get_selected_item().get_string());
             });
             break;
           // String type properties
@@ -280,7 +298,7 @@ export const PropertiesWindow = GObject.registerClass({
         model = dimStyleNames;
         break;
       case 'horizontalAlignment':
-        model = ['Left', 'Center', 'Right'];
+        model = [{ display: 'Left', value: 0 }, { display: 'Center', value: 1 }, { display: 'Right', value: 2 }];
         break;
       case 'verticalAlignment':
         model = [{ display: 'Baseline', value: 0 }, { display: 'Bottom', value: 1 }, { display: 'Middle', value: 2 }, { display: 'Top', value: 3 }];
