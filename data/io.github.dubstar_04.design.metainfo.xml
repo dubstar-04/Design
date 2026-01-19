@@ -41,7 +41,7 @@
   	<color type="primary" scheme_preference="dark">#3584e4</color>
 	</branding>
   	<releases>
-		<release version="49.alpha1" date="2025-XX-XX">
+		<release version="49.alpha1" date="2026-XX-XX">
 		<description>
 			<ul>
 			<li>Update to GNOME 49</li>
@@ -61,6 +61,7 @@
 			<li>Improved Trim (TR) command with Arc, Circle and Line entities</li>
 			<li>Fixed how properties are filtered in the properties window</li>
 			<li>Allow opening multiple files from a file manager</li>
+			<li>Add Arc Aligned Text Command (ARCTEXT)</li>
 			</ul>
 		</description>
 		</release>
