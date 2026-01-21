@@ -58,7 +58,9 @@ export const LayersWindow = GObject.registerClass({
 
   getLineTypes() {
     const lineStyles = DesignCore.LTypeManager.getItems();
-    const lineStyleNames = lineStyles.map((style) => style.name);
+    // filter out BYLAYER and BYBLOCK
+    const filteredLineStyles = lineStyles.filter((style) => !['BYLAYER', 'BYBLOCK'].includes(style.name.toUpperCase()));
+    const lineStyleNames = filteredLineStyles.map((style) => style.name);
     return lineStyleNames;
   }
 
