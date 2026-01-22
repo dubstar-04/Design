@@ -176,9 +176,12 @@ export const PropertiesWindow = GObject.registerClass({
           case 'textAlignment':
           case 'textOrientation':
           case 'arcSide':
-            const model = this.getModel(property);
           case 'horizontalAlignment':
           case 'verticalAlignment':
+            let model = this.getModel(property);
+            if (String(value).toUpperCase() === 'VARIES') {
+              model = [{ display: 'Varies', value: 'VARIES' }].concat(model);
+            }
             suffixWidget = Gtk.DropDown.new_from_strings(model.map((item) => item.display));
             suffixWidget.width_request = widgetWidth;
             suffixWidget.valign = Gtk.Align.CENTER;
@@ -190,9 +193,11 @@ export const PropertiesWindow = GObject.registerClass({
             suffixWidget.connect('notify::selected-item', () => {
               // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
               const selectedString = suffixWidget.get_selected_item().get_string();
-              const selectedItem = model.find((item) => item.display === selectedString);
-              DesignCore.PropertyManager.setItemProperties(`${property}`, selectedItem.value);
-              // suffixWidget.get_selected_item().get_string());
+              const selectedItem = this.getModel(property).find((item) => item.display === selectedString);
+              // check the select item is valid i.e. not 'Varies'
+              if (selectedItem !== undefined) {
+                this.onValueChanged(`${property}`, selectedItem.value);
+              }
             });
             break;
           // String type properties
