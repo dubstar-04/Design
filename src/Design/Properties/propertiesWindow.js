@@ -80,10 +80,15 @@ export const PropertiesWindow = GObject.registerClass({
   }
 
   onTypeChanged() {
+  getFilterValue() {
     const selectedIndex = this._elementSelector.get_selected();
     const typeStringList = this._elementSelector.get_model();
     const selectedType = typeStringList.get_string(selectedIndex);
+    return selectedType;
+  }
 
+  onTypeChanged() {
+    const selectedType = this.getFilterValue();
     const properties = DesignCore.PropertyManager.getItemProperties(selectedType);
 
     if (!properties) {
