@@ -79,11 +79,22 @@ export const PropertiesWindow = GObject.registerClass({
     return formattedName;
   }
 
-  onTypeChanged() {
+  /** Handle a property value being changed */
+  onValueChanged(property, value) {
+    const selectedType = this.getFilterValue();
+    DesignCore.PropertyManager.setItemProperties(property, value, selectedType);
+  }
+
+  /** Get the currently selected filter value */
+  getFilterValue() {
     const selectedIndex = this._elementSelector.get_selected();
     const typeStringList = this._elementSelector.get_model();
     const selectedType = typeStringList.get_string(selectedIndex);
+    return selectedType;
+  }
 
+  onTypeChanged() {
+    const selectedType = this.getFilterValue();
     const properties = DesignCore.PropertyManager.getItemProperties(selectedType);
 
     if (!properties) {
@@ -141,7 +152,7 @@ export const PropertiesWindow = GObject.registerClass({
               GObject.signal_handler_unblock(suffixWidget, changedSignal);
             });
             suffixWidget.connect('activate', () => {
-              DesignCore.PropertyManager.setItemProperties(`${property}`, Number(suffixWidget.text));
+              this.onValueChanged(`${property}`, Number(suffixWidget.text));
             });
             break;
           // Boolean type properties
@@ -153,42 +164,10 @@ export const PropertiesWindow = GObject.registerClass({
           case 'italic':
             suffixWidget = new Gtk.Switch({ valign: Gtk.Align.CENTER, state: value });
             suffixWidget.connect('notify::active', () => {
-              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.state);
+              this.onValueChanged(`${property}`, suffixWidget.state);
             });
             break;
           // option type properties
-          case 'horizontalAlignment':
-            const halignModel = this.getModel(property);
-            suffixWidget = Gtk.DropDown.new_from_strings(halignModel);
-            suffixWidget.width_request = widgetWidth;
-            suffixWidget.valign = Gtk.Align.CENTER;
-            // get the position of the current value
-            const halignIndex = halignModel.indexOf(value);
-
-            if (halignIndex >= 0) {
-              suffixWidget.set_selected(halignIndex);
-            }
-            suffixWidget.connect('notify::selected-item', () => {
-              // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
-              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.get_selected());
-            });
-            break;
-          case 'verticalAlignment':
-            const valignModel = this.getModel(property);
-            suffixWidget = Gtk.DropDown.new_from_strings(valignModel);
-            suffixWidget.width_request = widgetWidth;
-            suffixWidget.valign = Gtk.Align.CENTER;
-            // get the position of the current value
-            const valignIndex = valignModel.indexOf(value);
-
-            if (valignIndex >= 0) {
-              suffixWidget.set_selected(valignIndex);
-            }
-            suffixWidget.connect('notify::selected-item', () => {
-              // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
-              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.get_selected());
-            });
-            break;
           case 'layer':
           case 'styleName':
           case 'lineType':
@@ -197,7 +176,12 @@ export const PropertiesWindow = GObject.registerClass({
           case 'textAlignment':
           case 'textOrientation':
           case 'arcSide':
-            const model = this.getModel(property);
+          case 'horizontalAlignment':
+          case 'verticalAlignment':
+            let model = this.getModel(property);
+            if (String(value).toUpperCase() === 'VARIES') {
+              model = [{ display: 'Varies', value: 'VARIES' }].concat(model);
+            }
             suffixWidget = Gtk.DropDown.new_from_strings(model.map((item) => item.display));
             suffixWidget.width_request = widgetWidth;
             suffixWidget.valign = Gtk.Align.CENTER;
@@ -209,9 +193,11 @@ export const PropertiesWindow = GObject.registerClass({
             suffixWidget.connect('notify::selected-item', () => {
               // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
               const selectedString = suffixWidget.get_selected_item().get_string();
-              const selectedItem = model.find((item) => item.display === selectedString);
-              DesignCore.PropertyManager.setItemProperties(`${property}`, selectedItem.value);
-              // suffixWidget.get_selected_item().get_string());
+              const selectedItem = this.getModel(property).find((item) => item.display === selectedString);
+              // check the select item is valid i.e. not 'Varies'
+              if (selectedItem !== undefined) {
+                this.onValueChanged(`${property}`, selectedItem.value);
+              }
             });
             break;
           // String type properties
@@ -220,7 +206,7 @@ export const PropertiesWindow = GObject.registerClass({
             suffixWidget = new Gtk.Entry({ valign: Gtk.Align.CENTER, text: `${value}` });
             suffixWidget.width_request = widgetWidth;
             suffixWidget.connect('activate', () => {
-              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.text);
+              this.onValueChanged(`${property}`, suffixWidget.text);
             });
             break;
             // String type properties
@@ -248,7 +234,7 @@ export const PropertiesWindow = GObject.registerClass({
                   const rgb = rgba.substr(4).split(')')[0].split(',');
                   const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
                   suffixWidget.set_label(colour);
-                  DesignCore.PropertyManager.setItemProperties(`${property}`, colour);
+                  this.onValueChanged(`${property}`, colour);
                 }
 
                 dialog.destroy();
