@@ -152,7 +152,7 @@ export const PropertiesWindow = GObject.registerClass({
               GObject.signal_handler_unblock(suffixWidget, changedSignal);
             });
             suffixWidget.connect('activate', () => {
-              DesignCore.PropertyManager.setItemProperties(`${property}`, Number(suffixWidget.text));
+              this.onValueChanged(`${property}`, Number(suffixWidget.text));
             });
             break;
           // Boolean type properties
@@ -164,7 +164,7 @@ export const PropertiesWindow = GObject.registerClass({
           case 'italic':
             suffixWidget = new Gtk.Switch({ valign: Gtk.Align.CENTER, state: value });
             suffixWidget.connect('notify::active', () => {
-              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.state);
+              this.onValueChanged(`${property}`, suffixWidget.state);
             });
             break;
           // option type properties
@@ -231,7 +231,7 @@ export const PropertiesWindow = GObject.registerClass({
             suffixWidget = new Gtk.Entry({ valign: Gtk.Align.CENTER, text: `${value}` });
             suffixWidget.width_request = widgetWidth;
             suffixWidget.connect('activate', () => {
-              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.text);
+              this.onValueChanged(`${property}`, suffixWidget.text);
             });
             break;
             // String type properties
@@ -259,7 +259,7 @@ export const PropertiesWindow = GObject.registerClass({
                   const rgb = rgba.substr(4).split(')')[0].split(',');
                   const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
                   suffixWidget.set_label(colour);
-                  DesignCore.PropertyManager.setItemProperties(`${property}`, colour);
+                  this.onValueChanged(`${property}`, colour);
                 }
 
                 dialog.destroy();
