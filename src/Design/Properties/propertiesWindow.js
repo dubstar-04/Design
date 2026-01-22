@@ -79,7 +79,13 @@ export const PropertiesWindow = GObject.registerClass({
     return formattedName;
   }
 
-  onTypeChanged() {
+  /** Handle a property value being changed */
+  onValueChanged(property, value) {
+    const selectedType = this.getFilterValue();
+    DesignCore.PropertyManager.setItemProperties(property, value, selectedType);
+  }
+
+  /** Get the currently selected filter value */
   getFilterValue() {
     const selectedIndex = this._elementSelector.get_selected();
     const typeStringList = this._elementSelector.get_model();
