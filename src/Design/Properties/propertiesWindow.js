@@ -168,38 +168,6 @@ export const PropertiesWindow = GObject.registerClass({
             });
             break;
           // option type properties
-          case 'horizontalAlignment':
-            const halignModel = this.getModel(property);
-            suffixWidget = Gtk.DropDown.new_from_strings(halignModel);
-            suffixWidget.width_request = widgetWidth;
-            suffixWidget.valign = Gtk.Align.CENTER;
-            // get the position of the current value
-            const halignIndex = halignModel.indexOf(value);
-
-            if (halignIndex >= 0) {
-              suffixWidget.set_selected(halignIndex);
-            }
-            suffixWidget.connect('notify::selected-item', () => {
-              // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
-              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.get_selected());
-            });
-            break;
-          case 'verticalAlignment':
-            const valignModel = this.getModel(property);
-            suffixWidget = Gtk.DropDown.new_from_strings(valignModel);
-            suffixWidget.width_request = widgetWidth;
-            suffixWidget.valign = Gtk.Align.CENTER;
-            // get the position of the current value
-            const valignIndex = valignModel.indexOf(value);
-
-            if (valignIndex >= 0) {
-              suffixWidget.set_selected(valignIndex);
-            }
-            suffixWidget.connect('notify::selected-item', () => {
-              // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
-              DesignCore.PropertyManager.setItemProperties(`${property}`, suffixWidget.get_selected());
-            });
-            break;
           case 'layer':
           case 'styleName':
           case 'lineType':
@@ -209,6 +177,8 @@ export const PropertiesWindow = GObject.registerClass({
           case 'textOrientation':
           case 'arcSide':
             const model = this.getModel(property);
+          case 'horizontalAlignment':
+          case 'verticalAlignment':
             suffixWidget = Gtk.DropDown.new_from_strings(model.map((item) => item.display));
             suffixWidget.width_request = widgetWidth;
             suffixWidget.valign = Gtk.Align.CENTER;
