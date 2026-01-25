@@ -44,7 +44,6 @@
 		<release version="49.alpha1" date="2026-01-25">
 		<description>
 			<ul>
-			<li>FOSDEM 26 release!</li>
 			<li>Update to GNOME 49</li>
 			<li>Added keyboard shortcuts: CTRL+A (Select All) </li>
 			<li>Only allow files to be opened once</li>
