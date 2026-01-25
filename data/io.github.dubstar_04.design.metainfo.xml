@@ -41,9 +41,10 @@
   	<color type="primary" scheme_preference="dark">#3584e4</color>
 	</branding>
   	<releases>
-		<release version="49.alpha1" date="2026-XX-XX">
+		<release version="49.alpha1" date="2026-01-25">
 		<description>
 			<ul>
+			<li>FOSDEM 26 release!</li>
 			<li>Update to GNOME 49</li>
 			<li>Added keyboard shortcuts: CTRL+A (Select All) </li>
 			<li>Only allow files to be opened once</li>
@@ -53,15 +54,25 @@
 			<li>Reset current command when selecting toolbar commands</li>
 			<li>Add Pan Command (P)</li>
 			<li>Add Zoom Command (Z)</li>
+			<li>Add Cutclip Command (CUTCLIP)</li>
+			<li>Add Copyclip Command (COPYCLIP)</li>
+			<li>Add Copybase Command (COPYBASE)</li>
+			<li>Add Pasteclip Command (PASTECLIP)</li>
+			<li>Add Match Properties Command (MA)</li>
 			<li>Added Dimension Style Preference Page</li>
 			<li>Updated Text Style Preference Page</li>
 			<li>Updated Line Style Preference Page</li>
+			<li>Updated Keyboard Shortcut Window to use newer Adwaita widgets</li>
+			<li>Updated Layers window to be more consistent with preferences and layers</li>
 			<li>Show context menu on rightclick</li>
 			<li>Enable undo and redo</li>
+			<li>Enable clipboard management (Cut, Copy, Paste, Copy with basepoint)</li>
 			<li>Improved Trim (TR) command with Arc, Circle and Line entities</li>
 			<li>Fixed how properties are filtered in the properties window</li>
 			<li>Allow opening multiple files from a file manager</li>
 			<li>Add Arc Aligned Text Command (ARCTEXT)</li>
+			<li>Fixed selection of text entities</li>
+			<li>Fixed display of multiple values on properties form</li>
 			</ul>
 		</description>
 		</release>
