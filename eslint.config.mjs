@@ -33,5 +33,6 @@ export default defineConfig([{
     'valid-jsdoc': 0,
     'max-len': 0,
     'object-curly-spacing': [2, 'always'],
+    'space-in-parens': ['error', 'never'],
   },
 }]);
