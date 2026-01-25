@@ -164,7 +164,7 @@ export const PreferencePageTextStyle = GObject.registerClass({
 
         if (widget.name === 'name') {
           // update the name in the style list if the name in core has changed
-          const newName = DesignCore.StyleManager.getItemByIndex(this.styleIndex ).name;
+          const newName = DesignCore.StyleManager.getItemByIndex(this.styleIndex).name;
           // set the _name string - this is needed when the style name passed to core was invalid and a different name is used
           this._name.text = newName;
           this.reload();

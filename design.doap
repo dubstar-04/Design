@@ -9,9 +9,9 @@
   <shortdesc xml:lang="en">2D CAD for GNOME.</shortdesc>
 
   <description xml:lang="en">
-    2D computer aided design application (CAD), created to meet the needs of
-    makers and designers, hobbyists and professionals that require a first-class
-    CAD application.
+    Design is a 2D computer aided design (CAD) application built for GNOME.
+    Guided by the GNOME philosophy, it aims to deliver a powerful yet simple user experience.
+    DXF support ensures seamless interoperability with other CAD tools.
   </description>
 
   <category rdf:resource="http://api.gnome.org/doap-extensions#apps" />
