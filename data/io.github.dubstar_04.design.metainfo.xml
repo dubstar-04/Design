@@ -204,6 +204,13 @@
 	<url type="vcs-browser">https://github.com/dubstar-04/Design</url>
   	<url type="bugtracker">https://github.com/dubstar-04/Design/issues</url>
 	<url type="donation">https://ko-fi.com/dubstar04</url>
+
+	<requires>
+	<!-- Mobile/tablet AND desktop supported -->
+	<display_length compare="ge">360</display_length>
+	</requires>
+
+	<!-- Desktop AND mobile supported -->
 	<recommends>
     	<control>keyboard</control>
     	<control>pointing</control>
