@@ -7,5 +7,6 @@ Type=Application
 Categories=GTK;GNOME;Graphics;2DGraphics;Engineering;
 MimeType=image/vnd.dxf
 Keywords=CAD;DXF;drawing;design;vector;
+X-Purism-FormFactor=Workstation;Mobile;
 StartupNotify=true
 
