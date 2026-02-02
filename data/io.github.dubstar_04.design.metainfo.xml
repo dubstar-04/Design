@@ -41,6 +41,13 @@
   	<color type="primary" scheme_preference="dark">#3584e4</color>
 	</branding>
   	<releases>
+		<release version="49.alpha2" date="2026-xx-xx">
+		<description>
+			<ul>
+			<li>Allow preselection for match properties command (MA)</li>
+			</ul>
+		</description>
+		</release>
 		<release version="49.alpha1" date="2026-01-25">
 		<description>
 			<ul>
