@@ -71,7 +71,8 @@ export const DesignApplication = GObject.registerClass(
         // open signal only emitted if files are passed as argv. See activate signal.
         this.connect('open', (self, files) => {
           Logging.instance.debug('Main - Opening File');
-          const activeWindow = new DesignWindow(this);
+          // if there's already an active window, use that, otherwise create a new one
+          const activeWindow = this.activeWindow ? this.activeWindow : new DesignWindow(this);
           files.forEach((file) => {
             FileIO.loadFile(file, activeWindow);
           });
@@ -80,7 +81,8 @@ export const DesignApplication = GObject.registerClass(
 
         // activate signal only emitted if no files are passed as argv
         this.connect('activate', () => {
-          const activeWindow = new DesignWindow(this);
+          // if there's already an active window, use that, otherwise create a new one
+          const activeWindow = this.activeWindow ? this.activeWindow : new DesignWindow(this);
           activeWindow.present();
         });
       }
