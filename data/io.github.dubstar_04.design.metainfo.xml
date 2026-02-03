@@ -45,6 +45,7 @@
 		<description>
 			<ul>
 			<li>Allow preselection for match properties command (MA)</li>
+			<li>Fixed issue exporting invalid hatch elements</li>
 			</ul>
 		</description>
 		</release>
