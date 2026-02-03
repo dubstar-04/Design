@@ -45,6 +45,7 @@ export const DesignApplication = GObject.registerClass(
           const aboutParams = {
             developer_name: 'Daniel Wood',
             developers: [
+              'Daniel Wood',
               'Sonny Piers',
               'Brett Parker',
             ],
