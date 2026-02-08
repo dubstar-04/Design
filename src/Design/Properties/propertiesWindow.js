@@ -285,6 +285,7 @@ export const PropertiesWindow = GObject.registerClass({
         break;
       case 'horizontalAlignment':
         model = [{ display: 'Left', value: 0 }, { display: 'Center', value: 1 }, { display: 'Right', value: 2 }];
+        // unsupported { display: 'Aligned', value: 3 }, { display: 'Middle', value: 4 }, { display: 'Fit', value: 5 }
         break;
       case 'verticalAlignment':
         model = [{ display: 'Baseline', value: 0 }, { display: 'Bottom', value: 1 }, { display: 'Middle', value: 2 }, { display: 'Top', value: 3 }];
