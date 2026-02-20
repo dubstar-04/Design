@@ -46,6 +46,12 @@
 			<ul>
 			<li>Allow preselection for match properties command (MA)</li>
 			<li>Fixed issue exporting invalid hatch elements</li>
+			<li>Add shortcut descriptions</li>
+			<li>Export current text style</li>
+			<li>Use correct mimetype for dxf</li>
+			<li>Open files in the running application</li>
+			<li>Fix position of aligned text entities</li>
+			<li>Improve text height accuracy</li>
 			</ul>
 		</description>
 		</release>
