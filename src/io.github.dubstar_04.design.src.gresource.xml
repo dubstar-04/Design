@@ -130,5 +130,7 @@
     <file>Design-Core/core/tables/appId.js</file>
     <file>Design-Core/core/tables/blockRecordManager.js</file>
     <file>Design-Core/core/tables/blockRecord.js</file>
+    <file>Design-Core/core/dictionaries/dictionaryManager.js</file>
+    <file>Design-Core/core/dictionaries/dictionary.js</file>
   </gresource>
 </gresources>
