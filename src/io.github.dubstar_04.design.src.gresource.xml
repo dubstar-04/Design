@@ -122,5 +122,13 @@
     <file>Design-Core/core/tables/styleManager.js</file>
     <file>Design-Core/core/tables/styleManagerBase.js</file>
     <file>Design-Core/core/tables/tableManagerBase.js</file>
+    <file>Design-Core/core/tables/viewManager.js</file>
+    <file>Design-Core/core/tables/view.js</file>
+    <file>Design-Core/core/tables/ucsManager.js</file>
+    <file>Design-Core/core/tables/ucs.js</file>
+    <file>Design-Core/core/tables/appIdManager.js</file>
+    <file>Design-Core/core/tables/appId.js</file>
+    <file>Design-Core/core/tables/blockRecordManager.js</file>
+    <file>Design-Core/core/tables/blockRecord.js</file>
   </gresource>
 </gresources>
