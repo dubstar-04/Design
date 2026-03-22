@@ -50,7 +50,7 @@
     <!-- DXF -->
     <file>Design-Core/core/lib/dxf/dxf.js</file>
     <file>Design-Core/core/lib/dxf/dxfFile.js</file>
-    <file>Design-Core/core/lib/dxf/handle.js</file>
+    <file>Design-Core/core/lib/dxf/handleManager.js</file>
     <file>Design-Core/core/lib/dxf/dxfRead.js</file>
     <file>Design-Core/core/lib/dxf/dxfWrite.js</file>
     <file>Design-Core/core/lib/dxf/dxfIterator.js</file>
@@ -112,6 +112,7 @@
     <file>Design-Core/core/tools/zoom.js</file>
     <!-- Tables -->
     <file>Design-Core/core/tables/block.js</file>
+    <file>Design-Core/core/tables/endblk.js</file>
     <file>Design-Core/core/tables/blockManager.js</file>
     <file>Design-Core/core/tables/dimStyle.js</file>
     <file>Design-Core/core/tables/dimStyleManager.js</file>
@@ -125,6 +126,8 @@
     <file>Design-Core/core/tables/tableManagerBase.js</file>
     <file>Design-Core/core/tables/viewManager.js</file>
     <file>Design-Core/core/tables/view.js</file>
+    <file>Design-Core/core/tables/vportManager.js</file>
+    <file>Design-Core/core/tables/vport.js</file>
     <file>Design-Core/core/tables/ucsManager.js</file>
     <file>Design-Core/core/tables/ucs.js</file>
     <file>Design-Core/core/tables/appIdManager.js</file>
