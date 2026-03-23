@@ -52,7 +52,8 @@
 			<li>Open files in the running application</li>
 			<li>Fix position of aligned text entities</li>
 			<li>Improve text height accuracy</li>
-			<li>Enable Polyline Trimming</li>
+			<li>Enable Polyline Trim (TR)</li>
+			<li>Enable Polyline Extend (EX)</li>
 			</ul>
 		</description>
 		</release>
