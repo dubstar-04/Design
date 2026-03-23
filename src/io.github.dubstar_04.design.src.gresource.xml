@@ -58,6 +58,7 @@
     <file>Design-Core/core/lib/dxf/sections/blocks.js</file>
     <file>Design-Core/core/lib/dxf/sections/entities.js</file>
     <file>Design-Core/core/lib/dxf/sections/header.js</file>
+    <file>Design-Core/core/lib/dxf/sections/objects.js</file>
     <file>Design-Core/core/lib/dxf/sections/section.js</file>
     <file>Design-Core/core/lib/dxf/sections/tables.js</file>
     <!-- Properties -->
@@ -134,7 +135,7 @@
     <file>Design-Core/core/tables/appId.js</file>
     <file>Design-Core/core/tables/blockRecordManager.js</file>
     <file>Design-Core/core/tables/blockRecord.js</file>
-    <file>Design-Core/core/dictionaries/dictionaryManager.js</file>
-    <file>Design-Core/core/dictionaries/dictionary.js</file>
+    <file>Design-Core/core/objects/dictionaryManager.js</file>
+    <file>Design-Core/core/objects/dictionary.js</file>
   </gresource>
 </gresources>
