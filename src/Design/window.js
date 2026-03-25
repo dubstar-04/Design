@@ -380,7 +380,7 @@ export const DesignWindow = GObject.registerClass({
   }
 
   onToolbarButtonPress(command) {
-    DesignCore.Scene.inputManager.onCommand(`${command}`);
+    DesignCore.Scene.inputManager.onCommandButton(`${command}`);
   }
 
   showShortcutsWindow() {
