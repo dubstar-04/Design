@@ -24,6 +24,7 @@
     <!-- Design Core -->
     <file>Design-Core/core/designCore.js</file>
     <file>Design-Core/core/core/core.js</file>
+    <file>Design-Core/core/lib/constants.js</file>
     <file>Design-Core/core/lib/clipboard.js</file>
     <file>Design-Core/core/lib/boundingBox.js</file>
     <file>Design-Core/core/lib/canvas.js</file>
@@ -43,6 +44,7 @@
     <file>Design-Core/core/lib/patterns.js</file>
     <file>Design-Core/core/lib/scene.js</file>
     <file>Design-Core/core/lib/settings.js</file>
+    <file>Design-Core/core/lib/headers.js</file>
     <file>Design-Core/core/lib/snapping.js</file>
     <file>Design-Core/core/lib/selectionManager.js</file>
     <file>Design-Core/core/lib/selectionWindow.js</file>
@@ -103,6 +105,10 @@
     <file>Design-Core/core/tools/erase.js</file>
     <file>Design-Core/core/tools/extend.js</file>
     <file>Design-Core/core/tools/explode.js</file>
+    <file>Design-Core/core/tools/chamferFilletBase.js</file>
+    <file>Design-Core/core/tools/cornerEntity.js</file>
+    <file>Design-Core/core/tools/chamfer.js</file>
+    <file>Design-Core/core/tools/fillet.js</file>
     <file>Design-Core/core/tools/identify.js</file>
     <file>Design-Core/core/tools/matchProp.js</file>
     <file>Design-Core/core/tools/move.js</file>
