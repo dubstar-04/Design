@@ -54,6 +54,8 @@
 			<li>Improve text height accuracy</li>
 			<li>Enable Polyline Trim (TR)</li>
 			<li>Enable Polyline Extend (EX)</li>
+			<li>Enable Chamfer Command (CHA)</li>
+			<li>Enable Fillet Command (F)</li>
 			</ul>
 		</description>
 		</release>
