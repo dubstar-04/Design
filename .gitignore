@@ -5,3 +5,4 @@
 *.flatpak
 /node_modules
 /subprojects
+/coverage
