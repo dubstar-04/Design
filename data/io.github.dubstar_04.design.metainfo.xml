@@ -44,6 +44,7 @@
 		<release version="50.alpha1" date="2026-xx-xx">
 		<description>
 			<ul>
+			<li>Update to GNOME 50</li>
 			<li>Allow preselection for match properties command (MA)</li>
 			<li>Fixed issue exporting invalid hatch elements</li>
 			<li>Add shortcut descriptions</li>
