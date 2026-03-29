@@ -41,7 +41,7 @@
   	<color type="primary" scheme_preference="dark">#3584e4</color>
 	</branding>
   	<releases>
-		<release version="49.alpha2" date="2026-xx-xx">
+		<release version="50.alpha1" date="2026-xx-xx">
 		<description>
 			<ul>
 			<li>Allow preselection for match properties command (MA)</li>
@@ -56,6 +56,14 @@
 			<li>Enable Polyline Extend (EX)</li>
 			<li>Enable Chamfer Command (CHA)</li>
 			<li>Enable Fillet Command (F)</li>
+			<li>Enable infered direction for Arc Command (A)</li>
+			<li>Enable Diameter input for Circle Command (C)</li>
+			<li>Enable Close option for Line Command (L)</li>
+			<li>Enable Close and Undo options for Polyline Command (PL)</li>
+			<li>Enable multiple copies with Copy Command (CO)</li>
+			<li>Show angle in Distance Command (DI)</li>
+			<li>Fix item rotation when exploding blocks</li>
+			<li>Fix item rotation when exploding blocks</li>
 			</ul>
 		</description>
 		</release>
