@@ -403,6 +403,12 @@ export const Canvas = GObject.registerClass({
   }
 
   mouseMove(controller, x, y) {
+    const event = controller.get_current_event();
+    // ignore touch events - handled by dragUpdate
+    if (event.get_device().get_source() === Gdk.InputSource.TOUCHSCREEN) {
+      return;
+    }
+
     this.core.mouse.mouseMoved(x, y);
     this.emit('mouseposition-updated', this.core.mouse.positionString());
 
@@ -455,6 +461,7 @@ export const Canvas = GObject.registerClass({
   }
 
   dragUpdate(gesture, x, y) {
+    // TODO: consider caching the start point on drag begin to avoid getting it from the gesture each time
     const startPoint = gesture.get_start_point();
     this.core.mouse.mouseMoved(startPoint[1] + x, startPoint[2] + y);
   }
