@@ -65,6 +65,7 @@
 			<li>Show angle in Distance Command (DI)</li>
 			<li>Fix item rotation when exploding blocks</li>
 			<li>Fix item rotation when exploding blocks</li>
+			<li>Performance improvements when panning</li>
 			</ul>
 		</description>
 		</release>
