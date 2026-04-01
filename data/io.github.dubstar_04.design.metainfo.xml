@@ -66,6 +66,7 @@
 			<li>Fix item rotation when exploding blocks</li>
 			<li>Fix item rotation when exploding blocks</li>
 			<li>Performance improvements when panning</li>
+			<li>Enable nested elements with Hatch Command (H)</li>
 			</ul>
 		</description>
 		</release>
