@@ -111,6 +111,7 @@
     <file>Design-Core/core/tools/fillet.js</file>
     <file>Design-Core/core/tools/identify.js</file>
     <file>Design-Core/core/tools/matchProp.js</file>
+    <file>Design-Core/core/tools/mirror.js</file>
     <file>Design-Core/core/tools/move.js</file>
     <file>Design-Core/core/tools/pan.js</file>
     <file>Design-Core/core/tools/pasteclip.js</file>
