@@ -64,9 +64,9 @@
 			<li>Enable multiple copies with Copy Command (CO)</li>
 			<li>Show angle in Distance Command (DI)</li>
 			<li>Fix item rotation when exploding blocks</li>
-			<li>Fix item rotation when exploding blocks</li>
 			<li>Performance improvements when panning</li>
 			<li>Enable nested elements with Hatch Command (H)</li>
+			<li>Use consistent toast message format</li>
 			</ul>
 		</description>
 		</release>
