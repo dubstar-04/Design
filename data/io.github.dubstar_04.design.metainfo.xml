@@ -45,6 +45,7 @@
 		<description>
 			<ul>
 			<li>Enable Mirror Command (MI)</li>
+			<li>Enable Scale Command (SC)</li>
 			</ul>
 		</description>
 		</release>
