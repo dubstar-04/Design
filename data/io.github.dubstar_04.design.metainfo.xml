@@ -41,7 +41,7 @@
   	<color type="primary" scheme_preference="dark">#3584e4</color>
 	</branding>
   	<releases>
-		<release version="50.alpha1" date="2026-xx-xx">
+		<release version="50.alpha1" date="2026-04-02">
 		<description>
 			<ul>
 			<li>Update to GNOME 50</li>
