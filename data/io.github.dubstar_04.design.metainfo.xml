@@ -41,6 +41,13 @@
   	<color type="primary" scheme_preference="dark">#3584e4</color>
 	</branding>
   	<releases>
+		<release version="50.alpha2" date="2026-xx-xx">
+		<description>
+			<ul>
+			<li>Enable Mirror Command (MI)</li>
+			</ul>
+		</description>
+		</release>
 		<release version="50.alpha1" date="2026-04-02">
 		<description>
 			<ul>
