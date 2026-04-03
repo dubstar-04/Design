@@ -46,6 +46,7 @@
 			<ul>
 			<li>Enable Mirror Command (MI)</li>
 			<li>Enable Scale Command (SC)</li>
+			<li>Enable Offset Command (O)</li>
 			</ul>
 		</description>
 		</release>
