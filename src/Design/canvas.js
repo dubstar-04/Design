@@ -111,6 +111,7 @@ export const Canvas = GObject.registerClass({
 
     this.core.commandLine.setUpdateFunction(this.commandLineUpdateCallback.bind(this));
     this.core.canvas.setExternalPaintCallbackFunction(this.paintingCallback.bind(this));
+    this.core.canvas.setCursorCallbackFunction(this.onCursorChange.bind(this));
     this.core.propertyManager.setPropertyCallbackFunction(this.propertyCallback.bind(this));
     this.core.clipboard.setClipboardCallbackFunction(this.clipboardCallback.bind(this));
     this.core.scene.stateManager.setStateCallbackFunction(this.stateChanged.bind(this));
@@ -118,7 +119,7 @@ export const Canvas = GObject.registerClass({
     this.grab_focus();
     this.onStyleChange();
 
-    // set the cursor style
+    // set the default cursor style
     this.set_cursor(Gdk.Cursor.new_from_name('crosshair', null));
 
     // pinch to zoom delta
@@ -350,6 +351,15 @@ export const Canvas = GObject.registerClass({
 
     // Must be called on tab changes
     this.core.activate();
+  }
+
+  onCursorChange(state) {
+    const cursors = {
+      DEFAULT: 'crosshair',
+      PAN: 'grabbing',
+      ZOOM: 'zoom-in',
+    };
+    this.set_cursor(Gdk.Cursor.new_from_name(cursors[state] ?? 'crosshair', null));
   }
 
   onStyleChange() {
