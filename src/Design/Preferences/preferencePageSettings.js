@@ -46,8 +46,10 @@ export const PreferencePageSettings = GObject.registerClass({
   }
 
   onToggled(widget) {
-    // update core with the changed setting
+    // update core with the changed setting, then sync all values back so any
+    // side effects applied by core (e.g. mutual-exclusivity) are reflected in the UI
     this.settings.setCoreSetting(widget.name, widget.state);
+    this.settings.syncFromCore();
   }
 },
 );

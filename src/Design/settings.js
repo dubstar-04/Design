@@ -55,7 +55,7 @@ class Settings extends Gio.Settings {
   onSettingToggled(setting) {
     const state = this.getSetting(setting);
     this.setCoreSetting(setting, !state);
-    this.setSetting(setting, !state);
+    this.syncFromCore();
   }
 
   getCoreSetting(name) {
@@ -65,6 +65,19 @@ class Settings extends Gio.Settings {
 
   setCoreSetting(name, value) {
     DesignCore.Settings.setSetting(name, value);
+  }
+
+  syncFromCore() {
+    // Write core setting values back to GSettings so the UI reflects any
+    // side effects applied by the core (e.g. mutual-exclusivity constraints).
+    // Only write when the value has actually changed to avoid triggering
+    // spurious notify::active signals that could cause re-entrant sync loops.
+    this.list_keys().forEach((key) => {
+      const coreValue = this.getCoreSetting(key);
+      if (coreValue !== undefined && this.getSetting(key) !== coreValue) {
+        this.setSetting(key, coreValue);
+      }
+    });
   }
 
   getSetting(name) {
