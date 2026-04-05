@@ -56,6 +56,7 @@ class Settings extends Gio.Settings {
     const state = this.getSetting(setting);
     this.setCoreSetting(setting, !state);
     this.setSetting(setting, !state);
+    this.syncFromCore();
   }
 
   getCoreSetting(name) {
