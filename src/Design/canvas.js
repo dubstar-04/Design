@@ -356,8 +356,9 @@ export const Canvas = GObject.registerClass({
   onCursorChange(state) {
     const cursors = {
       DEFAULT: 'crosshair',
-      PAN: 'grabbing',
-      ZOOM: 'zoom-in',
+      GRAB: 'grab',
+      GRABBING: 'grabbing',
+      SELECTION: 'cell',
     };
     this.set_cursor(Gdk.Cursor.new_from_name(cursors[state] ?? 'crosshair', null));
   }
