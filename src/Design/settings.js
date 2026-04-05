@@ -67,6 +67,17 @@ class Settings extends Gio.Settings {
     DesignCore.Settings.setSetting(name, value);
   }
 
+  syncFromCore() {
+    // Write all core setting values back to GSettings so the UI reflects any
+    // side effects applied by the core (e.g. mutual-exclusivity constraints).
+    this.list_keys().forEach((key) => {
+      const coreValue = this.getCoreSetting(key);
+      if (coreValue !== undefined) {
+        this.setSetting(key, coreValue);
+      }
+    });
+  }
+
   getSetting(name) {
     return this.get_value(name).deep_unpack();
   }
