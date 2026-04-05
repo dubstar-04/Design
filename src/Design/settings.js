@@ -68,11 +68,13 @@ class Settings extends Gio.Settings {
   }
 
   syncFromCore() {
-    // Write all core setting values back to GSettings so the UI reflects any
+    // Write core setting values back to GSettings so the UI reflects any
     // side effects applied by the core (e.g. mutual-exclusivity constraints).
+    // Only write when the value has actually changed to avoid triggering
+    // spurious notify::active signals that could cause re-entrant sync loops.
     this.list_keys().forEach((key) => {
       const coreValue = this.getCoreSetting(key);
-      if (coreValue !== undefined) {
+      if (coreValue !== undefined && this.getSetting(key) !== coreValue) {
         this.setSetting(key, coreValue);
       }
     });
