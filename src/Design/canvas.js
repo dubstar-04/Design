@@ -119,8 +119,16 @@ export const Canvas = GObject.registerClass({
     this.grab_focus();
     this.onStyleChange();
 
+    // pre-build cursors for each cursor state
+    this.cursors = {
+      DEFAULT: Gdk.Cursor.new_from_name('crosshair', null),
+      GRAB: Gdk.Cursor.new_from_name('grab', null),
+      GRABBING: Gdk.Cursor.new_from_name('grabbing', null),
+      SELECTION: Gdk.Cursor.new_from_name('cell', null),
+    };
+
     // set the default cursor style
-    this.set_cursor(Gdk.Cursor.new_from_name('crosshair', null));
+    this.set_cursor(this.cursors.DEFAULT);
 
     // pinch to zoom delta
     this.pinchDelta = 0;
@@ -354,13 +362,7 @@ export const Canvas = GObject.registerClass({
   }
 
   onCursorChange(state) {
-    const cursors = {
-      DEFAULT: 'crosshair',
-      GRAB: 'grab',
-      GRABBING: 'grabbing',
-      SELECTION: 'cell',
-    };
-    this.set_cursor(Gdk.Cursor.new_from_name(cursors[state] ?? 'crosshair', null));
+    this.set_cursor(this.cursors[state] ?? this.cursors.DEFAULT);
   }
 
   onStyleChange() {
