@@ -6,6 +6,7 @@ import Cairo from 'cairo';
 import Gio from 'gi://Gio';
 
 import { Core } from '../Design-Core/core/core/core.js';
+import { SnapPoint } from '../Design-Core/core/lib/snapping.js';
 
 export const Canvas = GObject.registerClass({
   GTypeName: 'Canvas',
@@ -208,19 +209,19 @@ export const Canvas = GObject.registerClass({
     });
 
     this.snapOverrides = [
-      { name: 'none', label: _('None'), type: null },
-      { name: 'end', label: _('End'), type: 'end' },
-      { name: 'mid', label: _('Mid'), type: 'mid' },
-      { name: 'centre', label: _('Centre'), type: 'centre' },
-      { name: 'quadrant', label: _('Quadrant'), type: 'quadrant' },
-      { name: 'nearest', label: _('Nearest'), type: 'nearest' },
-      { name: 'tangent', label: _('Tangent'), type: 'tangent' },
-      { name: 'node', label: _('Node'), type: 'node' },
-      { name: 'perpendicular', label: _('Perpendicular'), type: 'perpendicular' },
+      { label: _('None'), type: SnapPoint.Type.NONE },
+      { label: _('End'), type: SnapPoint.Type.END },
+      { label: _('Mid'), type: SnapPoint.Type.MID },
+      { label: _('Centre'), type: SnapPoint.Type.CENTRE },
+      { label: _('Quadrant'), type: SnapPoint.Type.QUADRANT },
+      { label: _('Nearest'), type: SnapPoint.Type.NEAREST },
+      { label: _('Tangent'), type: SnapPoint.Type.TANGENT },
+      { label: _('Node'), type: SnapPoint.Type.NODE },
+      { label: _('Perpendicular'), type: SnapPoint.Type.PERPENDICULAR },
     ];
 
     for (const override of this.snapOverrides) {
-      const action = new Gio.SimpleAction({ name: `snap-override-${override.name}` });
+      const action = new Gio.SimpleAction({ name: `snap-override-${override.type}` });
       canvasActionGroup.add_action(action);
       action.connect('activate', () => {
         this.core.scene.inputManager.snapping.setSnapOverride(override.type);
@@ -248,7 +249,7 @@ export const Canvas = GObject.registerClass({
     // snap override submenu
     const snapOverrideMenu = new Gio.Menu();
     for (const item of this.snapOverrides) {
-      snapOverrideMenu.append(item.label, active ? `canvas.snap-override-${item.name}` : 'null');
+      snapOverrideMenu.append(item.label, active ? `canvas.snap-override-${item.type}` : 'null');
     }
 
     const mainMenu = new Gio.Menu();
