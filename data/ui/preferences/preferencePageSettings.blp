@@ -56,6 +56,18 @@ template $PreferencePageSettings : Adw.PreferencesPage {
           }
         }
 
+      Adw.ActionRow quadrantSnap{
+        title: _("Quadrant Snap");
+
+          [suffix]
+          Switch{
+            name: "quadrantsnap";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.quadrantsnap";
+          }
+        }
+
       Adw.ActionRow tangentSnap{
         title: _("Tangent Snap");
 
