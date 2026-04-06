@@ -223,7 +223,7 @@ export const Canvas = GObject.registerClass({
       const action = new Gio.SimpleAction({ name: `snap-override-${override.name}` });
       canvasActionGroup.add_action(action);
       action.connect('activate', () => {
-        this.core.scene.inputManager.snapping.snapOverride = override.type;
+        this.core.scene.inputManager.snapping.setSnapOverride(override.type);
       });
     }
 
