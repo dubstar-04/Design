@@ -54,6 +54,9 @@
   <key name="tangentsnap" type="b">
     <default>false</default>
   </key>
+  <key name="nodesnap" type="b">
+    <default>false</default>
+  </key>
   <key name="polarangle" type="s">
     <default>'45'</default>
   </key>

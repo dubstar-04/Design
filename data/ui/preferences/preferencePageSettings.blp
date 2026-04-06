@@ -80,6 +80,18 @@ template $PreferencePageSettings : Adw.PreferencesPage {
           }
         }
 
+      Adw.ActionRow nodeSnap{
+        title: _("Node Snap");
+
+          [suffix]
+          Switch{
+            name: "nodesnap";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.nodesnap";
+          }
+        }
+
     }
 
     Adw.PreferencesGroup {
