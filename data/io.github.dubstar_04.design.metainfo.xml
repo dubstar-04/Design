@@ -49,6 +49,14 @@
 			<li>Enable Offset Command (O)</li>
 			<li>Adapt mouse cursor to active state</li>
 			<li>Adjust colour index 7 based on the canvas colour</li>
+			<li>Enable polar and ortho tracking projection</li>
+			<li>Enable polar angle setting</li>
+			<li>Add Quadrent snap setting</li>
+			<li>Add Tangent snap setting</li>
+			<li>Add Node snap setting</li>
+			<li>Display typed snap indicators</li>
+			<li>Fix polar and ortho state</li>
+			<li>Enable snap override on context menu</li>
 			</ul>
 		</description>
 		</release>
