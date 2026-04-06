@@ -97,13 +97,12 @@ template $PreferencePageSettings : Adw.PreferencesPage {
           }
         }
 
-        /*
         //TODO: Fix loading of the polar angle
         Adw.ComboRow polarAngle {
             title: "Polar Angle";
             name: "polarangle";
             subtitle: "Snap Angle For Polar";
-            notify::selected => on_selected();
+            notify::selected => $onAngleSelected();
             //action-name: "settings.polarangle";
             sensitive: bind polar_switch.active;
 
@@ -116,7 +115,6 @@ template $PreferencePageSettings : Adw.PreferencesPage {
                 ]
             };
         }
-        */
 
       Adw.ActionRow ortho{
         title: _("Ortho");
