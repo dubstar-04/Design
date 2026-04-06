@@ -10,15 +10,13 @@
     <key name="selecteditemscolour" type="s">
       <default>'#00FF00'</default>
     </key>
-    <key name="snapcolour" type="s">
+    <key name="snaptrackingcolour" type="s">
       <default>'#FF0000'</default>
     </key>
     <key name="gridcolour" type="s">
       <default>'#77767b'</default>
     </key>
-    <key name="polarsnapcolour" type="s">
-      <default>'#38B44A'</default>
-    </key>
+
     -->
     <!-- Font settings-->
     <!--
