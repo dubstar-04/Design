@@ -92,6 +92,18 @@ template $PreferencePageSettings : Adw.PreferencesPage {
           }
         }
 
+      Adw.ActionRow perpSnap{
+        title: _("Perpendicular Snap");
+
+          [suffix]
+          Switch{
+            name: "perpsnap";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.perpsnap";
+          }
+        }
+
     }
 
     Adw.PreferencesGroup {
