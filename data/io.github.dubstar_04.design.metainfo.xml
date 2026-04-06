@@ -58,6 +58,7 @@
 			<li>Display typed snap indicators</li>
 			<li>Fix polar and ortho toggle state</li>
 			<li>Enable snap override on context menu</li>
+			<li>Use system accent colour for tracking and snap</li>
 			</ul>
 		</description>
 		</release>

@@ -107,6 +107,9 @@ export const Canvas = GObject.registerClass({
 
     this.styleManager = Adw.StyleManager.get_default();
     this.styleManager.connect('notify::dark', this.onStyleChange.bind(this));
+    if (this.styleManager.get_accent_color_rgba) {
+      this.styleManager.connect('notify::accent-color', this.onStyleChange.bind(this));
+    }
 
     this.set_draw_func(this.onDraw.bind(this));
 
@@ -419,6 +422,16 @@ export const Canvas = GObject.registerClass({
     } else {
       this.core.settings.canvasbackgroundcolour = { r: 246, g: 245, b: 244 };
     }
+
+    if (this.styleManager.get_accent_color_rgba) {
+      const rgba = this.styleManager.get_accent_color_rgba();
+      this.core.settings.snaptrackingcolour = {
+        r: Math.round(rgba.red * 255),
+        g: Math.round(rgba.green * 255),
+        b: Math.round(rgba.blue * 255),
+      };
+    }
+
     this.queue_draw();
   }
 
