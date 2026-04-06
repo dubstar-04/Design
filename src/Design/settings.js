@@ -85,6 +85,7 @@ class Settings extends Gio.Settings {
   }
 
   setSetting(name, value) {
-    this.set_value(name, GLib.Variant.new(this._keyTypes[name], value));
+    const type = this._keyTypes[name];
+    this.set_value(name, GLib.Variant.new(type, type === 's' ? String(value) : value));
   }
 });
