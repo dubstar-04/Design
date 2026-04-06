@@ -136,13 +136,6 @@ export const Canvas = GObject.registerClass({
     // activate the core
     this.activate();
 
-    // create the context menu
-    this.contextMenu = new Gtk.PopoverMenu();
-    this.contextMenu.set_has_arrow(false);
-    this.contextMenu.set_menu_model(this.getContextMenu());
-    this.contextMenu.set_parent(this);
-    // this.contextMenu.height_request = 200;
-
     const canvasActionGroup = new Gio.SimpleActionGroup();
     this.insert_action_group('canvas', canvasActionGroup);
 
@@ -214,6 +207,33 @@ export const Canvas = GObject.registerClass({
       this.onSelectAll();
     });
 
+    this.snapOverrides = [
+      { name: 'none', label: _('None'), type: null },
+      { name: 'end', label: _('End'), type: 'end' },
+      { name: 'mid', label: _('Mid'), type: 'mid' },
+      { name: 'centre', label: _('Centre'), type: 'centre' },
+      { name: 'quadrant', label: _('Quadrant'), type: 'quadrant' },
+      { name: 'nearest', label: _('Nearest'), type: 'nearest' },
+      { name: 'tangent', label: _('Tangent'), type: 'tangent' },
+      { name: 'node', label: _('Node'), type: 'node' },
+      { name: 'perpendicular', label: _('Perpendicular'), type: 'perpendicular' },
+    ];
+
+    for (const override of this.snapOverrides) {
+      const action = new Gio.SimpleAction({ name: `snap-override-${override.name}` });
+      canvasActionGroup.add_action(action);
+      action.connect('activate', () => {
+        this.core.scene.inputManager.snapping.snapOverride = override.type;
+      });
+    }
+
+    // create the context menu
+    this.contextMenu = new Gtk.PopoverMenu();
+    this.contextMenu.set_has_arrow(false);
+    this.contextMenu.set_menu_model(this.getContextMenu());
+    this.contextMenu.set_parent(this);
+    // this.contextMenu.height_request = 200;
+
     this.connect('unrealize', () => {
       // clean up when canvas is destroyed
       this.contextMenu.unparent();
@@ -224,6 +244,12 @@ export const Canvas = GObject.registerClass({
     const active = this.core.scene.inputManager.activeCommand !== undefined;
     const selectedItems = this.core.scene.selectionManager.selectedItems.length > 0;
     const validClipboard = this.core.clipboard.isValid;
+
+    // snap override submenu
+    const snapOverrideMenu = new Gio.Menu();
+    for (const item of this.snapOverrides) {
+      snapOverrideMenu.append(item.label, active ? `canvas.snap-override-${item.name}` : 'null');
+    }
 
     const mainMenu = new Gio.Menu();
     // input actions
@@ -236,9 +262,12 @@ export const Canvas = GObject.registerClass({
     clipboardMenu.append(_('Copy with Base Point'), !active && selectedItems ? `canvas.copy-with-base-point`:`null`);
     clipboardMenu.append(_('Paste'), !active && validClipboard ? `canvas.paste`:`null`);
     mainMenu.append_submenu(_('Clipboard'), clipboardMenu);
+    // snap override
+    mainMenu.append_submenu(_('Snap Override'), snapOverrideMenu);
     // canvas actions
     mainMenu.append(_('Pan'), active ? `null`:`canvas.pan`);
     mainMenu.append(_('Zoom Extents'), active ? `null`:`canvas.zoom`);
+
 
     return mainMenu;
   }
