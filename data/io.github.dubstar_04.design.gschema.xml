@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="design">
 	<schema id="io.github.dubstar_04.design" path="/io/github/dubstar_04/design/">
-    
+
     <!-- Colour settings-->
     <!--
     <key name="canvasbackgroundcolour" type="s">
@@ -49,6 +49,9 @@
     <default>false</default>
   </key>
   <key name="quadrantsnap" type="b">
+    <default>false</default>
+  </key>
+  <key name="tangentsnap" type="b">
     <default>false</default>
   </key>
   <key name="polarangle" type="s">
