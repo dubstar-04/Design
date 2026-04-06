@@ -57,7 +57,7 @@
   <key name="nodesnap" type="b">
     <default>false</default>
   </key>
-  <key name="perpsnap" type="b">
+  <key name="perpendicularsnap" type="b">
     <default>false</default>
   </key>
   <key name="polarangle" type="s">
