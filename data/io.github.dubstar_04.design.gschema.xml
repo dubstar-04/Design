@@ -16,9 +16,6 @@
     <key name="gridcolour" type="s">
       <default>'#77767b'</default>
     </key>
-    <key name="helpergeometrycolour" type="s">
-      <default>'#00BFFF'</default>
-    </key>
     <key name="polarsnapcolour" type="s">
       <default>'#38B44A'</default>
     </key>
