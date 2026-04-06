@@ -138,6 +138,7 @@ export const Canvas = GObject.registerClass({
     this.activate();
 
     const canvasActionGroup = new Gio.SimpleActionGroup();
+    this.canvasActionGroup = canvasActionGroup;
     this.insert_action_group('canvas', canvasActionGroup);
 
     // Add actions
@@ -208,10 +209,16 @@ export const Canvas = GObject.registerClass({
       this.onSelectAll();
     });
 
+    const clipboardSubmenuAction = new Gio.SimpleAction({ name: 'clipboard-submenu' });
+    canvasActionGroup.add_action(clipboardSubmenuAction);
+
+    const snapOverrideSubmenuAction = new Gio.SimpleAction({ name: 'snap-override-submenu' });
+    canvasActionGroup.add_action(snapOverrideSubmenuAction);
+
     this.snapOverrides = [
       { label: _('None'), type: SnapPoint.Type.NONE },
-      { label: _('End'), type: SnapPoint.Type.END },
-      { label: _('Mid'), type: SnapPoint.Type.MID },
+      { label: _('Endpoint'), type: SnapPoint.Type.END },
+      { label: _('Midpoint'), type: SnapPoint.Type.MID },
       { label: _('Centre'), type: SnapPoint.Type.CENTRE },
       { label: _('Quadrant'), type: SnapPoint.Type.QUADRANT },
       { label: _('Nearest'), type: SnapPoint.Type.NEAREST },
@@ -249,7 +256,7 @@ export const Canvas = GObject.registerClass({
     // snap override submenu
     const snapOverrideMenu = new Gio.Menu();
     for (const item of this.snapOverrides) {
-      snapOverrideMenu.append(item.label, active ? `canvas.snap-override-${item.type}` : 'null');
+      snapOverrideMenu.append(item.label, `canvas.snap-override-${item.type}`);
     }
 
     const mainMenu = new Gio.Menu();
@@ -262,9 +269,20 @@ export const Canvas = GObject.registerClass({
     clipboardMenu.append(_('Copy'), !active && selectedItems ? `canvas.copy`:`null`);
     clipboardMenu.append(_('Copy with Base Point'), !active && selectedItems ? `canvas.copy-with-base-point`:`null`);
     clipboardMenu.append(_('Paste'), !active && validClipboard ? `canvas.paste`:`null`);
-    mainMenu.append_submenu(_('Clipboard'), clipboardMenu);
+    // update submenu sensitivity
+    this.canvasActionGroup.lookup_action('clipboard-submenu').enabled = !active && (selectedItems || validClipboard);
+    this.canvasActionGroup.lookup_action('snap-override-submenu').enabled = active;
+    const clipboardItem = new Gio.MenuItem();
+    clipboardItem.set_label(_('Clipboard'));
+    clipboardItem.set_submenu(clipboardMenu);
+    clipboardItem.set_detailed_action('canvas.clipboard-submenu');
+    mainMenu.append_item(clipboardItem);
     // snap override
-    mainMenu.append_submenu(_('Snap Override'), snapOverrideMenu);
+    const snapItem = new Gio.MenuItem();
+    snapItem.set_label(_('Snap Override'));
+    snapItem.set_submenu(snapOverrideMenu);
+    snapItem.set_detailed_action('canvas.snap-override-submenu');
+    mainMenu.append_item(snapItem);
     // canvas actions
     mainMenu.append(_('Pan'), active ? `null`:`canvas.pan`);
     mainMenu.append(_('Zoom Extents'), active ? `null`:`canvas.zoom`);
