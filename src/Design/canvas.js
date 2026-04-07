@@ -266,6 +266,9 @@ export const Canvas = GObject.registerClass({
     // input actions
     mainMenu.append(_('Enter'), `canvas.enter`);
     mainMenu.append(_('Cancel'), active ? `canvas.escape` : 'null');
+    // canvas actions
+    mainMenu.append(_('Pan'), active ? `null`:`canvas.pan`);
+    mainMenu.append(_('Zoom Extents'), active ? `null`:`canvas.zoom`);
     // clipboard actions
     const clipboardMenu = new Gio.Menu();
     clipboardMenu.append(_('Cut'), !active && selectedItems ? `canvas.cut`:`null`);
@@ -286,9 +289,6 @@ export const Canvas = GObject.registerClass({
     snapItem.set_submenu(snapOverrideMenu);
     snapItem.set_detailed_action('canvas.snap-override-submenu');
     mainMenu.append_item(snapItem);
-    // canvas actions
-    mainMenu.append(_('Pan'), active ? `null`:`canvas.pan`);
-    mainMenu.append(_('Zoom Extents'), active ? `null`:`canvas.zoom`);
 
 
     return mainMenu;
