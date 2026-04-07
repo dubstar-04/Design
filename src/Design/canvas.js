@@ -238,12 +238,7 @@ export const Canvas = GObject.registerClass({
       });
     }
 
-    // create the context menu
-    this.contextMenu = new Gtk.PopoverMenu();
-    this.contextMenu.set_has_arrow(false);
-    this.contextMenu.set_menu_model(this.getContextMenu());
-    this.contextMenu.set_parent(this);
-    // this.contextMenu.height_request = 200;
+    this.buildContextMenu();
 
     this.connect('unrealize', () => {
       // clean up when canvas is destroyed
@@ -251,52 +246,68 @@ export const Canvas = GObject.registerClass({
     });
   }
 
-  getContextMenu() {
-    const active = this.core.scene.inputManager.activeCommand !== undefined;
-    const selectedItems = this.core.scene.selectionManager.selectedItems.length > 0;
-    const validClipboard = this.core.clipboard.isValid;
-
-    // snap override submenu
+  buildContextMenu() {
     const snapOverrideMenu = new Gio.Menu();
     for (const item of this.snapOverrides) {
       snapOverrideMenu.append(item.label, `canvas.snap-override-${item.type}`);
     }
-
-    const mainMenu = new Gio.Menu();
-    // input actions
-    mainMenu.append(_('Enter'), `canvas.enter`);
-    mainMenu.append(_('Cancel'), active ? `canvas.escape` : 'null');
-    // canvas actions
-    mainMenu.append(_('Pan'), active ? `null`:`canvas.pan`);
-    mainMenu.append(_('Zoom Extents'), active ? `null`:`canvas.zoom`);
-    // clipboard actions
     const clipboardMenu = new Gio.Menu();
-    clipboardMenu.append(_('Cut'), !active && selectedItems ? `canvas.cut`:`null`);
-    clipboardMenu.append(_('Copy'), !active && selectedItems ? `canvas.copy`:`null`);
-    clipboardMenu.append(_('Copy with Base Point'), !active && selectedItems ? `canvas.copy-with-base-point`:`null`);
-    clipboardMenu.append(_('Paste'), !active && validClipboard ? `canvas.paste`:`null`);
-    // update submenu sensitivity
-    this.canvasActionGroup.lookup_action('clipboard-submenu').enabled = !active && (selectedItems || validClipboard);
-    this.canvasActionGroup.lookup_action('snap-override-submenu').enabled = active;
-    const clipboardItem = new Gio.MenuItem();
-    clipboardItem.set_label(_('Clipboard'));
-    clipboardItem.set_submenu(clipboardMenu);
-    clipboardItem.set_detailed_action('canvas.clipboard-submenu');
-    mainMenu.append_item(clipboardItem);
-    // snap override
-    const snapItem = new Gio.MenuItem();
-    snapItem.set_label(_('Snap Override'));
-    snapItem.set_submenu(snapOverrideMenu);
-    snapItem.set_detailed_action('canvas.snap-override-submenu');
-    mainMenu.append_item(snapItem);
+    clipboardMenu.append(_('Cut'), 'canvas.cut');
+    clipboardMenu.append(_('Copy'), 'canvas.copy');
+    clipboardMenu.append(_('Copy with Base Point'), 'canvas.copy-with-base-point');
+    clipboardMenu.append(_('Paste'), 'canvas.paste');
+    const inputSection = new Gio.Menu();
+    inputSection.append(_('Enter'), 'canvas.enter');
+    inputSection.append(_('Cancel'), 'canvas.escape');
+    const canvasSection = new Gio.Menu();
+    canvasSection.append(_('Pan'), 'canvas.pan');
+    canvasSection.append(_('Zoom Extents'), 'canvas.zoom');
+    const submenuSection = new Gio.Menu();
+    const clipboardMenuItem = new Gio.MenuItem();
+    clipboardMenuItem.set_label(_('Clipboard'));
+    clipboardMenuItem.set_submenu(clipboardMenu);
+    clipboardMenuItem.set_detailed_action('canvas.clipboard-submenu');
+    submenuSection.append_item(clipboardMenuItem);
+    const snapMenuItem = new Gio.MenuItem();
+    snapMenuItem.set_label(_('Snap Override'));
+    snapMenuItem.set_submenu(snapOverrideMenu);
+    snapMenuItem.set_detailed_action('canvas.snap-override-submenu');
+    submenuSection.append_item(snapMenuItem);
+    const mainMenu = new Gio.Menu();
+    mainMenu.append_section(null, inputSection);
+    mainMenu.append_section(null, canvasSection);
+    mainMenu.append_section(null, submenuSection);
 
-
-    return mainMenu;
+    this.contextMenu = new Gtk.PopoverMenu();
+    this.contextMenu.set_has_arrow(false);
+    this.contextMenu.set_menu_model(mainMenu);
+    this.contextMenu.add_css_class('canvas-context-menu');
+    this.contextMenu.set_parent(this);
   }
 
   showContextMenu(x, y) {
-    const menu = this.getContextMenu();
-    this.contextMenu.set_menu_model(menu);
+    const active = this.core.scene.inputManager.activeCommand !== undefined;
+    const selectedItems = this.core.scene.selectionManager.selectedItems.length > 0;
+    const validClipboard = this.core.clipboard.isValid;
+
+    // Update action enabled states based on current context
+    this.canvasActionGroup.lookup_action('escape').enabled = active;
+    this.canvasActionGroup.lookup_action('pan').enabled = !active;
+    this.canvasActionGroup.lookup_action('zoom').enabled = !active;
+    this.canvasActionGroup.lookup_action('cut').enabled = !active && selectedItems;
+    this.canvasActionGroup.lookup_action('copy').enabled = !active && selectedItems;
+    this.canvasActionGroup.lookup_action('copy-with-base-point').enabled = !active && selectedItems;
+    this.canvasActionGroup.lookup_action('paste').enabled = !active && validClipboard;
+    this.canvasActionGroup.lookup_action('clipboard-submenu').enabled = !active && (selectedItems || validClipboard);
+    this.canvasActionGroup.lookup_action('snap-override-submenu').enabled = active;
+
+    // Open above the cursor when in the lower half of the canvas
+    if (y > this.get_height() / 2) {
+      this.contextMenu.set_position(Gtk.PositionType.TOP);
+    } else {
+      this.contextMenu.set_position(Gtk.PositionType.BOTTOM);
+    }
+
     const position = new Gdk.Rectangle({ x: x, y: y, width: 0, height: 0 });
     this.contextMenu.pointing_to = position;
     this.contextMenu.popup();
