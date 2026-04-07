@@ -6,6 +6,7 @@ import Cairo from 'cairo';
 import Gio from 'gi://Gio';
 
 import { Core } from '../Design-Core/core/core/core.js';
+import { SnapPoint } from '../Design-Core/core/lib/snapping.js';
 
 export const Canvas = GObject.registerClass({
   GTypeName: 'Canvas',
@@ -106,6 +107,9 @@ export const Canvas = GObject.registerClass({
 
     this.styleManager = Adw.StyleManager.get_default();
     this.styleManager.connect('notify::dark', this.onStyleChange.bind(this));
+    if (this.styleManager.get_accent_color_rgba) {
+      this.styleManager.connect('notify::accent-color', this.onStyleChange.bind(this));
+    }
 
     this.set_draw_func(this.onDraw.bind(this));
 
@@ -136,14 +140,8 @@ export const Canvas = GObject.registerClass({
     // activate the core
     this.activate();
 
-    // create the context menu
-    this.contextMenu = new Gtk.PopoverMenu();
-    this.contextMenu.set_has_arrow(false);
-    this.contextMenu.set_menu_model(this.getContextMenu());
-    this.contextMenu.set_parent(this);
-    // this.contextMenu.height_request = 200;
-
     const canvasActionGroup = new Gio.SimpleActionGroup();
+    this.canvasActionGroup = canvasActionGroup;
     this.insert_action_group('canvas', canvasActionGroup);
 
     // Add actions
@@ -214,38 +212,102 @@ export const Canvas = GObject.registerClass({
       this.onSelectAll();
     });
 
+    const clipboardSubmenuAction = new Gio.SimpleAction({ name: 'clipboard-submenu' });
+    canvasActionGroup.add_action(clipboardSubmenuAction);
+
+    const snapOverrideSubmenuAction = new Gio.SimpleAction({ name: 'snap-override-submenu' });
+    canvasActionGroup.add_action(snapOverrideSubmenuAction);
+
+    this.snapOverrides = [
+      { label: _('None'), type: SnapPoint.Type.NONE },
+      { label: _('Endpoint'), type: SnapPoint.Type.END },
+      { label: _('Midpoint'), type: SnapPoint.Type.MID },
+      { label: _('Centre'), type: SnapPoint.Type.CENTRE },
+      { label: _('Quadrant'), type: SnapPoint.Type.QUADRANT },
+      { label: _('Nearest'), type: SnapPoint.Type.NEAREST },
+      { label: _('Tangent'), type: SnapPoint.Type.TANGENT },
+      { label: _('Node'), type: SnapPoint.Type.NODE },
+      { label: _('Perpendicular'), type: SnapPoint.Type.PERPENDICULAR },
+    ];
+
+    for (const override of this.snapOverrides) {
+      const action = new Gio.SimpleAction({ name: `snap-override-${override.type}` });
+      canvasActionGroup.add_action(action);
+      action.connect('activate', () => {
+        this.core.scene.inputManager.snapping.setSnapOverride(override.type);
+      });
+    }
+
+    this.buildContextMenu();
+
     this.connect('unrealize', () => {
       // clean up when canvas is destroyed
       this.contextMenu.unparent();
     });
   }
 
-  getContextMenu() {
+  buildContextMenu() {
+    const snapOverrideMenu = new Gio.Menu();
+    for (const item of this.snapOverrides) {
+      snapOverrideMenu.append(item.label, `canvas.snap-override-${item.type}`);
+    }
+    const clipboardMenu = new Gio.Menu();
+    clipboardMenu.append(_('Cut'), 'canvas.cut');
+    clipboardMenu.append(_('Copy'), 'canvas.copy');
+    clipboardMenu.append(_('Copy with Base Point'), 'canvas.copy-with-base-point');
+    clipboardMenu.append(_('Paste'), 'canvas.paste');
+    const inputSection = new Gio.Menu();
+    inputSection.append(_('Enter'), 'canvas.enter');
+    inputSection.append(_('Cancel'), 'canvas.escape');
+    const canvasSection = new Gio.Menu();
+    canvasSection.append(_('Pan'), 'canvas.pan');
+    canvasSection.append(_('Zoom Extents'), 'canvas.zoom');
+    const submenuSection = new Gio.Menu();
+    const clipboardMenuItem = new Gio.MenuItem();
+    clipboardMenuItem.set_label(_('Clipboard'));
+    clipboardMenuItem.set_submenu(clipboardMenu);
+    clipboardMenuItem.set_detailed_action('canvas.clipboard-submenu');
+    submenuSection.append_item(clipboardMenuItem);
+    const snapMenuItem = new Gio.MenuItem();
+    snapMenuItem.set_label(_('Snap Override'));
+    snapMenuItem.set_submenu(snapOverrideMenu);
+    snapMenuItem.set_detailed_action('canvas.snap-override-submenu');
+    submenuSection.append_item(snapMenuItem);
+    const mainMenu = new Gio.Menu();
+    mainMenu.append_section(null, inputSection);
+    mainMenu.append_section(null, canvasSection);
+    mainMenu.append_section(null, submenuSection);
+
+    this.contextMenu = new Gtk.PopoverMenu();
+    this.contextMenu.set_has_arrow(false);
+    this.contextMenu.set_menu_model(mainMenu);
+    this.contextMenu.add_css_class('canvas-context-menu');
+    this.contextMenu.set_parent(this);
+  }
+
+  showContextMenu(x, y) {
     const active = this.core.scene.inputManager.activeCommand !== undefined;
     const selectedItems = this.core.scene.selectionManager.selectedItems.length > 0;
     const validClipboard = this.core.clipboard.isValid;
 
-    const mainMenu = new Gio.Menu();
-    // input actions
-    mainMenu.append(_('Enter'), `canvas.enter`);
-    mainMenu.append(_('Cancel'), active ? `canvas.escape` : 'null');
-    // clipboard actions
-    const clipboardMenu = new Gio.Menu();
-    clipboardMenu.append(_('Cut'), !active && selectedItems ? `canvas.cut`:`null`);
-    clipboardMenu.append(_('Copy'), !active && selectedItems ? `canvas.copy`:`null`);
-    clipboardMenu.append(_('Copy with Base Point'), !active && selectedItems ? `canvas.copy-with-base-point`:`null`);
-    clipboardMenu.append(_('Paste'), !active && validClipboard ? `canvas.paste`:`null`);
-    mainMenu.append_submenu(_('Clipboard'), clipboardMenu);
-    // canvas actions
-    mainMenu.append(_('Pan'), active ? `null`:`canvas.pan`);
-    mainMenu.append(_('Zoom Extents'), active ? `null`:`canvas.zoom`);
+    // Update action enabled states based on current context
+    this.canvasActionGroup.lookup_action('escape').enabled = active;
+    this.canvasActionGroup.lookup_action('pan').enabled = !active;
+    this.canvasActionGroup.lookup_action('zoom').enabled = !active;
+    this.canvasActionGroup.lookup_action('cut').enabled = !active && selectedItems;
+    this.canvasActionGroup.lookup_action('copy').enabled = !active && selectedItems;
+    this.canvasActionGroup.lookup_action('copy-with-base-point').enabled = !active && selectedItems;
+    this.canvasActionGroup.lookup_action('paste').enabled = !active && validClipboard;
+    this.canvasActionGroup.lookup_action('clipboard-submenu').enabled = !active && (selectedItems || validClipboard);
+    this.canvasActionGroup.lookup_action('snap-override-submenu').enabled = active;
 
-    return mainMenu;
-  }
+    // Open above the cursor when in the lower half of the canvas
+    if (y > this.get_height() / 2) {
+      this.contextMenu.set_position(Gtk.PositionType.TOP);
+    } else {
+      this.contextMenu.set_position(Gtk.PositionType.BOTTOM);
+    }
 
-  showContextMenu(x, y) {
-    const menu = this.getContextMenu();
-    this.contextMenu.set_menu_model(menu);
     const position = new Gdk.Rectangle({ x: x, y: y, width: 0, height: 0 });
     this.contextMenu.pointing_to = position;
     this.contextMenu.popup();
@@ -371,6 +433,16 @@ export const Canvas = GObject.registerClass({
     } else {
       this.core.settings.canvasbackgroundcolour = { r: 246, g: 245, b: 244 };
     }
+
+    if (this.styleManager.get_accent_color_rgba) {
+      const rgba = this.styleManager.get_accent_color_rgba();
+      this.core.settings.snaptrackingcolour = {
+        r: Math.round(rgba.red * 255),
+        g: Math.round(rgba.green * 255),
+        b: Math.round(rgba.blue * 255),
+      };
+    }
+
     this.queue_draw();
   }
 

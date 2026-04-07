@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="design">
 	<schema id="io.github.dubstar_04.design" path="/io/github/dubstar_04/design/">
-    
+
     <!-- Colour settings-->
     <!--
     <key name="canvasbackgroundcolour" type="s">
@@ -10,18 +10,13 @@
     <key name="selecteditemscolour" type="s">
       <default>'#00FF00'</default>
     </key>
-    <key name="snapcolour" type="s">
+    <key name="snaptrackingcolour" type="s">
       <default>'#FF0000'</default>
     </key>
     <key name="gridcolour" type="s">
       <default>'#77767b'</default>
     </key>
-    <key name="helpergeometrycolour" type="s">
-      <default>'#00BFFF'</default>
-    </key>
-    <key name="polarsnapcolour" type="s">
-      <default>'#38B44A'</default>
-    </key>
+
     -->
     <!-- Font settings-->
     <!--
@@ -49,6 +44,15 @@
     <default>false</default>
   </key>
   <key name="quadrantsnap" type="b">
+    <default>false</default>
+  </key>
+  <key name="tangentsnap" type="b">
+    <default>false</default>
+  </key>
+  <key name="nodesnap" type="b">
+    <default>false</default>
+  </key>
+  <key name="perpendicularsnap" type="b">
     <default>false</default>
   </key>
   <key name="polarangle" type="s">

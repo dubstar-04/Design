@@ -56,6 +56,59 @@ template $PreferencePageSettings : Adw.PreferencesPage {
           }
         }
 
+      Adw.ActionRow quadrantSnap{
+        title: _("Quadrant Snap");
+
+          [suffix]
+          Switch{
+            name: "quadrantsnap";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.quadrantsnap";
+          }
+        }
+
+      Adw.ActionRow tangentSnap{
+        title: _("Tangent Snap");
+
+          [suffix]
+          Switch{
+            name: "tangentsnap";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.tangentsnap";
+          }
+        }
+
+      Adw.ActionRow nodeSnap{
+        title: _("Node Snap");
+
+          [suffix]
+          Switch{
+            name: "nodesnap";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.nodesnap";
+          }
+        }
+
+      Adw.ActionRow perpendicularSnap{
+        title: _("Perpendicular Snap");
+
+          [suffix]
+          Switch{
+            name: "perpendicularsnap";
+            valign: center;
+            notify::active => $onToggled();
+            action-name: "settings.perpendicularsnap";
+          }
+        }
+
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Tracking");
+
       Adw.ActionRow polar{
         title: _("Polar");
 
@@ -68,13 +121,11 @@ template $PreferencePageSettings : Adw.PreferencesPage {
           }
         }
 
-        /*
-        //TODO: Fix loading of the polar angle
         Adw.ComboRow polarAngle {
-            title: "Polar Angle";
+            title: _("Polar Angle");
             name: "polarangle";
-            subtitle: "Snap Angle For Polar";
-            notify::selected => on_selected();
+            //subtitle: _("Snap Angle For Polar");
+            notify::selected => $onAngleSelected();
             //action-name: "settings.polarangle";
             sensitive: bind polar_switch.active;
 
@@ -87,7 +138,6 @@ template $PreferencePageSettings : Adw.PreferencesPage {
                 ]
             };
         }
-        */
 
       Adw.ActionRow ortho{
         title: _("Ortho");

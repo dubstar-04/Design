@@ -20,11 +20,12 @@ import GObject from 'gi://GObject';
 import Adw from 'gi://Adw?version=1';
 import Gio from 'gi://Gio';
 
+const POLAR_ANGLES = ['22.5', '45', '90', '135'];
 
 export const PreferencePageSettings = GObject.registerClass({
   GTypeName: 'PreferencePageSettings',
   Template: 'resource:///io/github/dubstar_04/design/ui/preferences/preferencePageSettings.ui',
-  InternalChildren: [],
+  InternalChildren: ['polarAngle'],
 }, class PreferencePageSettings extends Adw.PreferencesPage {
   constructor(settings) {
     super({});
@@ -43,6 +44,11 @@ export const PreferencePageSettings = GObject.registerClass({
       const action = this.settings.create_action(key);
       this.settings_group.add_action(action);
     });
+
+    // Initialise the polar angle ComboRow from the saved setting
+    const savedAngle = String(this.settings.getSetting('polarangle'));
+    const idx = POLAR_ANGLES.indexOf(savedAngle);
+    this._polarAngle.selected = idx >= 0 ? idx : 1;
   }
 
   onToggled(widget) {
@@ -50,6 +56,14 @@ export const PreferencePageSettings = GObject.registerClass({
     // side effects applied by core (e.g. mutual-exclusivity) are reflected in the UI
     this.settings.setCoreSetting(widget.name, widget.state);
     this.settings.syncFromCore();
+  }
+
+  onAngleSelected(widget) {
+    const angle = POLAR_ANGLES[widget.selected];
+    if (angle !== undefined) {
+      this.settings.setCoreSetting('polarangle', Number(angle));
+      this.settings.setSetting('polarangle', angle);
+    }
   }
 },
 );
