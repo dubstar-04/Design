@@ -121,11 +121,10 @@ template $PreferencePageSettings : Adw.PreferencesPage {
           }
         }
 
-        //TODO: Fix loading of the polar angle
         Adw.ComboRow polarAngle {
-            title: "Polar Angle";
+            title: _("Polar Angle");
             name: "polarangle";
-            subtitle: "Snap Angle For Polar";
+            //subtitle: _("Snap Angle For Polar");
             notify::selected => $onAngleSelected();
             //action-name: "settings.polarangle";
             sensitive: bind polar_switch.active;
