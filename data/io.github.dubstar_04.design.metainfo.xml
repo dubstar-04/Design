@@ -59,6 +59,15 @@
 			<li>Fix polar and ortho toggle state</li>
 			<li>Enable snap override on context menu</li>
 			<li>Use system accent colour for tracking and snap</li>
+			<li>Fix inverted arc on Fillet Command (F)</li>
+			<li>Fix arc properties on Fillet Command (F)</li>
+			<li>Fix seperate arc for polyline with Fillet Command (F)</li>
+			<li>Fix shifted start point with Pan Command (P)</li>
+			<li>Use rubber band during active commands</li>
+			<li>Add Preview for Fillet Command (F)</li>
+			<li>Add Preview for Chamfer Command (CHA)</li>
+			<li>Add Preview for Trim Command (TR)</li>
+			<li>Add Preview for Extend Command (EX)</li>
 			</ul>
 		</description>
 		</release>
