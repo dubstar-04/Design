@@ -6,7 +6,7 @@ import Cairo from 'cairo';
 import Gio from 'gi://Gio';
 
 import { Core } from '../Design-Core/core/core/core.js';
-import { SnapPoint } from '../Design-Core/core/lib/snapping.js';
+import { SnapPoint } from '../Design-Core/core/lib/auxiliary/snapPoint.js';
 
 export const Canvas = GObject.registerClass({
   GTypeName: 'Canvas',
