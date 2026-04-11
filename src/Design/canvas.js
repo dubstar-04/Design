@@ -436,7 +436,7 @@ export const Canvas = GObject.registerClass({
 
     if (this.styleManager.get_accent_color_rgba) {
       const rgba = this.styleManager.get_accent_color_rgba();
-      this.core.settings.snaptrackingcolour = {
+      this.core.settings.accentcolour = {
         r: Math.round(rgba.red * 255),
         g: Math.round(rgba.green * 255),
         b: Math.round(rgba.blue * 255),

@@ -7,11 +7,8 @@
     <key name="canvasbackgroundcolour" type="s">
       <default>'#1e1e1e'</default>
     </key>
-    <key name="selecteditemscolour" type="s">
-      <default>'#00FF00'</default>
-    </key>
-    <key name="snaptrackingcolour" type="s">
-      <default>'#FF0000'</default>
+    <key name="accentcolour" type="s">
+      <default>'#37b44b'</default>
     </key>
     <key name="gridcolour" type="s">
       <default>'#77767b'</default>
