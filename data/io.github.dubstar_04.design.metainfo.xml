@@ -58,7 +58,7 @@
 			<li>Display typed snap indicators</li>
 			<li>Fix polar and ortho toggle state</li>
 			<li>Enable snap override on context menu</li>
-			<li>Use system accent colour for tracking and snap</li>
+			<li>Use system accent colour for selection, tracking and snap</li>
 			<li>Fix inverted arc on Fillet Command (F)</li>
 			<li>Fix arc properties on Fillet Command (F)</li>
 			<li>Fix seperate arc for polyline with Fillet Command (F)</li>
