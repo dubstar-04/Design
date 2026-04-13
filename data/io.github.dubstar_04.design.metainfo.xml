@@ -68,6 +68,7 @@
 			<li>Add Preview for Chamfer Command (CHA)</li>
 			<li>Add Preview for Trim Command (TR)</li>
 			<li>Add Preview for Extend Command (EX)</li>
+			<li>Improve character spacing for ArcText Command (ArcText)</li>
 			</ul>
 		</description>
 		</release>
