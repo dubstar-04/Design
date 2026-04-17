@@ -7,6 +7,7 @@ import Gio from 'gi://Gio';
 
 import { Core } from '../Design-Core/core/core/core.js';
 import { SnapPoint } from '../Design-Core/core/lib/auxiliary/snapPoint.js';
+import { CairoRenderer } from '../Design-Core/core/lib/renderers/cairoRenderer.js';
 
 export const Canvas = GObject.registerClass({
   GTypeName: 'Canvas',
@@ -115,6 +116,7 @@ export const Canvas = GObject.registerClass({
 
     this.core.commandLine.setUpdateFunction(this.commandLineUpdateCallback.bind(this));
     this.core.canvas.setExternalPaintCallbackFunction(this.paintingCallback.bind(this));
+    this.core.canvas.setRenderer(CairoRenderer);
     this.core.canvas.setCursorCallbackFunction(this.onCursorChange.bind(this));
     this.core.propertyManager.setPropertyCallbackFunction(this.propertyCallback.bind(this));
     this.core.clipboard.setClipboardCallbackFunction(this.clipboardCallback.bind(this));
