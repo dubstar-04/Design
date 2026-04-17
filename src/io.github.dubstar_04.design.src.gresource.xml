@@ -6,6 +6,7 @@
     <file>Design/window.js</file>
     <file>Design/canvas.js</file>
     <file>Design/exportWindow.js</file>
+    <file>Design/plotWindow.js</file>
     <file>Design/commandLine.js</file>
     <file>Design/settings.js</file>
     <file>Design/fileIO.js</file>
