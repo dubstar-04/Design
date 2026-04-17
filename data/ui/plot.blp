@@ -1,0 +1,104 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $PlotWindow : Adw.Window {
+  modal: false;
+  default-width: 500;
+  destroy-with-parent: true;
+
+  Box {
+    orientation: vertical;
+
+    $AdwHeaderBar {
+      styles ["flat"]
+
+      title-widget:
+      $AdwWindowTitle {
+        title: _("Plot");
+      };
+
+      ShortcutController {
+        scope: managed;
+
+        Shortcut {
+          trigger: "Escape";
+          action: "action(window.close)";
+        }
+      }
+    } //headerbar
+
+    Adw.Clamp {
+
+      child:
+      Box {
+        orientation: vertical;
+        margin-top: 24;
+        margin-bottom: 24;
+        margin-start: 12;
+        margin-end: 12;
+        spacing: 24;
+
+        Adw.PreferencesGroup {
+          title: _('Plot Settings');
+
+          Adw.ComboRow fileType {
+            title: _("File Type");
+
+            model:
+            Gtk.StringList {
+              strings [_("PDF"), _("SVG")]
+            };
+          }
+
+          Adw.ComboRow pageSize {
+            title: _("Page Size");
+          }
+
+          Adw.ComboRow orientation {
+            title: _("Orientation");
+
+            model:
+            Gtk.StringList {
+              strings [_("Portrait"), _("Landscape")]
+            };
+          }
+
+          Adw.ComboRow plotArea {
+            title: _("Plot Area");
+
+            model:
+            Gtk.StringList {
+              strings [_("Extents"), _("Display")]
+            };
+          }
+
+          Adw.ComboRow plotScale {
+            title: _("Plot Scale");
+
+            model:
+            Gtk.StringList {
+              strings [_("Fit"), _("1:1"), _("1:2"), _("1:5"), _("1:10"), _("2:1"), _("5:1")]
+            };
+          }
+
+          Adw.ComboRow plotStyle {
+            title: _("Plot Style");
+
+            model:
+            Gtk.StringList {
+              strings [_("None"), _("Monochrome"), _("Greyscale")]
+            };
+          }
+
+        }
+
+        Button {
+          styles ["pill", "suggested-action"]
+          label: _("Plot...");
+          halign: center;
+          clicked => $onExportClicked();
+        }
+      }; //Box
+    } //Clamp
+  } //Box
+}
