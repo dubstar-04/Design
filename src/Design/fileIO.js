@@ -2,6 +2,8 @@ import Gtk from 'gi://Gtk';
 import Gio from 'gi://Gio';
 
 import { DesignCore } from '../Design-Core/core/designCore.js';
+import { PdfRenderer } from '../Design-Core/core/lib/renderers/pdfRenderer.js';
+import { SvgRenderer } from '../Design-Core/core/lib/renderers/svgRenderer.js';
 
 export class FileIO {
   // TODO: FileIO needs to be refactored considering the following:
@@ -158,6 +160,53 @@ export class FileIO {
           page.set_title(fileName);
         }
       }
+    });
+  }
+
+  static exportPlot(window, options) {
+    const ext = options.fileType ?? 'pdf';
+    const issvg = ext === 'svg';
+
+    const filter = new Gtk.FileFilter();
+    filter.set_name(issvg ? _('SVG') : _('PDF'));
+    filter.add_pattern(issvg ? '*.svg' : '*.pdf');
+
+    const dialog = new Gtk.FileChooserNative({
+      action: Gtk.FileChooserAction.SAVE,
+      select_multiple: false,
+      transient_for: window,
+      title: _('Export'),
+    });
+
+    dialog.add_filter(filter);
+
+    const name = this.formatFilename(window._tabView.get_selected_page().get_title());
+    dialog.set_current_name(`${name}.${ext}`);
+
+    dialog.show();
+    dialog.connect('response', (_dialog, response) => {
+      if (response !== Gtk.ResponseType.ACCEPT) return;
+
+      const file = _dialog.get_file();
+      const filePath = file.get_path();
+      const ext = this.getFileExtension(filePath).toLowerCase();
+
+      const { pageWidth, pageHeight } = options;
+      const renderer = ext === 'svg' ?
+        new SvgRenderer(pageWidth, pageHeight) :
+        new PdfRenderer(pageWidth, pageHeight);
+
+      renderer.setStyle(options.style);
+
+      const exported = window.getActiveCanvas().core.canvas.exportTo(renderer, options);
+      if (!exported) {
+        DesignCore.Core.notify(_('Nothing to export'));
+        return;
+      }
+
+      const [ok] = file.replace_contents(renderer.getOutput(), null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
+      const label = ext === 'svg' ? 'SVG' : 'PDF';
+      DesignCore.Core.notify(ok ? _(`${label} Exported`) : _(`${label} Export Failed`));
     });
   }
 }
