@@ -21,24 +21,19 @@ import Adw from 'gi://Adw?version=1';
 import Gtk from 'gi://Gtk';
 
 import { Constants } from '../Design-Core/core/lib/constants.js';
+import { PlotOptions } from '../Design-Core/core/lib/plotOptions.js';
 import { RendererBase } from '../Design-Core/core/lib/renderers/rendererBase.js';
 import { FileIO } from './fileIO.js';
 
 /** Scale label → numeric value (or 'fit' sentinel). */
 const scaleMap = {
-  'Fit': 'fit',
+  'Fit': null,
   '1:1': 1,
   '1:2': 0.5,
   '1:5': 0.2,
   '1:10': 0.1,
   '2:1': 2,
   '5:1': 5,
-};
-
-/** File type label → extension string. */
-const fileTypeMap = {
-  'PDF': 'pdf',
-  'SVG': 'svg',
 };
 
 /** Plot style label → RendererBase.Styles transform. */
@@ -75,15 +70,25 @@ export const PlotWindow = GObject.registerClass({
     const pageHeight = isLandscape ? pageSize.width : pageSize.height;
 
     const scaleLabel = this._plotScale.model.get_string(this._plotScale.selected);
-    const plotScale = scaleMap[scaleLabel] ?? 'fit';
+    const plotScale = scaleMap[scaleLabel] ?? null;
+
+    const plotAreaLabel = this._plotArea.model.get_string(this._plotArea.selected);
+    const plotArea = plotAreaLabel === 'Display' ? PlotOptions.Area.DISPLAY : PlotOptions.Area.EXTENTS;
 
     const styleLabel = this._plotStyle.model.get_string(this._plotStyle.selected);
     const style = styleMap[styleLabel] ?? RendererBase.Styles.NONE;
 
     const fileTypeLabel = this._fileType.model.get_string(this._fileType.selected);
-    const fileType = fileTypeMap[fileTypeLabel] ?? 'pdf';
+    const fileType = fileTypeLabel.toLowerCase();
 
-    return { pageWidth, pageHeight, plotScale, style, fileType };
+    // Construct the options object
+    const options = new PlotOptions(pageWidth, pageHeight);
+    options.setOption('plotScale', plotScale);
+    options.setOption('plotArea', plotArea);
+    options.setOption('style', style);
+    options.setOption('fileType', fileType);
+
+    return options;
   }
 
   onExportClicked() {
