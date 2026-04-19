@@ -164,12 +164,12 @@ export class FileIO {
   }
 
   static exportPlot(window, options) {
-    const ext = options.fileType ?? 'pdf';
-    const issvg = ext === 'svg';
+    const expectedExt = options.fileType ?? 'pdf';
+    const isSvg = expectedExt === 'svg';
 
     const filter = new Gtk.FileFilter();
-    filter.set_name(issvg ? _('SVG') : _('PDF'));
-    filter.add_pattern(issvg ? '*.svg' : '*.pdf');
+    filter.set_name(isSvg ? _('SVG') : _('PDF'));
+    filter.add_pattern(isSvg ? '*.svg' : '*.pdf');
 
     const dialog = new Gtk.FileChooserNative({
       action: Gtk.FileChooserAction.SAVE,
@@ -181,20 +181,26 @@ export class FileIO {
     dialog.add_filter(filter);
 
     const name = this.formatFilename(window._tabView.get_selected_page().get_title());
-    dialog.set_current_name(`${name}.${ext}`);
+    dialog.set_current_name(`${name}.${expectedExt}`);
 
     dialog.show();
     dialog.connect('response', (_dialog, response) => {
       if (response !== Gtk.ResponseType.ACCEPT) return;
 
       const file = _dialog.get_file();
-      const filePath = file.get_path();
-      const ext = this.getFileExtension(filePath).toLowerCase();
-
+      // Always use the file type from options — do not infer from the user-typed filename,
+      // which may have no extension or an unexpected one.
       const { pageWidth, pageHeight } = options;
-      const renderer = ext === 'svg' ?
+      const renderer = isSvg ?
         new SvgRenderer(pageWidth, pageHeight) :
         new PdfRenderer(pageWidth, pageHeight);
+
+      // Ensure the saved file has the correct extension.
+      const filePath = file.get_path();
+      const savedExt = this.getFileExtension(filePath).toLowerCase();
+      const outputFile = savedExt === expectedExt
+        ? file
+        : Gio.File.new_for_path(`${filePath}.${expectedExt}`);
 
       renderer.setStyle(options.style);
 
@@ -204,8 +210,8 @@ export class FileIO {
         return;
       }
 
-      const [ok] = file.replace_contents(renderer.getOutput(), null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
-      const label = ext === 'svg' ? 'SVG' : 'PDF';
+      const [ok] = outputFile.replace_contents(renderer.getOutput(), null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
+      const label = isSvg ? 'SVG' : 'PDF';
       DesignCore.Core.notify(ok ? _(`${label} Exported`) : _(`${label} Export Failed`));
     });
   }
