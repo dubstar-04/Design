@@ -25,23 +25,18 @@ import { PlotOptions } from '../Design-Core/core/lib/plotOptions.js';
 import { RendererBase } from '../Design-Core/core/lib/renderers/rendererBase.js';
 import { FileIO } from './fileIO.js';
 
-/** Scale label → numeric value (or 'fit' sentinel). */
-const scaleMap = {
-  'Fit': null,
-  '1:1': 1,
-  '1:2': 0.5,
-  '1:5': 0.2,
-  '1:10': 0.1,
-  '2:1': 2,
-  '5:1': 5,
-};
+/** Scale values by index, matching plot.blp order: Fit, 1:1, 1:2, 1:5, 1:10, 2:1, 5:1 */
+const scaleValues = [null, 1, 0.5, 0.2, 0.1, 2, 5];
 
-/** Plot style label → RendererBase.Styles transform. */
-const styleMap = {
-  'None': RendererBase.Styles.NONE,
-  'Monochrome': RendererBase.Styles.MONOCHROME,
-  'Greyscale': RendererBase.Styles.GREYSCALE,
-};
+/** File type values by index, matching plot.blp order: PDF, SVG */
+const fileTypeValues = ['pdf', 'svg'];
+
+/** Plot style values by index, matching plot.blp order: None, Monochrome, Greyscale */
+const styleValues = [
+  RendererBase.Styles.NONE,
+  RendererBase.Styles.MONOCHROME,
+  RendererBase.Styles.GREYSCALE,
+];
 
 export const PlotWindow = GObject.registerClass({
   GTypeName: 'PlotWindow',
@@ -69,17 +64,14 @@ export const PlotWindow = GObject.registerClass({
     const pageWidth = isLandscape ? pageSize.height : pageSize.width;
     const pageHeight = isLandscape ? pageSize.width : pageSize.height;
 
-    const scaleLabel = this._plotScale.model.get_string(this._plotScale.selected);
-    const plotScale = scaleMap[scaleLabel] ?? null;
+    const plotScale = scaleValues[this._plotScale.selected] ?? null;
 
-    const plotAreaLabel = this._plotArea.model.get_string(this._plotArea.selected);
-    const plotArea = plotAreaLabel === 'Display' ? PlotOptions.Area.DISPLAY : PlotOptions.Area.EXTENTS;
+    // plotArea: 0=Extents, 1=Display (matches plot.blp order)
+    const plotArea = this._plotArea.selected === 1 ? PlotOptions.Area.DISPLAY : PlotOptions.Area.EXTENTS;
 
-    const styleLabel = this._plotStyle.model.get_string(this._plotStyle.selected);
-    const style = styleMap[styleLabel] ?? RendererBase.Styles.NONE;
+    const style = styleValues[this._plotStyle.selected] ?? RendererBase.Styles.NONE;
 
-    const fileTypeLabel = this._fileType.model.get_string(this._fileType.selected);
-    const fileType = fileTypeLabel.toLowerCase();
+    const fileType = fileTypeValues[this._fileType.selected] ?? 'pdf';
 
     // Construct the options object
     const options = new PlotOptions(pageWidth, pageHeight);
