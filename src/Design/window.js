@@ -24,6 +24,7 @@ import Adw from 'gi://Adw?version=1';
 import { Canvas } from './canvas.js';
 import { CommandLine } from './commandLine.js';
 import { ExportWindow } from './exportWindow.js';
+import { PlotWindow } from './plotWindow.js';
 import { Settings } from './settings.js';
 import { FileIO } from './fileIO.js';
 
@@ -88,6 +89,13 @@ export const DesignWindow = GObject.registerClass({
     });
     exportFile.connect('activate', this.showExportWindow.bind(this));
     this.add_action(exportFile);
+
+    const plotFile = new Gio.SimpleAction({
+      name: 'plot',
+      parameter_type: null,
+    });
+    plotFile.connect('activate', this.showPlotWindow.bind(this));
+    this.add_action(plotFile);
 
     const preferences = new Gio.SimpleAction({
       name: 'preferences',
@@ -164,6 +172,7 @@ export const DesignWindow = GObject.registerClass({
     this.layersWindow;
     this.propertiesWindow;
     this.exportWindow;
+    this.plotWindow;
   }
 
   get toolbars_visible() {
@@ -414,6 +423,19 @@ export const DesignWindow = GObject.registerClass({
 
       this.exportWindow.connect('close-request', ()=>{
         this.exportWindow = null;
+      });
+    }
+  }
+
+  showPlotWindow() {
+    if (!this.plotWindow) {
+      this.plotWindow = new PlotWindow();
+      this.plotWindow.set_transient_for(this);
+      this.plotWindow.set_modal(true);
+      this.plotWindow.show();
+
+      this.plotWindow.connect('close-request', () => {
+        this.plotWindow = null;
       });
     }
   }

@@ -4,6 +4,7 @@
     <file>ui/window.ui</file>
     <file>ui/shortcuts.ui</file>
     <file>ui/export.ui</file>
+    <file>ui/plot.ui</file>
     <!-- preferences -->
     <file>ui/preferences/preferencesDialog.ui</file>
     <file>ui/preferences/preferencePageSettings.ui</file>

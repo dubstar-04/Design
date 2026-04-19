@@ -2,11 +2,11 @@ import Gtk from 'gi://Gtk?version=4.0';
 import GObject from 'gi://GObject';
 import Gdk from 'gi://Gdk';
 import Adw from 'gi://Adw?version=1';
-import Cairo from 'cairo';
 import Gio from 'gi://Gio';
 
 import { Core } from '../Design-Core/core/core/core.js';
 import { SnapPoint } from '../Design-Core/core/lib/auxiliary/snapPoint.js';
+import { CairoRenderer } from '../Design-Core/core/lib/renderers/cairoRenderer.js';
 
 export const Canvas = GObject.registerClass({
   GTypeName: 'Canvas',
@@ -115,6 +115,7 @@ export const Canvas = GObject.registerClass({
 
     this.core.commandLine.setUpdateFunction(this.commandLineUpdateCallback.bind(this));
     this.core.canvas.setExternalPaintCallbackFunction(this.paintingCallback.bind(this));
+    this.core.canvas.setRenderer(CairoRenderer);
     this.core.canvas.setCursorCallbackFunction(this.onCursorChange.bind(this));
     this.core.propertyManager.setPropertyCallbackFunction(this.propertyCallback.bind(this));
     this.core.clipboard.setClipboardCallbackFunction(this.clipboardCallback.bind(this));
@@ -457,9 +458,6 @@ export const Canvas = GObject.registerClass({
   onDraw(area, cr, width, height) {
     // this is the main drawing function for the canvas
     // this is triggered by design core calling the paintingCallback()
-
-    // set the line cap - this is required to make dotted lines work
-    cr.setLineCap(Cairo.LineCap.SQUARE);
     this.core.canvas.paint(cr, width, height);
     cr.$dispose();
   }

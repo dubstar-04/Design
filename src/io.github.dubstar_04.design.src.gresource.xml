@@ -6,6 +6,7 @@
     <file>Design/window.js</file>
     <file>Design/canvas.js</file>
     <file>Design/exportWindow.js</file>
+    <file>Design/plotWindow.js</file>
     <file>Design/commandLine.js</file>
     <file>Design/settings.js</file>
     <file>Design/fileIO.js</file>
@@ -28,6 +29,11 @@
     <file>Design-Core/core/lib/clipboard.js</file>
     <file>Design-Core/core/lib/boundingBox.js</file>
     <file>Design-Core/core/lib/canvas.js</file>
+    <!-- Renderers -->
+    <file>Design-Core/core/lib/renderers/rendererBase.js</file>
+    <file>Design-Core/core/lib/renderers/cairoRenderer.js</file>
+    <file>Design-Core/core/lib/renderers/pdfRenderer.js</file>
+    <file>Design-Core/core/lib/renderers/svgRenderer.js</file>
     <file>Design-Core/core/lib/colour.js</file>
     <file>Design-Core/core/lib/colours.js</file>
     <file>Design-Core/core/lib/commandLine.js</file>
@@ -35,6 +41,7 @@
     <file>Design-Core/core/lib/entityManager.js</file>
     <file>Design-Core/core/lib/input.js</file>
     <file>Design-Core/core/lib/inputManager.js</file>
+    <file>Design-Core/core/lib/plotOptions.js</file>
     <file>Design-Core/core/lib/promptOptions.js</file>
     <file>Design-Core/core/lib/fileio.js</file>
     <file>Design-Core/core/lib/intersect.js</file>
