@@ -198,9 +198,9 @@ export class FileIO {
       // Ensure the saved file has the correct extension.
       const filePath = file.get_path();
       const savedExt = this.getFileExtension(filePath).toLowerCase();
-      const outputFile = savedExt === expectedExt
-        ? file
-        : Gio.File.new_for_path(`${filePath}.${expectedExt}`);
+      const outputFile = savedExt === expectedExt ?
+        file :
+        Gio.File.new_for_path(`${filePath}.${expectedExt}`);
 
       renderer.setStyle(options.style);
 
@@ -211,8 +211,11 @@ export class FileIO {
       }
 
       const [ok] = outputFile.replace_contents(renderer.getOutput(), null, false, Gio.FileCreateFlags.REPLACE_DESTINATION, null);
-      const label = isSvg ? 'SVG' : 'PDF';
-      DesignCore.Core.notify(ok ? _(`${label} Exported`) : _(`${label} Export Failed`));
+      if (isSvg) {
+        DesignCore.Core.notify(ok ? _('SVG Exported') : _('SVG Export Failed'));
+      } else {
+        DesignCore.Core.notify(ok ? _('PDF Exported') : _('PDF Export Failed'));
+      }
     });
   }
 }
