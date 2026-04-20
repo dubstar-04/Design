@@ -31,6 +31,7 @@
     <file>Design-Core/core/lib/canvas.js</file>
     <!-- Renderers -->
     <file>Design-Core/core/lib/renderers/rendererBase.js</file>
+    <file>Design-Core/core/lib/renderers/canvasRenderer.js</file>
     <file>Design-Core/core/lib/renderers/cairoRenderer.js</file>
     <file>Design-Core/core/lib/renderers/pdfRenderer.js</file>
     <file>Design-Core/core/lib/renderers/svgRenderer.js</file>
@@ -45,6 +46,7 @@
     <file>Design-Core/core/lib/promptOptions.js</file>
     <file>Design-Core/core/lib/fileio.js</file>
     <file>Design-Core/core/lib/intersect.js</file>
+    <file>Design-Core/core/lib/polylineUtils.js</file>
     <file>Design-Core/core/lib/logging.js</file>
     <file>Design-Core/core/lib/matrix.js</file>
     <file>Design-Core/core/lib/mouse.js</file>
