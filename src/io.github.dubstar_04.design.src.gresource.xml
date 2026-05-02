@@ -31,7 +31,6 @@
     <file>Design-Core/core/lib/canvas.js</file>
     <!-- Renderers -->
     <file>Design-Core/core/lib/renderers/rendererBase.js</file>
-    <file>Design-Core/core/lib/renderers/canvasRenderer.js</file>
     <file>Design-Core/core/lib/renderers/cairoRenderer.js</file>
     <file>Design-Core/core/lib/renderers/pdfRenderer.js</file>
     <file>Design-Core/core/lib/renderers/svgRenderer.js</file>
@@ -79,6 +78,7 @@
     <file>Design-Core/core/lib/dxf/sections/tables.js</file>
     <!-- Properties -->
     <file>Design-Core/core/properties/property.js</file>
+    <file>Design-Core/core/properties/entityProperties.js</file>
     <file>Design-Core/core/properties/propertyManager.js</file>
     <file>Design-Core/core/properties/flags.js</file>
     <file>Design-Core/core/properties/dimType.js</file>

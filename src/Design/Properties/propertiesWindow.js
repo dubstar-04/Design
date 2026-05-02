@@ -23,7 +23,7 @@ import Gdk from 'gi://Gdk';
 
 import { Colours } from '../../Design-Core/core/lib/colours.js';
 import { DesignCore } from '../../Design-Core/core/designCore.js';
-import { Patterns } from '../../Design-Core/core/lib/patterns.js';
+import { Property } from '../../Design-Core/core/properties/property.js';
 
 export const PropertiesWindow = GObject.registerClass({
   GTypeName: 'PropertiesWindow',
@@ -105,29 +105,15 @@ export const PropertiesWindow = GObject.registerClass({
 
     if (properties.length) {
       for (let i = 0; i < properties.length; i++) {
-        const value = DesignCore.PropertyManager.getItemPropertyValue(selectedType, properties[i]);
+        const property = properties[i];
+        const value = DesignCore.PropertyManager.getItemPropertyValue(selectedType, property);
+        const definition = DesignCore.PropertyManager.getItemPropertyDefinition(selectedType, property);
 
         let suffixWidget;
-        const property = properties[i];
         const widgetWidth = 175;
 
-        switch (property) {
-          // Numeric type properties
-          case 'height':
-          case 'rotation':
-          case 'radius':
-          case 'width':
-          case 'lineWidth':
-          case 'scale':
-          case 'angle':
-          case 'characterSpacing':
-          case 'lineSpacing':
-          case 'startAngle':
-          case 'endAngle':
-          case 'offsetFromArc':
-          case 'offsetFromLeft':
-          case 'offsetFromRight':
-          case 'widthFactor':
+        switch (definition?.type) {
+          case Property.Type.NUMBER: {
             suffixWidget = new Gtk.Entry({ valign: Gtk.Align.CENTER, text: `${value}` });
             suffixWidget.width_request = widgetWidth;
             const changedSignal = suffixWidget.connect('changed', () => {
@@ -135,13 +121,12 @@ export const PropertiesWindow = GObject.registerClass({
               GObject.signal_handler_block(suffixWidget, changedSignal);
 
               let text = suffixWidget.text;
-              // Check if the entry characters that aren't numbers
+              // Remove anything that isn't a number or a decimal point
               if (text.match(/[^\d.]/i)) {
-                // remove anything thats not a number or a decimal point
                 text = text.replace(/[^\d.]/g, '');
                 suffixWidget.set_text(text);
               }
-              // Allow only one point.
+              // Allow only one decimal point
               const dots = text.match(/\./g) || [];
               if (dots.length > 1) {
                 const index = text.lastIndexOf('.');
@@ -155,95 +140,53 @@ export const PropertiesWindow = GObject.registerClass({
               this.onValueChanged(`${property}`, Number(suffixWidget.text));
             });
             break;
-          // Boolean type properties
-          case 'backwards':
-          case 'textReversed':
-          case 'upsideDown':
-          case 'bold':
-          case 'underline':
-          case 'italic':
+          }
+
+          case Property.Type.BOOLEAN:
             suffixWidget = new Gtk.Switch({ valign: Gtk.Align.CENTER, state: value });
             suffixWidget.connect('notify::active', () => {
               this.onValueChanged(`${property}`, suffixWidget.state);
             });
             break;
-          // option type properties
-          case 'layer':
-          case 'styleName':
-          case 'lineType':
-          case 'patternName':
-          case 'dimensionStyle':
-          case 'textAlignment':
-          case 'textOrientation':
-          case 'arcSide':
-          case 'horizontalAlignment':
-          case 'verticalAlignment':
-            let model = this.getModel(property);
+
+          case Property.Type.LIST: {
+            let options = definition.options?.() ?? [];
             if (String(value).toUpperCase() === 'VARIES') {
-              model = [{ display: 'Varies', value: 'VARIES' }].concat(model);
+              options = [{ display: 'Varies', value: 'VARIES' }].concat(options);
             }
-            suffixWidget = Gtk.DropDown.new_from_strings(model.map((item) => item.display));
+            suffixWidget = Gtk.DropDown.new_from_strings(options.map((item) => item.display));
             suffixWidget.width_request = widgetWidth;
             suffixWidget.valign = Gtk.Align.CENTER;
-            // get the position of the current value
-            const selectedIndex = model.findIndex((item) => item.value === value);
+            const selectedIndex = options.findIndex((item) => item.value === value);
             if (selectedIndex >= 0) {
               suffixWidget.set_selected(selectedIndex);
             }
             suffixWidget.connect('notify::selected-item', () => {
-              // console.log('update style:', `${property}`, suffixWidget.get_selected_item().get_string());
               const selectedString = suffixWidget.get_selected_item().get_string();
-              const selectedItem = this.getModel(property).find((item) => item.display === selectedString);
-              // check the select item is valid i.e. not 'Varies'
+              const selectedItem = (definition.options?.() ?? []).find((item) => item.display === selectedString);
+              // check the selected item is valid i.e. not 'Varies'
               if (selectedItem !== undefined) {
                 this.onValueChanged(`${property}`, selectedItem.value);
               }
             });
             break;
-          // String type properties
-          case 'string':
-          case 'textOverride':
+          }
+
+          case Property.Type.STRING:
             suffixWidget = new Gtk.Entry({ valign: Gtk.Align.CENTER, text: `${value}` });
             suffixWidget.width_request = widgetWidth;
             suffixWidget.connect('activate', () => {
               this.onValueChanged(`${property}`, suffixWidget.text);
             });
             break;
-            // String type properties
 
-          case 'colour':
+          case Property.Type.COLOUR:
+            // TODO: Create a custom colour widget
             continue;
-          /*
-            // TODO: Create a custom widget that can display, bylayer, various and show a colour
-            suffixWidget = new Gtk.Button({valign: Gtk.Align.CENTER});
-            suffixWidget.width_request = widgetWidth;
-            suffixWidget.set_label(value);
 
-            suffixWidget.connect('clicked', () => {
-              const colorChooser = new Gtk.ColorChooserDialog({
-                modal: true,
-                // TODO: Set the current colour
-                // rgba: currentColour,
-                transient_for: this,
-              });
-
-              colorChooser.show();
-              colorChooser.connect('response', (dialog, response) => {
-                if (response == Gtk.ResponseType.OK) {
-                  const rgba = dialog.get_rgba().to_string();
-                  const rgb = rgba.substr(4).split(')')[0].split(',');
-                  const colour = Colours.rgbToHex(rgb[0], rgb[1], rgb[2]);
-                  suffixWidget.set_label(colour);
-                  this.onValueChanged(`${property}`, colour);
-                }
-
-                dialog.destroy();
-              });
-            });
-            break;
-            */
+          case Property.Type.LABEL:
           default:
-            // Non-editable properties
+            // Read-only display
             suffixWidget = new Gtk.Label({ valign: Gtk.Align.CENTER, label: `${value}` });
             suffixWidget.width_request = widgetWidth;
             break;
@@ -256,60 +199,6 @@ export const PropertiesWindow = GObject.registerClass({
         this._elementList.append(propRow);
       }
     }
-  }
-
-  /**
-   * Return array of objects with keys: display and value
-   * display is the human readable name
-   * value is the actual value to be set
-   * {display: 'Display Name', value: 0'}
-   */
-  getModel(property) {
-    let model = [];
-    switch (property) {
-      case 'layer':
-        model = [];
-        for (const layer of DesignCore.LayerManager.getItems()) {
-          model.push({ display: layer.name, value: layer.name });
-        }
-        break;
-      case 'styleName':
-        const styles = DesignCore.StyleManager.getItems();
-        const styleNames = styles.map((style) => ({ display: style.name, value: style.name }));
-        model = styleNames;
-        break;
-      case 'dimensionStyle':
-        const dimSyles = DesignCore.DimStyleManager.getItems();
-        const dimStyleNames = dimSyles.map((style) => ({ display: style.name, value: style.name }));
-        model = dimStyleNames;
-        break;
-      case 'horizontalAlignment':
-        model = [{ display: 'Left', value: 0 }, { display: 'Center', value: 1 }, { display: 'Right', value: 2 }];
-        // unsupported { display: 'Aligned', value: 3 }, { display: 'Middle', value: 4 }, { display: 'Fit', value: 5 }
-        break;
-      case 'verticalAlignment':
-        model = [{ display: 'Baseline', value: 0 }, { display: 'Bottom', value: 1 }, { display: 'Middle', value: 2 }, { display: 'Top', value: 3 }];
-        break;
-      case 'lineType':
-        const lineStyles = DesignCore.LTypeManager.getItems();
-        const lineStyleNames = lineStyles.map((style) => ({ display: style.name, value: style.name }));
-        model = lineStyleNames;
-        break;
-      case 'patternName':
-        const patternNames = Object.keys(Patterns.hatch_patterns);
-        model = patternNames.map((patternName) => ({ display: patternName, value: patternName }));
-        break;
-      case 'textAlignment':
-        model = [{ display: 'Fit', value: 1 }, { display: 'Left', value: 2 }, { display: 'Right', value: 3 }, { display: 'Center', value: 4 }];
-        break;
-      case 'textOrientation':
-        model = [{ display: 'Outward', value: 1 }, { display: 'Inward', value: 2 }];
-        break;
-      case 'arcSide':
-        model = [{ display: 'Convex', value: 1 }, { display: 'Concave', value: 2 }];
-        break;
-    }
-    return model;
   }
 
   // TODO: this is duplicated on the layers window
