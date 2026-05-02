@@ -69,6 +69,7 @@
 			<li>Add Preview for Trim Command (TR)</li>
 			<li>Add Preview for Extend Command (EX)</li>
 			<li>Improve character spacing for ArcText Command (ArcText)</li>
+			<li>Improve mouse wheel zoom precision</li>
 			</ul>
 		</description>
 		</release>
