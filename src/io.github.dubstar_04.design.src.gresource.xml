@@ -31,7 +31,6 @@
     <file>Design-Core/core/lib/canvas.js</file>
     <!-- Renderers -->
     <file>Design-Core/core/lib/renderers/rendererBase.js</file>
-    <file>Design-Core/core/lib/renderers/canvasRenderer.js</file>
     <file>Design-Core/core/lib/renderers/cairoRenderer.js</file>
     <file>Design-Core/core/lib/renderers/pdfRenderer.js</file>
     <file>Design-Core/core/lib/renderers/svgRenderer.js</file>
