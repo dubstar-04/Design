@@ -89,13 +89,13 @@
     <file>Design-Core/core/dimensions/diametricDimension.js</file>
     <file>Design-Core/core/dimensions/radialDimension.js</file>
     <file>Design-Core/core/dimensions/rotatedDimension.js</file>
-    <file>Design-Core/core/dimensions/baseDimension.js</file>
+    <file>Design-Core/core/dimensions/dimensionBase.js</file>
     <file>Design-Core/core/dimensions/linearDimension.js</file>
-    <file>Design-Core/core/dimensions/baseCircularDimension.js</file>
-    <file>Design-Core/core/dimensions/baseLinearDimension.js</file>
+    <file>Design-Core/core/dimensions/circularDimensionBase.js</file>
+    <file>Design-Core/core/dimensions/linearDimensionBase.js</file>
     <!-- Entities -->
     <file>Design-Core/core/entities/arc.js</file>
-    <file>Design-Core/core/entities/basePolyline.js</file>
+    <file>Design-Core/core/entities/polylineBase.js</file>
     <file>Design-Core/core/entities/circle.js</file>
     <file>Design-Core/core/entities/entity.js</file>
     <file>Design-Core/core/entities/insert.js</file>
