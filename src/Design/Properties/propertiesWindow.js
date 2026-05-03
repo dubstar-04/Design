@@ -55,7 +55,7 @@ export const PropertiesWindow = GObject.registerClass({
   }
 
   loadSelectedItems() {
-    const types = DesignCore.PropertyManager.getItemTypes();
+    const types = DesignCore.PropertyManager.getEntityTypes();
     if (types.length) {
       this._stack.set_visible_child_name('elementsPage');
     } else {
@@ -82,7 +82,7 @@ export const PropertiesWindow = GObject.registerClass({
   /** Handle a property value being changed */
   onValueChanged(property, value) {
     const selectedType = this.getFilterValue();
-    DesignCore.PropertyManager.setItemProperties(property, value, selectedType);
+    DesignCore.PropertyManager.setEntityProperties(property, value, selectedType);
   }
 
   /** Get the currently selected filter value */
@@ -95,7 +95,7 @@ export const PropertiesWindow = GObject.registerClass({
 
   onTypeChanged() {
     const selectedType = this.getFilterValue();
-    const properties = DesignCore.PropertyManager.getItemProperties(selectedType);
+    const properties = DesignCore.PropertyManager.getEntityProperties(selectedType);
 
     if (!properties) {
       return;
@@ -106,8 +106,8 @@ export const PropertiesWindow = GObject.registerClass({
     if (properties.length) {
       for (let i = 0; i < properties.length; i++) {
         const property = properties[i];
-        const value = DesignCore.PropertyManager.getItemPropertyValue(selectedType, property);
-        const definition = DesignCore.PropertyManager.getItemPropertyDefinition(selectedType, property);
+        const value = DesignCore.PropertyManager.getEntityPropertyValue(selectedType, property);
+        const definition = DesignCore.PropertyManager.getEntityPropertyDefinition(selectedType, property);
 
         let suffixWidget;
         const widgetWidth = 175;
