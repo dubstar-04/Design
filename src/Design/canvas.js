@@ -288,18 +288,18 @@ export const Canvas = GObject.registerClass({
 
   showContextMenu(x, y) {
     const active = this.core.scene.inputManager.activeCommand !== undefined;
-    const selectedItems = this.core.scene.selectionManager.selectedItems.length > 0;
+    const selectedEntities = this.core.scene.selectionManager.selectedEntities.length > 0;
     const validClipboard = this.core.clipboard.isValid;
 
     // Update action enabled states based on current context
     this.canvasActionGroup.lookup_action('escape').enabled = active;
     this.canvasActionGroup.lookup_action('pan').enabled = !active;
     this.canvasActionGroup.lookup_action('zoom').enabled = !active;
-    this.canvasActionGroup.lookup_action('cut').enabled = !active && selectedItems;
-    this.canvasActionGroup.lookup_action('copy').enabled = !active && selectedItems;
-    this.canvasActionGroup.lookup_action('copy-with-base-point').enabled = !active && selectedItems;
+    this.canvasActionGroup.lookup_action('cut').enabled = !active && selectedEntities;
+    this.canvasActionGroup.lookup_action('copy').enabled = !active && selectedEntities;
+    this.canvasActionGroup.lookup_action('copy-with-base-point').enabled = !active && selectedEntities;
     this.canvasActionGroup.lookup_action('paste').enabled = !active && validClipboard;
-    this.canvasActionGroup.lookup_action('clipboard-submenu').enabled = !active && (selectedItems || validClipboard);
+    this.canvasActionGroup.lookup_action('clipboard-submenu').enabled = !active && (selectedEntities || validClipboard);
     this.canvasActionGroup.lookup_action('snap-override-submenu').enabled = active;
 
     // Open above the cursor when in the lower half of the canvas
