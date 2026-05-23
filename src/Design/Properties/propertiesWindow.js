@@ -145,9 +145,9 @@ export const PropertiesWindow = GObject.registerClass({
           }
 
           case Property.Type.BOOLEAN:
-            suffixWidget = new Gtk.Switch({ valign: Gtk.Align.CENTER, state: value });
+            suffixWidget = new Gtk.Switch({ valign: Gtk.Align.CENTER, active: value });
             suffixWidget.connect('notify::active', () => {
-              this.onValueChanged(`${property}`, suffixWidget.state);
+              this.onValueChanged(`${property}`, suffixWidget.active);
             });
             break;
 
