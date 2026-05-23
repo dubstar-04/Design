@@ -83,6 +83,8 @@ export const PropertiesWindow = GObject.registerClass({
   onValueChanged(property, value) {
     const selectedType = this.getFilterValue();
     DesignCore.PropertyManager.setEntityProperties(property, value, selectedType);
+    // Rebuild the widget list so readOnly() callbacks are re-evaluated for all properties
+    this.onTypeChanged();
   }
 
   /** Get the currently selected filter value */
@@ -191,6 +193,11 @@ export const PropertiesWindow = GObject.registerClass({
             suffixWidget.width_request = widgetWidth;
             break;
         }
+
+        // Apply readOnly state to the widget (supports static boolean or entity-parameterized callable)
+        const propEntity = DesignCore.PropertyManager.getEntityForProperty(selectedType, property);
+        const isReadOnly = typeof definition?.readOnly === 'function' ? definition.readOnly(propEntity) : !!definition?.readOnly;
+        suffixWidget.set_sensitive(!isReadOnly);
 
         // Get a formatted version of the property name
         const formattedName = this.formatDisplayName(property);
