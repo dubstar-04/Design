@@ -195,8 +195,9 @@ export const PropertiesWindow = GObject.registerClass({
         }
 
         // Apply readOnly state to the widget (supports static boolean or entity-parameterized callable)
-        const propEntity = DesignCore.PropertyManager.getEntityForProperty(selectedType, property);
-        const isReadOnly = typeof definition?.readOnly === 'function' ? definition.readOnly(propEntity) : !!definition?.readOnly;
+        const isReadOnly = typeof definition?.readOnly === 'function' ?
+          definition.readOnly(DesignCore.PropertyManager.getEntityForProperty(selectedType, property)) :
+          !!definition?.readOnly;
         suffixWidget.set_sensitive(!isReadOnly);
 
         // Get a formatted version of the property name
