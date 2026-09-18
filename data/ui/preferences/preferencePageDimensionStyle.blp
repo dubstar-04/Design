@@ -279,7 +279,7 @@ Adw.NavigationPage editDimensionStylePage {
 					subtitle: _("Set the center mark size (DIMCEN)");
 					digits: 2;
 					notify::value => $onStyleUpdate();
-					sensitive: bind DIMCENSTYL.selected;
+					sensitive: bind $center_mark_size_sensitive(DIMCENSTYL.selected) as <bool>;
 
 					adjustment: Adjustment {
 						lower: 0;
