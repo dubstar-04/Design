@@ -41,9 +41,10 @@
   	<color type="primary" scheme_preference="dark">#3584e4</color>
 	</branding>
   	<releases>
-		<release version="50.alpha2" date="2026-xx-xx">
+		<release version="51.alpha1" date="2026-09-18">
 		<description>
 			<ul>
+			<li>Update to GNOME 51</li>
 			<li>Enable Mirror Command (MI)</li>
 			<li>Enable Scale Command (SC)</li>
 			<li>Enable Offset Command (O)</li>
