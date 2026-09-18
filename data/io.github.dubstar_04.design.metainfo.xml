@@ -72,6 +72,7 @@
 			<li>Improve mouse wheel zoom precision</li>
 			<li>Fix handling of Insert entities with no block defined</li>
 			<li>Fix Zoom All with invalid scale value</li>
+			<li>Fix Zoom All with a single vertical or horizontal line</li>
 			<li>Add support for user-defined hatch patterns</li>
 			</ul>
 		</description>
