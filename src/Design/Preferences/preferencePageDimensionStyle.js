@@ -236,6 +236,11 @@ export const PreferencePageDimensionStyle = GObject.registerClass({
   }
 
 
+  // closure for DIMCENVALUE's sensitive bind: 0 = "None" style, disable the size field
+  center_mark_size_sensitive(_source, selected) {
+    return selected !== 0;
+  }
+
   onStyleUpdate(widget) {
     if (!widget) return;
     // update core with the changed setting
