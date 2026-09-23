@@ -120,6 +120,7 @@ export const PlotWindow = GObject.registerClass({
     options.setOption('plotArea', plotArea);
     options.setOption('windowArea', plotArea === PlotOptions.Area.WINDOW ? this._windowArea : null);
     // a precisely picked window shouldn't get the default page margin shrinking it further
+    options.setOption('margin', plotArea === PlotOptions.Area.WINDOW ? 0 : 40);
     options.setOption('style', style);
     options.setOption('fileType', fileType);
 
