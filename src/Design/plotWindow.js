@@ -25,8 +25,8 @@ import { PlotOptions } from '../Design-Core/core/lib/plotOptions.js';
 import { RendererBase } from '../Design-Core/core/lib/renderers/rendererBase.js';
 import { FileIO } from './fileIO.js';
 
-/** Scale values by index, matching plot.blp order: Fit, 1:1, 1:2, 1:5, 1:10, 2:1, 5:1 */
-const scaleValues = [null, 1, 0.5, 0.2, 0.1, 2, 5];
+import { DesignCore } from '../Design-Core/core/designCore.js';
+
 
 /** File type values by index, matching plot.blp order: PDF, SVG */
 const fileTypeValues = ['pdf', 'svg'];
@@ -52,6 +52,45 @@ export const PlotWindow = GObject.registerClass({
     // Default to Landscape (index 1)
     this._orientation.selected = 1;
 
+    // picked window corners, set once the user completes a Window area pick
+    this._windowArea = null;
+
+    this.present();
+  }
+
+  /**
+   * Handle plotArea selection changes.
+   * When "Window" (index 2) is selected, hide the dialog and let the user
+   * pick two corners on the canvas, then restore the dialog.
+   */
+  async onPlotAreaChanged() {
+    const isWindow = this._plotArea.selected === 2; // matches plot.blp order: Extents, Display, Window
+    if (!isWindow) {
+      this._windowArea = null;
+      return;
+    }
+
+    this.hide();
+
+    const inputManager = DesignCore.Scene.inputManager;
+    inputManager.reset();
+
+    const tool = DesignCore.CommandManager.createNew('PlotWindowPick');
+    inputManager.activeCommand = tool;
+    await tool.execute();
+
+    if (tool.points.length === 2) {
+      this._windowArea = { point1: tool.points[0], point2: tool.points[1] };
+    } else {
+      // picking was cancelled — fall back to Extents
+      this._windowArea = null;
+      this._plotArea.selected = 0;
+    }
+
+    // Re-showing the dialog can steal the pointer grab mid-click before the canvas
+    // sees a mouseUp; inputManager.reset() clears any state that leaves stuck
+    inputManager.reset();
+
     this.present();
   }
 
@@ -66,8 +105,10 @@ export const PlotWindow = GObject.registerClass({
 
     const plotScale = scaleValues[this._plotScale.selected] ?? null;
 
-    // plotArea: 0=Extents, 1=Display (matches plot.blp order)
-    const plotArea = this._plotArea.selected === 1 ? PlotOptions.Area.DISPLAY : PlotOptions.Area.EXTENTS;
+    // plotArea: 0=Extents, 1=Display, 2=Window (matches plot.blp order)
+    let plotArea = PlotOptions.Area.EXTENTS;
+    if (this._plotArea.selected === 1) plotArea = PlotOptions.Area.DISPLAY;
+    if (this._plotArea.selected === 2) plotArea = PlotOptions.Area.WINDOW;
 
     const style = styleValues[this._plotStyle.selected] ?? RendererBase.Styles.NONE;
 
@@ -77,6 +118,8 @@ export const PlotWindow = GObject.registerClass({
     const options = new PlotOptions(pageWidth, pageHeight);
     options.setOption('plotScale', plotScale);
     options.setOption('plotArea', plotArea);
+    options.setOption('windowArea', plotArea === PlotOptions.Area.WINDOW ? this._windowArea : null);
+    // a precisely picked window shouldn't get the default page margin shrinking it further
     options.setOption('style', style);
     options.setOption('fileType', fileType);
 
@@ -84,6 +127,11 @@ export const PlotWindow = GObject.registerClass({
   }
 
   onExportClicked() {
+    if (this._plotArea.selected === 2 && !this._windowArea) {
+      DesignCore.Core.notify(_('Specify a plot window first'));
+      return;
+    }
+
     const mainWindow = this.get_transient_for();
     FileIO.exportPlot(mainWindow, this.#buildOptions());
     this.close();
