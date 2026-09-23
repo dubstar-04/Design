@@ -27,6 +27,12 @@ import { FileIO } from './fileIO.js';
 
 import { DesignCore } from '../Design-Core/core/designCore.js';
 
+// PageSizes/pageWidth/pageHeight are in PDF points (1 point = 25.4/72 mm); drawing units are assumed to be millimetres
+const MM_TO_POINTS = 72 / 25.4;
+
+/** Scale values by index, matching plot.blp order: Fit, 1:1, 1:2, 1:5, 1:10, 2:1, 5:1
+ * Ratios are converted to PDF points per drawing unit so "1:1" prints at true mm size. */
+const scaleValues = [null, MM_TO_POINTS, MM_TO_POINTS * 0.5, MM_TO_POINTS * 0.2, MM_TO_POINTS * 0.1, MM_TO_POINTS * 2, MM_TO_POINTS * 5];
 
 /** File type values by index, matching plot.blp order: PDF, SVG */
 const fileTypeValues = ['pdf', 'svg'];
