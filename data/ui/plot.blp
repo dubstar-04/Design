@@ -65,10 +65,11 @@ template $PlotWindow : Adw.Window {
 
           Adw.ComboRow plotArea {
             title: _("Plot Area");
+            notify::selected => $onPlotAreaChanged();
 
             model:
             Gtk.StringList {
-              strings [_("Extents"), _("Display")]
+              strings [_("Extents"), _("Display"), _("Window")]
             };
           }
 
