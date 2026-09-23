@@ -128,6 +128,7 @@
     <file>Design-Core/core/tools/offset.js</file>
     <file>Design-Core/core/tools/pan.js</file>
     <file>Design-Core/core/tools/pasteclip.js</file>
+    <file>Design-Core/core/tools/plotWindowPick.js</file>
     <file>Design-Core/core/tools/rotate.js</file>
     <file>Design-Core/core/tools/scale.js</file>
     <file>Design-Core/core/tools/trim.js</file>
