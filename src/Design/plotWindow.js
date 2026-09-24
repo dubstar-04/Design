@@ -81,7 +81,7 @@ export const PlotWindow = GObject.registerClass({
     const inputManager = DesignCore.Scene.inputManager;
     inputManager.reset();
 
-    const tool = DesignCore.CommandManager.createNew('PlotWindowPick');
+    const tool = DesignCore.CommandManager.createNew('WindowPick');
     inputManager.activeCommand = tool;
     await tool.execute();
 
