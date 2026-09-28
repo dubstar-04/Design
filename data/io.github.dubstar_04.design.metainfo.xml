@@ -40,7 +40,15 @@
   	<color type="primary" scheme_preference="light">#1c71d8</color>
   	<color type="primary" scheme_preference="dark">#3584e4</color>
 	</branding>
-  	<releases>
+	  	<releases>
+		<release version="51.alpha2" date="2026-xx-xx">
+		<description>
+			<ul>
+			<li>Enable Plotting to PDF</li>
+			<li>Enable Plotting to SVG</li>
+			</ul>
+		</description>
+		</release>
 		<release version="51.alpha1" date="2026-09-18">
 		<description>
 			<ul>
