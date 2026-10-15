@@ -46,6 +46,14 @@
 			<ul>
 			<li>Enable Plotting to PDF</li>
 			<li>Enable Plotting to SVG</li>
+			<li>Enable Dimension Command (DIM)</li>
+			<li>Add Linear Dimension (DIMLIN)</li>
+			<li>Add Aligned Dimension (DIMALI)</li>
+			<li>Add Angular Dimension (DIMANG)</li>
+			<li>Add Radial Dimension (DIMRAD)</li>
+			<li>Add Diametric Dimension (DIMDIA)</li>
+			<li>Add object grips for entity editing</li>
+			<li>Enable grip editing of dimensions</li>
 			</ul>
 		</description>
 		</release>
