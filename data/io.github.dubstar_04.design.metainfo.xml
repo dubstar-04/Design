@@ -54,6 +54,7 @@
 			<li>Add Diametric Dimension (DIMDIA)</li>
 			<li>Add object grips for entity editing</li>
 			<li>Enable grip editing of dimensions</li>
+			<li>Fix offset of circle creating an arc</li>
 			</ul>
 		</description>
 		</release>
